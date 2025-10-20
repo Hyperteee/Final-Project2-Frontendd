@@ -8,7 +8,7 @@ import PoppularDoc from '../PopularDoc/PoppularDoc'
 import PackagePart from '../PackagePart/Package'
 import Footer from '../Footer/Footer'
 
-export default function layout() {
+export default function Layout() {
   return (
     <div>
         <Navbar />
