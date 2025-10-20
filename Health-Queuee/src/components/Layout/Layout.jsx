@@ -12,6 +12,10 @@ export default function Layout() {
   return (
     <div>
         <Navbar />
+        <HospitalSearch />
+        <ChatBot />
+        <PackagePart />
+        <PoppularDoc />
         <Outlet />
         <Footer />
     </div>

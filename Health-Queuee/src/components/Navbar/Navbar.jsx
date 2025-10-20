@@ -2,7 +2,7 @@ import { useState } from "react"
 
 export default function Navbar() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="bg-white">
       <header className="bg-white shadow-sm fixed w-full top-0 z-50">
         <div className="max-w-7xl mx-auto px-8 py-4">
           <div className="flex items-center justify-between">
