@@ -14,8 +14,8 @@ export default function Layout() {
         <Navbar />
         <HospitalSearch />
         <ChatBot />
-        <PackagePart />
         <PoppularDoc />
+        <PackagePart />
         <Outlet />
         <Footer />
     </div>

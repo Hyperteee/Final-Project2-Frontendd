@@ -8,17 +8,17 @@ export default function HospitalSearch() {
             <h2 className="text-4xl font-bold text-black m-10 mb-15 text-center ml-27">ค้นหาโรงพยาบาล</h2>
             <p className="text-xl text-blue-100 mb-8">
                 </p>
-        <div className="flex gap-4 justify-center">
-            <button className="bg-blue-600 text-white box-content m-auto h-8 w-20 p-4 border-2 rounded-3xl hover:bg-blue-700 transition-colors font-semibold text-lg justify-center items-center flex">
-                all
-            </button>
+        <div className="flex gap-4 justify-center ml-35">
             <input 
                 type="text" 
                 placeholder="ค้นหาชื่อโรงพยาบาล" 
                 className="border-2 border-gray-300 bg-gray-300 text-white box-content h-7 w-full p-4 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-white transition-colors font-semibold text-lg" 
             />
+            <button className="bg-blue-600 text-white box-content m-auto h-8 w-20 p-4 border-2 rounded-3xl hover:bg-blue-700 transition-colors font-semibold text-lg justify-center items-center flex">
+                Search
+            </button>
         </div>
-        <div>
+        {/* <div>
             <button className="bg-blue-600 text-white ml-20 box-content m-5 mr-1 h-8 w-20 p-4 border-2 rounded-4xl hover:bg-blue-700 transition-colors font-semibold text-lg   ">
                 ทั้งหมด
             </button>
@@ -28,7 +28,7 @@ export default function HospitalSearch() {
             <button className="bg-blue-600 text-white ml-20 box-content m-5 mr-1 h-8 w-20 p-4 border-2 rounded-4xl hover:bg-blue-700 transition-colors font-semibold text-lg ">
                 คลินิก
             </button>
-        </div>
+        </div> */}
         </div>
     </section>
 </div>
