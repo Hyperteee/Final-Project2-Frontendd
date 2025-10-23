@@ -16,7 +16,7 @@ function App() {
     // <HealthcarePage />
     <BrowserRouter basename="/Final-Project2-Frontendd/">
       <Routes>
-        <Route path="Layout" element={<Layout />} />
+        <Route path="/" element={<Layout />} />
       </Routes>
     </BrowserRouter>
   );
