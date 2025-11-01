@@ -3,10 +3,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function NavigationBar() {
   return (
-    <Navbar bg="[#00002b]" expand="md" className="border-bottom py-1">
+    <Navbar bg="[#00002b]" expand="md" className="border-bottom py-1 px-4 ">
       <Container fluid className="px-4">
         <Navbar.Brand href="#" className="d-flex align-items-center text-white">
-          <img src="./images/HFU-Logo.png" alt="HFU" className="h-32 w-auto" />
+          <img src="./images/HFU-Logo.png" alt="HFU" className="h-24 w-auto" />
           {/* <span className="ms-3 fs-4 fw-semibold">HFU</span> */}
         </Navbar.Brand>
 
