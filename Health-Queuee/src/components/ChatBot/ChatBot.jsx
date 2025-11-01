@@ -8,7 +8,7 @@ export default function ChatBot() {
         style={{ backgroundImage: "url('./images/BG/BG2.png')" }}
       >
         {/* ชั้น overlay มืดและเบลอ */}
-        <div className="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+        <div className="absolute inset-0 bg-black/0 backdrop-blur-sm"></div>
 
         {/* เนื้อหาหลัก */}
         <div className="relative max-w-7xl mx-auto">

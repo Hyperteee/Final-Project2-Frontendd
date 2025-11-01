@@ -10,7 +10,7 @@ export default function PackagePart() {
         style={{ backgroundImage: "url('./images/BG/BG2.png')" }}
       >
         {/* ชั้น overlay มืด + เบลอ */}
-        <div className="absolute inset-0 bg-black/50 backdrop-blur-[3px]"></div>
+        <div className="absolute inset-0 bg-black/0 backdrop-blur-[3px]"></div>
 
         {/* เนื้อหาหลัก */}
         <div className="relative max-w-7xl mx-auto">
