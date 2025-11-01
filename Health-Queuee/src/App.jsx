@@ -10,16 +10,18 @@ import PoppularDoc from "./components/PopularDoc/PoppularDoc";
 import PackagePart from "./components/PackagePart/Package";
 import Footer from "./components/Footer/Footer";
 import Layout from "./components/Layout/Layout";
+import Login from "./Login-Part/Login-Page";
 
 function App() {
   return (
     // <HealthcarePage />
     // <Navbar />
-    <BrowserRouter basename="/Final-Project2-Frontendd/">
-      <Routes>
-        <Route path="Layout" element={<Layout />} />
-      </Routes>
-    </BrowserRouter>
+    <Login />
+    // <BrowserRouter basename="/Final-Project2-Frontendd/">
+    //   <Routes>
+    //     <Route path="Layout" element={<Layout />} />
+    //   </Routes>
+    // </BrowserRouter>
   );
 }
 
