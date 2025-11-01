@@ -13,12 +13,13 @@ import Layout from "./components/Layout/Layout";
 
 function App() {
   return (
-    <HealthcarePage />
-    // <BrowserRouter basename="/Final-Project2-Frontendd/">
-    //   <Routes>
-    //     <Route path="Layout" element={<Layout />} />
-    //   </Routes>
-    // </BrowserRouter>
+    // <HealthcarePage />
+    // <Navbar />
+    <BrowserRouter basename="/Final-Project2-Frontendd/">
+      <Routes>
+        <Route path="Layout" element={<Layout />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

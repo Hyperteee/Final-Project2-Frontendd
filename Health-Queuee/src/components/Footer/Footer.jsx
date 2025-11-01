@@ -6,20 +6,25 @@ export default function Footer() {
       <footer id="contact" className="bg-gray-900 text-gray-300 py-16">
         <div className="max-w-7xl mx-auto px-8">
           <div className="grid grid-cols-4 gap-12 mb-12">
-            {/* Company Info */}
-            <div>
-              <div className="flex items-center gap-3 mb-6">
-                <img src="/HFU-logo-white.jpg" alt="HFU Logo" className="h-8" />
-                <span className="text-2xl font-bold text-white">HFU</span>
+            {/* Footer */}{" "}
+            <div className="-mt-7">
+              <div className="flex items-center gap-3 mb-2">
+                <img
+                  src="./images/HFU-Logo.png"
+                  alt="HFU Logo"
+                  className="h-32 w-auto"
+                />
+                {/* <span className="text-2xl font-bold text-white">HFU</span> */}{" "}
               </div>
-              <p className="text-gray-400 leading-relaxed">
-                Leading healthcare queue management solutions 
+              <p className="text-gray-400 leading-relaxed -mt-5 ">
+                Leading healthcare queue management solutions{" "}
               </p>
             </div>
-
             {/* Products */}
             <div>
-              <h4 className="text-white font-semibold text-lg mb-4">Products</h4>
+              <h4 className="text-white font-semibold text-lg mb-4">
+                Products
+              </h4>
               <ul className="space-y-3">
                 <li>
                   <a href="#" className="hover:text-white transition-colors">
@@ -43,10 +48,11 @@ export default function Footer() {
                 </li>
               </ul>
             </div>
-
             {/* Company */}
             <div>
-              <h4 className="text-white font-semibold text-lg mb-4">Company</h4>
+              <h4 className="text-white font-semibold text-lg mb-4">
+                Company
+              </h4>
               <ul className="space-y-3">
                 <li>
                   <a href="#" className="hover:text-white transition-colors">
@@ -70,10 +76,11 @@ export default function Footer() {
                 </li>
               </ul>
             </div>
-
             {/* Support */}
             <div>
-              <h4 className="text-white font-semibold text-lg mb-4">Support</h4>
+              <h4 className="text-white font-semibold text-lg mb-4">
+                Support
+              </h4>
               <ul className="space-y-3">
                 <li>
                   <a href="#" className="hover:text-white transition-colors">
@@ -98,7 +105,6 @@ export default function Footer() {
               </ul>
             </div>
           </div>
-
           <div className="border-t border-gray-800 pt-8 text-center text-gray-400">
             <p>&copy; 2025 HFU. All rights reserved.</p>
           </div>

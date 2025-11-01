@@ -1,7 +1,8 @@
 import React from 'react'
 import { Outlet } from 'react-router'
 
-import Navbar from '../Navbar/Navbar'
+// import Navbar from '../Navbar/Navbar'
+import NavigationBar from '../Navbar/Navbar'
 import HospitalSearch from '../Hospital-Search/Hospital-Search'
 import ChatBot from '../ChatBot/ChatBot'
 import PoppularDoc from '../PopularDoc/PoppularDoc'
@@ -11,7 +12,7 @@ import Footer from '../Footer/Footer'
 export default function Layout() {
   return (
     <div>
-        <Navbar />
+        <NavigationBar />
         <HospitalSearch />
         <ChatBot />
         <PoppularDoc />
