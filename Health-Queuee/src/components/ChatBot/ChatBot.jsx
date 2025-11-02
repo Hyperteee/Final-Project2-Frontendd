@@ -24,15 +24,39 @@ export default function ChatBot() {
 
           {/* ช่องโลโก้ */}
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
-            {[1, 2, 3, 4, 5].map((i) => (
-              <div
-                key={i}
-                className="bg-white/90 backdrop-blur-md rounded-lg p-8 flex items-center justify-center h-32 shadow-lg hover:scale-105 transition-transform duration-300"
+              <div   className="position-relative mx-3 mt-3 overflow-hidden"
+  style={{
+    backgroundImage: "url('./images/BG-Mainpage.png')",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    borderRadius: "2rem",
+  }}
               >
                 <span className="text-gray-600 font-medium">Logo</span>
               </div>
-            ))}
+
+              <div className="bg-white/90 backdrop-blur-md rounded-lg p-8 flex items-center justify-center h-32 shadow-lg hover:scale-105 transition-transform duration-300"
+               >
+                <span className="text-gray-600 font-medium">Logo</span>
+              </div>
+
+              <div className="bg-white/90 backdrop-blur-md rounded-lg p-8 flex items-center justify-center h-32 shadow-lg hover:scale-105 transition-transform duration-300"
+              >
+                <span className="text-gray-600 font-medium">Logo</span>
+              </div>
+
+              <div className="bg-white/90 backdrop-blur-md rounded-lg p-8 flex items-center justify-center h-32 shadow-lg hover:scale-105 transition-transform duration-300"
+              >
+                <span className="text-gray-600 font-medium">Logo</span>
+              </div>
+
+              <div className="bg-white/90 backdrop-blur-md rounded-lg p-8 flex items-center justify-center h-32 shadow-lg hover:scale-105 transition-transform duration-300"
+              >
+                <span className="text-gray-600 font-medium">Logo</span>
+              </div>             
           </div>
+
+          
           <div className="relative max-w-7xl mx-auto m-[35px] grid grid-cols-2 gap-12 items-center m">
             {/* ฝั่งข้อความ */}
             <div>

@@ -5,141 +5,79 @@ export default function HospitalSearch() {
     <div>
       {/* Hero Section */}
       <section
-        className="position-relative mx-3 mt-3 overflow-hidden"
-        style={{
-          backgroundImage: "url('./images/BG-Mainpage.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          borderRadius: "2rem",
-        }}
+  className="position-relative mx-3 mt-3 overflow-hidden"
+  style={{
+    backgroundImage: "url('./images/BG-Mainpage.png')",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    borderRadius: "2rem",
+  }}
+>
+  <div className="container-fluid px-5 py-5">
+    <div className="row align-items-center" style={{ minHeight: "500px" }}>
+      {/* Left Content */}
+      <div className="col-6">{/* add เนื้อหา */}</div>
+
+      {/* Right Content */}
+      <div className="col-6 d-flex align-items-center justify-content-center">
+        {/* add เนื้อหา */}
+      </div>
+    </div>
+  </div>
+
+
+  <div
+    className="position-absolute start-50 translate-middle-x"
+    style={{
+      bottom: "20px",
+      width: "80%",
+      maxWidth: "600px",
+      zIndex: 20,
+    }}
+  >
+    <div className="bg-white rounded-pill shadow-lg px-4 py-3 d-flex align-items-center">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="text-secondary me-2"
+        viewBox="0 0 24 24"
       >
-        <div className="container-fluid px-5 py-5">
-          <div
-            className="row align-items-center"
-            style={{ minHeight: "500px" }}
-          >
-            {/* Left Content */}
-            <div className="col-6">
-              {/* <h1
-                className="display-1 fw-bold mb-4"
-                style={{ color: "#c5d9f0", fontSize: "5rem" }}
-              >
-                Healthcare
-              </h1> */}
+        <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+      <input
+        type="text"
+        placeholder="ค้นหา"
+        className="form-control border-0 shadow-none flex-grow-1"
+      />
+      <button
+        className="btn text-white rounded-pill px-3"
+        style={{ backgroundColor: "#000066" }}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          viewBox="0 0 24 24"
+        >
+          <path d="M14 5l7 7-7 7M21 12H3" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>
 
-              <div className="mb-4">
-                {/* <div className="d-flex align-items-center gap-3 mb-3">
-                  <div
-                    className="rounded-circle d-flex align-items-center justify-content-center"
-                    style={{
-                      width: "40px",
-                      height: "40px",
-                      backgroundColor: "rgba(255,255,255,0.2)",
-                    }}
-                  >
-                    <svg
-                      className="text-white"
-                      width="24"
-                      height="24"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                  </div>
-                  <span className="text-white fs-5">Reduce HbA1c</span>
-                </div> */}
 
-                {/* <div className="d-flex align-items-center gap-3">
-                  <div
-                    className="rounded-circle d-flex align-items-center justify-content-center"
-                    style={{
-                      width: "40px",
-                      height: "40px",
-                      backgroundColor: "rgba(255,255,255,0.2)",
-                    }}
-                  >
-                    <svg
-                      className="text-white"
-                      width="24"
-                      height="24"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                  </div>
-                  <span className="text-white fs-5">No more medications</span>
-                </div> */}
-              </div>
-
-              {/* <div className="pt-4">
-                <p
-                  className="text-white small lh-base"
-                  style={{ maxWidth: "400px" }}
-                >
-                  IF YOU'RE LOOKING FOR A CREATIVE AND
-                  <br />
-                  EASY WAY TO BUILD A WEBSITE, WOW!
-                  <br />
-                  IS THE PERFECT SOLUTION.
-                </p>
-              </div> */}
-            </div>
-
-            {/* Right Content - Doctor Image */}
-            <div className="col-6 position-relative d-flex align-items-center justify-content-center">
-              {/* <img
-                src="./images/doctor-oshi.png"
-                alt="Healthcare Professional"
-                className="position-relative"
-                style={{ height: "500px", objectFit: "contain", zIndex: 10 }}
-              /> */}
-
-              {/* Book Consultation Button */}
-              <div className="position-absolute top-0 end-0 mt-4">
-                <button
-                  className="btn d-flex align-items-center gap-3 shadow-lg"
-                  style={{
-                    backgroundColor: "#c5d9f0",
-                    color: "#2d3561",
-                    borderRadius: "2rem",
-                    padding: "0.75rem 1.5rem",
-                  }}
-                >
-                  <svg
-                    width="20"
-                    height="20"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M14 5l7 7m0 0l-7 7m7-7H3"
-                    />
-                  </svg>
-                  <span className="fw-semibold">Book Consultation</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Service Cards Section */}
       <section className="container-fluid px-3 py-4">
