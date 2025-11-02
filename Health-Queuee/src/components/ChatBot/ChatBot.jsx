@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 export default function ChatBot() {
   return (
@@ -20,43 +20,71 @@ export default function ChatBot() {
           </h1>
 
           {/* เส้นขาวตกแต่ง */}
-          <div className="h-1 w-24 bg-white mx-auto rounded-full mb-10"></div>
+          <div className="h-1 w-24 bg-white mx-auto rounded-full mb-10 "></div>
 
           {/* ช่องโลโก้ */}
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
-              <div   className="position-relative mx-3 mt-3 overflow-hidden"
-  style={{
-    backgroundImage: "url('./images/BG-Mainpage.png')",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    borderRadius: "2rem",
-  }}
-              >
-                <span className="text-gray-600 font-medium">Logo</span>
-              </div>
+            <div
+              className="position-relative mx-3 mt-3 overflow-hidden"
+              style={{
+                backgroundImage: "url('./images/Hos-Chula.svg')",
+                backgroundSize: "contain",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                width: "100%",
+                aspectRatio: "1/1",
+              }}
+            ></div>
 
-              <div className="bg-white/90 backdrop-blur-md rounded-lg p-8 flex items-center justify-center h-32 shadow-lg hover:scale-105 transition-transform duration-300"
-               >
-                <span className="text-gray-600 font-medium">Logo</span>
-              </div>
+            <div
+              className="position-relative mx-3 mt-3 overflow-hidden"
+              style={{
+                backgroundImage: "url('./images/Hos-Paolo.png')",
+                backgroundSize: "contain",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                width: "100%",
+                aspectRatio: "1/1",
+              }}
+            ></div>
 
-              <div className="bg-white/90 backdrop-blur-md rounded-lg p-8 flex items-center justify-center h-32 shadow-lg hover:scale-105 transition-transform duration-300"
-              >
-                <span className="text-gray-600 font-medium">Logo</span>
-              </div>
+            <div
+              className="position-relative mx-3 mt-3 overflow-hidden"
+              style={{
+                backgroundImage: "url('./images/Hos-Bangkok.png')",
+                backgroundSize: "contain",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                width: "100%",
+                aspectRatio: "1/1",
+              }}
+            ></div>
 
-              <div className="bg-white/90 backdrop-blur-md rounded-lg p-8 flex items-center justify-center h-32 shadow-lg hover:scale-105 transition-transform duration-300"
-              >
-                <span className="text-gray-600 font-medium">Logo</span>
-              </div>
+            <div
+              className="position-relative mx-3 mt-3 overflow-hidden"
+              style={{
+                backgroundImage: "url('./images/Hos-Phyathai.png')",
+                backgroundSize: "contain",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                width: "100%",
+                aspectRatio: "1/1",
+              }}
+            ></div>
 
-              <div className="bg-white/90 backdrop-blur-md rounded-lg p-8 flex items-center justify-center h-32 shadow-lg hover:scale-105 transition-transform duration-300"
-              >
-                <span className="text-gray-600 font-medium">Logo</span>
-              </div>             
+            <div
+              className="position-relative mx-3 mt-3 overflow-hidden"
+              style={{
+                backgroundImage: "url('./images/hos-samitivej.png')",
+                backgroundSize: "contain",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                width: "100%",
+                aspectRatio: "1/1",
+              }}
+            ></div>
           </div>
 
-          
           <div className="relative max-w-7xl mx-auto m-[35px] grid grid-cols-2 gap-12 items-center m">
             {/* ฝั่งข้อความ */}
             <div>
@@ -109,5 +137,5 @@ export default function ChatBot() {
         </div>
       </section>
     </div>
-  )
+  );
 }
