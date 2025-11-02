@@ -40,11 +40,14 @@ export default function PoppularDoc() {
           {/* การ์ดแพทย์ */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-6">
             {[1, 2, 3, 4].map((i) => (
-              <div
+              <div style={{
+          background: "linear-gradient(135deg, #2d3561 0%, #1a1f3a 100%)",
+          borderRadius: "2rem",
+        }}
                 key={i}
-                className="bg-gray-100 rounded-2xl p-6 min-h-[400px]"
+                className="text-white rounded-2xl p-6 min-h-[400px] "
               >
-                <div className="w-full aspect-[4/3] bg-gray-300 rounded-2xl mb-4 flex items-center justify-center overflow-hidden">
+                <div className="w-full aspect-[4/3] bg-gray-300 rounded-2xl mb-4 flex items-center justify-center overflow-hidden" >
                   <span className="text-gray-500 text-sm">Image</span>
                 </div>
                 <div className="text-center">

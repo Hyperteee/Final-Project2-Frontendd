@@ -3,7 +3,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function NavigationBar() {
   return (
-    <Navbar bg="[#00002b]" expand="md" className="border-bottom py-1 px-4 ">
+    <section>
+    <Navbar className="position-relative mx-3 mt-3 overflow-hidden"
+        style={{
+          background: "linear-gradient(135deg, #1a1f3a 0%, #0f1327ff 100%)",
+          borderRadius: "2rem",
+        }}
+      >
       <Container fluid className="px-4">
         <Navbar.Brand href="#" className="d-flex align-items-center text-white">
           <img src="./images/HFU-Logo.png" alt="HFU" className="h-24 w-auto" />
@@ -52,5 +58,6 @@ export default function NavigationBar() {
         </Navbar.Collapse>
       </Container>
     </Navbar>
+    </section>
   );
 }

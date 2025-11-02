@@ -3,8 +3,13 @@ import React from 'react'
 export default function Footer() {
   return (
     <div>
-      <footer id="contact" className="bg-gray-900 text-gray-300 py-16">
-        <div className="max-w-7xl mx-auto px-8">
+      <section>
+      <footer className="position-relative mx-3 mt-3 overflow-hidden bg-gray-900 text-gray-300 mt-4"
+        style={{
+          borderRadius: "2rem",
+        }}
+      >
+        <div className="max-w-7xl mx-auto px-8 mt-4">
           <div className="grid grid-cols-4 gap-12 mb-12">
             {/* Footer */}{" "}
             <div className="-mt-7">
@@ -110,6 +115,7 @@ export default function Footer() {
           </div>
         </div>
       </footer>
+    </section>
     </div>
   )
 }
