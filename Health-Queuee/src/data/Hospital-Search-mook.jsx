@@ -10,7 +10,7 @@ export default function HospitalSearch() {
     const [letterSearch, setLetterSearch] = useState("")
     const searchSection = useRef(null)
     const navigate = useNavigate()
-    const hospitalThai = "โรงพยาบาล"
+    const hospitalThai = "โรงพยาบาล กกก"
 
 
     function handleSelect(state){
