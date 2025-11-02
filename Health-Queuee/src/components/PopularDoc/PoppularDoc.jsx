@@ -38,8 +38,8 @@ export default function PoppularDoc() {
           </div>
 
           {/* การ์ดแพทย์ */}
-      <section className="container py-5">
-        <div className="row">
+      <section className="container py-5" >
+        <div className="row" >
           <div className="col-12">
             {/* <h1 className="fw-bold mb-4" style={{ color: "#2d3561", fontSize: "2.5rem" }}>
               Book an appointment for an
@@ -142,15 +142,18 @@ export default function PoppularDoc() {
             </div> */}
 
             {/* Doctor Cards Grid */}
-            <div className="row g-4">
-              <div className="col-12 col-md-6 col-lg-3">
-                <div className="card border-0 shadow-sm h-100" style={{ borderRadius: "1rem" }}>
+            <div className="row g-4" >
+              <div className="col-12 col-md-6 col-lg-3" >
+                <div className="card border-0 shadow-sm h-100" style={{
+          background: "linear-gradient(135deg, #2d3561 0%, #1a1f3a 100%)",
+          borderRadius: "2rem",
+        }}>
                   <div className="card-body p-0">
                     <div
                       className="d-flex align-items-end justify-content-center"
                       style={{
                         height: "280px",
-                        backgroundColor: "#f8f9fa",
+                        backgroundColor: "#ecf6ffff",
                         borderRadius: "1rem 1rem 0 0",
                         overflow: "hidden",
                       }}
@@ -163,10 +166,10 @@ export default function PoppularDoc() {
                       />
                     </div>
                     <div className="p-3">
-                      <h5 className="fw-bold mb-1" style={{ color: "#2d3561" }}>
+                      <h5 className="fw-bold mb-1 text-white">
                         Dr. Oshi
                       </h5>
-                      <p className="text-muted small mb-0">อยุรกรรม</p>
+                      <p className="mb-0 text-white">แผนก: อยุรกรรม</p>
                     </div>
                   </div>
                 </div>
@@ -174,12 +177,15 @@ export default function PoppularDoc() {
 
               <div className="col-12 col-md-6 col-lg-3">
                 <div className="card border-0 shadow-sm h-100" style={{ borderRadius: "1rem" }}>
-                  <div className="card-body p-0">
+                  <div className="card-body p-0" style={{
+          background: "linear-gradient(135deg, #2d3561 0%, #1a1f3a 100%)",
+          borderRadius: "2rem",
+        }}>
                     <div
                       className="d-flex align-items-end justify-content-center"
                       style={{
                         height: "280px",
-                        backgroundColor: "#f8f9fa",
+                        backgroundColor: "#ecf6ffff",
                         borderRadius: "1rem 1rem 0 0",
                         overflow: "hidden",
                       }}
@@ -192,10 +198,10 @@ export default function PoppularDoc() {
                       />
                     </div>
                     <div className="p-3">
-                      <h5 className="fw-bold mb-1" style={{ color: "#2d3561" }}>
+                      <h5 className="fw-bold mb-1 text-white">
                         Dr. Mook
                       </h5>
-                      <p className="text-muted small mb-0">เวชกรรม</p>
+                      <p className="text-white small mb-0">แผนก: เวชกรรม</p>
                     </div>
                   </div>
                 </div>
@@ -204,12 +210,15 @@ export default function PoppularDoc() {
               {/* Dr. Sanjana Gupta */}
               <div className="col-12 col-md-6 col-lg-3">
                 <div className="card border-0 shadow-sm h-100" style={{ borderRadius: "1rem" }}>
-                  <div className="card-body p-0">
+                  <div className="card-body p-0"style={{
+          background: "linear-gradient(135deg, #2d3561 0%, #1a1f3a 100%)",
+          borderRadius: "2rem",
+        }}>
                     <div
                       className="d-flex align-items-end justify-content-center"
                       style={{
                         height: "280px",
-                        backgroundColor: "#f8f9fa",
+                        backgroundColor: "#ecf6ffff",
                         borderRadius: "1rem 1rem 0 0",
                         overflow: "hidden",
                       }}
@@ -222,10 +231,10 @@ export default function PoppularDoc() {
                       />
                     </div>
                     <div className="p-3">
-                      <h5 className="fw-bold mb-1" style={{ color: "#2d3561" }}>
+                      <h5 className="fw-bold mb-1 text-white" >
                         Dr. Frame
                       </h5>
-                      <p className="text-muted small mb-0">ศูนย์ระบบทางเดินอาหารและตับ</p>
+                      <p className="text-white small mb-0">แผนก: ศูนย์ระบบทางเดินอาหารและตับ</p>
                     </div>
                   </div>
                 </div>
@@ -234,28 +243,31 @@ export default function PoppularDoc() {
               {/* Dr. Jen Gunter */}
               <div className="col-12 col-md-6 col-lg-3">
                 <div className="card border-0 shadow-sm h-100" style={{ borderRadius: "1rem" }}>
-                  <div className="card-body p-0">
+                  <div className="card-body p-0"style={{
+          background: "linear-gradient(135deg, #2d3561 0%, #1a1f3a 100%)",
+          borderRadius: "2rem",
+        }}>
                     <div
                       className="d-flex align-items-end justify-content-center"
                       style={{
                         height: "280px",
-                        backgroundColor: "#f8f9fa",
+                        backgroundColor: "#ecf6ffff",
                         borderRadius: "1rem 1rem 0 0",
                         overflow: "hidden",
                       }}
                     >
                       <img
-                        src="/male-doctor-with-stethoscope-smiling-professional.jpg"
+                        src="./images/Doctor-T.png"
                         alt="Dr. Jen Gunter"
                         className="img-fluid"
                         style={{ height: "100%", objectFit: "cover" }}
                       />
                     </div>
                     <div className="p-3">
-                      <h5 className="fw-bold mb-1" style={{ color: "#2d3561" }}>
-                        Dr. Jen Gunter
+                      <h5 className="fw-bold mb-1 text-white" >
+                        Dr. TEE
                       </h5>
-                      <p className="text-muted small mb-0">Neurologist</p>
+                      <p className="text-white small mb-0">แผนก: กุมารเวชกรรม</p>
                     </div>
                   </div>
                 </div>
