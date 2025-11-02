@@ -39,7 +39,7 @@ export default function LoginPage() {
                 <small>
                   หากท่านยังไม่มีบัญชี{" "}
                   <a href="#" className="text-primary text-decoration-none">
-                    กดตรงนี้
+                    กดตรงนี้ กกก
                   </a>
                 </small>
               </div>
