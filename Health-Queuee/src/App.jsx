@@ -16,12 +16,12 @@ function App() {
   return (
     // <HealthcarePage />
     // <Navbar />
-    // <LoginPage />
-    <BrowserRouter basename="/Final-Project2-Frontendd/">
-      <Routes>
-        <Route path="Layout" element={<Layout />} />
-      </Routes>
-    </BrowserRouter>
+    <LoginPage />
+    // <BrowserRouter basename="/Final-Project2-Frontendd/">
+    //   <Routes>
+    //     <Route path="Layout" element={<Layout />} />
+    //   </Routes>
+    // </BrowserRouter>
   );
 }
 
