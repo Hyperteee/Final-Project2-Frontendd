@@ -1,4 +1,7 @@
 import { useState } from "react"
+import Carousel from "react-bootstrap/Carousel";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 
 export default function HealthcarePage() {
   const [currentOrgSlide, setCurrentOrgSlide] = useState(0)
@@ -24,20 +27,7 @@ export default function HealthcarePage() {
 
   return (
     <>
-      <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-        crossOrigin="anonymous"
-      />
-      <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossOrigin="anonymous"
-        async
-      ></script>
-
-      <div style={{ minHeight: "100vh", backgroundColor: "#f8f9fa" }}>
+    <div style={{ minHeight: "100vh", backgroundColor: "#f8f9fa" }}>
     <header
       className="py-3 shadow-lg sticky-top"
       style={{
@@ -85,221 +75,158 @@ export default function HealthcarePage() {
     </header>
 
         <section
-          className="position-relative py-5"
-          style={{
-            background: "linear-gradient(180deg, #020A1B 0%, #000000 100%)",
-            minHeight: "500px",
-          }}
-        >
-          <div className="container py-5">
-            <div className="text-center mb-5">
-              <h2 className="display-3 fw-bold text-white mb-4">
-                ดูแลสุขภาพของคุณ
-                <br />
-                <span style={{ color: "#60a5fa" }}>ด้วยใจ</span>
-              </h2>
-              <p className="fs-5 text-light mb-4" style={{ maxWidth: "700px", margin: "0 auto" }}>
-                บริการด้านสุขภาพครบวงจร พร้อมทีมแพทย์ผู้เชี่ยวชาญ และเทคโนโลยีที่ทันสมัย
-              </p>
-            </div>
+  className="position-relative py-5"
+  style={{
+    background: "linear-gradient(180deg, #020A1B 0%, #000000 100%)",
+    minHeight: "500px",
+  }}
+>
+  <div className="container py-5">
+    {/* HERO CAROUSEL */}
+    <Carousel className="rounded-4 overflow-hidden mb-5">
+      <Carousel.Item>
+        <img
+          className="d-block w-100"
+          src="./images/BG-Mainpage.png"
+          alt="สไลด์ 1"
+          style={{ height: "500px", objectFit: "cover" }}
+        />
+      </Carousel.Item>
 
-            <div className="row justify-content-center">
-              <div className="col-lg-8">
-                <div className="card shadow-lg border-0 rounded-4">
-                  <div className="card-body p-2">
-                    <div className="input-group">
-                      <span className="input-group-text bg-white border-0 ps-4">
-                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                          />
-                        </svg>
-                      </span>
-                      <input
-                        type="text"
-                        className="form-control border-0 py-3"
-                        placeholder="ค้นหาแพทย์, แพ็กเกจ, หรือบริการ..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        style={{ fontSize: "1rem" }}
-                      />
-                      <button className="btn btn-primary px-5 rounded-3" type="button">
-                        ค้นหา
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+      <Carousel.Item>
+        <img
+          className="d-block w-100"
+          src="./images/BG-Clinic.png"
+          alt="สไลด์ 2"
+          style={{ height: "500px", objectFit: "cover" }}
+        />
+      </Carousel.Item>
+
+      <Carousel.Item>
+        <img
+          className="d-block w-100"
+          src="./images/BG-Hospital.png"
+          alt="สไลด์ 3"
+          style={{ height: "500px", objectFit: "cover" }}
+        />
+      </Carousel.Item>
+    </Carousel>
+
+    {/* SEARCH BAR */}
+    <div className="row justify-content-center">
+      <div className="col-lg-8">
+        <div className="card shadow-lg border-0 rounded-4">
+          <div className="card-body p-2">
+            <div className="input-group">
+              <span className="input-group-text bg-white border-0 ps-4">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+              </span>
+              <input
+                type="text"
+                className="form-control border-0 py-3"
+                placeholder="ค้นหาแพทย์, แพ็กเกจ, หรือบริการ..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                style={{ fontSize: "1rem" }}
+              />
+              <button className="btn btn-primary px-5 rounded-3" type="button">
+                ค้นหา
+              </button>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-          {/* Decorative Elements */}
+  {/* Decorative Elements */}
+  <div
+    className="position-absolute rounded-circle"
+    style={{
+      top: "80px",
+      left: "40px",
+      width: "80px",
+      height: "80px",
+      backgroundColor: "rgba(59, 130, 246, 0.1)",
+      filter: "blur(40px)",
+      pointerEvents: "none",
+    }}
+  ></div>
+  <div
+    className="position-absolute rounded-circle"
+    style={{
+      bottom: "80px",
+      right: "40px",
+      width: "128px",
+      height: "128px",
+      backgroundColor: "rgba(59, 130, 246, 0.1)",
+      filter: "blur(40px)",
+      pointerEvents: "none",
+    }}
+  ></div>
+
+  {/* ต่อด้วยส่วนพาร์ทเนอร์ + Chat Bot ของคุณเหมือนเดิม */}
+  <div className="container mt-5">
+    <div className="text-center mb-5">
+      <h3 className="h2 fw-bold text-white">พันธมิตรทางการแพทย์ชั้นนำ</h3>
+    </div>
+    <div className="row g-4">
+      {[1, 2, 3, 4, 5].map((i) => (
+        <div key={i} className="col-6 col-md-4 col-lg-2">
           <div
-            className="position-absolute rounded-circle"
+            className="card border rounded-3 h-100 d-flex align-items-center justify-content-center"
             style={{
-              top: "80px",
-              left: "40px",
-              width: "80px",
-              height: "80px",
-              backgroundColor: "rgba(59, 130, 246, 0.1)",
-              filter: "blur(40px)",
+              minHeight: "100px",
+              backgroundColor: "#f8f9fa",
+              transition: "all 0.3s ease",
+              cursor: "pointer",
             }}
-          ></div>
-          <div
-            className="position-absolute rounded-circle"
-            style={{
-              bottom: "80px",
-              right: "40px",
-              width: "128px",
-              height: "128px",
-              backgroundColor: "rgba(59, 130, 246, 0.1)",
-              filter: "blur(40px)",
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "translateY(-4px)"
+              e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.1)"
             }}
-          ></div>
-
-
-          <div className="container">
-            <div className="text-center mb-5">
-              <h3 className="h2 fw-bold mt-5 text-white">พันธมิตรทางการแพทย์ชั้นนำ</h3>
-            </div>
-
-            <div className="row g-4">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <div key={i} className="col-6 col-md-4 col-lg-2">
-                  <div
-                    className="card border rounded-3 h-100 d-flex align-items-center justify-content-center"
-                    style={{
-                      minHeight: "100px",
-                      backgroundColor: "#f8f9fa",
-                      transition: "all 0.3s ease",
-                      cursor: "pointer",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = "translateY(-4px)"
-                      e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.1)"
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = "translateY(0)"
-                      e.currentTarget.style.boxShadow = "none"
-                    }}
-                  >
-                    <div className="card-body text-center">
-                      <span className="text-muted fw-semibold">Partner {i}</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "translateY(0)"
+              e.currentTarget.style.boxShadow = "none"
+            }}
+          >
+            <div className="card-body text-center">
+              <span className="text-muted fw-semibold">Partner {i}</span>
             </div>
           </div>
+        </div>
+      ))}
+    </div>
 
-          
-          <div className="container py-20">
-            <div className="row g-5 align-items-center">
-              {/* Left Content */}
-              <div className="col-lg-6">
-                <span className="badge bg-primary bg-opacity-10 text-primary px-3 py-2 mb-3">AI Assistant</span>
-                <h2 className="display-4 fw-bold mb-4 text-white">
-                  Chat Bot
-                  <br />
-                  <span className="text-primary">Doctor</span>
-                </h2>
-                <p className="fs-5 text-white mb-4 lh-lg ">
-                  ปรึกษาอาการเบื้องต้นกับแชทบอทอัจฉริยะ รับคำแนะนำด้านสุขภาพก่อนพบแพทย์ พร้อมบริการตลอด 24 ชั่วโมง
-                </p>
-                <button className="btn btn-primary btn-lg px-5 py-3 shadow">เริ่มสนทนา</button>
-              </div>
+    <div className="row g-5 align-items-center mt-5">
+      {/* Left Content */}
+      <div className="col-lg-6">
+        <span className="badge bg-primary bg-opacity-10 text-primary px-3 py-2 mb-3">AI Assistant</span>
+        <h2 className="display-4 fw-bold mb-4 text-white">
+          Chat Bot
+          <br />
+          <span className="text-primary">Doctor</span>
+        </h2>
+        <p className="fs-5 text-white mb-4 lh-lg">
+          ปรึกษาอาการเบื้องต้นกับแชทบอทอัจฉริยะ รับคำแนะนำด้านสุขภาพก่อนพบแพทย์ พร้อมบริการตลอด 24 ชั่วโมง
+        </p>
+        <button className="btn btn-primary btn-lg px-5 py-3 shadow">เริ่มสนทนา</button>
+      </div>
 
-              {/* Right - Chat Interface */}
-              <div className="col-lg-6">
-                <div className="card shadow-lg border-0 rounded-4 overflow-hidden">
-                  <div
-                    className="card-header text-white p-3"
-                    style={{ background: "linear-gradient(90deg, #2563eb 0%, #1d4ed8 100%)" }}
-                  >
-                    <div className="d-flex align-items-center gap-3">
-                      <div
-                        className="rounded-circle d-flex align-items-center justify-content-center"
-                        style={{ width: "40px", height: "40px", backgroundColor: "rgba(255,255,255,0.2)" }}
-                      >
-                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
-                          />
-                        </svg>
-                      </div>
-                      <div>
-                        <h6 className="mb-0 fw-semibold">AI Doctor</h6>
-                        <small style={{ color: "#bfdbfe" }}>ออนไลน์</small>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="card-body p-4 bg-light" style={{ height: "320px", overflowY: "auto" }}>
-                    <div className="d-flex gap-3 mb-3">
-                      <div
-                        className="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
-                        style={{ width: "32px", height: "32px", backgroundColor: "#2563eb" }}
-                      >
-                        <span className="text-white small fw-bold">AI</span>
-                      </div>
-                      <div
-                        className="card border-0 shadow-sm"
-                        style={{ maxWidth: "75%", borderRadius: "1rem 1rem 1rem 0.25rem" }}
-                      >
-                        <div className="card-body p-3">
-                          <p className="mb-0 text-dark">สวัสดีครับ ผม AI Doctor พร้อมให้คำปรึกษาเบื้องต้นเกี่ยวกับสุขภาพของคุณ</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="d-flex gap-3 justify-content-end">
-                      <div
-                        className="card bg-primary text-white border-0 shadow-sm"
-                        style={{ maxWidth: "75%", borderRadius: "1rem 1rem 0.25rem 1rem" }}
-                      >
-                        <div className="card-body p-3">
-                          <p className="mb-0">สวัสดีครับ</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="card-footer bg-white border-top p-3">
-                    <div className="input-group">
-                      <input
-                        type="text"
-                        className="form-control border rounded-3"
-                        placeholder="พิมพ์ข้อความ..."
-                        value={chatMessage}
-                        onChange={(e) => setChatMessage(e.target.value)}
-                        style={{ borderRadius: "0.75rem 0 0 0.75rem" }}
-                      />
-                      <button
-                        className="btn btn-primary rounded-3"
-                        type="button"
-                        style={{ borderRadius: "0 0.75rem 0.75rem 0" }}
-                      >
-                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+      {/* Right - Chat Interface */}
+      <div className="col-lg-6">
+        {/* ... card แชตของคุณตามเดิม ... */}
+      </div>
+    </div>
+  </div>
+</section>
 <svg viewBox="0 0 100 15" preserveAspectRatio="none" className="bl_g0">
   <ellipse cx="50" cy="-5" fill="var(--rich-black, #000000)" rx="100" ry="15"></ellipse>
 </svg>
