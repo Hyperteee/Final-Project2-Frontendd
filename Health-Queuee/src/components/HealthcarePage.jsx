@@ -41,10 +41,9 @@ export default function HealthcarePage() {
     <header
       className="py-3 shadow-lg sticky-top"
       style={{
-        backgroundColor: "rgba(15, 23, 42, 0.6)", // สีเทาเข้มโปร่งใส (เทียบกับ bg-slate-900)
+        backgroundColor: "#020A1B", // สีเทาเข้มโปร่งใส (เทียบกับ bg-slate-900)
         backdropFilter: "blur(12px)", // เบลอพื้นหลัง
-        WebkitBackdropFilter: "blur(12px)", // รองรับ Safari
-        borderBottom: "1px solid rgba(255,255,255,0.15)",
+        WebkitBackdropFilter: "blur(12px)", // รองรับ Safari,
       }}
     >
       <div className="container d-flex align-items-center justify-content-between">
@@ -63,7 +62,7 @@ export default function HealthcarePage() {
         </div>
 
         {/* Nav */}
-        <nav className="d-none d-md-flex align-items-center gap-4">
+        <nav className="d-none d-md-flex align-items-center gap-4 ">
           <a href="#services" className="text-light text-decoration-none opacity-75 hover-opacity-100">
             บริการ
           </a>
@@ -88,7 +87,7 @@ export default function HealthcarePage() {
         <section
           className="position-relative py-5"
           style={{
-            background: "linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #0f172a 100%)",
+            background: "linear-gradient(180deg, #020A1B 0%, #000000 100%)",
             minHeight: "500px",
           }}
         >
@@ -160,16 +159,11 @@ export default function HealthcarePage() {
               filter: "blur(40px)",
             }}
           ></div>
-        </section>
 
-        <section
-          id="services"
-          className=""
-          style={{ background: "linear-gradient(135deg, #eff6ff 0%, #ffffff 100%)" }}
-        >
+
           <div className="container">
             <div className="text-center mb-5">
-              <h3 className="h2 fw-bold mt-5">พันธมิตรทางการแพทย์ชั้นนำ</h3>
+              <h3 className="h2 fw-bold mt-5 text-white">พันธมิตรทางการแพทย์ชั้นนำ</h3>
             </div>
 
             <div className="row g-4">
@@ -201,17 +195,18 @@ export default function HealthcarePage() {
             </div>
           </div>
 
-          <div className="container py-4">
+          
+          <div className="container py-20">
             <div className="row g-5 align-items-center">
               {/* Left Content */}
               <div className="col-lg-6">
                 <span className="badge bg-primary bg-opacity-10 text-primary px-3 py-2 mb-3">AI Assistant</span>
-                <h2 className="display-4 fw-bold mb-4">
+                <h2 className="display-4 fw-bold mb-4 text-white">
                   Chat Bot
                   <br />
                   <span className="text-primary">Doctor</span>
                 </h2>
-                <p className="fs-5 text-muted mb-4 lh-lg">
+                <p className="fs-5 text-white mb-4 lh-lg ">
                   ปรึกษาอาการเบื้องต้นกับแชทบอทอัจฉริยะ รับคำแนะนำด้านสุขภาพก่อนพบแพทย์ พร้อมบริการตลอด 24 ชั่วโมง
                 </p>
                 <button className="btn btn-primary btn-lg px-5 py-3 shadow">เริ่มสนทนา</button>
@@ -305,6 +300,10 @@ export default function HealthcarePage() {
             </div>
           </div>
         </section>
+<svg viewBox="0 0 100 15" preserveAspectRatio="none" className="bl_g0">
+  <ellipse cx="50" cy="-5" fill="var(--rich-black, #000000)" rx="100" ry="15"></ellipse>
+</svg>
+
 
         
         <section id="doctors" className=""
@@ -393,17 +392,42 @@ export default function HealthcarePage() {
           </div>
         </section>
 
+        <svg
+  viewBox="0 0 1440 320"
+  xmlns="http://www.w3.org/2000/svg"
+  preserveAspectRatio="none"
+  style={{
+    display: "block",
+    width: "100%",
+    height: "120px",
+  }}
+>
+  <path
+    fill="url(#waveGradient)"
+    fillOpacity="1"
+    d="M0,160L48,154.7C96,149,192,139,288,122.7C384,107,480,85,576,85.3C672,85,768,107,864,133.3C960,160,1056,192,1152,197.3C1248,203,1344,181,1392,170.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+  ></path>
+  <defs>
+    <linearGradient id="waveGradient" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stopColor="#14b8c4" />
+      <stop offset="100%" stopColor="#14B8C4" />
+    </linearGradient>
+  </defs>
+</svg>
+
         <section
           id="packages"
           className="py-5"
-          style={{ background: "linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%)" }}
+          style={{  background: "linear-gradient(to bottom, #14B8C4 0%, #0F4CA3 40%, #001B45 75%, #000000 100%)",
+    position: "relative",
+    overflow: "hidden",}}
         >
           <div className="container py-4">
             <div className="mb-5">
               <h2 className="display-5 fw-bold text-white mb-2">
-                แพ็กเกจ <span style={{ color: "#60a5fa" }}>และโปรโมชั่น</span>
+                แพ็กเกจ <span style={{ color: "#001B45" }}>และโปรโมชั่น</span>
               </h2>
-              <div style={{ height: "4px", width: "80px", backgroundColor: "#60a5fa", borderRadius: "2px" }}></div>
+              <div style={{ height: "4px", width: "80px", backgroundColor: "#001B45", borderRadius: "2px" }}></div>
             </div>
 
             {/* Filters */}
