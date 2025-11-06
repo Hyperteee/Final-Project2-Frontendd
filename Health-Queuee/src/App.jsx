@@ -12,6 +12,7 @@ import Footer from "./components/Footer/Footer";
 import Layout from "./components/Layout/Layout";
 import Listsearch from "./components/Hospital-Search/listsearch";
 import Queue1 from "./components/Hospital-Search/Queue1";
+import LoginPage from "./login-Pages/Login-user";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="" element={<Layout />} />
         <Route path="hospitals" element={<Listsearch />} />
         <Route path="queue1" element={<Queue1 />}/>
+        <Route path="login" element={<LoginPage />}/>
       </Routes>
     </BrowserRouter>
   );

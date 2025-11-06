@@ -1,420 +1,156 @@
-import React from "react";
-
+import { useEffect, useRef, useState } from 'react';
+import Button from 'react-bootstrap/Button'
+import { useNavigate } from 'react-router';
+import stateData from '../../data/liststate';
+import hospitalData from '../../data/listhospital';
 export default function HospitalSearch() {
-  return (
-    <div>
-      {/* Hero Section */}
-      <section
-  className="position-relative mx-3 mt-3 overflow-hidden"
-  style={{
-    backgroundImage: "url('./images/BG-Mainpage.png')",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    borderRadius: "2rem",
-  }}
->
-  <div className="container-fluid px-5 py-5">
-    <div className="row align-items-center" style={{ minHeight: "500px" }}>
-      {/* Left Content */}
-      <div className="col-6">{/* add เนื้อหา */}</div>
-
-      {/* Right Content */}
-      <div className="col-6 d-flex align-items-center justify-content-center">
-        {/* add เนื้อหา */}
-      </div>
-    </div>
-  </div>
+    const [showDropdown, setShowDropdown] = useState(false)
+    const [selectedstate, setSelectedState] = useState("")
+    const [selectedHospital, setSelectedHospital] = useState("")
+    const [letterSearch, setLetterSearch] = useState("")
+    const searchSection = useRef(null)
+    const navigate = useNavigate()
+    const hospitalThai = "โรงพยาบาล"
 
 
-  <div
-    className="position-absolute start-50 translate-middle-x"
-    style={{
-      bottom: "20px",
-      width: "80%",
-      maxWidth: "600px",
-      zIndex: 20,
-    }}
-  >
-    <div className="bg-white rounded-pill shadow-lg px-4 py-3 d-flex align-items-center">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="text-secondary me-2"
-        viewBox="0 0 24 24"
-      >
-        <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-      </svg>
-      <input
-        type="text"
-        placeholder="ค้นหา"
-        className="form-control border-0 shadow-none flex-grow-1"
-      />
-      <button
-        className="btn text-white rounded-pill px-3"
-        style={{ backgroundColor: "#000066" }}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          viewBox="0 0 24 24"
-        >
-          <path d="M14 5l7 7-7 7M21 12H3" />
-        </svg>
-      </button>
-    </div>
-  </div>
-</section>
+    function handleSelect(state){
+        setSelectedState(state)
+        navigate("/hospitals", { state: { selectedstate: state, showDropdown: false } })
+    }
+    function handleHospital(hospital){
+        setSelectedHospital(hospital.name)
+        navigate("/queue1", { state: { selectedHospital: hospital.name, showDropdown: false } })
+    }
+
+    const filteredStates = stateData.filter(state =>
+      state.toLowerCase().includes(letterSearch.toLowerCase())
+    )
+
+    const filteredHospitals = hospitalData.filter(hospital =>
+      hospital.name.toLowerCase().includes(letterSearch.toLowerCase()) ||
+      hospitalThai.includes(letterSearch)
+    )
+
+    useEffect(() => {
+      function closedropdown(){
+        if (searchSection.current && !searchSection.current.contains(event.target)){
+          setShowDropdown(false)
+        }
+      }
+      document.addEventListener("mousedown", closedropdown)
+        return () => {
+            document.removeEventListener("mousedown", closedropdown)
+        }
+    },[])
+    
+    return (
+<div>
+    <section className="pt-32 pb-50 bg-gradient-to-br from-blue-50 to-white">
+        <div className="max-w-4xl mx-auto px-8 text-center mr-130">
+            <h2 className="text-4xl font-bold text-black m-10 mb-15 text-center ml-27">ค้นหาโรงพยาบาล</h2>
+            <p className="text-xl text-blue-100 mb-8"></p>
+
+            <div className="flex gap-4 justify-center mt-10">
+                <div ref={searchSection} className='d-flex border-1 border-primary rounded-3 position-relative' style={{width : "100%", boxSizing: "border-box"}}>
+                    <i className="bi bi-search" 
+                        style={{
+                            padding: "10px",
+                            background: "dodgerblue",
+                            color: "white",
+                            minWidth: "50px",
+                            textAlign: "center"
+                        }}></i>
+
+                    <input 
+                        type="text" 
+                        placeholder="ค้นหาจากชื่อ หรือ จังหวัด" 
+                        name="hospital" 
+                        onFocus={() => setShowDropdown(true)} 
+                        onChange={(e)=> setLetterSearch(e.target.value)}
+                        style={{ width: "100%", padding: "10px", outline: "5px" }}
+                    />
+
+                    {showDropdown && (
+                        <ul 
+                          className="absolute bg-white border border-gray-300 mt-5 rounded-xl max-h-48 overflow-y-auto shadow-lg text-left"
+                          style={{ width: "100%", zIndex: 10 }}
+                        >
+                          {letterSearch ? (
+                            <>
+                              {filteredHospitals.length > 0 && filteredHospitals.map((hospital, index) => {
+                                const name = hospital.name
+                                const search = letterSearch.toLowerCase()
+                                const startIndex = name.toLowerCase().indexOf(search)
+
+                                let before = name
+                                let match = ""
+                                let after = ""
+                                if (startIndex !== -1) {
+                                  before = name.slice(0, startIndex)
+                                  match = name.slice(startIndex, startIndex + search.length)
+                                  after = name.slice(startIndex + search.length)
+                                }
+
+                                return (
+                                  <li
+                                    key={`hospital-${index}`}
+                                    onClick={() => handleHospital(hospital)}
+                                    className="px-4 py-2 hover:bg-blue-100 cursor-pointer"
+                                  >
+                                    โรงพยาบาล{before}
+                                    {match && <span className="text-blue-500 font-bold">{match}</span>}
+                                    {after} <span className="text-gray-500">({hospital.state})</span>
+                                  </li>
+                                )
+                              })}
+                              {filteredStates.map((state, index) => {
+                                const search = letterSearch.toLowerCase()
+                                const startIndex = state.toLowerCase().indexOf(search)
+
+                                let before = state
+                                let match = ""
+                                let after = ""
+                                if (startIndex !== -1) {
+                                  before = state.slice(0, startIndex)
+                                  match = state.slice(startIndex, startIndex + search.length)
+                                  after = state.slice(startIndex + search.length)
+                                }
+
+                                return (
+                                  <li
+                                    key={`state-${index}`}
+                                    onClick={() => handleSelect(state)}
+                                    className="px-4 py-2 hover:bg-blue-100 cursor-pointer"
+                                  >
+                                    {before}
+                                    {match && <span className="text-blue-500 font-bold">{match}</span>}
+                                    {after}
+                                  </li>
+                                )
+                              })}
+                            </>
+                          ) : (
+                            filteredStates.map((state, index) => (
+                              <li
+                                key={`state-${index}`}
+                                onClick={() => handleSelect(state)}
+                                className="px-4 py-2 hover:bg-blue-100 cursor-pointer"
+                              >
+                                {state}
+                              </li>
+                            ))
+                          )}
+
+                        </ul>
+                      )}
 
 
+                </div>
 
-      {/* Service Cards Section */}
-      <section className="container-fluid px-3 py-4">
-        <div className="row g-3">
-          {/* Instant Video Consultation Card */}
-          <div className="col-3">
-            <div
-              className="position-relative overflow-hidden d-flex flex-column justify-content-between p-4"
-              style={{
-                background: "linear-gradient(135deg, #f4e87c 0%, #e8d84f 100%)",
-                borderRadius: "2rem",
-                minHeight: "320px",
-              }}
-            >
-              <div className="position-relative" style={{ zIndex: 10 }}>
-                <h3 className="fs-4 fw-bold mb-2" style={{ color: "#2d3561" }}>
-                  Instant Video
-                  <br />
-                  Consultation
-                </h3>
-                <p className="small mb-4" style={{ color: "#2d3561" }}>
-                  Connect within 60 secs
-                </p>
-              </div>
-
-              <div
-                className="position-absolute"
-                style={{ bottom: "4rem", right: "2rem", opacity: 0.2 }}
-              >
-                <svg width="128" height="128" viewBox="0 0 100 100" fill="none">
-                  <rect
-                    x="20"
-                    y="30"
-                    width="60"
-                    height="40"
-                    rx="4"
-                    stroke="#2d3561"
-                    strokeWidth="3"
-                  />
-                  <path
-                    d="M35 45 L35 55 M45 45 L45 55"
-                    stroke="#2d3561"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                  />
-                  <circle
-                    cx="65"
-                    cy="50"
-                    r="8"
-                    stroke="#2d3561"
-                    strokeWidth="3"
-                  />
-                </svg>
-              </div>
-
-              <button
-                className="btn rounded-circle d-flex align-items-center justify-content-center position-relative"
-                style={{
-                  width: "48px",
-                  height: "48px",
-                  backgroundColor: "#2d3561",
-                  zIndex: 10,
-                }}
-              >
-                <svg
-                  className="text-white"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M14 5l7 7m0 0l-7 7m7-7H3"
-                  />
-                </svg>
-              </button>
+                <Button variant="primary" onClick={()=>handleSelect(letterSearch)}>ค้นหา</Button>
             </div>
-          </div>
-
-          {/* Find Doctors Card */}
-          <div className="col-3">
-            <div
-              className="position-relative overflow-hidden d-flex flex-column justify-content-between p-4"
-              style={{
-                background: "linear-gradient(135deg, #a8dcc5 0%, #7ecaa8 100%)",
-                borderRadius: "2rem",
-                minHeight: "320px",
-              }}
-            >
-              <div className="position-relative" style={{ zIndex: 10 }}>
-                <h3 className="fs-4 fw-bold mb-2" style={{ color: "#2d3561" }}>
-                  Find Doctors
-                  <br />
-                  near you
-                </h3>
-                <p className="small mb-4" style={{ color: "#2d3561" }}>
-                  Confirmed appointments
-                </p>
-              </div>
-
-              <div
-                className="position-absolute"
-                style={{ bottom: "4rem", right: "2rem", opacity: 0.2 }}
-              >
-                <svg width="128" height="128" viewBox="0 0 100 100" fill="none">
-                  <path
-                    d="M50 20 L50 45 M35 45 L65 45"
-                    stroke="#2d3561"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                  />
-                  <circle
-                    cx="50"
-                    cy="60"
-                    r="15"
-                    stroke="#2d3561"
-                    strokeWidth="3"
-                  />
-                  <path
-                    d="M40 75 Q50 85 60 75"
-                    stroke="#2d3561"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                    fill="none"
-                  />
-                </svg>
-              </div>
-
-              <button
-                className="btn rounded-circle d-flex align-items-center justify-content-center position-relative"
-                style={{
-                  width: "48px",
-                  height: "48px",
-                  backgroundColor: "#2d3561",
-                  zIndex: 10,
-                }}
-              >
-                <svg
-                  className="text-white"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M14 5l7 7m0 0l-7 7m7-7H3"
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
-
-          {/* 24/7 Medicines Card */}
-          <div className="col-3">
-            <div
-              className="position-relative overflow-hidden d-flex flex-column justify-content-between p-4"
-              style={{
-                background: "linear-gradient(135deg, #f4c5d9 0%, #e89bb8 100%)",
-                borderRadius: "2rem",
-                minHeight: "320px",
-              }}
-            >
-              <div className="position-relative" style={{ zIndex: 10 }}>
-                <h3 className="fs-4 fw-bold mb-2" style={{ color: "#2d3561" }}>
-                  24/7
-                  <br />
-                  Medicines
-                </h3>
-                <p className="small mb-4" style={{ color: "#2d3561" }}>
-                  Essentials at your doorstep
-                </p>
-              </div>
-
-              <div
-                className="position-absolute"
-                style={{ bottom: "4rem", right: "2rem", opacity: 0.2 }}
-              >
-                <svg width="128" height="128" viewBox="0 0 100 100" fill="none">
-                  <ellipse
-                    cx="45"
-                    cy="50"
-                    rx="15"
-                    ry="25"
-                    stroke="#2d3561"
-                    strokeWidth="3"
-                  />
-                  <ellipse
-                    cx="65"
-                    cy="50"
-                    rx="15"
-                    ry="25"
-                    stroke="#2d3561"
-                    strokeWidth="3"
-                  />
-                  <line
-                    x1="30"
-                    y1="50"
-                    x2="80"
-                    y2="50"
-                    stroke="#2d3561"
-                    strokeWidth="3"
-                  />
-                </svg>
-              </div>
-
-              <button
-                className="btn rounded-circle d-flex align-items-center justify-content-center position-relative"
-                style={{
-                  width: "48px",
-                  height: "48px",
-                  backgroundColor: "#2d3561",
-                  zIndex: 10,
-                }}
-              >
-                <svg
-                  className="text-white"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M14 5l7 7m0 0l-7 7m7-7H3"
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
-
-          {/* Lab Tests Card */}
-          <div className="col-3">
-            <div
-              className="position-relative overflow-hidden d-flex flex-column justify-content-between p-4"
-              style={{
-                background: "linear-gradient(135deg, #a8c5e8 0%, #7ea8d4 100%)",
-                borderRadius: "2rem",
-                minHeight: "320px",
-              }}
-            >
-              <div className="position-relative" style={{ zIndex: 10 }}>
-                <h3 className="fs-4 fw-bold mb-2" style={{ color: "#2d3561" }}>
-                  Lab
-                  <br />
-                  Tests
-                </h3>
-                <p className="small mb-4" style={{ color: "#2d3561" }}>
-                  Sample pickup at your home
-                </p>
-              </div>
-
-              <div
-                className="position-absolute"
-                style={{ bottom: "4rem", right: "2rem", opacity: 0.2 }}
-              >
-                <svg width="128" height="128" viewBox="0 0 100 100" fill="none">
-                  <rect
-                    x="35"
-                    y="25"
-                    width="30"
-                    height="50"
-                    rx="2"
-                    stroke="#2d3561"
-                    strokeWidth="3"
-                  />
-                  <line
-                    x1="35"
-                    y1="35"
-                    x2="65"
-                    y2="35"
-                    stroke="#2d3561"
-                    strokeWidth="3"
-                  />
-                  <line
-                    x1="35"
-                    y1="45"
-                    x2="65"
-                    y2="45"
-                    stroke="#2d3561"
-                    strokeWidth="3"
-                  />
-                  <circle
-                    cx="75"
-                    cy="65"
-                    r="8"
-                    stroke="#2d3561"
-                    strokeWidth="3"
-                  />
-                  <path
-                    d="M80 70 L85 75"
-                    stroke="#2d3561"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </div>
-
-              <button
-                className="btn rounded-circle d-flex align-items-center justify-content-center position-relative"
-                style={{
-                  width: "48px",
-                  height: "48px",
-                  backgroundColor: "#2d3561",
-                  zIndex: 10,
-                }}
-              >
-                <svg
-                  className="text-white"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M14 5l7 7m0 0l-7 7m7-7H3"
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
         </div>
-      </section>
-    </div>
-  );
+    </section>
+</div>
+  )
 }

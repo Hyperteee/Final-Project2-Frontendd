@@ -26,6 +26,8 @@ export default function Listsearch() {
   const handleShow = () => setShow(true);
   const [selectedStars, setSelectedStars] = useState([]);
   const userLocation = { lat: 13.8591, lng: 100.5616 }
+  const [selectedHospital, setSelectedHospital] = useState(null)
+
 
   // ฟังชั่นคำนวน
 
@@ -138,7 +140,25 @@ const filteredHospitalList = hospitalData
       </>
     );
   }
-  console.log(selectedTag)
+  
+  function handleHospital(hospital){
+        setSelectedHospital(hospital)
+        navigate("/queue1", { state: { selectedHospital: hospital, showDropdown: false } })
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   return (
     <div className="max-w-4xl mx-auto px-8 text-center mb-5 pt-10">
       <h2 className="text-4xl font-bold text-black m-10 mb-15 text-center ml-27">
@@ -356,6 +376,7 @@ const filteredHospitalList = hospitalData
                     {Array.from({ length: 5 }).map((_, i) => (
                       <i
                         key={i}
+                        
                         className={
                           i < Math.floor(hospital.stars)
                             ? "bi bi-star-fill text-warning"
@@ -416,7 +437,7 @@ const filteredHospitalList = hospitalData
                 <p className="mb-0 text-primary text-decoration-underline cursor-pointer">
                   ดูบนแผนที่
                 </p>
-                <Button variant="primary" style={{ height: "40px" }}>
+                <Button variant="primary" style={{ height: "40px" }} onClick={() => handleHospital(hospital.name)}>
                   นัดหมายแพทย์
                 </Button>
               </div>
