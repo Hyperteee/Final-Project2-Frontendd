@@ -46,8 +46,8 @@ export default function HealthcarePage() {
             <span className="text-white fw-bold fs-4">H</span>
           </div>
           <div>
-            <h1 className="text-white fw-bold fs-5 mb-0">HealthCare</h1>
-            <p className="text-light small mb-0 opacity-75">Your Health Partner</p>
+            <h1 className="text-white fw-bold fs-5 mb-0">HFU</h1>
+            <p className="text-light small mb-0 opacity-75">Health Queue</p>
           </div>
         </div>
 
@@ -87,7 +87,7 @@ export default function HealthcarePage() {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src="./images/BG-Mainpage.png"
+          src="./images/smart-healthcare-dashboard.png"
           alt="สไลด์ 1"
           style={{ height: "500px", objectFit: "cover" }}
         />
@@ -96,7 +96,7 @@ export default function HealthcarePage() {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src="./images/BG-Clinic.png"
+          src="./images/col2.jpg"
           alt="สไลด์ 2"
           style={{ height: "500px", objectFit: "cover" }}
         />
@@ -105,7 +105,7 @@ export default function HealthcarePage() {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src="./images/BG-Hospital.png"
+          src="./images/BG-Hospital.jpg"
           alt="สไลด์ 3"
           style={{ height: "500px", objectFit: "cover" }}
         />
@@ -175,35 +175,38 @@ export default function HealthcarePage() {
   {/* ต่อด้วยส่วนพาร์ทเนอร์ + Chat Bot ของคุณเหมือนเดิม */}
   <div className="container mt-5">
     <div className="text-center mb-5">
-      <h3 className="h2 fw-bold text-white">พันธมิตรทางการแพทย์ชั้นนำ</h3>
+      <h3 className="h2 fw-bold text-white">Trusted by teams at</h3>
     </div>
-    <div className="row g-4">
-      {[1, 2, 3, 4, 5].map((i) => (
-        <div key={i} className="col-6 col-md-4 col-lg-2">
-          <div
-            className="card border rounded-3 h-100 d-flex align-items-center justify-content-center"
-            style={{
-              minHeight: "100px",
-              backgroundColor: "#f8f9fa",
-              transition: "all 0.3s ease",
-              cursor: "pointer",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translateY(-4px)"
-              e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.1)"
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "translateY(0)"
-              e.currentTarget.style.boxShadow = "none"
-            }}
-          >
-            <div className="card-body text-center">
-              <span className="text-muted fw-semibold">Partner {i}</span>
-            </div>
-          </div>
-        </div>
-      ))}
+<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 place-items-center">
+  {[
+    "./images/Hos-Chula.svg",
+    "./images/Hos-Paolo.png",
+    "./images/Hos-Bangkok.png",
+    "./images/Hos-Phyathai.png",
+    "./images/hos-samitivej.png",
+  ].map((src, i) => (
+    <div
+      key={i}
+      className="flex items-center justify-center  rounded-xl shadow-sm"
+      style={{
+        width: "200px",         // ✅ ขนาดเท่ากันหมด
+        height: "120px",        // ✅ เท่ากันแน่นอน
+        overflow: "hidden",
+      }}
+    >
+      <div
+        style={{
+          backgroundImage: `url(${src})`,
+          backgroundSize: "contain",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+          width: "80%",          // ✅ ทำให้โลโก้มีระยะห่างพอดี
+          height: "80%",
+        }}
+      ></div>
     </div>
+  ))}
+</div>
 
     <div className="row g-5 align-items-center mt-5">
       {/* Left Content */}
