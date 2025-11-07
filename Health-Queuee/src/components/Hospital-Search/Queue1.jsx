@@ -21,7 +21,7 @@ function Queue1() {
 
     const steps = [1, 2, 3, 4];
     const currentStep = 1;
-
+    console.log(department)
     const isStepActive = (stepNumber) => stepNumber <= currentStep;
     useEffect(() => {
         if (!selectedHospital) return;
@@ -74,40 +74,56 @@ function Queue1() {
                                 id="choose-department"
                                 name="chooseDepartment"
                                 value="choose-Department"
-                                checked={chooseDoctor === 'Doctor'}
-                                onChange={(e) => setChooseDoctor(e.target.value)}
-                            />เลือกแผนกเอง
+                                onClick={handleShow}
+                                checked={department !== null && department !== "dontChoose"}
+                                onChange={() => { }}
+                            />{
+                                department == null || department == "dontChoose" ? "เลือกแผนกเอง" : department
+                            }
                         </div>
-                        <div className="option">
-                            ไม่แน่ใจ
+                        <div className="option" onClick={() => setDepartment("dontChoose")}>
+                            <Form.Check
+                                type="radio"
+                                id="no-department"
+                                name="chooseDepartment"
+                                value="no-Department"
+                                onChange={() => setDepartment("dontChoose")}
+                            />ไม่แน่ใจ
                         </div>
                     </div>
+                    <div className="zone-option d-flex flex-column">
+                        <div>เลือกแพทย์</div>
+                        <div className="d-flex">
+                            <div className="option">
+                                <Form.Check
+                                    type="radio"
+                                    id="choose-Doctor"
+                                    name="doctorChoice"
+                                    value="choose-Doctor"
+                                    checked={chooseDoctor !== null && chooseDoctor !== "dontChoose"}
+                                    onChange={(e) => setChooseDoctor("choose")}
+                                />ต้องการเลือกแพทย์เอง
+                            </div>
 
-                    {/* <div className="option">
-                        <Form.Check
-                            type="radio"
-                            id="choose-Doctor"
-                            name="doctorChoice"
-                            value="choose-Doctor"
-                            checked={chooseDoctor === 'Doctor'}
-                            onChange={(e) => setChooseDoctor(e.target.value)}
-                        />เลือกแพทย์เอง
+                            <div className="option">
+                                <Form.Check
+                                    type="radio"
+                                    id="no-Doctor"
+                                    name="doctorChoice"
+                                    value="no-Doctor"
+                                    checked={chooseDoctor !== null && chooseDoctor !== "choose"}
+                                    onChange={(e) => setChooseDoctor("dontChoose")}
+
+                                />เลือกแพทย์ให้ฉัน
+                            </div>
+                        </div>
+
+
                     </div>
 
-                    <div className="option">
-                        <Form.Check
-                            type="radio"
-                            id="no-Doctor"
-                            name="doctorChoice"
-                            value="no-Doctor"
-                            checked={chooseDoctor === 'Doctor'}
-                            onChange={(e) => setDepartment(e.target.value)}
-
-                        />เลือกแพทย์เอง
-                    </div> */}
                     <Modal className="department-modal" size="lg" show={show} onHide={handleClose} centered>
                         <Modal.Header closeButton>
-                            <Modal.Title className="fw-semibold">เลือกแผนกที่ต้องการรักษา</Modal.Title>
+                            <Modal.Title className="fw-semibold modal-title">เลือกแผนกที่ต้องการรักษา</Modal.Title>
                         </Modal.Header>
 
                         <Modal.Body className="modal-body department-grid">
@@ -115,25 +131,24 @@ function Queue1() {
                                 <div
                                     key={department.name}
                                     className="option-department"
-                                    onClick={() => setDepartment(department.name)}
+                                    onClick={() => { setDepartment(department.name), handleClose() }}
                                 >
+                                    <img src={department.logo} alt="department icon" />
                                     {department.name}
                                 </div>
                             ))}
                         </Modal.Body>
 
 
-                        <Modal.Footer>
-                            <Button variant="outline-secondary" onClick={handleClose}>
-                                ยกเลิก
-                            </Button>
-                            <Button variant="primary" onClick={handleClose}>
-                                บันทึก
-                            </Button>
-                        </Modal.Footer>
                     </Modal>
 
 
+                </div>
+                <div className="d-flex justify-content-end">
+                    <Button className="nextButton px-5 py-2">
+                        <span>ต่อไป   </span>
+                        <i className="bi bi-arrow-right"></i>
+                    </Button>
                 </div>
 
             </div>

@@ -1,4 +1,6 @@
-
+.body{
+  height: 100vh;
+}
 /* Stepper circles (shared base) */
 .step {
   width: 40px;
@@ -38,7 +40,7 @@
 
 /* Option buttons */
 .option {
-  width: 250px;
+  width: 300px;
   height: 80px;
   margin-right: 20px;
   padding: 15px 25px;
@@ -73,13 +75,15 @@
     gap:20px;
     font-size: larger;
     font-weight: 600;
-}/* ===== Modal overall styling ===== */
+}
 .modal-content {
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   border: none;
   font-size: 20px;
+  font-weight: bold;
+  /* color: #1a237e; */
 }
 
 .modal-header {
@@ -109,30 +113,44 @@
 
 /* ===== Department option boxes ===== */
 .option-department {
-  background: #f8f9fa;
-  border: 2px solid #e0e0e0;
+  background: #ffffff;
+  border: 2px solid #e6e6e6;
   border-radius: 12px;
-  padding: 14px 16px;
-  text-align: center;
-  font-weight: 500;
-  color: #11248f;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
   cursor: pointer;
-  transition: all 0.25s ease;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+  gap: 12px;
 }
 
 .option-department:hover {
-  background: #11248f;
-  color: #fff;
-  border-color: #11248f;
-  transform: translateY(-3px);
+  border-color: #007bff;
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.15);
+  transform: translateY(-2px);
 }
 
-/* ===== Selected department highlight ===== */
-.option-department.selected {
-  background-color: #11248f;
-  color: white;
-  border-color: #11248f;
-  box-shadow: 0 4px 10px rgba(17, 36, 143, 0.3);
+.option-department img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  background-color: #c3e0fe;
+  border-radius: 10px;
+  padding: 3px;
 }
 
+.option-department span {
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+  text-align: left;
+}
+.nextButton {
+  background-color: #1a237e;
+  margin-top: 70px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  width: fit-content;
+}
