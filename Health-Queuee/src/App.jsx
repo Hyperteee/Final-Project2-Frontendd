@@ -1,10 +1,9 @@
+import AdminLayout from "../Layout/Adminlayout"
 import HealthcarePage from "./components/HealthcarePage"
 
 
 function App() {
-  return <HealthcarePage 
-  // asdlikujgsef
-  />
+  return <AdminLayout/>
 }
 
 export default App
