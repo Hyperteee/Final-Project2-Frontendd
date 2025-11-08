@@ -13,7 +13,7 @@ import Layout from "./components/Layout/Layout";
 import Listsearch from "./components/Hospital-Search/listsearch";
 import Queue1 from "./components/Hospital-Search/Queue1";
 import LoginPage from "./login-Pages/Login-user";
-
+import Queue2 from "./components/Hospital-Search/Queue2";
 function App() {
   return (
     // <HealthcarePage />
@@ -23,6 +23,7 @@ function App() {
         <Route path="hospitals" element={<Listsearch />} />
         <Route path="queue1" element={<Queue1 />}/>
         <Route path="login" element={<LoginPage />}/>
+        <Route path="queue2" element={<Queue2/>}/>
       </Routes>
     </BrowserRouter>
   );

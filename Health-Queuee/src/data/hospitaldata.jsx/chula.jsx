@@ -20,38 +20,38 @@ const chulalongkorn = {
           name: "นพ. สมชาย ใจดี",
           specialization: "อายุรแพทย์ทั่วไป",
           schedule: [
-            { day: "จันทร์", time: "09:00 - 10:00", isBooked: false },
-            { day: "พุธ", time: "10:00 - 11:00", isBooked: false },
+            { day: "จันทร์", time: "09:00 - 10:00", bookings: [] },
+            { day: "พุธ", time: "10:00 - 11:00", bookings: [] },
           ],
         },
         {
           name: "พญ. สมหญิง แพทย์ดี",
           specialization: "โรคเบาหวาน",
           schedule: [
-            { day: "อังคาร", time: "09:00 - 10:00", isBooked: false },
-            { day: "ศุกร์", time: "10:00 - 11:00", isBooked: false },
+            { day: "อังคาร", time: "09:00 - 10:00", bookings: [] },
+            { day: "ศุกร์", time: "10:00 - 11:00", bookings: [] },
           ],
         },
         {
           name: "นพ. ธนชัย บำรุงสุข",
           specialization: "โรคหัวใจ",
           schedule: [
-            { day: "จันทร์", time: "13:00 - 14:00", isBooked: false },
-            { day: "พฤหัสบดี", time: "13:00 - 14:00", isBooked: false },
+            { day: "จันทร์", time: "13:00 - 14:00", bookings: [] },
+            { day: "พฤหัสบดี", time: "13:00 - 14:00", bookings: [] },
           ],
         },
         {
           name: "พญ. มณีรัตน์ สายใจ",
           specialization: "ทางเดินอาหาร",
           schedule: [
-            { day: "อังคาร", time: "08:00 - 09:00", isBooked: false },
+            { day: "อังคาร", time: "08:00 - 09:00", bookings: [] },
           ],
         },
         {
           name: "นพ. กิตติคุณ ชาญณรงค์",
           specialization: "โรคปอดและระบบหายใจ",
           schedule: [
-            { day: "ศุกร์", time: "14:00 - 15:00", isBooked: false },
+            { day: "ศุกร์", time: "14:00 - 15:00", bookings: [] },
           ],
         },
       ],
@@ -63,37 +63,27 @@ const chulalongkorn = {
         {
           name: "นพ. วิศิษฐ์ แข็งแรง",
           specialization: "ศัลยกรรมทั่วไป",
-          schedule: [
-            { day: "จันทร์", time: "08:00 - 09:00", isBooked: false },
-          ],
+          schedule: [{ day: "จันทร์", time: "08:00 - 09:00", bookings: [] }],
         },
         {
           name: "พญ. พิมพ์พร รักษ์แผล",
           specialization: "ศัลยกรรมตกแต่ง",
-          schedule: [
-            { day: "อังคาร", time: "13:00 - 14:00", isBooked: false },
-          ],
+          schedule: [{ day: "อังคาร", time: "13:00 - 14:00", bookings: [] }],
         },
         {
           name: "นพ. ธีรภัทร แข็งกล้า",
           specialization: "ศัลยกรรมหลอดเลือด",
-          schedule: [
-            { day: "พุธ", time: "09:00 - 10:00", isBooked: false },
-          ],
+          schedule: [{ day: "พุธ", time: "09:00 - 10:00", bookings: [] }],
         },
         {
           name: "พญ. สุภาวดี ใจงาม",
           specialization: "ศัลยกรรมเต้านม",
-          schedule: [
-            { day: "พฤหัสบดี", time: "10:00 - 11:00", isBooked: false },
-          ],
+          schedule: [{ day: "พฤหัสบดี", time: "10:00 - 11:00", bookings: [] }],
         },
         {
           name: "นพ. กนกวัฒน์ อารีย์สุข",
           specialization: "ศัลยกรรมช่องท้อง",
-          schedule: [
-            { day: "อังคาร", time: "14:00 - 15:00", isBooked: false },
-          ],
+          schedule: [{ day: "อังคาร", time: "14:00 - 15:00", bookings: [] }],
         },
       ],
     },
@@ -104,37 +94,27 @@ const chulalongkorn = {
         {
           name: "พญ. ดารารัตน์ เด็กดี",
           specialization: "กุมารแพทย์ทั่วไป",
-          schedule: [
-            { day: "จันทร์", time: "09:00 - 10:00", isBooked: false },
-          ],
+          schedule: [{ day: "จันทร์", time: "09:00 - 10:00", bookings: [] }],
         },
         {
           name: "นพ. อนุชา ยิ้มแย้ม",
           specialization: "โรคภูมิแพ้ในเด็ก",
-          schedule: [
-            { day: "อังคาร", time: "10:00 - 11:00", isBooked: false },
-          ],
+          schedule: [{ day: "อังคาร", time: "10:00 - 11:00", bookings: [] }],
         },
         {
           name: "พญ. ขวัญใจ อ่อนโยน",
           specialization: "พัฒนาการเด็ก",
-          schedule: [
-            { day: "พุธ", time: "09:00 - 10:00", isBooked: false },
-          ],
+          schedule: [{ day: "พุธ", time: "09:00 - 10:00", bookings: [] }],
         },
         {
           name: "นพ. วีรพงศ์ มีเมตตา",
           specialization: "โรคติดเชื้อในเด็ก",
-          schedule: [
-            { day: "พฤหัสบดี", time: "11:00 - 12:00", isBooked: false },
-          ],
+          schedule: [{ day: "พฤหัสบดี", time: "11:00 - 12:00", bookings: [] }],
         },
         {
           name: "พญ. จิราภา สุขุม",
           specialization: "โรคหัวใจเด็ก",
-          schedule: [
-            { day: "ศุกร์", time: "10:00 - 11:00", isBooked: false },
-          ],
+          schedule: [{ day: "ศุกร์", time: "10:00 - 11:00", bookings: [] }],
         },
       ],
     },
@@ -145,37 +125,27 @@ const chulalongkorn = {
         {
           name: "พญ. นลินี สายอ่อน",
           specialization: "สูติแพทย์ทั่วไป",
-          schedule: [
-            { day: "จันทร์", time: "08:00 - 09:00", isBooked: false },
-          ],
+          schedule: [{ day: "จันทร์", time: "08:00 - 09:00", bookings: [] }],
         },
         {
           name: "นพ. ภูวเดช สุขใจ",
           specialization: "ผ่าคลอดและฝากครรภ์",
-          schedule: [
-            { day: "อังคาร", time: "13:00 - 14:00", isBooked: false },
-          ],
+          schedule: [{ day: "อังคาร", time: "13:00 - 14:00", bookings: [] }],
         },
         {
           name: "พญ. ชุติมา วงศ์เพ็ญ",
           specialization: "โรคทางนรีเวช",
-          schedule: [
-            { day: "พุธ", time: "09:00 - 10:00", isBooked: false },
-          ],
+          schedule: [{ day: "พุธ", time: "09:00 - 10:00", bookings: [] }],
         },
         {
           name: "นพ. ศักดา มั่นสุข",
           specialization: "มะเร็งนรีเวช",
-          schedule: [
-            { day: "พฤหัสบดี", time: "10:00 - 11:00", isBooked: false },
-          ],
+          schedule: [{ day: "พฤหัสบดี", time: "10:00 - 11:00", bookings: [] }],
         },
         {
           name: "พญ. สุธาสินี หอมหวล",
           specialization: "วางแผนครอบครัว",
-          schedule: [
-            { day: "ศุกร์", time: "14:00 - 15:00", isBooked: false },
-          ],
+          schedule: [{ day: "ศุกร์", time: "14:00 - 15:00", bookings: [] }],
         },
       ],
     },
@@ -186,37 +156,27 @@ const chulalongkorn = {
         {
           name: "นพ. สมพงษ์ หูดี",
           specialization: "หัวใจ",
-          schedule: [
-            { day: "จันทร์", time: "09:00 - 10:00", isBooked: false },
-          ],
+          schedule: [{ day: "จันทร์", time: "09:00 - 10:00", bookings: [] }],
         },
         {
           name: "พญ. มาริสา ตาดี",
           specialization: "หัวใจ",
-          schedule: [
-            { day: "อังคาร", time: "13:00 - 14:00", isBooked: false },
-          ],
+          schedule: [{ day: "อังคาร", time: "13:00 - 14:00", bookings: [] }],
         },
         {
           name: "นพ. ธนากร กลิ่นหอม",
           specialization: "หัวใจ",
-          schedule: [
-            { day: "พุธ", time: "09:00 - 10:00", isBooked: false },
-          ],
+          schedule: [{ day: "พุธ", time: "09:00 - 10:00", bookings: [] }],
         },
         {
           name: "พญ. พรทิพย์ คำดี",
           specialization: "หัวใจ",
-          schedule: [
-            { day: "พฤหัสบดี", time: "10:00 - 11:00", isBooked: false },
-          ],
+          schedule: [{ day: "พฤหัสบดี", time: "10:00 - 11:00", bookings: [] }],
         },
         {
           name: "นพ. อนุรักษ์ ใจเย็น",
           specialization: "ผ่าตัดตา",
-          schedule: [
-            { day: "ศุกร์", time: "13:00 - 14:00", isBooked: false },
-          ],
+          schedule: [{ day: "ศุกร์", time: "13:00 - 14:00", bookings: [] }],
         },
       ],
     },
@@ -227,37 +187,27 @@ const chulalongkorn = {
         {
           name: "พญ. ศุภรัตน์ จิตดี",
           specialization: "จิตแพทย์ทั่วไป",
-          schedule: [
-            { day: "จันทร์", time: "09:00 - 10:00", isBooked: false },
-          ],
+          schedule: [{ day: "จันทร์", time: "09:00 - 10:00", bookings: [] }],
         },
         {
           name: "นพ. ณัฐพล ใจเย็น",
           specialization: "จิตเวชเด็กและวัยรุ่น",
-          schedule: [
-            { day: "อังคาร", time: "13:00 - 14:00", isBooked: false },
-          ],
+          schedule: [{ day: "อังคาร", time: "13:00 - 14:00", bookings: [] }],
         },
         {
           name: "พญ. กรรณิกา สุขสันต์",
           specialization: "บำบัดความเครียด",
-          schedule: [
-            { day: "พุธ", time: "10:00 - 11:00", isBooked: false },
-          ],
+          schedule: [{ day: "พุธ", time: "10:00 - 11:00", bookings: [] }],
         },
         {
           name: "นพ. ภาคิน ธรรมโชติ",
           specialization: "จิตเวชผู้สูงอายุ",
-          schedule: [
-            { day: "พฤหัสบดี", time: "14:00 - 15:00", isBooked: false },
-          ],
+          schedule: [{ day: "พฤหัสบดี", time: "14:00 - 15:00", bookings: [] }],
         },
         {
           name: "พญ. สุมนา พงษ์ดี",
           specialization: "จิตเวชทั่วไป",
-          schedule: [
-            { day: "ศุกร์", time: "13:00 - 14:00", isBooked: false },
-          ],
+          schedule: [{ day: "ศุกร์", time: "13:00 - 14:00", bookings: [] }],
         },
       ],
     },
