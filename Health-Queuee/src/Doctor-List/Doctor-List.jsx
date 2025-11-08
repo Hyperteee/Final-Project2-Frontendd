@@ -39,11 +39,6 @@ const getInitials = (text) => {
   return tokens.join("") || "DR";
 };
 
-const getNextAvailableSlot = (doctor) => {
-  if (!doctor.schedule || doctor.schedule.length === 0) return null;
-  return doctor.schedule.find((slot) => !slot.isBooked) ?? doctor.schedule[0];
-};
-
 export default function DoctorList() {
   const doctorPool = useMemo(() => normalizeDoctors(hospitalsData), []);
 
@@ -160,7 +155,6 @@ export default function DoctorList() {
             {pageDoctors.length > 0 ? (
               <div className="row g-4">
                 {pageDoctors.map((doctor) => {
-                  const slot = getNextAvailableSlot(doctor);
                   return (
                     <div className="col-12 col-md-6" key={doctor.id}>
                       <div className="card border-0 shadow-sm rounded-4 position-relative h-100 doctor-card">
@@ -172,14 +166,6 @@ export default function DoctorList() {
                           <p className="small mb-1 doctor-card__subtitle">{doctor.dept}</p>
                           <p className="small mb-3 doctor-card__hospital">{doctor.hospital}</p>
                           {doctor.specialization && <p className="small text-secondary mb-3">{doctor.specialization}</p>}
-                          {slot && (
-                            <div className="doctor-card__slot py-2 px-3 small mb-3 w-100">
-                              <div className="text-uppercase text-dark fw-semibold small">Next slot</div>
-                              <div>
-                                {slot.day} | {slot.time}
-                              </div>
-                            </div>
-                          )}
                           <div className="d-grid gap-2 w-100 mt-auto doctor-card__actions">
                             <button className="btn btn-primary rounded-pill py-2">Book</button>
                             <button className="btn btn-outline-secondary rounded-pill py-2">View profile</button>
