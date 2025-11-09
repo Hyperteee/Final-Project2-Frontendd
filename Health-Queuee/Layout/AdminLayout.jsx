@@ -1,6 +1,7 @@
 const AdminLayout = () => {
     return ( 
         <>
+            <AdminHeader/>
         </>
      );
 }
