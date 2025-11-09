@@ -10,10 +10,12 @@ import PoppularDoc from "./components/PopularDoc/PoppularDoc";
 import PackagePart from "./components/PackagePart/Package";
 import Footer from "./components/Footer/Footer";
 import Layout from "./components/Layout/Layout";
+import LoginPage from "./login-Pages/Login-user";
 
 function App() {
   return (
-    <HealthcarePage />
+    <HealthcarePage />,
+    <LoginPage />
     // <Navbar />
     // <Login />
     // <BrowserRouter basename="/Final-Project2-Frontendd/">
