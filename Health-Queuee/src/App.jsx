@@ -11,11 +11,13 @@ import PackagePart from "./components/PackagePart/Package";
 import Footer from "./components/Footer/Footer";
 import Layout from "./components/Layout/Layout";
 import LoginPage from "./login-Pages/Login-user";
+import RegisterPage from "./Login-Pages/Register-User";
 
 function App() {
   return (
-    <HealthcarePage />,
-    <LoginPage />
+    // <HealthcarePage />,
+    // <LoginPage />,
+    <RegisterPage />
     // <Navbar />
     // <Login />
     // <BrowserRouter basename="/Final-Project2-Frontendd/">
