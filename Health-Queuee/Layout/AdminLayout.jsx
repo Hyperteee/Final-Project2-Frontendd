@@ -1,7 +1,7 @@
 const AdminLayout = () => {
     return ( 
         <>
-            <AdminHeader/>
+            <h1>ควย</h1>
         </>
      );
 }
