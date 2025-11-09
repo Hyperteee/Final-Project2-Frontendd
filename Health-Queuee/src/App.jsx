@@ -3,7 +3,9 @@ import HealthcarePage from "./components/HealthcarePage"
 
 
 function App() {
-  return <AdminLayout/>
+  return <>
+    <AdminLayout/>
+  </>
 }
 
 export default App
