@@ -1,13 +1,41 @@
-/* .doctor-page {
-  background: linear-gradient(180deg, #0b1026 0%, #121735 40%, #1e1f3a 100%);
+.doctor-page {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   min-height: calc(100vh - 80px);
   padding: 4.5rem 0 5rem;
-} */
+  background-color: #eef1fb;
+}
+
+.doctor-page::before,
+.doctor-page::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.doctor-page::before {
+  background: url("../../images/BG/BG4.jpg") center/cover no-repeat;
+  opacity: 0.92;
+  filter: saturate(1.05) contrast(1.05);
+}
+
+.doctor-page::after {
+  background: linear-gradient(
+    180deg,
+    rgba(238, 241, 251, 0.35) 0%,
+    rgba(243, 245, 253, 0.25) 45%,
+    rgba(245, 247, 255, 0.35) 100%
+  );
+}
 
 .doctor-wrapper {
   max-width: 1100px;
   margin: 0 auto;
   padding: 0 1.5rem;
+  position: relative;
+  z-index: 1;
 }
 
 .doctor-filter-card {
@@ -74,11 +102,34 @@
   box-shadow: 0 14px 30px rgba(5, 7, 20, 0.28);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   background: radial-gradient(circle at top, #ffffff 0%, #f6f7ff 55%, #eef1ff 100%);
+  position: relative;
 }
 
 .doctor-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 30px 38px rgba(5, 7, 20, 0.4);
+}
+
+.doctor-card__logo {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(209, 219, 255, 0.9);
+  box-shadow: 0 10px 20px rgba(15, 28, 67, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+}
+
+.doctor-card__logo img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }
 
 .doctor-card__avatar {

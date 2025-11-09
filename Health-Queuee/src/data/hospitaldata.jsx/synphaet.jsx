@@ -2,10 +2,10 @@ import dataIcon from "../../../images/icon-department/icon-department";
 
 const synphaet_ramintra = {
     id: 2,
-    name: "สินแพทย์",
+    name: "โรงพยาบาลสินแพทย์",
     state: "กรุงเทพมหานคร",
     type: "โรงพยาบาลเอกชน",
-    logo: "images/logohospital/สินแพทย์.jpeg",
+    logo: "images/logohospital/synphaet.jpeg",
     stars: 4.2,
     reviews: 153,
     location: { lat: 13.7620, lng: 100.5673 },

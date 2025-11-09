@@ -7,6 +7,7 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Badge from 'react-bootstrap/Badge'
 import BTSstations from "../../data/btsstation";
+import resolveAssetPath from "../../utils/assetPath.js";
 
 
 
@@ -359,7 +360,7 @@ const filteredHospitalList = hospitalData
             className="rounded-4 d-flex p-3 justify-content-start mx-auto border-2 border-primary mt-3 bg-white shadow-sm"
             style={{ width: "800px" }}>
             <img
-              src={hospital.logo}
+              src={resolveAssetPath(hospital.logo)}
               alt="hospital logo"
               className="rounded-3"
               style={{ width: "120px", height: "100px", objectFit: "cover" }}

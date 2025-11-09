@@ -2,7 +2,7 @@ import dataIcon from "../../../images/icon-department/icon-department";
 
 const phyathai = {
   id: 5,
-  name: "โรงพยาบาลพญาไท 1",
+  name: "โรงพยาบาลพญาไท 2",
   state: "กรุงเทพมหานคร",
   type: "โรงพยาบาลเอกชนตติยภูมิ",
   logo: "images/logohospital/phyathai.png",

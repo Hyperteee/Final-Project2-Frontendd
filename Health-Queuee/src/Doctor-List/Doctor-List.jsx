@@ -4,13 +4,34 @@ import Footer from "../components/Footer/Footer";
 import chulalongkorn from "../data/hospitaldata.jsx/chula";
 import synphaetRamintra from "../data/hospitaldata.jsx/synphaet";
 import phyathai from "../data/hospitaldata.jsx/phyathai";
+import bumrungrad from "../data/hospitaldata.jsx/bumrungrad";
+import samitivejSukhumvit from "../data/hospitaldata.jsx/samitivej-sukhumvit";
+import sirirajPiyamaharajkarun from "../data/hospitaldata.jsx/siriraj-piyamaharajkarun";
+import bangkokHospital from "../data/hospitaldata.jsx/bangkok-hospital";
+import praram9Hospital from "../data/hospitaldata.jsx/praram9";
+import ramathibodiHospital from "../data/hospitaldata.jsx/ramathibodi";
+import vejthaniHospital from "../data/hospitaldata.jsx/vejthani";
+import somdetPhraThepratHospital from "../data/hospitaldata.jsx/somdet-phra-theprat";
 import "./DoctorList.css";
+import resolveAssetPath from "../utils/assetPath.js";
 
 const PAGE_SIZE = 8;
 const ALL_DEPARTMENTS = "All departments";
 const ALL_HOSPITALS = "All hospitals";
 
-const hospitalsData = [chulalongkorn, synphaetRamintra, phyathai];
+const hospitalsData = [
+  chulalongkorn,
+  synphaetRamintra,
+  phyathai,
+  bumrungrad,
+  samitivejSukhumvit,
+  sirirajPiyamaharajkarun,
+  bangkokHospital,
+  praram9Hospital,
+  ramathibodiHospital,
+  vejthaniHospital,
+  somdetPhraThepratHospital,
+];
 
 const normalizeDoctors = (hospitals) => {
   return hospitals.flatMap((hospital) => {
@@ -24,6 +45,7 @@ const normalizeDoctors = (hospitals) => {
         schedule: doctor.schedule ?? [],
         dept: department.name ?? "",
         hospital: hospital.name ?? "",
+        hospitalLogo: hospital.logo ?? "",
       }));
     });
   });
@@ -155,9 +177,15 @@ export default function DoctorList() {
             {pageDoctors.length > 0 ? (
               <div className="row g-4">
                 {pageDoctors.map((doctor) => {
+                  const logoSrc = resolveAssetPath(doctor.hospitalLogo);
                   return (
                     <div className="col-12 col-md-6" key={doctor.id}>
                       <div className="card border-0 shadow-sm rounded-4 position-relative h-100 doctor-card">
+                        {logoSrc && (
+                          <div className="doctor-card__logo">
+                            <img src={logoSrc} alt={doctor.hospital} />
+                          </div>
+                        )}
                         <div className="card-body text-center pt-4 pb-4 d-flex flex-column align-items-center doctor-card__body">
                           <div className="doctor-card__avatar">
                             <span className="fw-semibold">{getInitials(doctor.name)}</span>

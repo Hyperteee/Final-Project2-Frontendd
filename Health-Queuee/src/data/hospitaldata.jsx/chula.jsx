@@ -2,7 +2,7 @@ import dataIcon from "../../../images/icon-department/icon-department";
 
 const chulalongkorn = {
   id: 1,
-  name: "จุฬาลงกรณ์",
+  name: "โรงพยาบาลจุฬาลงกรณ์ สภากาชาดไทย",
   state: "กรุงเทพมหานคร",
   type: "โรงพยาบาลรัฐ",
   logo: "images/logohospital/chula.png",
