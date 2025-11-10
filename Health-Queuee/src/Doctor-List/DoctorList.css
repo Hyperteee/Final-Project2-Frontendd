@@ -147,6 +147,193 @@
   box-shadow: 0 14px 30px rgba(83, 109, 255, 0.35);
 }
 
+.doctor-card__avatar--image {
+  background: #fff;
+  padding: 4px;
+  box-shadow: 0 12px 24px rgba(15, 28, 67, 0.25);
+  overflow: hidden;
+}
+
+.doctor-card__avatar--image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+.doctor-card__rank {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  box-shadow: 0 8px 20px rgba(15, 28, 67, 0.25);
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.doctor-card__rank--gold {
+  background: linear-gradient(135deg, #f2c94c, #e38c05);
+}
+
+.doctor-card__rank--silver {
+  background: linear-gradient(135deg, #dfe4f4, #9da7c2);
+  color: #2e3553;
+}
+
+.doctor-card__rank--bronze {
+  background: linear-gradient(135deg, #f0b490, #c06b2a);
+}
+
+.doctor-card__rank--default {
+  background: linear-gradient(135deg, #7b89ff, #536dff);
+}
+
+.doctor-profile-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(8, 12, 40, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.doctor-profile-modal__panel {
+  position: relative;
+  max-width: 640px;
+  width: min(100%, 640px);
+  background: #ffffff;
+  border-radius: 32px;
+  padding: 2.5rem 2.5rem 2rem;
+  box-shadow: 0 30px 55px rgba(5, 7, 20, 0.45);
+  border: 1px solid rgba(209, 219, 255, 0.7);
+}
+
+.doctor-profile-modal__close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: rgba(238, 242, 255, 0.9);
+  border-radius: 50%;
+  padding: 0.65rem;
+}
+
+.doctor-profile-modal__header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.doctor-profile-modal__avatar {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #536dff, #7b89ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  box-shadow: 0 16px 34px rgba(83, 109, 255, 0.35);
+}
+
+.doctor-profile-modal__avatar--image {
+  background: #fff;
+  padding: 6px;
+  box-shadow: 0 18px 38px rgba(12, 16, 44, 0.25);
+}
+
+.doctor-profile-modal__avatar--image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.doctor-profile-modal__identity h4 {
+  font-weight: 700;
+  color: #1f2240;
+}
+
+.doctor-profile-modal__identity p {
+  color: #5e6278;
+}
+
+.doctor-profile-modal__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.doctor-profile-modal__body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.doctor-profile-modal__section h6 {
+  font-weight: 700;
+  color: #303556;
+  margin-bottom: 0.5rem;
+}
+
+.doctor-profile-modal__hospital {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.9rem 1rem;
+  border-radius: 20px;
+  background: rgba(239, 242, 255, 0.7);
+}
+
+.doctor-profile-modal__hospital-logo {
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  background: #fff;
+  border: 1px solid rgba(209, 219, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+}
+
+.doctor-profile-modal__hospital-logo img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.doctor-profile-modal__schedule li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.65rem 0.9rem;
+  border-radius: 16px;
+  background: rgba(248, 249, 255, 0.8);
+  border: 1px dashed rgba(140, 149, 192, 0.4);
+  font-weight: 600;
+  color: #373c5c;
+  margin-bottom: 0.4rem;
+}
+
+.doctor-profile-modal__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
 .doctor-card__body p {
   margin-bottom: 0.4rem;
 }
@@ -239,5 +426,22 @@
 
   .doctor-results-panel {
     padding: 0;
+  }
+
+  .doctor-profile-modal {
+    padding: 1rem;
+  }
+
+  .doctor-profile-modal__panel {
+    padding: 2rem 1.5rem 1.5rem;
+  }
+
+  .doctor-profile-modal__header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .doctor-profile-modal__actions {
+    flex-direction: column;
   }
 }

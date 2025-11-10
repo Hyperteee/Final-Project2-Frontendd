@@ -5,7 +5,7 @@ const synphaet_ramintra = {
     name: "โรงพยาบาลสินแพทย์",
     state: "กรุงเทพมหานคร",
     type: "โรงพยาบาลเอกชน",
-    logo: "images/logohospital/synphaet.jpeg",
+    logo: "images/logohospital/synphaet.png",
     stars: 4.2,
     reviews: 153,
     location: { lat: 13.7620, lng: 100.5673 },

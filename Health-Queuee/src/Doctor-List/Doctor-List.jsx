@@ -18,6 +18,12 @@ import resolveAssetPath from "../utils/assetPath.js";
 const PAGE_SIZE = 8;
 const ALL_DEPARTMENTS = "All departments";
 const ALL_HOSPITALS = "All hospitals";
+const DOCTOR_AVATAR_PATHS = {
+  male: "images/Doctor-Boy.jpg",
+  female: "images/Doctor-Girl.jpg",
+};
+const MALE_MARKERS = ["นพ.", "นายแพทย์", "dr.", "mr.", "sir"];
+const FEMALE_MARKERS = ["พญ.", "แพทย์หญิง", "นางแพทย์", "mrs.", "ms.", "madam"];
 
 const hospitalsData = [
   chulalongkorn,
@@ -61,6 +67,23 @@ const getInitials = (text) => {
   return tokens.join("") || "DR";
 };
 
+const detectDoctorGender = (name = "") => {
+  const normalized = name?.toLowerCase?.() ?? "";
+  if (!normalized) return "unknown";
+  if (MALE_MARKERS.some((marker) => normalized.includes(marker.toLowerCase()))) {
+    return "male";
+  }
+  if (FEMALE_MARKERS.some((marker) => normalized.includes(marker.toLowerCase()))) {
+    return "female";
+  }
+  return "unknown";
+};
+
+const getDoctorAvatarPath = (name = "") => {
+  const gender = detectDoctorGender(name);
+  return DOCTOR_AVATAR_PATHS[gender] ?? "";
+};
+
 export default function DoctorList() {
   const doctorPool = useMemo(() => normalizeDoctors(hospitalsData), []);
 
@@ -82,6 +105,8 @@ export default function DoctorList() {
   const [hospital, setHospital] = useState(hospitalOptions[0]);
   const [q, setQ] = useState("");
   const [step, setStep] = useState(1);
+  const [selectedDoctor, setSelectedDoctor] = useState(null);
+  const isProfileOpen = Boolean(selectedDoctor);
 
   useEffect(() => {
     setStep(1);
@@ -121,6 +146,27 @@ export default function DoctorList() {
 
   const handlePrev = () => {
     if (step > 1) setStep((prev) => prev - 1);
+  };
+
+  useEffect(() => {
+    if (!isProfileOpen) return undefined;
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setSelectedDoctor(null);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isProfileOpen]);
+
+  const handleOpenProfile = (doctor) => {
+    setSelectedDoctor(doctor);
+  };
+
+  const handleCloseProfile = () => {
+    setSelectedDoctor(null);
   };
 
   return (
@@ -176,19 +222,35 @@ export default function DoctorList() {
           <div className="doctor-results-panel">
             {pageDoctors.length > 0 ? (
               <div className="row g-4">
-                {pageDoctors.map((doctor) => {
+                {pageDoctors.map((doctor, idx) => {
                   const logoSrc = resolveAssetPath(doctor.hospitalLogo);
+                  const rank = startIndex + idx + 1;
+                  const rankClassMap = {
+                    1: "doctor-card__rank doctor-card__rank--gold",
+                    2: "doctor-card__rank doctor-card__rank--silver",
+                    3: "doctor-card__rank doctor-card__rank--bronze",
+                    4: "doctor-card__rank doctor-card__rank--default",
+                  };
+                  const rankClass = rankClassMap[rank];
+                  const avatarPath = getDoctorAvatarPath(doctor.name);
+                  const avatarSrc = avatarPath ? resolveAssetPath(avatarPath) : "";
+                  const avatarClassName = `doctor-card__avatar${avatarSrc ? " doctor-card__avatar--image" : ""}`;
                   return (
                     <div className="col-12 col-md-6" key={doctor.id}>
                       <div className="card border-0 shadow-sm rounded-4 position-relative h-100 doctor-card">
+                        {rankClass && <div className={rankClass}>Top {rank}</div>}
                         {logoSrc && (
                           <div className="doctor-card__logo">
                             <img src={logoSrc} alt={doctor.hospital} />
                           </div>
                         )}
                         <div className="card-body text-center pt-4 pb-4 d-flex flex-column align-items-center doctor-card__body">
-                          <div className="doctor-card__avatar">
-                            <span className="fw-semibold">{getInitials(doctor.name)}</span>
+                          <div className={avatarClassName}>
+                            {avatarSrc ? (
+                              <img src={avatarSrc} alt={doctor.name || "Doctor avatar"} />
+                            ) : (
+                              <span className="fw-semibold">{getInitials(doctor.name)}</span>
+                            )}
                           </div>
                           <p className="fw-semibold mt-3 mb-1 text-truncate w-100">{doctor.name || "Unnamed doctor"}</p>
                           <p className="small mb-1 doctor-card__subtitle">{doctor.dept}</p>
@@ -196,7 +258,9 @@ export default function DoctorList() {
                           {doctor.specialization && <p className="small text-secondary mb-3">{doctor.specialization}</p>}
                           <div className="d-grid gap-2 w-100 mt-auto doctor-card__actions">
                             <button className="btn btn-primary rounded-pill py-2">Book</button>
-                            <button className="btn btn-outline-secondary rounded-pill py-2">View profile</button>
+                            <button className="btn btn-outline-secondary rounded-pill py-2" onClick={() => handleOpenProfile(doctor)}>
+                              View profile
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -225,6 +289,68 @@ export default function DoctorList() {
           </div>
         </div>
       </section>
+      {isProfileOpen && selectedDoctor && (
+        <div className="doctor-profile-modal" role="dialog" aria-modal="true" aria-label={`${selectedDoctor.name} profile`} onClick={handleCloseProfile}>
+          <div className="doctor-profile-modal__panel" onClick={(event) => event.stopPropagation()} role="document">
+            <button type="button" className="doctor-profile-modal__close btn-close" aria-label="Close profile" onClick={handleCloseProfile} />
+            <div className="doctor-profile-modal__header">
+              {(() => {
+                const avatarPath = getDoctorAvatarPath(selectedDoctor.name);
+                const avatarSrc = avatarPath ? resolveAssetPath(avatarPath) : "";
+                const avatarClassName = `doctor-profile-modal__avatar${avatarSrc ? " doctor-profile-modal__avatar--image" : ""}`;
+                return (
+                  <div className={avatarClassName}>
+                    {avatarSrc ? <img src={avatarSrc} alt={selectedDoctor.name || "Doctor avatar"} /> : <span>{getInitials(selectedDoctor.name)}</span>}
+                  </div>
+                );
+              })()}
+              <div className="doctor-profile-modal__identity">
+                <h4 className="mb-1">{selectedDoctor.name || "Unnamed doctor"}</h4>
+                <p className="mb-1 text-muted">{selectedDoctor.specialization || "General practitioner"}</p>
+                <div className="doctor-profile-modal__tags">
+                  {selectedDoctor.dept && <span className="badge rounded-pill bg-primary-subtle text-primary">{selectedDoctor.dept}</span>}
+                  {selectedDoctor.hospital && <span className="badge rounded-pill bg-light text-dark">{selectedDoctor.hospital}</span>}
+                </div>
+              </div>
+            </div>
+            <div className="doctor-profile-modal__body">
+              <div className="doctor-profile-modal__section">
+                <h6>Hospital</h6>
+                <div className="doctor-profile-modal__hospital">
+                  {selectedDoctor.hospitalLogo && (
+                    <div className="doctor-profile-modal__hospital-logo">
+                      <img src={resolveAssetPath(selectedDoctor.hospitalLogo)} alt={selectedDoctor.hospital} />
+                    </div>
+                  )}
+                  <div>
+                    <p className="mb-0 fw-semibold">{selectedDoctor.hospital || "N/A"}</p>
+                    <small className="text-muted">{selectedDoctor.dept || "Department not specified"}</small>
+                  </div>
+                </div>
+              </div>
+              {Array.isArray(selectedDoctor.schedule) && selectedDoctor.schedule.length > 0 && (
+                <div className="doctor-profile-modal__section">
+                  <h6>Available slots</h6>
+                  <ul className="doctor-profile-modal__schedule list-unstyled mb-0">
+                    {selectedDoctor.schedule.map((slot, idx) => (
+                      <li key={`${slot?.day || "day"}-${slot?.time || "time"}-${idx}`}>
+                        <span>{slot?.day || "—"}</span>
+                        <span>{slot?.time || "—"}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+            <div className="doctor-profile-modal__actions">
+              <button className="btn btn-primary rounded-pill px-4">Book appointment</button>
+              <button className="btn btn-outline-secondary rounded-pill px-4" onClick={handleCloseProfile}>
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <Footer />
     </>
   );
