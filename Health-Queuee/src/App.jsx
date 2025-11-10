@@ -16,8 +16,8 @@ import RegisterPage from "./Login-Pages/Register-User";
 function App() {
   return (
     // <HealthcarePage />,
-    // <LoginPage />,
-    <RegisterPage />
+    <LoginPage />
+    // <RegisterPage />,
     // <Navbar />
     // <Login />
     // <BrowserRouter basename="/Final-Project2-Frontendd/">
