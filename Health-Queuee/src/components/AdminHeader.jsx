@@ -1,8 +1,10 @@
+import './AdminHeader.css';
+
 const AdminHeader = () => {
     return (
-        <>
-            <h1>Header</h1>
-        </>
+        <div className="health-queue-bar">
+                <h1>Health-Queue</h1>
+        </div>
     );
 }
 

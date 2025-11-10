@@ -1,9 +1,15 @@
-function Admin(){
+import { Outlet, Router } from "react-router";
+import AdminHeader from "../src/components/AdminHeader";
+import AdminNavbar from "../src/components/AdminNavbar";
+
+const Adminlayout = () => {
     return (
         <>
-        dasd
-        dasdasdasdsa
+            <AdminHeader/>
+            <AdminNavbar/>
+            <Outlet/>
         </>
-    )
+    );
 }
-export default Admin
+
+export default Adminlayout;

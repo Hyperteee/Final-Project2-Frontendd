@@ -1,0 +1,99 @@
+/* Container สำหรับ Navbar ทั้งหมด */
+.admin-navbar-container {
+    width: 250px; 
+    background-color: #f0f0f0; /* สีเทาอ่อนของพื้นหลัง Navbar */
+    height: 100vh; 
+    padding: 20px 15px; 
+    box-sizing: border-box; 
+    display: flex;
+    flex-direction: column; 
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1); /* เพิ่มเงาด้านขวาเล็กน้อย */
+}
+
+/* ส่วนข้อมูลผู้ใช้/โรงพยาบาล */
+.profile-section {
+    /* จัด layout ของ ชื่อ-นามสกุล และ ชื่อโรงพยาบาล ให้อยู่ด้านขวาของรูป */
+    display: flex;
+    align-items: center;
+    gap: 15px; /* ระยะห่างระหว่างรูปกับข้อความ */
+    padding-bottom: 15px;
+}
+
+.profile-image-wrapper {
+    border: 2px solid #333; /* ขอบรูป */
+    border-radius: 50%;
+    padding: 2px;
+}
+
+.profile-image {
+    width: 50px; /* ขนาดรูปโปรไฟล์ให้เล็กลงตามรูปที่ 1 */
+    height: 50px;
+    border-radius: 50%; 
+    object-fit: cover; 
+}
+
+.profile-text {
+    text-align: left;
+    /* ข้อความ: ชื่อ-นามสกุล และ ชื่อโรงพยาบาล */
+}
+
+.profile-name {
+    font-size: 1em;
+    font-weight: bold;
+    margin: 0;
+    color: #333;
+}
+
+.profile-hospital {
+    font-size: 0.85em;
+    color: #666;
+    margin: 0;
+}
+
+.divider {
+    border: 0;
+    height: 1px;
+    background-color: #ccc; 
+    margin: 10px 0 20px 0; /* เว้นระยะห่างด้านล่าง */
+}
+
+/* ส่วนปุ่มนำทาง */
+.nav-buttons-section {
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* ลดระยะห่างระหว่างปุ่ม */
+}
+
+.nav-link-wrapper {
+    text-decoration: none; 
+    width: 100%; 
+}
+
+.nav-button {
+    width: 100%; 
+    /* ใช้สีพื้นหลังที่โปร่งใสเพื่อให้เห็นสีเทาอ่อนของ Navbar */
+    background-color: transparent !important; 
+    border: none !important; 
+    color: #333 !important; /* สีข้อความปกติ */
+    padding: 10px 15px;
+    font-size: 1em;
+    text-align: center; /* จัดให้อยู่กึ่งกลาง */
+    font-weight: normal; 
+    border-radius: 15px !important; /* ขอบมนมากๆ */
+    transition: all 0.2s ease-in-out; 
+    box-shadow: none !important; /* ลบเงาเริ่มต้นของ Bootstrap Button */
+    margin: 5px 0; /* เพิ่มระยะห่างระหว่างปุ่มตามรูป */
+    height: 45px; /* กำหนดความสูงของปุ่ม */
+}
+
+/* Style เมื่อปุ่มถูกเลือก (active) */
+.nav-button.active-nav-button {
+    background-color: #87CEEB !important; /* สีฟ้าอ่อนตามรูป (Sky Blue) */
+    color: #333 !important; /* สีข้อความเปลี่ยนเป็นดำตามรูป */
+    font-weight: bold; 
+}
+
+/* Hover effect สำหรับปุ่มที่ไม่ active */
+.nav-button:not(.active-nav-button):hover {
+    background-color: #e8e8e8 !important; /* สีพื้นหลังเมื่อ hover */
+}
