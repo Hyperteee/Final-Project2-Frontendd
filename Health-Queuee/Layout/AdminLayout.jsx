@@ -1,9 +1,8 @@
-const AdminLayout = () => {
-    return ( 
+function Admin(){
+    return (
         <>
-            <h1>ควย</h1>
+        dasd
         </>
-     );
+    )
 }
- 
-export default AdminLayout;
+export default Admin
