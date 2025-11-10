@@ -13,6 +13,7 @@ function Queue1() {
     const [department, setDepartment] = useState(null)
     const [show, setShow] = useState(false);
     const [chooseDoctor, setChooseDoctor] = useState(null)
+    const [departmentName, setDepartmentName] = useState(null)
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const navigate = useNavigate()
@@ -78,7 +79,7 @@ function Queue1() {
                                 onChange={() => { }}
 
                             />{
-                                department == null || department == "dontChoose" ? "เลือกแผนกเอง" : department
+                                department == null || department == "dontChoose" ? "เลือกแผนกเอง" : departmentName
                             }
                         </div>
                         <div className="option" onClick={() => setDepartment("dontChoose")}>
@@ -131,9 +132,9 @@ function Queue1() {
                         <Modal.Body className="modal-body department-grid">
                             {hospitalData?.departments?.map((department) => (
                                 <div
-                                    key={department.name}
+                                    key={department.id}
                                     className="option-department"
-                                    onClick={() => { setDepartment(department.name), handleClose() }}
+                                    onClick={() => { setDepartment(department.id), handleClose(), setDepartmentName(department.name) }}
                                 >
                                     <img src={department.logo} alt="department icon" />
                                     {department.name}

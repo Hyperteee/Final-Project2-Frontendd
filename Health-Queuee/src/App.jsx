@@ -14,6 +14,7 @@ import Listsearch from "./components/Hospital-Search/listsearch";
 import Queue1 from "./components/Hospital-Search/Queue1";
 import LoginPage from "./login-Pages/Login-user";
 import Queue2 from "./components/Hospital-Search/Queue2";
+import Queue3 from "./components/Hospital-Search/Queue3";
 function App() {
   return (
     // <HealthcarePage />
@@ -21,9 +22,10 @@ function App() {
       <Routes>
         <Route path="" element={<Layout />} />
         <Route path="hospitals" element={<Listsearch />} />
-        <Route path="queue1" element={<Queue1 />}/>
-        <Route path="login" element={<LoginPage />}/>
-        <Route path="queue2" element={<Queue2/>}/>
+        <Route path="queue1" element={<Queue1 />} />
+        <Route path="login" element={<LoginPage />} />
+        <Route path="queue2" element={<Queue2 />} />
+        <Route path="queue3" element={<Queue3 />} />
       </Routes>
     </BrowserRouter>
   );
