@@ -36,19 +36,19 @@ const AdminNavbar = () => {
                     </Button>
                 </Link>
                 {/* ปุ่ม 'จัดการคนไข้' */}
-                <Link to="/patients" className="nav-link-wrapper">
+                <Link to="/managepatients" className="nav-link-wrapper">
                     <Button variant="light" className={`nav-button ${getButtonClass('/patients')}`}>
                         จัดการคนไข้
                     </Button>
                 </Link>
                 {/* ปุ่ม 'จัดการหมอ' (ตัวอย่างปุ่มที่ถูกเลือกในรูป) */}
-                <Link to="/doctors" className="nav-link-wrapper">
+                <Link to="/managethedocter" className="nav-link-wrapper">
                     <Button variant="light" className={`nav-button ${getButtonClass('/doctors')}`}>
                         จัดการหมอ
                     </Button>
                 </Link>
                 {/* ปุ่ม 'จัดการข้อมูลอื่นๆ' */}
-                <Link to="/other-data" className="nav-link-wrapper">
+                <Link to="/other" className="nav-link-wrapper">
                     <Button variant="light" className={`nav-button ${getButtonClass('/other-data')}`}>
                         จัดการข้อมูลอื่นๆ
                     </Button>
