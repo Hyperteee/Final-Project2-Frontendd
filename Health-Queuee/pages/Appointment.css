@@ -1,0 +1,43 @@
+/* Appointments.css */
+
+/* Custom styling for the base status card border */
+/* We use card-status class to manage the left border */
+.card-status {
+    /* Base border color is often blue, but will be overridden by .border-warning, etc. */
+    border-left: 5px solid #007bff; 
+    border-radius: 0.5rem;
+}
+
+/* Custom overrides for StatusCard border colors based on the className prop (e.g., border-warning) */
+.card-status.border-warning {
+    border-left-color: #ffc107 !important; /* Yellow */
+}
+.card-status.border-danger {
+    border-left-color: #dc3545 !important; /* Red */
+}
+.card-status.border-info {
+    border-left-color: #0dcaf0 !important; /* Cyan/Light Blue */
+}
+
+/* Ensure the sidebar links look good in the dark background */
+.sidebar .btn-link {
+    color: #adb5bd; /* Light grey */
+    text-decoration: none;
+    transition: all 0.15s ease-in-out;
+    padding: 0.5rem 0.75rem; /* Better padding for touch target */
+    margin-bottom: 0.25rem;
+}
+
+.sidebar .btn-link:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+}
+
+/* Style for the active/primary button in the sidebar */
+.sidebar .btn-primary.active {
+    background-color: #0d6efd; /* Primary blue */
+    border-color: #0d6efd;
+    border-radius: 0.5rem;
+    font-weight: 600;
+}
