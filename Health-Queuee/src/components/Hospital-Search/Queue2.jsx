@@ -9,7 +9,7 @@ function Queue2() {
     const { state } = useLocation();
 
     const { selectedHospital, selectedDepartment, optionChooseDoctor } = state || {};
-    const hospitalData = hospitalMap[selectedHospital] || null
+    const hospitalData = hospitalMap[selectedHospital].info || null
 
     const navigate = useNavigate()
 

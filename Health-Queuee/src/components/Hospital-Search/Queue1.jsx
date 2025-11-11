@@ -31,7 +31,7 @@ function Queue1() {
     const isStepActive = (stepNumber) => stepNumber <= currentStep;
 
     
-    const hospitalData= hospitalMap[selectedHospital] || null
+    const hospitalData= hospitalMap[selectedHospital].info || null
 
     return (
         <>
