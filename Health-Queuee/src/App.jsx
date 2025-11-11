@@ -15,17 +15,19 @@ import RegisterPage from "./Login-Pages/Register-User";
 
 function App() {
   return (
-    // <HealthcarePage />,
-    <LoginPage />
-    // <RegisterPage />,
-    // <Navbar />
-    // <Login />
-    // <BrowserRouter basename="/Final-Project2-Frontendd/">
+    <>
+    {/* // <HealthcarePage />, */}
+    {/* <LoginPage />, */}
+    <RegisterPage />
+    {/* // <Navbar /> */}
+    {/* // <Login /> */}
+    {/* // <BrowserRouter basename="/Final-Project2-Frontendd/">
     //   <Routes>
     //     <Route path="Layout" element={<Layout />} />
     //   </Routes>
-    // </BrowserRouter>
-  );
+    // </BrowserRouter> */}
+    </>
+  )
 }
 
-export default App;
+export default App

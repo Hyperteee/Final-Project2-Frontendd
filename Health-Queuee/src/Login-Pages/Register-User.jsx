@@ -12,9 +12,9 @@ export default function RegisterPage() {
           }}
         >
           <div>
-            <h3 className="mb-5" style={{ marginTop: "-50px" }}>
+            {/* <h3 className="mb-5" style={{ marginTop: "-50px" }}>
               <img src="./images/HFU-Logo.png" alt="HFU" className="h-48 w-auto " />
-            </h3>
+            </h3> */}
           </div>
         </div>
 
@@ -74,15 +74,32 @@ export default function RegisterPage() {
               </div>
 
               <div className="mb-3">
-                <p className="text-center mb-3">หรือ สมัครสมาชิกด้วย</p>
+                <p className="text-center mb-3">หรือ เข้าสู่ระบบด้วย</p>
                 <div className="d-grid gap-2">
-                  <button type="button" className="btn btn-dark">
-                    <i className="bi bi-apple me-2"></i>
-                    เบอร์โทรศัพทย์
+                  <button
+                    type="button"
+                    className="btn btn-light border d-flex align-items-center justify-content-center gap-2 py-2"
+                    style={{ borderRadius: "8px" }}
+                  >
+                    <img
+                      src="./images/facebook-logo.png"
+                      alt="Facebook"
+                      style={{ width: "24px", height: "24px" }}
+                    />
+                    <span className="fw-semibold text-dark">หมายเลขประจำตัวผู้ป่วย</span>
                   </button>
-                  <button type="button" className="btn btn-dark">
-                    <i className="bi bi-google me-2"></i>
-                    Email
+
+                  <button
+                    type="button"
+                    className="btn btn-light border d-flex align-items-center justify-content-center gap-2 py-2"
+                    style={{ borderRadius: "8px" }}
+                  >
+                    <img
+                      src="./images/google-logo.png"
+                      alt="Google"
+                      style={{ width: "24px", height: "24px" }}
+                    />
+                    <span className="fw-semibold text-dark">เบอร์โทร</span>
                   </button>
                 </div>
               </div>

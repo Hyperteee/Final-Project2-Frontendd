@@ -12,13 +12,13 @@ export default function LoginPage() {
           }}
         >
           <div>
-            <h3 className="mb-5" style={{ marginTop: "-50px" }}>
+            {/* <h3 className="mb-5" style={{ marginTop: "-50px" }}>
               <img
                 src="./images/HFU-Logo.png"
                 alt="HFU"
                 className="h-48 w-auto "
               />
-            </h3>
+            </h3> */}
           </div>
         </div>
 
@@ -49,18 +49,24 @@ export default function LoginPage() {
                   id="password"
                   placeholder="รหัสผ่าน"
                 />
-                <div className="d-grid gap-2">
+
+                {/* sign in */}
+                <div
+                  className="d-grid gap-2"
+                  style={{
+                    marginTop: "20px",
+                  }}
+                >
                   <button
                     type="button"
-                    className="btn btn-light border d-flex align-items-center justify-content-center gap-2 py-2"
-                    style={{ borderRadius: "8px" }}
+                    className=" border d-flex align-items-center justify-content-center gap-2 py-2"
+                    style={{
+                      backgroundColor: "#3b77fa",
+                      color: "#fff",
+                      borderRadius: "8px",
+                    }}
                   >
-                    <img
-                      src="./images/facebook-logo.png"
-                      alt="Facebook"
-                      style={{ width: "24px", height: "24px" }}
-                    />
-                    <span className="fw-semibold text-dark">Facebook</span>
+                    <span className="fw-semibold text-white">Sign In</span>
                   </button>
                 </div>
               </div>
@@ -77,7 +83,6 @@ export default function LoginPage() {
               <div className="mb-3">
                 <p className="text-center mb-3">หรือ เข้าสู่ระบบด้วย</p>
                 <div className="d-grid gap-2">
-                  {/* ปุ่ม Facebook */}
                   <button
                     type="button"
                     className="btn btn-light border d-flex align-items-center justify-content-center gap-2 py-2"
@@ -88,10 +93,9 @@ export default function LoginPage() {
                       alt="Facebook"
                       style={{ width: "24px", height: "24px" }}
                     />
-                    <span className="fw-semibold text-dark">Facebook</span>
+                    <span className="fw-semibold text-dark">หมายเลขประจำตัวผู้ป่วย</span>
                   </button>
 
-                  {/* ปุ่ม Google */}
                   <button
                     type="button"
                     className="btn btn-light border d-flex align-items-center justify-content-center gap-2 py-2"
@@ -102,7 +106,7 @@ export default function LoginPage() {
                       alt="Google"
                       style={{ width: "24px", height: "24px" }}
                     />
-                    <span className="fw-semibold text-dark">Google</span>
+                    <span className="fw-semibold text-dark">เบอร์โทร</span>
                   </button>
                 </div>
               </div>
