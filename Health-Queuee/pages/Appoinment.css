@@ -1,0 +1,19 @@
+.sidebar .btn-link {
+    color: white; /* Ensure text is white */
+    text-align: left; /* Align text to the start */
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+}
+
+.sidebar .btn-link:hover {
+    color: #dee2e6;
+    text-decoration: none;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar .active {
+    background-color: #0d6efd !important; /* Primary color */
+    color: white !important;
+    border-radius: 0.25rem;
+    border-left: 4px solid #fff; /* Highlight bar for active item */
+}

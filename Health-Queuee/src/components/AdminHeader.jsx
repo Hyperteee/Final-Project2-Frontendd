@@ -1,5 +1,8 @@
 import './AdminHeader.css';
 
+import 'bootstrap-icons/font/bootstrap-icons.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
+
 const AdminHeader = () => {
     return (
         <div className="health-queue-bar">

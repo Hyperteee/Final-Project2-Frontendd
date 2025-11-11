@@ -1,6 +1,7 @@
 const ManagePatients = () => {
     return ( 
         <>
+            <h1>จัดการคนไข้</h1>
         </>
      );
 }
