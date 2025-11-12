@@ -1,3 +1,4 @@
+import { Timer } from 'lucide-react';
 import React, { useState, useMemo } from 'react';
 
 // Data Mockup (Keep data structure as close to original as possible)
@@ -107,7 +108,7 @@ const Appointments = () => {
                 <h2 className="text-xl font-semibold text-gray-700 mb-4">สรุปสถานะคิว</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-10">
                     <StatusCard
-                        icon={Hourglass}
+                        icon={Timer}
                         label="Waiting Queues (คิวกำลังรอ)"
                         count={waitingQueues}
                         colorClass="text-yellow-600"
