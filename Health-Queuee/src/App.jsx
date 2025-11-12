@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Router, Routes } from "react-router"
-import Admin from "../Layout/Adminlayout"
 import HealthcarePage from "./components/HealthcarePage"
 import Adminlayout from "../Layout/Adminlayout"
 import ManagePatients from "../pages/ManagePatients"
@@ -13,10 +12,10 @@ function App() {
     <BrowserRouter basename="/Health-Queuee/">
       <Routes>
         <Route element={<Adminlayout />}>
-          <Route path="/appointments" element={<Appointments/>}/>
+          <Route path="/other" element={<Other/>}/>
           <Route path="/managepatients" element={<ManagePatients/>}/>
           <Route path="/managethedocter" element={<ManageTheDocter/>}/>
-          <Route path="*" element={<Other/>}/>
+          <Route path="*" element={<Appointments/>}/>
         </Route>
 
       </Routes>
