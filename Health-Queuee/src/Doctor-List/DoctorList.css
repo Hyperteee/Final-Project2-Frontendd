@@ -68,7 +68,7 @@
 }
 
 .doctor-summary {
-  color: #f6f8ff;
+  color: #000;
 }
 
 .doctor-summary h5 {
@@ -77,7 +77,7 @@
 }
 
 .doctor-summary small {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(0, 0, 0, 0.75);
 }
 
 .doctor-page .badge {
