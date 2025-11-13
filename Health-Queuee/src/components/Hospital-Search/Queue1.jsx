@@ -6,37 +6,33 @@ import "./Queue1.css"
 import Form from 'react-bootstrap/Form'
 import Modal from 'react-bootstrap/Modal';
 import Button from "react-bootstrap/esm/Button";
-
-import chulalongkorn from "../../data/hospitaldata.jsx/chula";
+import hospitalMap from "../../data/hospitaldata.jsx/allhospitaldata";
 function Queue1() {
     const { state } = useLocation();
     const { selectedHospital } = state || {};
     const [department, setDepartment] = useState(null)
     const [show, setShow] = useState(false);
     const [chooseDoctor, setChooseDoctor] = useState(null)
-    const [hospitalData, setHospitalData] = useState(null)
+    const [departmentName, setDepartmentName] = useState(null)
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const navigate = useNavigate()
+    function handleNext(department, chooseDoctor, selectedHospital) {
+        navigate("/queue2", 
+            { state: { selectedDepartment : department, 
+                optionChooseDoctor : chooseDoctor, 
+                selectedHospital } });
+    }
     //////////////////////////////// stepper ////////////////////////
 
     const steps = [1, 2, 3, 4];
     const currentStep = 1;
     console.log(department)
     const isStepActive = (stepNumber) => stepNumber <= currentStep;
-    useEffect(() => {
-        if (!selectedHospital) return;
 
-        switch (selectedHospital) {
-            case "จุฬาลงกรณ์":
-                setHospitalData(chulalongkorn);
-                break;
-            case "ศิริราช":
-                setHospitalData(siriraj);
-                break;
-            default:
-                setHospitalData(null);
-        }
-    }, [selectedHospital]);
+    
+    const hospitalData= hospitalMap[selectedHospital].info || null
+
     return (
         <>
             <div className="d-flex flex-column align-items-center">
@@ -74,11 +70,16 @@ function Queue1() {
                                 id="choose-department"
                                 name="chooseDepartment"
                                 value="choose-Department"
-                                onClick={handleShow}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleShow();
+                                }}
+
                                 checked={department !== null && department !== "dontChoose"}
                                 onChange={() => { }}
+
                             />{
-                                department == null || department == "dontChoose" ? "เลือกแผนกเอง" : department
+                                department == null || department == "dontChoose" ? "เลือกแผนกเอง" : departmentName
                             }
                         </div>
                         <div className="option" onClick={() => setDepartment("dontChoose")}>
@@ -87,14 +88,16 @@ function Queue1() {
                                 id="no-department"
                                 name="chooseDepartment"
                                 value="no-Department"
+                                checked={department !== null && department == "dontChoose"}
                                 onChange={() => setDepartment("dontChoose")}
+                                onClick={(e) => e.stopPropagation()}
                             />ไม่แน่ใจ
                         </div>
                     </div>
                     <div className="zone-option d-flex flex-column">
                         <div>เลือกแพทย์</div>
                         <div className="d-flex">
-                            <div className="option">
+                            <div className="option" onClick={() => setChooseDoctor("choose")}>
                                 <Form.Check
                                     type="radio"
                                     id="choose-Doctor"
@@ -105,7 +108,7 @@ function Queue1() {
                                 />ต้องการเลือกแพทย์เอง
                             </div>
 
-                            <div className="option">
+                            <div className="option" onClick={() => setChooseDoctor("dontChoose")}>
                                 <Form.Check
                                     type="radio"
                                     id="no-Doctor"
@@ -129,9 +132,9 @@ function Queue1() {
                         <Modal.Body className="modal-body department-grid">
                             {hospitalData?.departments?.map((department) => (
                                 <div
-                                    key={department.name}
+                                    key={department.id}
                                     className="option-department"
-                                    onClick={() => { setDepartment(department.name), handleClose() }}
+                                    onClick={() => { setDepartment(department.id), handleClose(), setDepartmentName(department.name) }}
                                 >
                                     <img src={department.logo} alt="department icon" />
                                     {department.name}
@@ -145,7 +148,7 @@ function Queue1() {
 
                 </div>
                 <div className="d-flex justify-content-end">
-                    <Button className="nextButton px-5 py-2">
+                    <Button className="nextButton px-5 py-2" onClick={() => handleNext(department, chooseDoctor, selectedHospital)}>
                         <span>ต่อไป   </span>
                         <i className="bi bi-arrow-right"></i>
                     </Button>
