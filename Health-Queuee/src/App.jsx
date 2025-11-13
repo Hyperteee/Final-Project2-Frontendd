@@ -12,22 +12,24 @@ import Footer from "./components/Footer/Footer";
 import Layout from "./components/Layout/Layout";
 import LoginPage from "./login-Pages/Login-user";
 import RegisterPage from "./Login-Pages/Register-User";
+import Profile from "./Profile-User/Profile";
 
 function App() {
   return (
     <>
-    {/* // <HealthcarePage />, */}
-    {/* <LoginPage />, */}
-    <RegisterPage />
-    {/* // <Navbar /> */}
-    {/* // <Login /> */}
-    {/* // <BrowserRouter basename="/Final-Project2-Frontendd/">
-    //   <Routes>
-    //     <Route path="Layout" element={<Layout />} />
-    //   </Routes>
-    // </BrowserRouter> */}
+      {/* <HealthcarePage />, */}
+      <Profile />
+      {/* <LoginPage />, */}
+      {/* <RegisterPage /> */}
+      {/* <Navbar /> */}
+      {/* <Login /> */}
+      {/* <BrowserRouter basename="/Final-Project2-Frontendd/">
+        <Routes>
+          <Route path="Layout" element={<Layout />} />
+        </Routes>
+      </BrowserRouter> */}
     </>
-  )
+  );
 }
 
-export default App
+export default App;

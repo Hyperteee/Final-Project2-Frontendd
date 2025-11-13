@@ -2,7 +2,6 @@ import { useState } from "react"
 import Carousel from "react-bootstrap/Carousel";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-
 export default function HealthcarePage() {
   const [currentOrgSlide, setCurrentOrgSlide] = useState(0)
   const [currentPackageSlide, setCurrentPackageSlide] = useState(0)
@@ -33,7 +32,6 @@ export default function HealthcarePage() {
       style={{
         backgroundColor: "#020A1B", // สีเทาเข้มโปร่งใส (เทียบกับ bg-slate-900)
         backdropFilter: "blur(12px)", // เบลอพื้นหลัง
-        WebkitBackdropFilter: "blur(12px)", // รองรับ Safari,
       }}
     >
       <div className="container d-flex align-items-center justify-content-between">
@@ -147,8 +145,9 @@ export default function HealthcarePage() {
   </div>
 
   {/* Decorative Elements */}
-  <div
+   <div
     className="position-absolute rounded-circle"
+    aria-hidden="true"
     style={{
       top: "80px",
       left: "40px",
@@ -161,6 +160,7 @@ export default function HealthcarePage() {
   ></div>
   <div
     className="position-absolute rounded-circle"
+    aria-hidden="true"
     style={{
       bottom: "80px",
       right: "40px",
@@ -172,44 +172,22 @@ export default function HealthcarePage() {
     }}
   ></div>
 
-  {/* ต่อด้วยส่วนพาร์ทเนอร์ + Chat Bot ของคุณเหมือนเดิม */}
   <div className="container mt-5">
-    <div className="text-center mb-5">
-      <h3 className="h2 fw-bold text-white">Trusted by teams at</h3>
+    {/* Trusted by */}
+    <div className="text-center mt-5">
+      <h3 className="h2 fw-bold text-white mb-4">Trusted by teams at</h3>
+      <div className="d-flex flex-wrap justify-content-center align-items-center gap-4">
+        <img src="./images/Hos-Chula.svg" alt="Chula" width="180" height="160" loading="lazy" />
+        <img src="./images/Hos-Paolo.png" alt="Paolo" width="180" height="160" loading="lazy" />
+        <img src="./images/Hos-Bangkok.png" alt="Bangkok" width="180" height="160" loading="lazy" />
+        <img src="./images/Hos-Phyathai.png" alt="Phyathai" width="180" height="160" loading="lazy" />
+        <img src="./images/hos-samitivej.png" alt="Samitivej" width="180" height="160" loading="lazy" />
+      </div>
     </div>
-<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 place-items-center">
-  {[
-    "./images/Hos-Chula.svg",
-    "./images/Hos-Paolo.png",
-    "./images/Hos-Bangkok.png",
-    "./images/Hos-Phyathai.png",
-    "./images/hos-samitivej.png",
-  ].map((src, i) => (
-    <div
-      key={i}
-      className="flex items-center justify-center  rounded-xl shadow-sm"
-      style={{
-        width: "200px",         // ✅ ขนาดเท่ากันหมด
-        height: "120px",        // ✅ เท่ากันแน่นอน
-        overflow: "hidden",
-      }}
-    >
-      <div
-        style={{
-          backgroundImage: `url(${src})`,
-          backgroundSize: "contain",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
-          width: "80%",          // ✅ ทำให้โลโก้มีระยะห่างพอดี
-          height: "80%",
-        }}
-      ></div>
-    </div>
-  ))}
-</div>
 
+    {/* Hero content */}
     <div className="row g-5 align-items-center mt-5">
-      {/* Left Content */}
+      {/* Left */}
       <div className="col-lg-6">
         <span className="badge bg-primary bg-opacity-10 text-primary px-3 py-2 mb-3">AI Assistant</span>
         <h2 className="display-4 fw-bold mb-4 text-white">
@@ -223,9 +201,7 @@ export default function HealthcarePage() {
         <button className="btn btn-primary btn-lg px-5 py-3 shadow">เริ่มสนทนา</button>
       </div>
 
-      {/* Right - Chat Interface */}
       <div className="col-lg-6">
-        {/* ... card แชตของคุณตามเดิม ... */}
       </div>
     </div>
   </div>
@@ -474,127 +450,53 @@ export default function HealthcarePage() {
           </div>
         </section>
 
-     <footer id="contact" className="bg-slate-900 text-gray-300 py-16">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-            {/* Brand */}
-            <div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-xl">H</span>
-                </div>
-                <div>
-                  <h3 className="text-white font-bold text-xl">HealthCare</h3>
-                  <p className="text-gray-500 text-xs">Your Health Partner</p>
-                </div>
-              </div>
-              <p className="text-gray-400 leading-relaxed">ผู้นำด้านการบริการสุขภาพครบวงจร พร้อมดูแลคุณด้วยใจ</p>
-            </div>
+ <div class="container">
+  <footer class="row row-cols-5 py-5 my-5 border-top">
+    <div class="col">
+      <a href="/" class="d-flex align-items-center mb-3 link-dark text-decoration-none">
+        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+      </a>
+      <p class="text-muted">&copy; 2021</p>
+    </div>
 
-            {/* Products */}
-            <div>
-              <h4 className="text-white font-semibold text-lg mb-4">บริการ</h4>
-              <ul className="space-y-3">
-                <li>
-                  <a href="#" className="hover:text-white transition-colors hover:translate-x-1 inline-block">
-                    ระบบจองคิว
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors hover:translate-x-1 inline-block">
-                    นัดหมายแพทย์
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors hover:translate-x-1 inline-block">
-                    ตรวจสุขภาพ
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors hover:translate-x-1 inline-block">
-                    แอปพลิเคชัน
-                  </a>
-                </li>
-              </ul>
-            </div>
+    <div class="col">
 
-            {/* Company */}
-            <div>
-              <h4 className="text-white font-semibold text-lg mb-4">เกี่ยวกับเรา</h4>
-              <ul className="space-y-3">
-                <li>
-                  <a href="#" className="hover:text-white transition-colors hover:translate-x-1 inline-block">
-                    เกี่ยวกับบริษัท
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors hover:translate-x-1 inline-block">
-                    ร่วมงานกับเรา
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors hover:translate-x-1 inline-block">
-                    บล็อก
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors hover:translate-x-1 inline-block">
-                    ข่าวสาร
-                  </a>
-                </li>
-              </ul>
-            </div>
+    </div>
 
-            {/* Support */}
-            <div>
-              <h4 className="text-white font-semibold text-lg mb-4">ช่วยเหลือ</h4>
-              <ul className="space-y-3">
-                <li>
-                  <a href="#" className="hover:text-white transition-colors hover:translate-x-1 inline-block">
-                    ศูนย์ช่วยเหลือ
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors hover:translate-x-1 inline-block">
-                    คู่มือการใช้งาน
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors hover:translate-x-1 inline-block">
-                    ติดต่อเรา
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors hover:translate-x-1 inline-block">
-                    นโยบายความเป็นส่วนตัว
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
+    <div class="col">
+      <h5>Section</h5>
+      <ul class="nav flex-column">
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+      </ul>
+    </div>
 
-          <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-gray-400 text-sm">&copy; 2025 HealthCare. สงวนลิขสิทธิ์.</p>
-            <div className="flex gap-6">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                </svg>
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
-                </svg>
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z" />
-                </svg>
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
+    <div class="col">
+      <h5>Section</h5>
+      <ul class="nav flex-column">
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+      </ul>
+    </div>
+
+    <div class="col">
+      <h5>Section</h5>
+      <ul class="nav flex-column">
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+      </ul>
+    </div>
+  </footer>
+</div>
       </div>
     </>
   )
