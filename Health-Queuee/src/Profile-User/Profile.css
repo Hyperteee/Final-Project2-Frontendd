@@ -1,6 +1,3 @@
-/* Bangkok Hospital Profile Custom Styles */
-
-/* Override Bootstrap primary color to match Bangkok Hospital blue */
 :root {
   --bs-primary: #0066cc;
   --bs-primary-rgb: 0, 102, 204;
@@ -10,7 +7,6 @@
   --bs-danger-rgb: 233, 30, 99;
 }
 
-/* Active sidebar item styling */
 .list-group-item.active {
   background-color: #e3f2fd;
   color: var(--bs-primary);

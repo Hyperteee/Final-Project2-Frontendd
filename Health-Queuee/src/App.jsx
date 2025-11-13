@@ -13,12 +13,14 @@ import Layout from "./components/Layout/Layout";
 import LoginPage from "./login-Pages/Login-user";
 import RegisterPage from "./Login-Pages/Register-User";
 import Profile from "./Profile-User/Profile";
+import Login2 from "./Login-Pages/Login2";
 
 function App() {
   return (
     <>
       {/* <HealthcarePage />, */}
-      <Profile />
+      <Login2 />,
+      {/* <Profile /> */}
       {/* <LoginPage />, */}
       {/* <RegisterPage /> */}
       {/* <Navbar /> */}

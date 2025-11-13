@@ -1,5 +1,5 @@
-import { useState } from "react"
-import { User, CreditCard, Calendar, Lock, Shield, LogOut } from "lucide-react"
+import { useState } from "react";
+import { User, CreditCard, Calendar, Lock, Shield, LogOut } from "lucide-react";
 
 export default function Profile() {
   const [formData, setFormData] = useState({
@@ -11,32 +11,32 @@ export default function Profile() {
     birthDate: "2548-10-20",
     gender: "ชาย",
     email: "Prayard@gmail.com",
-  })
+  });
 
   const handleSubmit = (e) => {
-  e.preventDefault();
-};
+    e.preventDefault();
+  };
 
-const handleInputChange = (e) => {
-  const { name, value } = e.target;
-  console.log(name, value);
-};
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+  };
 
-const calculateAge = (birthdate) => {
-  const today = new Date();
-  const birth = new Date(birthdate);
+  const calculateAge = (birthdate) => {
+    const today = new Date();
+    const birth = new Date(birthdate);
 
-  let age = today.getFullYear() - birth.getFullYear();
-  const monthDiff = today.getMonth() - birth.getMonth();
-  const dayDiff = today.getDate() - birth.getDate();
+    let age = today.getFullYear() - birth.getFullYear();
+    const monthDiff = today.getMonth() - birth.getMonth();
+    const dayDiff = today.getDate() - birth.getDate();
 
-  if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
-    age--;
-  }
+    if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+      age--;
+    }
 
-  return age;
-};
-  
+    return age;
+  };
+
   return (
     <div className="bg-light min-vh-100">
       <header
@@ -61,56 +61,71 @@ const calculateAge = (birthdate) => {
           </div>
 
           <nav className="d-none d-md-flex align-items-center gap-4">
-            <a href="#services" className="text-light text-decoration-none opacity-75 hover-opacity-100">
+            <a
+              href="#services"
+              className="text-light text-decoration-none opacity-75 hover-opacity-100"
+            >
               บริการ
             </a>
-            <a href="#doctors" className="text-light text-decoration-none opacity-75 hover-opacity-100">
+            <a
+              href="#doctors"
+              className="text-light text-decoration-none opacity-75 hover-opacity-100"
+            >
               แพทย์
             </a>
-            <a href="#packages" className="text-light text-decoration-none opacity-75 hover-opacity-100">
+            <a
+              href="#packages"
+              className="text-light text-decoration-none opacity-75 hover-opacity-100"
+            >
               แพ็กเกจ
             </a>
-            <a href="#contact" className="text-light text-decoration-none opacity-75 hover-opacity-100">
+            <a
+              href="#contact"
+              className="text-light text-decoration-none opacity-75 hover-opacity-100"
+            >
               ติดต่อ
             </a>
           </nav>
 
-          <button className="btn btn-primary px-4 py-2 fw-semibold">เข้าสู่ระบบ</button>
+          <button className="btn btn-primary px-4 py-2 fw-semibold">
+            เข้าสู่ระบบ
+          </button>
         </div>
       </header>
 
       <div className="container py-4">
-        <h1 className="text-center mb-4 fw-semibold text-secondary">ข้อมูลของคุณ</h1>
-<div className="d-flex justify-content-center mb-4 ">
-  <div
-    style={{
-      height: "4px",
-      width: "100px",
-      backgroundColor: "#001B45",
-      borderRadius: "2px",
-    }}
-  ></div>
-</div>
+        <h1 className="text-center mb-4 fw-semibold text-black">
+          ข้อมูลของคุณ
+        </h1>
+        <div className="d-flex justify-content-center mb-4 ">
+          <div
+            style={{
+              height: "4px",
+              width: "100px",
+              backgroundColor: "#001B45",
+              borderRadius: "2px",
+            }}
+          ></div>
+        </div>
 
         <div className="row g-4">
           <div className="col-lg-3">
             <div className="card shadow-sm border-0">
-                <h1 className="fw-medium ">ข้อมูลส่วนตัว</h1>
+              <h1 className="fw-medium ">ข้อมูลส่วนตัว</h1>
 
-  <div
-    style={{
-      height: "4px",
-      width: "20px",
-      backgroundColor: "#001B45",
-      borderRadius: "2px",
-    }}
-  ></div>
-
+              <div
+                style={{
+                  height: "4px",
+                  width: "20px",
+                  backgroundColor: "#001B45",
+                  borderRadius: "2px",
+                }}
+              ></div>
 
               <div className="list-group list-group-flush mt-3">
-                <button className="list-group-item list-group-item-action active d-flex align-items-center gap-3 py-3 border-end border-primary border-4">
+                <button className="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">
                   <User size={20} />
-                  <span>บัตรนายของคุณ</span>
+                  <span>โปรไฟล์ของคุณ</span>
                 </button>
 
                 <button className="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">
@@ -148,13 +163,24 @@ const calculateAge = (birthdate) => {
               <div className="card-body p-4 p-lg-5">
                 <form onSubmit={handleSubmit}>
                   <div className="mb-4">
-                    <label className="form-label fw-medium text-secondary">เบอร์โทรศัพท์</label>
-                    <div className="fs-5 fw-semibold text-success">{formData.phone}</div>
+                    <label className="form-label fw-medium text-secondary">
+                      เบอร์โทรศัพท์
+                    </label>
+                    <div className="fs-5 fw-semibold text-success">
+                      {formData.phone}
+                    </div>
                   </div>
 
                   <div className="mb-4">
-                    <label className="form-label fw-medium text-secondary">คำนำหน้าชื่อ</label>
-                    <select name="title" value={formData.title} onChange={handleInputChange} className="form-select">
+                    <label className="form-label fw-medium text-secondary">
+                      คำนำหน้าชื่อ
+                    </label>
+                    <select
+                      name="title"
+                      value={formData.title}
+                      onChange={handleInputChange}
+                      className="form-select"
+                    >
                       <option value="นาย">นาย</option>
                       <option value="นาง">นาง</option>
                       <option value="นางสาว">นางสาว</option>
@@ -162,7 +188,9 @@ const calculateAge = (birthdate) => {
                   </div>
 
                   <div className="mb-4">
-                    <label className="form-label fw-medium text-secondary">ชื่อ</label>
+                    <label className="form-label fw-medium text-secondary">
+                      ชื่อ
+                    </label>
                     <input
                       type="text"
                       name="firstName"
@@ -174,7 +202,9 @@ const calculateAge = (birthdate) => {
                   </div>
 
                   <div className="mb-4">
-                    <label className="form-label fw-medium text-secondary">นามสกุล</label>
+                    <label className="form-label fw-medium text-secondary">
+                      นามสกุล
+                    </label>
                     <input
                       type="text"
                       name="lastName"
@@ -186,13 +216,19 @@ const calculateAge = (birthdate) => {
                   </div>
 
                   <div className="mb-4">
-                    <label className="form-label fw-medium text-secondary">เลขบัตรประชาชน</label>
-                    <div className="fs-5 fw-semibold text-success">{formData.nationalId}</div>
+                    <label className="form-label fw-medium text-secondary">
+                      เลขบัตรประชาชน
+                    </label>
+                    <div className="fs-5 fw-semibold text-success">
+                      {formData.nationalId}
+                    </div>
                   </div>
 
                   <div className="row mb-4">
                     <div className="col-md-8">
-                      <label className="form-label fw-medium text-secondary">วัน/เดือน/ปีเกิด</label>
+                      <label className="form-label fw-medium text-secondary">
+                        วัน/เดือน/ปีเกิด
+                      </label>
                       <input
                         type="date"
                         name="birthDate"
@@ -202,18 +238,28 @@ const calculateAge = (birthdate) => {
                       />
                     </div>
                     <div className="col-md-4">
-                      <label className="form-label fw-medium text-secondary">อายุ</label>
-                      <div className="fs-5 fw-semibold text-success">{calculateAge(formData.birthDate)} ปี</div>
+                      <label className="form-label fw-medium text-secondary">
+                        อายุ
+                      </label>
+                      <div className="fs-5 fw-semibold text-success">
+                        {calculateAge(formData.birthDate)} ปี
+                      </div>
                     </div>
                   </div>
 
                   <div className="mb-4">
-                    <label className="form-label fw-medium text-secondary">เพศ</label>
-                    <div className="fs-5 fw-semibold text-success">{formData.gender}</div>
+                    <label className="form-label fw-medium text-secondary">
+                      เพศ
+                    </label>
+                    <div className="fs-5 fw-semibold text-success">
+                      {formData.gender}
+                    </div>
                   </div>
 
                   <div className="mb-4">
-                    <label className="form-label fw-medium text-secondary">อีเมล</label>
+                    <label className="form-label fw-medium text-secondary">
+                      อีเมล
+                    </label>
                     <input
                       type="email"
                       name="email"
@@ -225,7 +271,10 @@ const calculateAge = (birthdate) => {
                   </div>
 
                   <div className="d-flex justify-content-end mt-5">
-                    <button type="submit" className="btn btn-success px-5 py-2 fw-medium">
+                    <button
+                      type="submit"
+                      className="btn btn-success px-5 py-2 fw-medium"
+                    >
                       บันทึก
                     </button>
                   </div>
@@ -235,6 +284,116 @@ const calculateAge = (birthdate) => {
           </div>
         </div>
       </div>
+              <div class="container">
+          <footer class="row row-cols-5 py-5 my-5 border-top">
+            <div class="col">
+              <a
+                href="/"
+                class="d-flex align-items-center mb-3 link-dark text-decoration-none"
+              >
+                <svg class="bi me-2" width="40" height="32">
+                  <use xlink:href="#bootstrap" />
+                </svg>
+              </a>
+              <p class="text-muted">&copy; 2021</p>
+            </div>
+
+            <div class="col"></div>
+
+            <div class="col">
+              <h5>Section</h5>
+              <ul class="nav flex-column">
+                <li class="nav-item mb-2">
+                  <a href="#" class="nav-link p-0 text-muted">
+                    Home
+                  </a>
+                </li>
+                <li class="nav-item mb-2">
+                  <a href="#" class="nav-link p-0 text-muted">
+                    Features
+                  </a>
+                </li>
+                <li class="nav-item mb-2">
+                  <a href="#" class="nav-link p-0 text-muted">
+                    Pricing
+                  </a>
+                </li>
+                <li class="nav-item mb-2">
+                  <a href="#" class="nav-link p-0 text-muted">
+                    FAQs
+                  </a>
+                </li>
+                <li class="nav-item mb-2">
+                  <a href="#" class="nav-link p-0 text-muted">
+                    About
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="col">
+              <h5>Section</h5>
+              <ul class="nav flex-column">
+                <li class="nav-item mb-2">
+                  <a href="#" class="nav-link p-0 text-muted">
+                    Home
+                  </a>
+                </li>
+                <li class="nav-item mb-2">
+                  <a href="#" class="nav-link p-0 text-muted">
+                    Features
+                  </a>
+                </li>
+                <li class="nav-item mb-2">
+                  <a href="#" class="nav-link p-0 text-muted">
+                    Pricing
+                  </a>
+                </li>
+                <li class="nav-item mb-2">
+                  <a href="#" class="nav-link p-0 text-muted">
+                    FAQs
+                  </a>
+                </li>
+                <li class="nav-item mb-2">
+                  <a href="#" class="nav-link p-0 text-muted">
+                    About
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="col">
+              <h5>Section</h5>
+              <ul class="nav flex-column">
+                <li class="nav-item mb-2">
+                  <a href="#" class="nav-link p-0 text-muted">
+                    Home
+                  </a>
+                </li>
+                <li class="nav-item mb-2">
+                  <a href="#" class="nav-link p-0 text-muted">
+                    Features
+                  </a>
+                </li>
+                <li class="nav-item mb-2">
+                  <a href="#" class="nav-link p-0 text-muted">
+                    Pricing
+                  </a>
+                </li>
+                <li class="nav-item mb-2">
+                  <a href="#" class="nav-link p-0 text-muted">
+                    FAQs
+                  </a>
+                </li>
+                <li class="nav-item mb-2">
+                  <a href="#" class="nav-link p-0 text-muted">
+                    About
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </footer>
+        </div>
     </div>
-  )
+  );
 }
