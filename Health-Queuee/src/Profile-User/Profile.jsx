@@ -38,61 +38,76 @@ const calculateAge = (birthdate) => {
 };
   
   return (
-    
     <div className="bg-light min-vh-100">
-            <header
-      className="py-3 shadow-lg sticky-top"
-      style={{
-        backgroundColor: "#020A1B",
-        backdropFilter: "blur(12px)",
-      }}
-    >
-      <div className="container d-flex align-items-center justify-content-between">
-        <div className="d-flex align-items-center gap-3">
-          <div
-            className="d-flex align-items-center justify-content-center bg-primary rounded-3"
-            style={{ width: "50px", height: "50px" }}
-          >
-            <span className="text-white fw-bold fs-4">H</span>
+      <header
+        className="py-3 shadow-lg sticky-top"
+        style={{
+          backgroundColor: "#020A1B",
+          backdropFilter: "blur(12px)",
+        }}
+      >
+        <div className="container d-flex align-items-center justify-content-between">
+          <div className="d-flex align-items-center gap-3">
+            <div
+              className="d-flex align-items-center justify-content-center bg-primary rounded-3"
+              style={{ width: "50px", height: "50px" }}
+            >
+              <span className="text-white fw-bold fs-4">H</span>
+            </div>
+            <div>
+              <h1 className="text-white fw-bold fs-5 mb-0">HFU</h1>
+              <p className="text-light small mb-0 opacity-75">Health Queue</p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-white fw-bold fs-5 mb-0">HFU</h1>
-            <p className="text-light small mb-0 opacity-75">Health Queue</p>
-          </div>
+
+          <nav className="d-none d-md-flex align-items-center gap-4">
+            <a href="#services" className="text-light text-decoration-none opacity-75 hover-opacity-100">
+              บริการ
+            </a>
+            <a href="#doctors" className="text-light text-decoration-none opacity-75 hover-opacity-100">
+              แพทย์
+            </a>
+            <a href="#packages" className="text-light text-decoration-none opacity-75 hover-opacity-100">
+              แพ็กเกจ
+            </a>
+            <a href="#contact" className="text-light text-decoration-none opacity-75 hover-opacity-100">
+              ติดต่อ
+            </a>
+          </nav>
+
+          <button className="btn btn-primary px-4 py-2 fw-semibold">เข้าสู่ระบบ</button>
         </div>
+      </header>
 
-        <nav className="d-none d-md-flex align-items-center gap-4 ">
-          <a href="#services" className="text-light text-decoration-none opacity-75 hover-opacity-100">
-            บริการ
-          </a>
-          <a href="#doctors" className="text-light text-decoration-none opacity-75 hover-opacity-100">
-            แพทย์
-          </a>
-          <a href="#packages" className="text-light text-decoration-none opacity-75 hover-opacity-100">
-            แพ็กเกจ
-          </a>
-          <a href="#contact" className="text-light text-decoration-none opacity-75 hover-opacity-100">
-            ติดต่อ
-          </a>
-        </nav>
-
-        <button className="btn btn-primary px-4 py-2 fw-semibold">
-          เข้าสู่ระบบ
-        </button>
-      </div>
-    </header>
       <div className="container py-4">
         <h1 className="text-center mb-4 fw-semibold text-secondary">ข้อมูลของคุณ</h1>
+<div className="d-flex justify-content-center mb-4 ">
+  <div
+    style={{
+      height: "4px",
+      width: "100px",
+      backgroundColor: "#001B45",
+      borderRadius: "2px",
+    }}
+  ></div>
+</div>
 
         <div className="row g-4">
           <div className="col-lg-3">
             <div className="card shadow-sm border-0">
-              <div className="card-header bg-primary text-white d-flex align-items-center gap-2 py-3">
-                <User size={20} />
-                <span className="fw-medium">ข้อมูลส่วนตัว</span>
-              </div>
+                <h1 className="fw-medium ">ข้อมูลส่วนตัว</h1>
 
-              <div className="list-group list-group-flush">
+  <div
+    style={{
+      height: "4px",
+      width: "20px",
+      backgroundColor: "#001B45",
+      borderRadius: "2px",
+    }}
+  ></div>
+
+
+              <div className="list-group list-group-flush mt-3">
                 <button className="list-group-item list-group-item-action active d-flex align-items-center gap-3 py-3 border-end border-primary border-4">
                   <User size={20} />
                   <span>บัตรนายของคุณ</span>
@@ -100,12 +115,12 @@ const calculateAge = (birthdate) => {
 
                 <button className="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">
                   <CreditCard size={20} />
-                  <span>ระบบสมัครนัดหมาย</span>
+                  <span>นัดหมาย</span>
                 </button>
 
                 <button className="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">
                   <Calendar size={20} />
-                  <span>เปลี่ยนรหัสผ่าน</span>
+                  <span>ประวัติการรักษา</span>
                 </button>
 
                 <button className="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">
