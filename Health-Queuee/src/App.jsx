@@ -14,6 +14,7 @@ import LoginPage from "./login-Pages/Login-user";
 import RegisterPage from "./Login-Pages/Register-User";
 import Profile from "./Profile-User/Profile";
 import Login2 from "./Login-Pages/Login2";
+import ProfileBook from "./Profile-User/Profile-book";
 import { Toaster, toast } from "react-hot-toast";
 
 function App() {
@@ -21,17 +22,18 @@ function App() {
     <>
       {/* <Toaster/> */}
       {/* <HealthcarePage />, */}
-      <Login2 />,
+      {/* <Login2 />, */}
       {/* <Profile /> */}
       {/* <LoginPage />, */}
       {/* <RegisterPage /> */}
       {/* <Navbar /> */}
       {/* <Login /> */}
-      {/* <BrowserRouter basename="/Final-Project2-Frontendd/">
+      <BrowserRouter basename="/Final-Project2-Frontendd/">
         <Routes>
-          <Route path="Layout" element={<Layout />} />
+          <Route path="Profile" element={<Profile />} />
+          <Route path="ProfileBook" element={<ProfileBook />} />
         </Routes>
-      </BrowserRouter> */}
+      </BrowserRouter>
     </>
   );
 }

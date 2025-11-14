@@ -2,7 +2,7 @@ import { useState } from "react";
 import { User, CreditCard, Calendar, Lock, Shield, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-export default function Profile() {
+export default function ProfileBook() {
   const [formData, setFormData] = useState({
     phone: "เบอร์โทรศัพท์",
     title: "นาย",
@@ -192,89 +192,6 @@ export default function Profile() {
                       <option value="นาง">นาง</option>
                       <option value="นางสาว">นางสาว</option>
                     </select>
-                  </div>
-
-                  <div className="mb-4">
-                    <label className="form-label fw-medium text-secondary">
-                      ชื่อ
-                    </label>
-                    <input
-                      type="text"
-                      name="firstName"
-                      value={formData.firstName}
-                      onChange={handleInputChange}
-                      className="form-control"
-                      placeholder="กันโทร"
-                    />
-                  </div>
-
-                  <div className="mb-4">
-                    <label className="form-label fw-medium text-secondary">
-                      นามสกุล
-                    </label>
-                    <input
-                      type="text"
-                      name="lastName"
-                      value={formData.lastName}
-                      onChange={handleInputChange}
-                      className="form-control"
-                      placeholder="รับสุคนธ์"
-                    />
-                  </div>
-
-                  <div className="mb-4">
-                    <label className="form-label fw-medium text-secondary">
-                      เลขบัตรประชาชน
-                    </label>
-                    <div className="fs-5 fw-semibold text-success">
-                      {formData.nationalId}
-                    </div>
-                  </div>
-
-                  <div className="row mb-4">
-                    <div className="col-md-8">
-                      <label className="form-label fw-medium text-secondary">
-                        วัน/เดือน/ปีเกิด
-                      </label>
-                      <input
-                        type="date"
-                        name="birthDate"
-                        value={formData.birthDate}
-                        onChange={handleInputChange}
-                        className="form-control"
-                      />
-                    </div>
-                    <div className="col-md-4">
-                      <label className="form-label fw-medium text-secondary">
-                        อายุ
-                      </label>
-                      <div className="fs-5 fw-semibold text-success">
-                        {calculateAge(formData.birthDate)} ปี
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mb-4">
-                    <label className="form-label fw-medium text-secondary">
-                      เพศ
-                    </label>
-                    <div className="fs-5 fw-semibold text-success">
-                      {formData.gender}
-                    </div>
-                  </div>
-
-                  <div className="mb-4">
-                    <label className="form-label fw-medium text-secondary">
-                      อีเมล
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      className="form-control"
-                      placeholder="theepakorn3th@gmail.com"
-                    />
                   </div>
 
                   <div className="d-flex justify-content-end mt-5">

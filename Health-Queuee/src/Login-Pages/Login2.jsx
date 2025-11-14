@@ -15,12 +15,9 @@ export default function Login2() {
     e.preventDefault();
     console.log("Login attempt:", { email, password, rememberMe });
 
-    // เช็ค login กับ backend
-    // login ผ่านแล้วค่อยไปหน้า OTP
     setShowOtp(true);
 
-    // แสดง Toast ว่าส่ง OTP 
-    toast.success("ส่ง OTP ไปยังเบอร์/อีเมลของคุณแล้ว");
+  //   toast.success("ส่ง OTP ไปยังเบอร์/อีเมลของคุณแล้ว");
   };
 
   const handleOtpChange = (index, value) => {
@@ -48,26 +45,22 @@ export default function Login2() {
     const code = otp.join("");
     console.log("OTP submit:", code);
 
-    //  สมมติว่าตรงนี้ไป verify OTP กับ backend
-    // ถ้า success:
-    toast.success("ยืนยัน OTP สำเร็จ! กำลังพาไปหน้า Dashboard");
-    // ถ้า fail :
-    // toast.error("OTP ไม่ถูกต้อง ลองใหม่อีกครั้ง");
+    // toast.success("ยืนยัน OTP สำเร็จ! กำลังพาไปหน้า Dashboard");
 
     alert(`Entered OTP: ${code}`);
   };
 
-  const showSuccess = () => {
-    toast.success("บันทึกข้อมูลสำเร็จ!");
-  };
+  // const showSuccess = () => {
+  //   toast.success("บันทึกข้อมูลสำเร็จ!");
+  // };
 
-  const showError = () => {
-    toast.error("เกิดข้อผิดพลาด!");
-  };
+  // const showError = () => {
+  //   toast.error("เกิดข้อผิดพลาด!");
+  // };
 
   return (
     <>
-      <Toaster position="top-right" reverseOrder={false} />
+      {/* <Toaster position="top-right" reverseOrder={false} /> */}
 
       <div
         style={{
