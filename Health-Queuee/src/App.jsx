@@ -14,10 +14,12 @@ import LoginPage from "./login-Pages/Login-user";
 import RegisterPage from "./Login-Pages/Register-User";
 import Profile from "./Profile-User/Profile";
 import Login2 from "./Login-Pages/Login2";
+import { Toaster, toast } from "react-hot-toast";
 
 function App() {
   return (
     <>
+      {/* <Toaster/> */}
       {/* <HealthcarePage />, */}
       <Login2 />,
       {/* <Profile /> */}
