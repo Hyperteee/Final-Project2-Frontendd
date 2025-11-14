@@ -152,7 +152,7 @@ return (
           โรงพยาบาล{selectedHospital}
         </div>
         <div className="bg-primary-subtle rounded-2 px-2 py-2 mb-2" style={{ color: "#11248fff" }}>
-          แผนก{selectedDepartmentData?.name}
+          แผนกกหฟกฟก{selectedDepartmentData?.name}
         </div>
       </div>
 
