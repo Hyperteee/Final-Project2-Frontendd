@@ -18,10 +18,29 @@ function Queue1() {
     const handleShow = () => setShow(true);
     const navigate = useNavigate()
     function handleNext(department, chooseDoctor, selectedHospital) {
-        navigate("/queue2", 
-            { state: { selectedDepartment : department, 
-                optionChooseDoctor : chooseDoctor, 
-                selectedHospital } });
+        if (!department || department === "") {
+            alert("กรุณาเลือกแผนกก่อน");
+            return;
+        }
+        if (!chooseDoctor || chooseDoctor === "") {
+            alert("กรุณาเลือกตัวเลือกแพทย์ก่อน");
+            return;
+        }
+        if (chooseDoctor == "choose") {
+            navigate("/queue2",
+                {
+                    state: {
+                        selectedDepartment: department,
+                        optionChooseDoctor: chooseDoctor,
+                        selectedHospital
+                    }
+                });
+        } 
+        else if (chooseDoctor == "dontChoose") {
+            navigate("/queue3",
+                { state: { selectedHospital, selectedDoctor: null, selectedDepartment: department } })
+        }
+
     }
     //////////////////////////////// stepper ////////////////////////
 
@@ -30,8 +49,8 @@ function Queue1() {
     console.log(department)
     const isStepActive = (stepNumber) => stepNumber <= currentStep;
 
-    
-    const hospitalData= hospitalMap[selectedHospital].info || null
+
+    const hospitalData = hospitalMap[selectedHospital].info || null
 
     return (
         <>

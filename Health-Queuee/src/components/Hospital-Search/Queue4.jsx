@@ -5,6 +5,8 @@ import Form from 'react-bootstrap/Form'
 import Button from "react-bootstrap/esm/Button";
 import { UserAppointment } from "../../data/context/appointment";
 import Modal from 'react-bootstrap/Modal'
+import { HospitalScheduleContext } from "../../data/context/allSchedule";
+
 const Queue4 = () => {
 
     const { state } = useLocation()
@@ -19,6 +21,11 @@ const Queue4 = () => {
     const [selectedFiles, setSelectedFiles] = useState([])
     const { addAppointment } = useContext(UserAppointment)
     const [show, setShow] = useState(false);
+    const { hospitalSchedules, setHospitalSchedules } = useContext(HospitalScheduleContext);
+
+
+
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const selectedDepartmentData = hospitalData.departments.find(
@@ -50,6 +57,20 @@ const Queue4 = () => {
     };
 
     const handleConfirm = () => {
+        const updatedSchedules = { ...hospitalSchedules };
+        const doctorSchedule = updatedSchedules[selectedHospital]
+            ?.find(dep => dep.departmentId === selectedDepartment)
+            ?.doctors.find(doc => doc.doctorId === selectedDoctor);
+
+        if (!doctorSchedule.bookings[appointmentDate]) {
+            doctorSchedule.bookings[appointmentDate] = {};
+        }
+        if (!doctorSchedule.bookings[appointmentDate][appointmentTime]) {
+            doctorSchedule.bookings[appointmentDate][appointmentTime] = [];
+        }
+        doctorSchedule.bookings[appointmentDate][appointmentTime].push({ symptom, files });
+        setHospitalSchedules(updatedSchedules);
+
         const newAppointment = {
             hospitalID: hospitalData.id,
             departmentID: selectedDepartment,
@@ -64,8 +85,8 @@ const Queue4 = () => {
         handleShow()
 
     }
-    function handleFinished(){
-        navigate("/testdata") 
+    function handleFinished() {
+        navigate("/testdata")
         // เดี๋ยวเปลี่บยเป็นไปหน้าโปรไฟล์
     }
 
@@ -153,7 +174,7 @@ const Queue4 = () => {
                     จองสำเร็จ
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="primary" onClick={()=>handleFinished()}>เสร็จสิ้น</Button>
+                    <Button variant="primary" onClick={() => handleFinished()}>เสร็จสิ้น</Button>
                 </Modal.Footer>
             </Modal>
         </div >
