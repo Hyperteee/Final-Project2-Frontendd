@@ -1,7 +1,8 @@
-import dataIcon from "../../../images/icon-department/icon-department";
+﻿import dataIcon from "../../../../images/icon-department/icon-department";
+import { createHospitalData } from "../utils/createHospitalData";
 
-const phyathai = {
-  id: 5,
+const phyathaiDefinition = {
+  id: "BKK003",
   name: "โรงพยาบาลพญาไท 2",
   state: "กรุงเทพมหานคร",
   type: "โรงพยาบาลเอกชนตติยภูมิ",
@@ -12,10 +13,12 @@ const phyathai = {
   district: "ราชเทวี",
   departments: [
     {
+      id: "BKK003-D01",
       name: "อายุรกรรมและเวชศาสตร์วินิจฉัย",
       logo: dataIcon.ayurkum,
       doctors: [
         {
+          id: "BKK003-D01-DR01",
           name: "พญ. กนกวรรณ อธิสุข",
           specialization: "อายุรกรรมทั่วไปและเวชศาสตร์เชิงลึก",
           schedule: [
@@ -24,6 +27,7 @@ const phyathai = {
           ],
         },
         {
+          id: "BKK003-D01-DR02",
           name: "นพ. ธีรภัทร ศิริพันธ์",
           specialization: "ต่อมไร้ท่อและเมตะบอลิสม",
           schedule: [
@@ -32,6 +36,7 @@ const phyathai = {
           ],
         },
         {
+          id: "BKK003-D01-DR03",
           name: "นพ. ปิยะวุฒิ ลิ้มสกุล",
           specialization: "ระบบทางเดินอาหารและตับ",
           schedule: [
@@ -41,10 +46,12 @@ const phyathai = {
       ],
     },
     {
+      id: "BKK003-D02",
       name: "สถาบันศัลยกรรมขั้นสูง",
       logo: dataIcon.surgery,
       doctors: [
         {
+          id: "BKK003-D02-DR01",
           name: "นพ. รัชนนนท์ กฤตเทพ",
           specialization: "ศัลยกรรมส่องกล้องและแผลเล็ก",
           schedule: [
@@ -53,6 +60,7 @@ const phyathai = {
           ],
         },
         {
+          id: "BKK003-D02-DR02",
           name: "พญ. สรินยา เทพวิไล",
           specialization: "ศัลยกรรมกระดูกและอุบัติเหตุ",
           schedule: [
@@ -60,6 +68,7 @@ const phyathai = {
           ],
         },
         {
+          id: "BKK003-D02-DR03",
           name: "นพ. ชนินทร์ เมฆธนา",
           specialization: "ศัลยกรรมหัวใจและทรวงอก",
           schedule: [
@@ -154,4 +163,9 @@ const phyathai = {
   ],
 };
 
+const { info: phyathai, schedule: phyathaiSchedule } = createHospitalData(phyathaiDefinition);
+
+export { phyathaiSchedule };
+
 export default phyathai;
+

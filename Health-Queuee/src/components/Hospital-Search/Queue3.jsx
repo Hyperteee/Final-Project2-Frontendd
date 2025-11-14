@@ -8,8 +8,7 @@ import "react-calendar/dist/Calendar.css";
 import "./Queue3.css";
 import Button from "react-bootstrap/esm/Button";
 import Calendar from "react-calendar";
-import Modal from 'react-bootstrap/Modal';
-import "react-calendar/dist/Calendar.css";
+import Modal from "react-bootstrap/Modal";
 
 const thaiDays = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"];
 const thaiMonths = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."]

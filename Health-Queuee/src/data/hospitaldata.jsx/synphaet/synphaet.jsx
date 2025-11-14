@@ -1,12 +1,13 @@
-import dataIcon from "../../../images/icon-department/icon-department";
+﻿import dataIcon from "../../../../images/icon-department/icon-department";
+import { createHospitalData } from "../utils/createHospitalData";
 
-const synphaet_ramintra = {
+const synphaetDefinition = {
   id: "BKK002", // Bangkok hospital #2
-  name: "สินแพทย์",
+  name: "โรงพยาบาลสินแพทย์",
   state: "กรุงเทพมหานคร",
   district: "ห้วยขวาง",
   type: "โรงพยาบาลเอกชน",
-  logo: "images/logohospital/สินแพทย์.jpeg",
+  logo: "images/logohospital/synphaet.png",
   stars: 4.2,
   reviews: 153,
   location: { lat: 13.7620, lng: 100.5673 },
@@ -143,4 +144,9 @@ const synphaet_ramintra = {
   ],
 };
 
+const { info: synphaet_ramintra, schedule: synphaetSchedule } = createHospitalData(synphaetDefinition);
+
+export { synphaetSchedule };
+
 export default synphaet_ramintra;
+

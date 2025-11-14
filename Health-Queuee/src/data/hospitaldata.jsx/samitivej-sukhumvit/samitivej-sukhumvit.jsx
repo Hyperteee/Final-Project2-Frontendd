@@ -1,7 +1,8 @@
-import dataIcon from "../../../images/icon-department/icon-department";
+﻿import dataIcon from "../../../../images/icon-department/icon-department";
+import { createHospitalData } from "../utils/createHospitalData";
 
-const samitivejSukhumvit = {
-    id: 7,
+const samitivejDefinition = {
+    id: "BKK005",
     name: "โรงพยาบาลสมิติเวช สุขุมวิท",
     state: "กรุงเทพมหานคร",
     type: "โรงพยาบาลเอกชน",
@@ -102,4 +103,9 @@ const samitivejSukhumvit = {
     ],
   };
 
+const { info: samitivejSukhumvit, schedule: samitivejSchedule } = createHospitalData(samitivejDefinition);
+
+export { samitivejSchedule };
+
 export default samitivejSukhumvit;
+

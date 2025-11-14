@@ -1,7 +1,8 @@
-import dataIcon from "../../../images/icon-department/icon-department";
+﻿import dataIcon from "../../../../images/icon-department/icon-department";
+import { createHospitalData } from "../utils/createHospitalData";
 
-const praram9Hospital = {
-    id: 10,
+const praram9Definition = {
+    id: "BKK008",
     name: "โรงพยาบาลพระรามเก้า",
     state: "กรุงเทพมหานคร",
     type: "โรงพยาบาลเอกชน",
@@ -102,4 +103,9 @@ const praram9Hospital = {
     ],
   };
 
+const { info: praram9Hospital, schedule: praram9Schedule } = createHospitalData(praram9Definition);
+
+export { praram9Schedule };
+
 export default praram9Hospital;
+

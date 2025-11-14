@@ -1,7 +1,8 @@
-import dataIcon from "../../../images/icon-department/icon-department";
+﻿import dataIcon from "../../../../images/icon-department/icon-department";
+import { createHospitalData } from "../utils/createHospitalData";
 
-const vejthaniHospital = {
-    id: 12,
+const vejthaniDefinition = {
+    id: "BKK010",
     name: "โรงพยาบาลเวชธานี",
     state: "กรุงเทพมหานคร",
     type: "โรงพยาบาลเอกชน",
@@ -102,4 +103,9 @@ const vejthaniHospital = {
     ],
   };
 
+const { info: vejthaniHospital, schedule: vejthaniSchedule } = createHospitalData(vejthaniDefinition);
+
+export { vejthaniSchedule };
+
 export default vejthaniHospital;
+

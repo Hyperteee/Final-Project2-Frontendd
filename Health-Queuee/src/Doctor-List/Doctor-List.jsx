@@ -1,17 +1,7 @@
 ﻿import { useEffect, useMemo, useState } from "react";
 import NavigationBar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
-import chulalongkorn from "../data/hospitaldata.jsx/chula";
-import synphaetRamintra from "../data/hospitaldata.jsx/synphaet";
-import phyathai from "../data/hospitaldata.jsx/phyathai";
-import bumrungrad from "../data/hospitaldata.jsx/bumrungrad";
-import samitivejSukhumvit from "../data/hospitaldata.jsx/samitivej-sukhumvit";
-import sirirajPiyamaharajkarun from "../data/hospitaldata.jsx/siriraj-piyamaharajkarun";
-import bangkokHospital from "../data/hospitaldata.jsx/bangkok-hospital";
-import praram9Hospital from "../data/hospitaldata.jsx/praram9";
-import ramathibodiHospital from "../data/hospitaldata.jsx/ramathibodi";
-import vejthaniHospital from "../data/hospitaldata.jsx/vejthani";
-import somdetPhraThepratHospital from "../data/hospitaldata.jsx/somdet-phra-theprat";
+import hospitalMap from "../data/hospitaldata.jsx/allhospitaldata";
 import "./DoctorList.css";
 import resolveAssetPath from "../utils/assetPath.js";
 
@@ -25,34 +15,143 @@ const DOCTOR_AVATAR_PATHS = {
 const MALE_MARKERS = ["นพ.", "นายแพทย์", "dr.", "mr.", "sir"];
 const FEMALE_MARKERS = ["พญ.", "แพทย์หญิง", "นางแพทย์", "mrs.", "ms.", "madam"];
 
-const hospitalsData = [
-  chulalongkorn,
-  synphaetRamintra,
-  phyathai,
-  bumrungrad,
-  samitivejSukhumvit,
-  sirirajPiyamaharajkarun,
-  bangkokHospital,
-  praram9Hospital,
-  ramathibodiHospital,
-  vejthaniHospital,
-  somdetPhraThepratHospital,
+const hospitalEntries = Object.values(hospitalMap);
+
+const UNIVERSITY_POOL = [
+  "คณะแพทยศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย",
+  "คณะแพทยศาสตร์ มหาวิทยาลัยมหิดล",
+  "คณะแพทยศาสตร์ศิริราชพยาบาล",
+  "คณะแพทยศาสตร์โรงพยาบาลรามาธิบดี",
+  "คณะแพทยศาสตร์ มหาวิทยาลัยเชียงใหม่",
+  "คณะแพทยศาสตร์ มหาวิทยาลัยขอนแก่น",
+  "คณะแพทยศาสตร์ มหาวิทยาลัยสงขลานครินทร์",
+  "คณะแพทยศาสตร์ มหาวิทยาลัยธรรมศาสตร์",
+  "คณะแพทยศาสตร์ มหาวิทยาลัยนเรศวร",
+  "คณะแพทยศาสตร์ มหาวิทยาลัยศรีนครินทรวิโรฒ",
 ];
 
-const normalizeDoctors = (hospitals) => {
-  return hospitals.flatMap((hospital) => {
+const EXPERIENCE_SENTENCES = [
+  "มีประสบการณ์ดูแลผู้ป่วยด้าน{specialty}มากกว่า 5 ปี",
+  "ผ่านการดูแลผู้ป่วยเฉพาะทาง{specialty}ทั้งในคลินิกและหอผู้ป่วยหนัก",
+  "ร่วมทีมสหสาขาด้าน{specialty}ในหลายโรงพยาบาลชั้นนำ",
+  "เคยศึกษาต่อยอดด้าน{specialty}ในต่างประเทศและถ่ายทอดสู่การรักษาในไทย",
+];
+
+const CARE_STYLE_SENTENCES = [
+  "เน้นการสื่อสารแบบเข้าใจง่ายและติดตามอาการอย่างใกล้ชิด",
+  "ให้ความสำคัญกับการป้องกันก่อนเกิดโรครุนแรงและออกแบบแผนการรักษาเฉพาะบุคคล",
+  "ใช้ข้อมูลเชิงลึกและเทคโนโลยีวินิจฉัยยุคใหม่ช่วยให้ผู้ป่วยตัดสินใจได้มั่นใจ",
+  "ดูแลคนไข้ด้วยความใส่ใจในรายละเอียดและทำงานร่วมกับครอบครัวผู้ป่วยเสมอ",
+];
+
+const FOCUS_SENTENCES = [
+  "สนใจการวิจัยด้าน{specialty}เชิงป้องกันเพื่อลดความเสี่ยงในระยะยาว",
+  "ถนัดการดูแลผู้ป่วย{specialty}ที่ต้องฟื้นฟูอย่างต่อเนื่อง",
+  "มุ่งพัฒนาการรักษาแบบผสมผสานทั้งการแพทย์แผนปัจจุบันและการดูแลตนเอง",
+  "เชี่ยวชาญการวางแผนติดตามอาการ{specialty}ด้วยเครื่องมือสวมใส่และแอปสุขภาพ",
+];
+
+const COMMUNITY_SENTENCES = [
+  "นอกจากงานประจำยังร่วมถ่ายทอดความรู้ให้ชุมชนในโครงการโรงพยาบาล{hospital}",
+  "ทำหน้าที่ที่ปรึกษาให้สตาร์ทอัปสุขภาพและทีมอาสาสมัครของ{hospital}",
+  "เป็นหนึ่งในทีมจัดอบรมครอบครัวผู้ป่วยที่{hospital}",
+  "ร่วมเวิร์กช็อปกับองค์กรท้องถิ่นเพื่อเพิ่มการเข้าถึงบริการที่{hospital}",
+];
+
+const LANGUAGE_SENTENCES = [
+  "สามารถสื่อสารได้ทั้งภาษาไทย อังกฤษ และภาษาญี่ปุ่นระดับพื้นฐาน",
+  "พูดคุยได้ทั้งภาษาไทย อังกฤษ และมีล่ามออนไลน์สำหรับผู้ป่วยต่างชาติ",
+  "ถนัดภาษาไทย อังกฤษ และจีนกลางสำหรับผู้ป่วยนักธุรกิจ",
+  "สื่อสารภาษาไทย อังกฤษ พร้อมมีคู่มือภาษามือสำหรับผู้ป่วยที่ต้องการ",
+];
+
+const createScheduleLookup = (schedule = []) => {
+  const map = new Map();
+  schedule.forEach((department) => {
+    department?.doctors?.forEach((doctor) => {
+      const slots = [];
+      Object.entries(doctor?.bookings ?? {}).forEach(([day, times]) => {
+        Object.entries(times ?? {}).forEach(([time, reservations]) => {
+          slots.push({
+            day,
+            time,
+            isBooked: Array.isArray(reservations) && reservations.length > 0,
+          });
+        });
+      });
+      map.set(doctor.doctorId, slots);
+    });
+  });
+  return map;
+};
+
+const hashString = (input = "") => {
+  if (!input) return 0;
+  let hash = 0;
+  for (let i = 0; i < input.length; i += 1) {
+    hash = (hash << 5) - hash + input.charCodeAt(i);
+    hash |= 0;
+  }
+  return Math.abs(hash);
+};
+
+const selectFromList = (items, key) => {
+  if (!Array.isArray(items) || items.length === 0) {
+    return "";
+  }
+  const index = Math.abs(hashString(key)) % items.length;
+  return items[index];
+};
+
+const pickEducation = (doctor, hospital) => {
+  if (doctor?.education) return doctor.education;
+  if (!UNIVERSITY_POOL.length) {
+    return "คณะแพทยศาสตร์ มหาวิทยาลัยการแพทย์แห่งชาติ";
+  }
+  const key = doctor?.id || doctor?.name || hospital?.id || hospital?.name || "default";
+  const index = hashString(key) % UNIVERSITY_POOL.length;
+  return UNIVERSITY_POOL[index];
+};
+
+const buildDoctorBio = (doctor, hospital, education) => {
+  if (doctor?.bio) return doctor.bio;
+  const name = doctor?.name || "แพทย์ประจำโรงพยาบาล";
+  const specialty = doctor?.specialization || "การแพทย์ทั่วไป";
+  const hospitalName = hospital?.name || "โรงพยาบาลชั้นนำ";
+  const doctorKey = doctor?.id || `${name}-${hospitalName}`;
+
+  const expTemplate = selectFromList(EXPERIENCE_SENTENCES, `${doctorKey}-exp`);
+  const experience = expTemplate ? expTemplate.replaceAll("{specialty}", specialty) : "";
+  const careStyle = selectFromList(CARE_STYLE_SENTENCES, `${doctorKey}-care`);
+  const focusTemplate = selectFromList(FOCUS_SENTENCES, `${doctorKey}-focus`);
+  const focusArea = focusTemplate ? focusTemplate.replaceAll("{specialty}", specialty) : "";
+  const communityTemplate = selectFromList(COMMUNITY_SENTENCES, `${doctorKey}-community`);
+  const communityRole = communityTemplate ? communityTemplate.replaceAll("{hospital}", hospitalName) : "";
+  const language = selectFromList(LANGUAGE_SENTENCES, `${doctorKey}-lang`);
+
+  return `${name} จบการศึกษาจาก${education} ${experience} ${careStyle} ${focusArea} ${communityRole} ${language}`.replace(/\s+/g, " ").trim();
+};
+
+const normalizeDoctors = (entries) => {
+  return entries.flatMap(({ info: hospital, schedule }) => {
     const departments = hospital?.departments ?? [];
+    const scheduleLookup = createScheduleLookup(schedule);
     return departments.flatMap((department) => {
       const doctors = department?.doctors ?? [];
-      return doctors.map((doctor, idx) => ({
-        id: doctor.id ?? `${hospital.id}-${department.name}-${idx}`,
-        name: doctor.name ?? "",
-        specialization: doctor.specialization ?? "",
-        schedule: doctor.schedule ?? [],
-        dept: department.name ?? "",
-        hospital: hospital.name ?? "",
-        hospitalLogo: hospital.logo ?? "",
-      }));
+      return doctors.map((doctor, idx) => {
+        const education = pickEducation(doctor, hospital);
+        return {
+          id: doctor.id ?? `${hospital.id}-${department.name}-${idx}`,
+          name: doctor.name ?? "",
+          specialization: doctor.specialization ?? "",
+          schedule: scheduleLookup.get(doctor.id) ?? [],
+          education,
+          bio: buildDoctorBio(doctor, hospital, education),
+          dept: department.name ?? "",
+          hospital: hospital.name ?? "",
+          hospitalLogo: hospital.logo ?? "",
+        };
+      });
     });
   });
 };
@@ -85,7 +184,7 @@ const getDoctorAvatarPath = (name = "") => {
 };
 
 export default function DoctorList() {
-  const doctorPool = useMemo(() => normalizeDoctors(hospitalsData), []);
+  const doctorPool = useMemo(() => normalizeDoctors(hospitalEntries), []);
 
   const departmentOptions = useMemo(() => {
     const names = doctorPool
@@ -221,7 +320,7 @@ export default function DoctorList() {
 
           <div className="doctor-results-panel">
             {pageDoctors.length > 0 ? (
-              <div className="row g-4">
+              <div className="doctor-card-grid">
                 {pageDoctors.map((doctor, idx) => {
                   const logoSrc = resolveAssetPath(doctor.hospitalLogo);
                   const rank = startIndex + idx + 1;
@@ -236,7 +335,7 @@ export default function DoctorList() {
                   const avatarSrc = avatarPath ? resolveAssetPath(avatarPath) : "";
                   const avatarClassName = `doctor-card__avatar${avatarSrc ? " doctor-card__avatar--image" : ""}`;
                   return (
-                    <div className="col-12 col-md-6" key={doctor.id}>
+                    <div className="doctor-card-grid__item" key={doctor.id}>
                       <div className="card border-0 shadow-sm rounded-4 position-relative h-100 doctor-card">
                         {rankClass && <div className={rankClass}>Top {rank}</div>}
                         {logoSrc && (
@@ -252,7 +351,9 @@ export default function DoctorList() {
                               <span className="fw-semibold">{getInitials(doctor.name)}</span>
                             )}
                           </div>
-                          <p className="fw-semibold mt-3 mb-1 text-truncate w-100">{doctor.name || "Unnamed doctor"}</p>
+                          <p className="fw-semibold doctor-card__name mt-3 mb-1 text-truncate w-100">
+                            {doctor.name || "Unnamed doctor"}
+                          </p>
                           <p className="small mb-1 doctor-card__subtitle">{doctor.dept}</p>
                           <p className="small mb-3 doctor-card__hospital">{doctor.hospital}</p>
                           {doctor.specialization && <p className="small text-secondary mb-3">{doctor.specialization}</p>}
@@ -328,6 +429,18 @@ export default function DoctorList() {
                   </div>
                 </div>
               </div>
+              {selectedDoctor.education && (
+                <div className="doctor-profile-modal__section">
+                  <h6>ประวัติการศึกษา</h6>
+                  <p className="mb-0">{selectedDoctor.education}</p>
+                </div>
+              )}
+              {selectedDoctor.bio && (
+                <div className="doctor-profile-modal__section">
+                  <h6>ประวัติย่อ</h6>
+                  <p className="mb-0">{selectedDoctor.bio}</p>
+                </div>
+              )}
               {Array.isArray(selectedDoctor.schedule) && selectedDoctor.schedule.length > 0 && (
                 <div className="doctor-profile-modal__section">
                   <h6>Available slots</h6>

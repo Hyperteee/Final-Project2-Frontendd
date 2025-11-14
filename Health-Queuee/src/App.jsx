@@ -16,6 +16,7 @@ import LoginPage from "./login-Pages/Login-user";
 import Queue2 from "./components/Hospital-Search/Queue2";
 import Queue3 from "./components/Hospital-Search/Queue3";
 import Queue4 from "./components/Hospital-Search/Queue4";
+import DoctorList from "./doctor-list/doctor-list.jsx";
 import hospitalMap from "./data/hospitaldata.jsx/allhospitaldata";
 import { HospitalScheduleProvider } from "./data/context/allSchedule";
 import { UserAppointmentProvider } from "./data/context/appointment";
@@ -33,6 +34,7 @@ function App() {
           <Route path="queue2" element={<Queue2 />} />
           <Route path="queue3" element={<Queue3 />} />
           <Route path="queue4" element={<Queue4 />} />
+          <Route path="doctors" element={<DoctorList />} />
           <Route path="testdata" element={<Testdata />} />
         </Routes>
       </BrowserRouter>

@@ -1,7 +1,8 @@
-import dataIcon from "../../../images/icon-department/icon-department";
+﻿import dataIcon from "../../../../images/icon-department/icon-department";
+import { createHospitalData } from "../utils/createHospitalData";
 
-const somdetPhraThepratHospital = {
-    id: 13,
+const somdetDefinition = {
+    id: "BKK011",
     name: "โรงพยาบาลศูนย์การแพทย์สมเด็จพระเทพรัตน์",
     state: "กรุงเทพมหานคร",
     type: "ศูนย์การแพทย์เฉพาะทาง",
@@ -102,4 +103,9 @@ const somdetPhraThepratHospital = {
     ],
   };
 
+const { info: somdetPhraThepratHospital, schedule: somdetSchedule } = createHospitalData(somdetDefinition);
+
+export { somdetSchedule };
+
 export default somdetPhraThepratHospital;
+

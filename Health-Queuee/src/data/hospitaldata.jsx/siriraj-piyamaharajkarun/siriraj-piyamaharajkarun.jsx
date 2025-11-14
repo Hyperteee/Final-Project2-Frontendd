@@ -1,7 +1,8 @@
-import dataIcon from "../../../images/icon-department/icon-department";
+﻿import dataIcon from "../../../../images/icon-department/icon-department";
+import { createHospitalData } from "../utils/createHospitalData";
 
-const sirirajPiyamaharajkarun = {
-    id: 8,
+const sirirajDefinition = {
+    id: "BKK006",
     name: "โรงพยาบาลศิริราช ปิยมหาราชการุณย์",
     state: "กรุงเทพมหานคร",
     type: "โรงพยาบาลมหาวิทยาลัย",
@@ -102,4 +103,9 @@ const sirirajPiyamaharajkarun = {
     ],
   };
 
+const { info: sirirajPiyamaharajkarun, schedule: sirirajSchedule } = createHospitalData(sirirajDefinition);
+
+export { sirirajSchedule };
+
 export default sirirajPiyamaharajkarun;
+

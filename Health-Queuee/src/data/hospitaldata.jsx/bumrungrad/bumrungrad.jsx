@@ -1,7 +1,8 @@
-import dataIcon from "../../../images/icon-department/icon-department";
+﻿import dataIcon from "../../../../images/icon-department/icon-department";
+import { createHospitalData } from "../utils/createHospitalData";
 
-const bumrungrad = {
-    id: 6,
+const bumrungradDefinition = {
+    id: "BKK004",
     name: "โรงพยาบาลบำรุงราษฎร์",
     state: "กรุงเทพมหานคร",
     type: "โรงพยาบาลเอกชนระดับนานาชาติ",
@@ -102,4 +103,9 @@ const bumrungrad = {
     ],
   };
 
+const { info: bumrungrad, schedule: bumrungradSchedule } = createHospitalData(bumrungradDefinition);
+
+export { bumrungradSchedule };
+
 export default bumrungrad;
+

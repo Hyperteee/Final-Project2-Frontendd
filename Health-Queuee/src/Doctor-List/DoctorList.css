@@ -31,7 +31,7 @@
 }
 
 .doctor-wrapper {
-  max-width: 1100px;
+  max-width: 1220px;
   margin: 0 auto;
   padding: 0 1.5rem;
   position: relative;
@@ -96,6 +96,16 @@
   margin-bottom: 2.25rem;
 }
 
+.doctor-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.25rem;
+}
+
+.doctor-card-grid__item {
+  height: 100%;
+}
+
 .doctor-card {
   border-radius: 30px;
   border: 1px solid rgba(209, 219, 255, 0.65) !important;
@@ -103,11 +113,17 @@
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   background: radial-gradient(circle at top, #ffffff 0%, #f6f7ff 55%, #eef1ff 100%);
   position: relative;
+  min-height: 430px;
 }
 
 .doctor-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 30px 38px rgba(5, 7, 20, 0.4);
+}
+
+.doctor-card .card-body {
+  width: 100%;
+  padding: 2.75rem 2.5rem 2.25rem;
 }
 
 .doctor-card__logo {
@@ -133,8 +149,8 @@
 }
 
 .doctor-card__avatar {
-  width: 84px;
-  height: 84px;
+  width: 108px;
+  height: 108px;
   border-radius: 50%;
   background: linear-gradient(135deg, #536dff, #7b89ff);
   display: flex;
@@ -338,14 +354,19 @@
   margin-bottom: 0.4rem;
 }
 
+.doctor-card__name {
+  font-size: 1.1rem;
+  color: #111735;
+}
+
 .doctor-card__subtitle {
-  color: #7a7f92;
-  font-size: 0.9rem;
+  color: #636987;
+  font-size: 0.95rem;
 }
 
 .doctor-card__hospital {
-  color: #5c6280;
-  font-size: 0.85rem;
+  color: #454c6b;
+  font-size: 0.9rem;
 }
 
 .doctor-card__slot {
@@ -398,8 +419,21 @@
     max-width: 90%;
   }
 
+  .doctor-card-grid {
+    grid-template-columns: 1fr;
+  }
+
   .doctor-card {
     border-radius: 24px;
+  }
+
+  .doctor-card .card-body {
+    padding: 2.2rem 1.9rem 1.9rem;
+  }
+
+  .doctor-card__avatar {
+    width: 96px;
+    height: 96px;
   }
 
   .doctor-results-panel {
