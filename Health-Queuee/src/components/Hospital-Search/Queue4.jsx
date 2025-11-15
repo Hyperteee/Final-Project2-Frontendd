@@ -31,10 +31,11 @@ const Queue4 = () => {
     const selectedDepartmentData = hospitalData.departments.find(
         (d) => d.id === selectedDepartment
     );
-    const DoctorData = selectedDepartmentData?.doctors.find(
-        (doctor) => doctor.id === selectedDoctor
-    );
 
+    const DoctorData =
+        selectedDoctor != null
+            ? selectedDepartmentData?.doctors?.find((doctor) => doctor.id === selectedDoctor)
+            : null
     console.log(selectedHospital)
     console.log(selectedDepartment)
     console.log(selectedDoctor)
@@ -56,35 +57,92 @@ const Queue4 = () => {
         setSelectedFiles([])
     };
 
-    const handleConfirm = () => {
-        const updatedSchedules = { ...hospitalSchedules };
-        const doctorSchedule = updatedSchedules[selectedHospital]
-            ?.find(dep => dep.departmentId === selectedDepartment)
-            ?.doctors.find(doc => doc.doctorId === selectedDoctor);
+    // const handleConfirm = () => {
+    //     const updatedSchedules = { ...hospitalSchedules };
+    //     const doctorSchedule = updatedSchedules[selectedHospital]
+    //         ?.find(dep => dep.departmentId === selectedDepartment)
+    //         ?.doctors.find(doc => doc.doctorId === selectedDoctor);
 
-        if (!doctorSchedule.bookings[appointmentDate]) {
-            doctorSchedule.bookings[appointmentDate] = {};
+    //     if (!doctorSchedule.bookings[appointmentDate]) {
+    //         doctorSchedule.bookings[appointmentDate] = {};
+    //     }
+    //     if (!doctorSchedule.bookings[appointmentDate][appointmentTime]) {
+    //         doctorSchedule.bookings[appointmentDate][appointmentTime] = [];
+    //     }
+    //     doctorSchedule.bookings[appointmentDate][appointmentTime].push({ symptom, files });
+    //     setHospitalSchedules(updatedSchedules);
+
+    //     const newAppointment = {
+    //         hospitalID: hospitalData.id,
+    //         departmentID: selectedDepartment,
+    //         doctorID: selectedDoctor,
+    //         date: appointmentDate,
+    //         time: appointmentTime,
+    //         symptom,
+    //         files
+    //     }
+    //     addAppointment(newAppointment);
+    //     console.log("Appointment added:", newAppointment);
+    //     handleShow()
+
+    // }
+    const handleConfirm = () => {
+        // Copy schedules
+        const updatedSchedules = { ...hospitalSchedules };
+        const departmentSchedule = updatedSchedules[selectedHospital]
+            ?.find(dep => dep.departmentId === selectedDepartment);
+
+        if (!departmentSchedule) {
+            console.error("Department schedule not found!");
+            return;
         }
-        if (!doctorSchedule.bookings[appointmentDate][appointmentTime]) {
-            doctorSchedule.bookings[appointmentDate][appointmentTime] = [];
+
+        if (selectedDoctor != null) {
+            const doctorSchedule = departmentSchedule.doctors.find(doc => doc.doctorId === selectedDoctor);
+            if (!doctorSchedule) {
+                console.error("Doctor schedule not found!");
+                return;
+            }
+
+            if (!doctorSchedule.bookings[appointmentDate]) {
+                doctorSchedule.bookings[appointmentDate] = {};
+            }
+            if (!doctorSchedule.bookings[appointmentDate][appointmentTime]) {
+                doctorSchedule.bookings[appointmentDate][appointmentTime] = [];
+            }
+
+            doctorSchedule.bookings[appointmentDate][appointmentTime].push({ symptom, files });
+        } else {
+            // "ไม่รู้แผนก" case — no specific doctor
+            if (!departmentSchedule.bookings[appointmentDate]) {
+                departmentSchedule.bookings[appointmentDate] = {};
+            }
+            if (!departmentSchedule.bookings[appointmentDate][appointmentTime]) {
+                departmentSchedule.bookings[appointmentDate][appointmentTime] = [];
+            }
+
+            departmentSchedule.bookings[appointmentDate][appointmentTime].push({ symptom, files });
         }
-        doctorSchedule.bookings[appointmentDate][appointmentTime].push({ symptom, files });
+
+        // Update state
         setHospitalSchedules(updatedSchedules);
 
+        // Save to user's appointments
         const newAppointment = {
             hospitalID: hospitalData.id,
             departmentID: selectedDepartment,
-            doctorID: selectedDoctor,
+            doctorID: selectedDoctor, // may be null for "ไม่รู้แผนก"
             date: appointmentDate,
             time: appointmentTime,
             symptom,
             files
-        }
+        };
         addAppointment(newAppointment);
         console.log("Appointment added:", newAppointment);
-        handleShow()
 
-    }
+        handleShow()
+    };
+
     function handleFinished() {
         navigate("/testdata")
         // เดี๋ยวเปลี่บยเป็นไปหน้าโปรไฟล์
@@ -99,7 +157,7 @@ const Queue4 = () => {
                         โรงพยาบาล{selectedHospital}
                     </div>
                     <div className="bg-primary-subtle rounded-2 px-2 py-2 mb-2" style={{ color: "#11248fff" }}>
-                        แผนก{selectedDepartmentData?.name}
+                        {selectedDepartmentData?.name == "ไม่รู้แผนก" ? "คัดกรอง" : `แผนก ${selectedDepartmentData?.name}`}
                     </div>
                 </div>
 
@@ -120,8 +178,8 @@ const Queue4 = () => {
                 <div>
                     <p className="fw-bold fs-5">ข้อมูลทำนัด</p>
                     <div className="doctor-card__avatar"><span className="fw-semibold">รูป</span></div>
-                    <p className="mt-3 text-truncate w-100"><b>ชื่อแพทย์ : </b>{DoctorData?.name || "Unnamed doctor"}</p>
-                    <p><b>ศูนย์การรักษา : </b>{selectedDepartmentData?.name}</p>
+                    <p className="mt-3 text-truncate w-100"><b>ชื่อแพทย์ : </b>{DoctorData?.name || "-"}</p>
+                    <p><b>ศูนย์การรักษา : </b>{selectedDepartmentData?.name == "ไม่รู้แผนก" ? "คัดกรอง" : `แผนก ${selectedDepartmentData?.name}`}</p>
                     <p><b>วันนัดหมาย : </b>{displayDate}</p>
                     <p><b>เวลานัดหมาย : </b>{appointmentTime}</p>
                 </div>

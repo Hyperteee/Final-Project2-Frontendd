@@ -11,7 +11,7 @@ const Testdata = () => {
         <ul>
           {appointments.map((app, idx) => (
             <li key={idx}>
-              Hospital: {app.hospitalID}, Doctor: {app.doctorID}, Date: {app.date}, Time: {app.time}
+              Hospital: {app.hospitalID},Department : {app.departmentID}, Doctor: {app.doctorID}, Date: {app.date}, Time: {app.time}
             </li>
           ))}
         </ul>
