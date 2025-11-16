@@ -2,7 +2,7 @@ import { useState } from "react";
 import { User, CreditCard, Calendar, Lock, Shield, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-export default function Profile() {
+export default function ProfilePrivacy() {
   const [formData, setFormData] = useState({
     phone: "เบอร์โทรศัพท์",
     title: "นาย",
@@ -147,9 +147,7 @@ export default function Profile() {
                   <span>ประวัติการรักษา</span>
                 </button>
 
-                <button 
-                onClick={() => navigate("/ProfilePrivacy")}
-                className="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">
+                <button className="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">
                   <Shield size={20} />
                   <span>จัดการข้อมูลส่วนบุคคล</span>
                 </button>
@@ -171,109 +169,43 @@ export default function Profile() {
                 <form onSubmit={handleSubmit}>
                   <div className="mb-4">
                     <label className="form-label fw-medium text-secondary">
-                      เบอร์โทรศัพท์
+                      การจัดการข้อมูลส่วนบุคคล
                     </label>
                     <div className="fs-5 fw-semibold text-success">
-                      {formData.phone}
+                      เปลี่ยนรหัสผ่าน
                     </div>
                   </div>
 
                   <div className="mb-4">
                     <label className="form-label fw-medium text-secondary">
-                      คำนำหน้าชื่อ
-                    </label>
-                    <select
-                      name="title"
-                      value={formData.title}
-                      onChange={handleInputChange}
-                      className="form-select"
-                    >
-                      <option value="นาย">นาย</option>
-                      <option value="นาง">นาง</option>
-                      <option value="นางสาว">นางสาว</option>
-                    </select>
-                  </div>
-
-                  <div className="mb-4">
-                    <label className="form-label fw-medium text-secondary">
-                      ชื่อ
+                      รหัสผ่านปัจจุบัน
                     </label>
                     <input
                       type="text"
-                      name="firstName"
-                      value={formData.firstName}
-                      onChange={handleInputChange}
+                      name="Current-Password"
                       className="form-control"
-                      placeholder="ชื่อจริง"
+                      placeholder="Current Password"
                     />
                   </div>
 
                   <div className="mb-4">
                     <label className="form-label fw-medium text-secondary">
-                      นามสกุล
+                      รหัสผ่านใหม่
                     </label>
                     <input
                       type="text"
-                      name="lastName"
-                      value={formData.lastName}
-                      onChange={handleInputChange}
+                      name="New-Password"
                       className="form-control"
-                      placeholder="นามสกุล"
+                      placeholder="New Password"
                     />
-                  </div>
+                  </div>                  
 
                   <div className="mb-4">
-                    <label className="form-label fw-medium text-secondary">
-                      เลขบัตรประชาชน
-                    </label>
-                    <div className="fs-5 fw-semibold text-success">
-                      {formData.nationalId}
-                    </div>
-                  </div>
-
-                  <div className="row mb-4">
-                    <div className="col-md-8">
-                      <label className="form-label fw-medium text-secondary">
-                        วัน/เดือน/ปีเกิด
-                      </label>
-                      <input
-                        type="date"
-                        name="birthDate"
-                        value={formData.birthDate}
-                        onChange={handleInputChange}
-                        className="form-control"
-                      />
-                    </div>
-                    <div className="col-md-4">
-                      <label className="form-label fw-medium text-secondary">
-                        อายุ
-                      </label>
-                      <div className="fs-5 fw-semibold text-success">
-                        {calculateAge(formData.birthDate)} ปี
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mb-4">
-                    <label className="form-label fw-medium text-secondary">
-                      เพศ
-                    </label>
-                    <div className="fs-5 fw-semibold text-success">
-                      {formData.gender}
-                    </div>
-                  </div>
-
-                  <div className="mb-4">
-                    <label className="form-label fw-medium text-secondary">
-                      อีเมล
-                    </label>
                     <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
+                      type="text"
+                      name="Confirm-Password"
                       className="form-control"
-                      placeholder="theepakorn3th@gmail.com"
+                      placeholder="Confirm Password"
                     />
                   </div>
 

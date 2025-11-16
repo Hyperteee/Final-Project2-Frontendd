@@ -192,7 +192,9 @@ export default function ProfileHistory() {
                   <span>ประวัติการรักษา</span>
                 </button>
 
-                <button className="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">
+                <button 
+                onClick={() => navigate("/ProfilePrivacy")}
+                className="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">
                   <Shield size={20} />
                   <span>จัดการข้อมูลส่วนบุคคล</span>
                 </button>
