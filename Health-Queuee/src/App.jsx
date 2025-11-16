@@ -33,6 +33,7 @@ function App() {
       {/* <Login /> */}
       <BrowserRouter basename="/Final-Project2-Frontendd/">
         <Routes>
+          <Route path="/" element={<LoginPage />} />
           <Route path="Profile" element={<Profile />} />
           <Route path="ProfileBook" element={<ProfileBook />} />
           <Route path ="ProfileHistory" element={<ProfileHistory />} />

@@ -1,6 +1,8 @@
 import React, { useState, useRef } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { Toaster, toast } from "react-hot-toast"; // ✅ เพิ่มตรงนี้
+import { useNavigate } from "react-router-dom";
+import Userspass from "./Users/Userspass";
 
 export default function Login2() {
   const [showOtp, setShowOtp] = useState(false);
