@@ -1,450 +1,732 @@
 import { useState } from "react";
-
+import Carousel from "react-bootstrap/Carousel";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function HealthcarePage() {
   const [currentOrgSlide, setCurrentOrgSlide] = useState(0);
   const [currentPackageSlide, setCurrentPackageSlide] = useState(0);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [chatMessage, setChatMessage] = useState("");
+
+  const doctors = [
+    { id: 1, name: "นพ. สมชาย ใจดี", specialty: "อายุรแพทย์" },
+    { id: 2, name: "พญ. สมหญิง รักษา", specialty: "กุมารแพทย์" },
+    { id: 3, name: "นพ. วิชัย สุขภาพ", specialty: "ศัลยแพทย์" },
+    { id: 4, name: "พญ. นิภา ดูแล", specialty: "สูติ-นรีแพทย์" },
+  ];
+
+  const packages = [
+    { id: 1, title: "แพ็กเกจตรวจสุขภาพทั่วไป", category: "ตรวจสุขภาพ" },
+    { id: 2, title: "แพ็กเกจดูแลผิวพรรณ", category: "ความงาม" },
+    { id: 3, title: "วัคซีนป้องกันโรค", category: "วัคซีน" },
+    { id: 4, title: "ตรวจสุขภาพผู้สูงอายุ", category: "ตรวจสุขภาพ" },
+    { id: 5, title: "แพ็กเกจลดน้ำหนัก", category: "ความงาม" },
+    { id: 6, title: "วัคซีนไข้หวัดใหญ่", category: "วัคซีน" },
+  ];
 
   return (
-    <div className="min-h-screen bg-white">
-      <header className="bg-[#00002b] -py-4 px-10">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <img src="./images/HFU-Logo.png" alt="HFU" className="h-24 w-auto" />
-    
-
-          <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-            <span className="text-[#00002b] font-bold text-sm">LOGO</span>
-          </div>
-        </div>
-      </header>
-
-      <section className="relative">
-        <img
-          src="./images/BG-Hospital.jpg"
-          alt="Healthcare Professional"
-          className="w-full h-[600px] object-cover"
-        />
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 w-full max-w-2xl px-6">
-          <div className="bg-white rounded-full shadow-lg px-6 py-3 flex items-center gap-3">
-            <svg
-              className="w-5 h-5 text-gray-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
-            <input
-              type="text"
-              placeholder="ค้นหา"
-              className="flex-1 outline-none text-gray-700"
-            />
-            <button className="bg-[#000066] text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-[#000088] transition-colors">
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+    <>
+      <div style={{ minHeight: "100vh", backgroundColor: "#f8f9fa" }}>
+        <header
+          className="py-3 shadow-lg sticky-top"
+          style={{
+            backgroundColor: "#020A1B",
+            backdropFilter: "blur(12px)",
+          }}
+        >
+          <div className="container d-flex align-items-center justify-content-between">
+            {/* Logo */}
+            <div className="d-flex align-items-center gap-3">
+              <div
+                className="d-flex align-items-center justify-content-center bg-primary rounded-3"
+                style={{ width: "50px", height: "50px" }}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M14 5l7 7m0 0l-7 7m7-7H3"
-                />
-              </svg>
+                <span className="text-white fw-bold fs-4">H</span>
+              </div>
+              <div>
+                <h1 className="text-white fw-bold fs-5 mb-0">HFU</h1>
+                <p className="text-light small mb-0 opacity-75">Health Queue</p>
+              </div>
+            </div>
+
+            {/* Nav */}
+            <nav className="d-none d-md-flex align-items-center gap-4 ">
+              <a
+                href="#services"
+                className="text-light text-decoration-none opacity-75 hover-opacity-100"
+              >
+                บริการ
+              </a>
+              <a
+                href="#doctors"
+                className="text-light text-decoration-none opacity-75 hover-opacity-100"
+              >
+                แพทย์
+              </a>
+              <a
+                href="#packages"
+                className="text-light text-decoration-none opacity-75 hover-opacity-100"
+              >
+                แพ็กเกจ
+              </a>
+              <a
+                href="#contact"
+                className="text-light text-decoration-none opacity-75 hover-opacity-100"
+              >
+                ติดต่อ
+              </a>
+            </nav>
+
+            {/* Button */}
+            <button className="btn btn-primary px-4 py-2 fw-semibold">
+              เข้าสู่ระบบ
             </button>
           </div>
-        </div>
-      </section>
+        </header>
 
-      <section
-        className="relative py-12 px-6 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('./images/BG/BG2.png')" }}
-      >
-        {/* ชั้น overlay มืดและเบลอ */}
-        <div className="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
-
-        {/* เนื้อหาหลัก */}
-        <div className="relative max-w-7xl mx-auto">
-          <h1 className="text-center text-3xl font-semibold text-white mb-8 drop-shadow-md">
-            Trusted by teams at
-          </h1>
-
-          {/* เส้นขาวตกแต่ง */}
-          <div className="h-1 w-24 bg-white mx-auto rounded-full mb-10"></div>
-
-          {/* ช่องโลโก้ */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
-            {[1, 2, 3, 4, 5].map((i) => (
-              <div
-                key={i}
-                className="bg-white/90 backdrop-blur-md rounded-lg p-8 flex items-center justify-center h-32 shadow-lg hover:scale-105 transition-transform duration-300"
-              >
-                <span className="text-gray-600 font-medium">Logo</span>
-              </div>
-            ))}
-          </div>
-          <div className="relative max-w-7xl mx-auto m-[35px] grid grid-cols-2 gap-12 items-center m">
-            {/* ฝั่งข้อความ */}
-            <div>
-              <h2 className="text-7xl font-bold text-white mb-4 drop-shadow-lg">
-                Chat Bot Doctor
-              </h2>
-              <p className="text-white text-[20px] leading-relaxed mb-6 drop-shadow-md">
-                ผู้ป่วยสามารถสอบถามข้อมูลเบื้องต้น
-                <br />
-                เกี่ยวกับอาการเจ็บป่วยและรับคำแนะนำ
-                <br />
-                จากแชทบอทก่อนพบแพทย์
-              </p>
-              <button className="bg-[#000066] text-white px-8 py-4 rounded-lg hover:bg-[#000088] transition-colors shadow-lg">
-                ChatBot
-              </button>
-            </div>
-
-            {/* กล่องแชทจำลอง */}
-            <div className="bg-white/90 rounded-2xl shadow-2xl p-6 backdrop-blur-md">
-              <div className="bg-gray-100 rounded-lg p-4 mb-4 h-64 flex items-end overflow-hidden">
-                <div className="text-gray-500 italic">
-                  เริ่มพิมพ์เพื่อสนทนา...
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  className="flex-1 border border-gray-300 rounded-full px-4 py-2 outline-none"
-                  placeholder="พิมพ์ข้อความ..."
+        <section
+          className="position-relative py-5"
+          style={{
+            background: "linear-gradient(180deg, #020A1B 0%, #000000 100%)",
+            minHeight: "500px",
+          }}
+        >
+          <div className="container py-5">
+            <Carousel className="rounded-4 overflow-hidden mb-5">
+              <Carousel.Item>
+                <img
+                  className="d-block w-100"
+                  src="./images/smart-healthcare-dashboard.png"
+                  alt="สไลด์ 1"
+                  style={{ height: "500px", objectFit: "cover" }}
                 />
-                <button className="bg-[#000066] text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-[#000088] transition-colors">
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M14 5l7 7m0 0l-7 7m7-7H3"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+              </Carousel.Item>
 
-      {/* <section
-        className="relative py-12 px-6 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('./images/BG/BG2.png')" }}
-      >
-        <div className="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
-
-        
-      </section> */}
-
-      <section
-  className="relative py-12 px-6 bg-cover bg-center bg-no-repeat"
-  style={{ backgroundImage: "url('./images/BG/BG-White.png')" }}
->
-  <div className="max-w-7xl mx-auto">
-    {/* หัวข้อ + ปุ่ม ทั้งหมด */}
-    <div className="flex items-end justify-between mb-8">
-      <div>
-        <h2 className="text-2xl font-bold text-gray-900">แพทย์ยอดนิยม</h2>
-        <div className="h-2 bg-[#000066] mt-3 w-24 rounded"></div>
-      </div>
-      <button className="bg-gray-200 text-gray-700 px-4 py-1.5 rounded-full text-sm hover:bg-gray-300 transition">
-        ทั้งหมด
-      </button>
-    </div>
-
-    {/* การ์ดแพทย์ */}
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-6">
-      {[1, 2, 3, 4].map((i) => (
-        <div key={i} className="bg-gray-100 rounded-2xl p-6 min-h-[400px]">
-          <div className="w-full aspect-[4/3] bg-gray-300 rounded-2xl mb-4 flex items-center justify-center overflow-hidden">
-            {/* ถ้ามีรูปจริง: <img src="..." alt="" className="w-full h-full object-cover" /> */}
-            <span className="text-gray-500 text-sm">Image</span>
-          </div>
-          <div className="text-center">
-            <h3 className="font-semibold text-gray-900">ชื่อแพทย์</h3>
-            <p className="text-sm text-gray-500">ความเชี่ยวชาญ</p>
-          </div>
-        </div>
-      ))}
-    </div>
-
-    {/* ปุ่มเลื่อนซ้ายขวา */}
-    <div className="flex gap-3 mb-6">
-      <button
-        onClick={() => setCurrentOrgSlide(Math.max(0, currentOrgSlide - 1))}
-        className="w-10 h-10 border-2 border-gray-300 rounded-full flex items-center justify-center hover:bg-gray-100 transition"
-        aria-label="ก่อนหน้า"
-      >
-        <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
-      <button
-        onClick={() => setCurrentOrgSlide(currentOrgSlide + 1)}
-        className="w-10 h-10 border-2 border-gray-300 rounded-full flex items-center justify-center hover:bg-gray-100 transition"
-        aria-label="ถัดไป"
-      >
-        <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-        </svg>
-      </button>
-    </div>
-
-    {/* ปุ่มลงทะเบียน */}
-    <div className="flex justify-end ml-0 md:ml-20">
-      <button className="bg-[#000066] text-white px-8 py-3 rounded-lg hover:bg-[#000088] transition">
-        ลงทะเบียน
-      </button>
-    </div>
-  </div>
-</section>
-
-
-      <section
-        className="relative py-12 px-6 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('./images/BG/BG2.png')" }} // เปลี่ยน path ตามไฟล์คุณ
-      >
-        {/* ชั้น overlay มืด + เบลอ */}
-        <div className="absolute inset-0 bg-black/50 backdrop-blur-[3px]"></div>
-
-        {/* เนื้อหาหลัก */}
-        <div className="relative max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-white mb-1">
-            แพ็กเกจ <span className="text-blue-300">และโปรโมชั่น</span>
-          </h2>
-          <div className="h-1 w-24 bg-white mt-3 rounded-full"></div>
-
-          {/* แถบตัวกรอง */}
-          <div className="grid grid-cols-2 gap-6 mb-8 mt-8">
-            <div>
-              <label className="block text-white mb-2">เลือกประเภท</label>
-              <div className="relative">
-                <button className="bg-white text-black px-20 py-2 rounded-full transition-colors">
-                  ทั้งหมด
-                  <svg
-                    className="absolute right-[1px] top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </div>
-            <div className="bg-white/90 backdrop-blur-md rounded-full shadow-lg px-[20px] py-[20px] flex items-center gap-3">
-              <svg
-                className="w-5 h-5 text-gray-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              <Carousel.Item>
+                <img
+                  className="d-block w-100"
+                  src="./images/col2.jpg"
+                  alt="สไลด์ 2"
+                  style={{ height: "500px", objectFit: "cover" }}
                 />
-              </svg>
-              <input
-                type="text"
-                placeholder="ค้นหา"
-                className="flex-1 outline-none text-gray-700 bg-transparent"
-              />
-            </div>
-          </div>
+              </Carousel.Item>
 
-          {/* การ์ดโปรโมชั่น */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
-            {[...Array(6)].map((_, i) => (
-              <div
-                key={i}
-                className="bg-white/90 backdrop-blur-md rounded-2xl overflow-hidden shadow-lg hover:scale-[1.02] transition-transform duration-300"
-              >
-                <div className="bg-gray-100 h-48"></div>
-                <div className="bg-gray-200 p-4">
-                  <p className="text-gray-800 font-semibold mb-1">
-                    แพ็กเกจสุขภาพ
-                  </p>
-                  <p className="text-gray-800 font-semibold mb-3">
-                    ตรวจสุขภาพ / ความงาม / วัคซีน
-                  </p>
-                  <div className="flex gap-2">
-                    <button className="bg-white text-gray-800 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-50 transition-colors">
-                      ดูรายละเอียด
-                    </button>
-                    <button className="bg-white text-gray-800 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-50 transition-colors">
-                      จองเลย
-                    </button>
+              <Carousel.Item>
+                <img
+                  className="d-block w-100"
+                  src="./images/BG-Hospital.jpg"
+                  alt="สไลด์ 3"
+                  style={{ height: "500px", objectFit: "cover" }}
+                />
+              </Carousel.Item>
+            </Carousel>
+
+            <div className="row justify-content-center">
+              <div className="col-lg-8">
+                <div className="card shadow-lg border-0 rounded-4">
+                  <div className="card-body p-2">
+                    <div className="input-group">
+                      <span className="input-group-text bg-white border-0 ps-4">
+                        <svg
+                          width="20"
+                          height="20"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                          />
+                        </svg>
+                      </span>
+                      <input
+                        type="text"
+                        className="form-control border-0 py-3"
+                        placeholder="ค้นหาแพทย์, แพ็กเกจ, หรือบริการ..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        style={{ fontSize: "1rem" }}
+                      />
+                      <button
+                        className="btn btn-primary px-5 rounded-3"
+                        type="button"
+                      >
+                        ค้นหา
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-            ))}
+            </div>
           </div>
 
-          {/* ปุ่มเลื่อน */}
-          <div className="flex gap-3 mb-8 justify-center">
-            <button className="w-10 h-10 bg-white/90 rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors shadow-md">
-              <svg
-                className="w-5 h-5 text-[#000066]"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
-            </button>
-            <button className="w-10 h-10 bg-white/90 rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors shadow-md">
-              <svg
-                className="w-5 h-5 text-[#000066]"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-      </section>
+          <div
+            className="position-absolute rounded-circle"
+            aria-hidden="true"
+            style={{
+              top: "80px",
+              left: "40px",
+              width: "80px",
+              height: "80px",
+              backgroundColor: "rgba(59, 130, 246, 0.1)",
+              filter: "blur(40px)",
+              pointerEvents: "none",
+            }}
+          ></div>
+          <div
+            className="position-absolute rounded-circle"
+            aria-hidden="true"
+            style={{
+              bottom: "80px",
+              right: "40px",
+              width: "128px",
+              height: "128px",
+              backgroundColor: "rgba(59, 130, 246, 0.1)",
+              filter: "blur(40px)",
+              pointerEvents: "none",
+            }}
+          ></div>
 
-      <footer id="contact" className="bg-gray-900 text-gray-300 py-16">
-        <div className="max-w-7xl mx-auto px-8">
-          <div className="grid grid-cols-4 gap-12 mb-12">
-            {/* Footer */}{" "}
-            <div className="-mt-7">
-              <div className="flex items-center gap-3 mb-2">
+          <div className="container mt-5">
+            {/* Trusted by */}
+            <div className="text-center mt-5">
+              <h3 className="h2 fw-bold text-white mb-4">
+                Trusted by teams at
+              </h3>
+              <div className="d-flex flex-wrap justify-content-center align-items-center gap-4">
                 <img
-                  src="./images/HFU-Logo.png"
-                  alt="HFU Logo"
-                  className="h-32 w-auto"
+                  src="./images/Hos-Chula.svg"
+                  alt="Chula"
+                  width="180"
+                  height="160"
+                  loading="lazy"
                 />
-                {/* <span className="text-2xl font-bold text-white">HFU</span> */}{" "}
+                <img
+                  src="./images/Hos-Paolo.png"
+                  alt="Paolo"
+                  width="180"
+                  height="160"
+                  loading="lazy"
+                />
+                <img
+                  src="./images/Hos-Bangkok.png"
+                  alt="Bangkok"
+                  width="180"
+                  height="160"
+                  loading="lazy"
+                />
+                <img
+                  src="./images/Hos-Phyathai.png"
+                  alt="Phyathai"
+                  width="180"
+                  height="160"
+                  loading="lazy"
+                />
+                <img
+                  src="./images/hos-samitivej.png"
+                  alt="Samitivej"
+                  width="180"
+                  height="160"
+                  loading="lazy"
+                />
               </div>
-              <p className="text-gray-400 leading-relaxed -mt-5 ">
-                Leading healthcare queue management solutions{" "}
-              </p>
             </div>
-            {/* Products */}
-            <div>
-              <h4 className="text-white font-semibold text-lg mb-4">
-                Products
-              </h4>
-              <ul className="space-y-3">
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Queue Management
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Appointment System
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Analytics Dashboard
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Mobile App
-                  </a>
-                </li>
-              </ul>
-            </div>
-            {/* Company */}
-            <div>
-              <h4 className="text-white font-semibold text-lg mb-4">
-                Company
-              </h4>
-              <ul className="space-y-3">
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    About Us
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Careers
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Blog
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Press
-                  </a>
-                </li>
-              </ul>
-            </div>
-            {/* Support */}
-            <div>
-              <h4 className="text-white font-semibold text-lg mb-4">
-                Support
-              </h4>
-              <ul className="space-y-3">
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Help Center
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Documentation
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Contact Us
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Privacy Policy
-                  </a>
-                </li>
-              </ul>
+
+            <div className="row g-5 align-items-center mt-5">
+              <div className="col-lg-6">
+                <span className="badge bg-primary bg-opacity-10 text-primary px-3 py-2 mb-3">
+                  AI Assistant
+                </span>
+                <h2 className="display-4 fw-bold mb-4 text-white">
+                  Chat Bot
+                  <br />
+                  <span className="text-primary">Doctor</span>
+                </h2>
+                <p className="fs-5 text-white mb-4 lh-lg">
+                  ปรึกษาอาการเบื้องต้นกับแชทบอทอัจฉริยะ
+                  รับคำแนะนำด้านสุขภาพก่อนพบแพทย์ พร้อมบริการตลอด 24 ชั่วโมง
+                </p>
+                <button className="btn btn-primary btn-lg px-5 py-3 shadow">
+                  เริ่มสนทนา
+                </button>
+              </div>
+
+              <div className="col-lg-6"></div>
             </div>
           </div>
-          <div className="border-t border-gray-800 pt-8 text-center text-gray-400">
-            <p>&copy; 2025 HFU. All rights reserved.</p>
+        </section>
+        <svg viewBox="0 0 100 15" preserveAspectRatio="none" className="bl_g0">
+          <ellipse
+            cx="50"
+            cy="-5"
+            fill="var(--rich-black, #000000)"
+            rx="100"
+            ry="15"
+          ></ellipse>
+        </svg>
+
+        <section
+          id="doctors"
+          className=""
+          style={{
+            background: "linear-gradient(135deg, #eff6ff 0%, #ffffff 100%)",
+          }}
+        >
+          <div className="container py-4">
+            <div className="d-flex justify-content-between align-items-end mb-5">
+              <div>
+                <h2 className="display-5 fw-bold mb-2">แพทย์ยอดนิยม</h2>
+                <div
+                  style={{
+                    height: "4px",
+                    width: "80px",
+                    backgroundColor: "#2563eb",
+                    borderRadius: "2px",
+                  }}
+                ></div>
+              </div>
+              <a
+                href="#"
+                className="btn btn-link text-primary text-decoration-none fw-medium"
+              >
+                ดูทั้งหมด
+              </a>
+            </div>
+
+            <div className="row g-4 mb-4">
+              {doctors.map((doctor) => (
+                <div key={doctor.id} className="col-sm-6 col-lg-3">
+                  <div
+                    className="card border rounded-4 h-100 shadow-sm"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%)",
+                      transition: "all 0.3s ease",
+                      cursor: "pointer",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = "translateY(-8px)";
+                      e.currentTarget.style.boxShadow =
+                        "0 12px 24px rgba(0,0,0,0.15)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = "translateY(0)";
+                      e.currentTarget.style.boxShadow =
+                        "0 2px 8px rgba(0,0,0,0.1)";
+                    }}
+                  >
+                    <div className="card-body p-4">
+                      <div
+                        className="rounded-4 mb-3 d-flex align-items-center justify-content-center overflow-hidden"
+                        style={{
+                          width: "100%",
+                          aspectRatio: "1",
+                          background:
+                            "linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%)",
+                        }}
+                      >
+                        <svg
+                          width="80"
+                          height="80"
+                          fill="none"
+                          stroke="#93c5fd"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={1.5}
+                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                          />
+                        </svg>
+                      </div>
+                      <div className="text-center">
+                        <h5 className="fw-bold mb-1">{doctor.name}</h5>
+                        <p className="text-primary small fw-medium mb-3">
+                          {doctor.specialty}
+                        </p>
+                        <button className="btn btn-primary w-100 rounded-3">
+                          นัดหมาย
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="d-flex gap-3 justify-content-center">
+              <button
+                onClick={() =>
+                  setCurrentOrgSlide(Math.max(0, currentOrgSlide - 1))
+                }
+                className="btn btn-outline-secondary rounded-circle"
+                style={{ width: "48px", height: "48px" }}
+                aria-label="ก่อนหน้า"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+              </button>
+              <button
+                onClick={() => setCurrentOrgSlide(currentOrgSlide + 1)}
+                className="btn btn-outline-secondary rounded-circle"
+                style={{ width: "48px", height: "48px" }}
+                aria-label="ถัดไป"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
+        </section>
+
+        <svg
+          viewBox="0 0 1440 320"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+          style={{
+            display: "block",
+            width: "100%",
+            height: "120px",
+          }}
+        >
+          <path
+            fill="url(#waveGradient)"
+            fillOpacity="1"
+            d="M0,160L48,154.7C96,149,192,139,288,122.7C384,107,480,85,576,85.3C672,85,768,107,864,133.3C960,160,1056,192,1152,197.3C1248,203,1344,181,1392,170.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+          ></path>
+          <defs>
+            <linearGradient id="waveGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#14b8c4" />
+              <stop offset="100%" stopColor="#14B8C4" />
+            </linearGradient>
+          </defs>
+        </svg>
+
+        <section
+          id="packages"
+          className="py-5"
+          style={{
+            background:
+              "linear-gradient(to bottom, #14B8C4 0%, #0F4CA3 40%, #001B45 75%, #000000 100%)",
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
+          <div className="container py-4">
+            <div className="mb-5">
+              <h2 className="display-5 fw-bold text-white mb-2">
+                แพ็กเกจ <span style={{ color: "#001B45" }}>และโปรโมชั่น</span>
+              </h2>
+              <div
+                style={{
+                  height: "4px",
+                  width: "80px",
+                  backgroundColor: "#001B45",
+                  borderRadius: "2px",
+                }}
+              ></div>
+            </div>
+
+            <div className="row g-4 mb-5">
+              <div className="col-md-6">
+                <label className="form-label text-white fw-medium">
+                  เลือกประเภท
+                </label>
+                <select className="form-select form-select-lg rounded-3">
+                  <option>ทั้งหมด</option>
+                  <option>ตรวจสุขภาพ</option>
+                  <option>ความงาม</option>
+                  <option>วัคซีน</option>
+                </select>
+              </div>
+              <div className="col-md-6">
+                <label className="form-label text-white fw-medium">ค้นหา</label>
+                <div className="input-group input-group-lg">
+                  <span className="input-group-text bg-white border-0">
+                    <svg
+                      width="20"
+                      height="20"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                      />
+                    </svg>
+                  </span>
+                  <input
+                    type="text"
+                    className="form-control border-0 rounded-end"
+                    placeholder="ค้นหาแพ็กเกจ..."
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="row g-4 mb-4">
+              {packages.map((pkg) => (
+                <div key={pkg.id} className="col-md-6 col-lg-4">
+                  <div
+                    className="card border-0 rounded-4 h-100 overflow-hidden"
+                    style={{
+                      transition: "all 0.3s ease",
+                      cursor: "pointer",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = "translateY(-8px)";
+                      e.currentTarget.style.boxShadow =
+                        "0 16px 32px rgba(0,0,0,0.2)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = "translateY(0)";
+                      e.currentTarget.style.boxShadow = "none";
+                    }}
+                  >
+                    <div
+                      className="d-flex align-items-center justify-content-center"
+                      style={{
+                        height: "192px",
+                        background:
+                          "linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%)",
+                        transition: "all 0.3s ease",
+                      }}
+                    >
+                      <svg
+                        width="80"
+                        height="80"
+                        fill="none"
+                        stroke="#60a5fa"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={1.5}
+                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                        />
+                      </svg>
+                    </div>
+                    <div className="card-body p-4">
+                      <span className="badge bg-primary bg-opacity-10 text-primary mb-3">
+                        {pkg.category}
+                      </span>
+                      <h5 className="fw-bold mb-4">{pkg.title}</h5>
+                      <div className="d-flex gap-2">
+                        <button className="btn btn-light flex-fill">
+                          รายละเอียด
+                        </button>
+                        <button className="btn btn-primary flex-fill">
+                          จองเลย
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="d-flex gap-3 justify-content-center">
+              <button
+                onClick={() =>
+                  setCurrentPackageSlide(Math.max(0, currentPackageSlide - 1))
+                }
+                className="btn rounded-circle"
+                style={{
+                  width: "48px",
+                  height: "48px",
+                  backgroundColor: "rgba(255,255,255,0.1)",
+                  border: "1px solid rgba(255,255,255,0.2)",
+                  color: "white",
+                }}
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+              </button>
+              <button
+                onClick={() => setCurrentPackageSlide(currentPackageSlide + 1)}
+                className="btn rounded-circle"
+                style={{
+                  width: "48px",
+                  height: "48px",
+                  backgroundColor: "rgba(255,255,255,0.1)",
+                  border: "1px solid rgba(255,255,255,0.2)",
+                  color: "white",
+                }}
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <div class="container">
+          <footer class="row row-cols-5 py-5 my-5 border-top">
+            <div class="col">
+              <a
+                href="/"
+                class="d-flex align-items-center mb-3 link-dark text-decoration-none"
+              >
+                <svg class="bi me-2" width="40" height="32">
+                  <use xlink:href="#bootstrap" />
+                </svg>
+              </a>
+              <p class="text-muted">&copy; 2021</p>
+            </div>
+
+            <div class="col"></div>
+
+            <div class="col">
+              <h5>Section</h5>
+              <ul class="nav flex-column">
+                <li class="nav-item mb-2">
+                  <a href="#" class="nav-link p-0 text-muted">
+                    Home
+                  </a>
+                </li>
+                <li class="nav-item mb-2">
+                  <a href="#" class="nav-link p-0 text-muted">
+                    Features
+                  </a>
+                </li>
+                <li class="nav-item mb-2">
+                  <a href="#" class="nav-link p-0 text-muted">
+                    Pricing
+                  </a>
+                </li>
+                <li class="nav-item mb-2">
+                  <a href="#" class="nav-link p-0 text-muted">
+                    FAQs
+                  </a>
+                </li>
+                <li class="nav-item mb-2">
+                  <a href="#" class="nav-link p-0 text-muted">
+                    About
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="col">
+              <h5>Section</h5>
+              <ul class="nav flex-column">
+                <li class="nav-item mb-2">
+                  <a href="#" class="nav-link p-0 text-muted">
+                    Home
+                  </a>
+                </li>
+                <li class="nav-item mb-2">
+                  <a href="#" class="nav-link p-0 text-muted">
+                    Features
+                  </a>
+                </li>
+                <li class="nav-item mb-2">
+                  <a href="#" class="nav-link p-0 text-muted">
+                    Pricing
+                  </a>
+                </li>
+                <li class="nav-item mb-2">
+                  <a href="#" class="nav-link p-0 text-muted">
+                    FAQs
+                  </a>
+                </li>
+                <li class="nav-item mb-2">
+                  <a href="#" class="nav-link p-0 text-muted">
+                    About
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="col">
+              <h5>Section</h5>
+              <ul class="nav flex-column">
+                <li class="nav-item mb-2">
+                  <a href="#" class="nav-link p-0 text-muted">
+                    Home
+                  </a>
+                </li>
+                <li class="nav-item mb-2">
+                  <a href="#" class="nav-link p-0 text-muted">
+                    Features
+                  </a>
+                </li>
+                <li class="nav-item mb-2">
+                  <a href="#" class="nav-link p-0 text-muted">
+                    Pricing
+                  </a>
+                </li>
+                <li class="nav-item mb-2">
+                  <a href="#" class="nav-link p-0 text-muted">
+                    FAQs
+                  </a>
+                </li>
+                <li class="nav-item mb-2">
+                  <a href="#" class="nav-link p-0 text-muted">
+                    About
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </footer>
         </div>
-      </footer>
-    </div>
+      </div>
+    </>
   );
 }

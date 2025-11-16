@@ -1,0 +1,85 @@
+:root {
+  --bs-primary: #0066cc;
+  --bs-primary-rgb: 0, 102, 204;
+  --bs-success: #7cb342;
+  --bs-success-rgb: 124, 179, 66;
+  --bs-danger: #e91e63;
+  --bs-danger-rgb: 233, 30, 99;
+}
+
+.list-group-item.active {
+  background-color: #e3f2fd;
+  color: var(--bs-primary);
+  border-color: transparent;
+}
+
+.list-group-item.active:hover {
+  background-color: #e3f2fd;
+  color: var(--bs-primary);
+}
+
+/* Sidebar hover effect */
+.list-group-item-action:hover {
+  background-color: #f8f9fa;
+}
+
+/* Form controls focus state */
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--bs-primary);
+  box-shadow: 0 0 0 0.25rem rgba(0, 102, 204, 0.25);
+}
+
+/* Card styling */
+.card {
+  border-radius: 0.5rem;
+}
+
+.card-header {
+  border-radius: 0.5rem 0.5rem 0 0 !important;
+}
+
+/* Button styling */
+.btn-outline-danger {
+  border-width: 2px;
+}
+
+.btn-outline-danger:hover {
+  background-color: #fce4ec;
+  color: var(--bs-danger);
+  border-color: var(--bs-danger);
+}
+
+.btn-success {
+  background-color: var(--bs-success);
+  border-color: var(--bs-success);
+}
+
+.btn-success:hover {
+  background-color: #689f38;
+  border-color: #689f38;
+}
+
+/* Text colors */
+.text-success {
+  color: var(--bs-success) !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991.98px) {
+  .card-body {
+    padding: 1.5rem !important;
+  }
+}
+
+/* Form label spacing */
+.form-label {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+/* Static field values (phone, national ID, gender) */
+.fs-5.fw-semibold.text-success {
+  padding: 0.5rem 0;
+  font-size: 1.1rem !important;
+}
