@@ -140,14 +140,11 @@ export default function Profile() {
                   <span>นัดหมาย</span>
                 </button>
 
-                <button className="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">
+                <button 
+                onClick={() => navigate("/ProfileHistory")}
+                className="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">
                   <Calendar size={20} />
                   <span>ประวัติการรักษา</span>
-                </button>
-
-                <button className="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">
-                  <Lock size={20} />
-                  <span>จัดการข้อมูลส่วนบุคคล</span>
                 </button>
 
                 <button className="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">

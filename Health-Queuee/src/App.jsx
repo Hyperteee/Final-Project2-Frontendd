@@ -15,6 +15,8 @@ import RegisterPage from "./Login-Pages/Register-User";
 import Profile from "./Profile-User/Profile";
 import Login2 from "./Login-Pages/Login2";
 import ProfileBook from "./Profile-User/Profile-book";
+import ProfileHistory from "./Profile-User/Profile-History";
+
 import { Toaster, toast } from "react-hot-toast";
 
 function App() {
@@ -32,6 +34,7 @@ function App() {
         <Routes>
           <Route path="Profile" element={<Profile />} />
           <Route path="ProfileBook" element={<ProfileBook />} />
+          <Route path ="ProfileHistory" element={<ProfileHistory />} />
         </Routes>
       </BrowserRouter>
     </>

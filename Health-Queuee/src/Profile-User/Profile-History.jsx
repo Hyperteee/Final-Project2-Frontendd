@@ -3,7 +3,7 @@ import { User, CreditCard, Calendar, Lock, Shield, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Card, Row, Col, Button } from "react-bootstrap";
 
-export default function ProfileBook() {
+export default function ProfileHistory() {
   const [formData, setFormData] = useState({
     phone: "เบอร์โทรศัพท์",
     title: "นาย",
@@ -56,6 +56,29 @@ export default function ProfileBook() {
 
     return age;
   };
+
+  const historyData = [
+    {
+      headerDate: "16/11/68", // วันที่แสดงเหนือการ์ด
+      fullName: "นาย ประหยัด จันทร์โทรลา",
+      hospital: "โรงพยาบาลเปาโล",
+      visitDate: "17/11/68",
+      time: "14:30",
+      doctor: "ดร. หาหร่วมน้อย",
+      symptom:
+        "น้ำมูกไหล ปวดหัว ตาแห้ง ตัวร้อน กินไม่ได้ นอนหลับไม่สนิท กระดูกข้อตรึงลับ ตับพักกร",
+    },
+    {
+      headerDate: "5/10/68",
+      fullName: "นาย (UserForm.setUserForm)",
+      hospital: "โรงพยาบาลเปาโล",
+      visitDate: "17/11/68",
+      time: "14:30",
+      doctor: "ดร. หาหร่วมน้อย",
+      symptom:
+        "น้ำมูกไหล ปวดหัว ตาแห้ง ตัวร้อน กินไม่ได้ นอนหลับไม่สนิท กระดูกข้อตรึงลับ ตับพักกร",
+    },
+  ];
 
   const navigate = useNavigate();
 
@@ -161,9 +184,10 @@ export default function ProfileBook() {
                   <span>นัดหมาย</span>
                 </button>
 
-                <button 
-                onClick={() => navigate("/ProfileHistory")}
-                className="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">
+                <button
+                  onClick={() => navigate("/ProfileHistory")}
+                  className="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3"
+                >
                   <Calendar size={20} />
                   <span>ประวัติการรักษา</span>
                 </button>
@@ -189,113 +213,130 @@ export default function ProfileBook() {
                 <form onSubmit={handleSubmit}>
                   <div className="">
                     <label className="form-label fw-medium text-secondary">
-                      นัดหมาย
+                      ประวัติการรักษา
                     </label>
                   </div>
 
                   <div className="mb-4">
-                    <div className="d-flex my-5">
-                      <Card
-                        className="shadow-sm"
-                        style={{
-                          width: "600px",
-                          borderRadius: "24px",
-                          borderWidth: "1.9px",
-                          borderColor: "#000000",
-                        }}
-                      >
-                        <Card.Body style={{ padding: "32px 40px" }}>
-                          <h4
-                            className="fw-bold mb-2"
-                            style={{ color: "#1f3bb3" }}
-                          >
-                            แจ้งเตือนนัดหมาย
-                          </h4>
-                          <div className="mb-3" style={{ fontSize: "16px" }}>
-                            {UserForm.fullName}
-                          </div>
-
+                    <div className="mt-4">
+                      {historyData.map((item, index) => (
+                        <div key={index} className="mb-5">
                           <div
-                            className="mb-3"
-                            style={{
-                              height: "1px",
-                              backgroundColor: "#000",
-                              width: "100%",
-                            }}
-                          />
-
-                          <div style={{ fontSize: "14px", lineHeight: 1.7 }}>
-                            <Row>
-                              <Col xs={4} sm={3}>
-                                <span className="fw-semibold">Hospital:</span>
-                              </Col>
-                              <Col>{UserForm.hospital}</Col>
-                            </Row>
-                            <Row>
-                              <Col xs={4} sm={3}>
-                                <span className="fw-semibold">วันที่:</span>
-                              </Col>
-                              <Col>{UserForm.date}</Col>
-                            </Row>
-                            <Row>
-                              <Col xs={4} sm={3}>
-                                <span className="fw-semibold">เวลา:</span>
-                              </Col>
-                              <Col>{UserForm.time}</Col>
-                            </Row>
-                            <Row>
-                              <Col xs={4} sm={3}>
-                                <span className="fw-semibold">แพทย์:</span>
-                              </Col>
-                              <Col>{UserForm.doctor}</Col>
-                            </Row>
-                            <Row>
-                              <Col xs={4} sm={3}>
-                                <span className="fw-semibold">หมายเหตุ:</span>
-                              </Col>
-                              <Col>{UserForm.reason}</Col>
-                            </Row>
+                            className="fw-semibold mb-1"
+                            style={{ fontSize: "14px" }}
+                          >
+                            {item.headerDate}
                           </div>
 
-                          <div className="d-flex justify-content-end mt-4 gap-3">
-                            <Button
-                              variant="light"
+                          <div className="d-flex">
+                            <Card
+                              className="shadow-sm"
                               style={{
-                                borderRadius: "18px",
-                                minWidth: "120px",
-                                marginRight: "100px",
-                                border: "1px solid #d0d0d0",
+                                width: "600px",
+                                borderRadius: "24px",
+                                borderWidth: "1.9px",
+                                borderColor: "#000000",
                               }}
-                              onClick={""}
                             >
-                              รายละเอียด
-                            </Button>
+                              <Card.Body style={{ padding: "32px 40px" }}>
+                                <h4
+                                  className="fw-bold mb-1"
+                                  style={{ color: "#1f3bb3", fontSize: "25px" }}
+                                >
+                                  ประวัติการรักษา
+                                </h4>
 
-                            <Button
-                              style={{
-                                backgroundColor: "#ff3131ff",
-                                borderColor: "#ff3131ff",
-                                borderRadius: "18px",
-                                minWidth: "140px",
-                              }}
-                              onClick={""}
-                            >
-                              ยกเลิกนัดหมาย
-                            </Button>
-                            <Button
-                              style={{
-                                backgroundColor: "#3155ff",
-                                borderColor: "#3155ff",
-                                borderRadius: "18px",
-                                minWidth: "140px",
-                              }}
-                              onClick={""}
-                            >
-                              ยืนยันนัดหมาย
-                            </Button>
+                                <div
+                                  className="mb-2"
+                                  style={{ fontSize: "16px" }}
+                                >
+                                  {item.fullName}
+                                </div>
+
+                                <div
+                                  className="mb-3"
+                                  style={{
+                                    height: "1px",
+                                    backgroundColor: "#000",
+                                    width: "100%",
+                                    marginTop: "15px",
+                                  }}
+                                />
+
+                                <div
+                                  style={{ fontSize: "14px", lineHeight: 1.7 }}
+                                >
+                                  <Row className="mb-1">
+                                    <Col xs={4} sm={3}>
+                                      <span className="fw-semibold">
+                                        Hospital:
+                                      </span>
+                                    </Col>
+                                    <Col>{item.hospital}</Col>
+                                  </Row>
+
+                                  <Row className="mb-1">
+                                    <Col xs="auto">
+                                      <span className="fw-semibold">
+                                        วันที่:
+                                      </span>
+                                    </Col>
+                                    <Col xs="auto">
+                                      <span
+                                        style={{
+                                          textDecoration: "underline",
+                                          color: "#1f3bb3",
+                                          fontWeight: 600,
+                                        }}
+                                      >
+                                        {item.visitDate}
+                                      </span>
+                                    </Col>
+                                    <Col xs="auto">
+                                      <span className="fw-semibold">เวลา:</span>
+                                    </Col>
+                                    <Col xs="auto">{item.time}</Col>
+                                  </Row>
+
+                                  <Row className="mb-1">
+                                    <Col xs={4} sm={3}>
+                                      <span className="fw-semibold">
+                                        แพทย์ที่:
+                                      </span>
+                                    </Col>
+                                    <Col>{item.doctor}</Col>
+                                  </Row>
+
+                                  <Row className="mb-1">
+                                    <Col xs={4} sm={3}>
+                                      <span className="fw-semibold">
+                                        อาการตรวจ:
+                                      </span>
+                                    </Col>
+                                    <Col>{item.symptom}</Col>
+                                  </Row>
+                                </div>
+
+                                <div className="d-flex justify-content-end mt-3">
+                                  <Button
+                                    variant="light"
+                                    style={{
+                                      borderRadius: "18px",
+                                      minWidth: "120px",
+                                      border: "1px solid #d0d0d0",
+                                    }}
+                                    onClick={() =>
+                                      console.log("ดูรายละเอียด", item)
+                                    }
+                                  >
+                                    รายละเอียด
+                                  </Button>
+                                </div>
+                              </Card.Body>
+                            </Card>
                           </div>
-                        </Card.Body>
-                      </Card>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </form>
