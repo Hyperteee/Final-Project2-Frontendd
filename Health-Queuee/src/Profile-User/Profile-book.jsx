@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { User, CreditCard, Calendar, Lock, Shield, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { Card, Row, Col, Button } from "react-bootstrap";
 
 export default function ProfileBook() {
   const [formData, setFormData] = useState({
@@ -12,6 +13,24 @@ export default function ProfileBook() {
     birthDate: "2548-10-20",
     gender: "ชาย",
     email: "Prayard@gmail.com",
+  });
+
+  const [formBooking, setFormBooking] = useState({
+    Bookingtime: "นัดหมายของฉัน",
+
+    date: "วันที่",
+    time: "เวลา",
+    department: "แผนก",
+    doctor: "แพทย์",
+  });
+
+  const [UserForm, setUserForm] = useState({
+    fullName: "นาย ประหยัด จันทร์โทรลา",
+    hospital: "โรงพยาบาลเปาโล",
+    date: "17/11/68",
+    time: "14:30",
+    doctor: "ดร. หารร่วมน้อย",
+    reason: "ตรวจสุขภาพ",
   });
 
   const handleSubmit = (e) => {
@@ -38,7 +57,7 @@ export default function ProfileBook() {
     return age;
   };
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <div className="bg-light min-vh-100">
@@ -126,16 +145,18 @@ export default function ProfileBook() {
               ></div>
 
               <div className="list-group list-group-flush mt-3">
-                <button 
-                onClick={() => navigate("/Profile")}
-                className="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">
+                <button
+                  onClick={() => navigate("/Profile")}
+                  className="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3"
+                >
                   <User size={20} />
                   <span>โปรไฟล์ของคุณ</span>
                 </button>
 
-                <button 
-                onClick={() => navigate("/ProfileBook")}
-                className="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">
+                <button
+                  onClick={() => navigate("/ProfileBook")}
+                  className="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3"
+                >
                   <CreditCard size={20} />
                   <span>นัดหมาย</span>
                 </button>
@@ -169,38 +190,116 @@ export default function ProfileBook() {
             <div className="card shadow-sm border-0">
               <div className="card-body p-4 p-lg-5">
                 <form onSubmit={handleSubmit}>
-                  <div className="mb-4">
+                  <div className="">
                     <label className="form-label fw-medium text-secondary">
                       เบอร์โทรศัพท์
                     </label>
-                    <div className="fs-5 fw-semibold text-success">
-                      {formData.phone}
-                    </div>
                   </div>
 
                   <div className="mb-4">
-                    <label className="form-label fw-medium text-secondary">
-                      คำนำหน้าชื่อ
-                    </label>
-                    <select
-                      name="title"
-                      value={formData.title}
-                      onChange={handleInputChange}
-                      className="form-select"
-                    >
-                      <option value="นาย">นาย</option>
-                      <option value="นาง">นาง</option>
-                      <option value="นางสาว">นางสาว</option>
-                    </select>
-                  </div>
+                    <div className="d-flex my-5">
+                      <Card
+                        className="shadow-sm"
+                        style={{
+                          width: "600px",
+                          borderRadius: "24px",
+                          borderWidth: "1.9px",
+                          borderColor: "#000000",
+                        }}
+                      >
+                        <Card.Body style={{ padding: "32px 40px" }}>
+                          <h4
+                            className="fw-bold mb-2"
+                            style={{ color: "#1f3bb3" }}
+                          >
+                            แจ้งเตือนนัดหมาย
+                          </h4>
+                          <div className="mb-3" style={{ fontSize: "16px" }}>
+                            {UserForm.fullName}
+                          </div>
 
-                  <div className="d-flex justify-content-end mt-5">
-                    <button
-                      type="submit"
-                      className="btn btn-success px-5 py-2 fw-medium"
-                    >
-                      บันทึก
-                    </button>
+                          <div
+                            className="mb-3"
+                            style={{
+                              height: "1px",
+                              backgroundColor: "#000",
+                              width: "100%",
+                            }}
+                          />
+
+                          <div style={{ fontSize: "14px", lineHeight: 1.7 }}>
+                            <Row>
+                              <Col xs={4} sm={3}>
+                                <span className="fw-semibold">Hospital:</span>
+                              </Col>
+                              <Col>{UserForm.hospital}</Col>
+                            </Row>
+                            <Row>
+                              <Col xs={4} sm={3}>
+                                <span className="fw-semibold">วันที่:</span>
+                              </Col>
+                              <Col>{UserForm.date}</Col>
+                            </Row>
+                            <Row>
+                              <Col xs={4} sm={3}>
+                                <span className="fw-semibold">เวลา:</span>
+                              </Col>
+                              <Col>{UserForm.time}</Col>
+                            </Row>
+                            <Row>
+                              <Col xs={4} sm={3}>
+                                <span className="fw-semibold">แพทย์:</span>
+                              </Col>
+                              <Col>{UserForm.doctor}</Col>
+                            </Row>
+                            <Row>
+                              <Col xs={4} sm={3}>
+                                <span className="fw-semibold">หมายเหตุ:</span>
+                              </Col>
+                              <Col>{UserForm.reason}</Col>
+                            </Row>
+                          </div>
+
+                          <div className="d-flex justify-content-end mt-4 gap-3">
+                            <Button
+                              variant="light"
+                              style={{
+                                borderRadius: "18px",
+                                minWidth: "120px",
+                                marginRight: "100px",
+                                border: "1px solid #d0d0d0",
+                              }}
+                              onClick={""}
+                            >
+                              รายละเอียด
+                            </Button>
+
+                            <Button
+                              style={{
+                                backgroundColor: "#ff3131ff",
+                                borderColor: "#ff3131ff",
+                                borderRadius: "18px",
+                                minWidth: "140px",
+                              }}
+                              onClick={""}
+                            >
+                              ยกเลิกนัดหมาย
+                            </Button>
+                            <Button
+                              style={{
+                                backgroundColor: "#3155ff",
+                                borderColor: "#3155ff",
+                                borderRadius: "18px",
+                                minWidth: "140px",
+                              }}
+                              onClick={""}
+                            >
+                              ยืนยันนัดหมาย
+                            </Button>
+                          </div>
+                        </Card.Body>
+                      </Card>
+                    </div>
                   </div>
                 </form>
               </div>
@@ -208,116 +307,116 @@ export default function ProfileBook() {
           </div>
         </div>
       </div>
-              <div class="container">
-          <footer class="row row-cols-5 py-5 my-5 border-top">
-            <div class="col">
-              <a
-                href="/"
-                class="d-flex align-items-center mb-3 link-dark text-decoration-none"
-              >
-                <svg class="bi me-2" width="40" height="32">
-                  <use xlink:href="#bootstrap" />
-                </svg>
-              </a>
-              <p class="text-muted">&copy; 2021</p>
-            </div>
+      <div class="container">
+        <footer class="row row-cols-5 py-5 my-5 border-top">
+          <div class="col">
+            <a
+              href="/"
+              class="d-flex align-items-center mb-3 link-dark text-decoration-none"
+            >
+              <svg class="bi me-2" width="40" height="32">
+                <use xlink:href="#bootstrap" />
+              </svg>
+            </a>
+            <p class="text-muted">&copy; 2021</p>
+          </div>
 
-            <div class="col"></div>
+          <div class="col"></div>
 
-            <div class="col">
-              <h5>Section</h5>
-              <ul class="nav flex-column">
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
-                    Home
-                  </a>
-                </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
-                    Features
-                  </a>
-                </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
-                    Pricing
-                  </a>
-                </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
-                    FAQs
-                  </a>
-                </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
-                    About
-                  </a>
-                </li>
-              </ul>
-            </div>
+          <div class="col">
+            <h5>Section</h5>
+            <ul class="nav flex-column">
+              <li class="nav-item mb-2">
+                <a href="#" class="nav-link p-0 text-muted">
+                  Home
+                </a>
+              </li>
+              <li class="nav-item mb-2">
+                <a href="#" class="nav-link p-0 text-muted">
+                  Features
+                </a>
+              </li>
+              <li class="nav-item mb-2">
+                <a href="#" class="nav-link p-0 text-muted">
+                  Pricing
+                </a>
+              </li>
+              <li class="nav-item mb-2">
+                <a href="#" class="nav-link p-0 text-muted">
+                  FAQs
+                </a>
+              </li>
+              <li class="nav-item mb-2">
+                <a href="#" class="nav-link p-0 text-muted">
+                  About
+                </a>
+              </li>
+            </ul>
+          </div>
 
-            <div class="col">
-              <h5>Section</h5>
-              <ul class="nav flex-column">
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
-                    Home
-                  </a>
-                </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
-                    Features
-                  </a>
-                </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
-                    Pricing
-                  </a>
-                </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
-                    FAQs
-                  </a>
-                </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
-                    About
-                  </a>
-                </li>
-              </ul>
-            </div>
+          <div class="col">
+            <h5>Section</h5>
+            <ul class="nav flex-column">
+              <li class="nav-item mb-2">
+                <a href="#" class="nav-link p-0 text-muted">
+                  Home
+                </a>
+              </li>
+              <li class="nav-item mb-2">
+                <a href="#" class="nav-link p-0 text-muted">
+                  Features
+                </a>
+              </li>
+              <li class="nav-item mb-2">
+                <a href="#" class="nav-link p-0 text-muted">
+                  Pricing
+                </a>
+              </li>
+              <li class="nav-item mb-2">
+                <a href="#" class="nav-link p-0 text-muted">
+                  FAQs
+                </a>
+              </li>
+              <li class="nav-item mb-2">
+                <a href="#" class="nav-link p-0 text-muted">
+                  About
+                </a>
+              </li>
+            </ul>
+          </div>
 
-            <div class="col">
-              <h5>Section</h5>
-              <ul class="nav flex-column">
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
-                    Home
-                  </a>
-                </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
-                    Features
-                  </a>
-                </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
-                    Pricing
-                  </a>
-                </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
-                    FAQs
-                  </a>
-                </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
-                    About
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </footer>
-        </div>
+          <div class="col">
+            <h5>Section</h5>
+            <ul class="nav flex-column">
+              <li class="nav-item mb-2">
+                <a href="#" class="nav-link p-0 text-muted">
+                  Home
+                </a>
+              </li>
+              <li class="nav-item mb-2">
+                <a href="#" class="nav-link p-0 text-muted">
+                  Features
+                </a>
+              </li>
+              <li class="nav-item mb-2">
+                <a href="#" class="nav-link p-0 text-muted">
+                  Pricing
+                </a>
+              </li>
+              <li class="nav-item mb-2">
+                <a href="#" class="nav-link p-0 text-muted">
+                  FAQs
+                </a>
+              </li>
+              <li class="nav-item mb-2">
+                <a href="#" class="nav-link p-0 text-muted">
+                  About
+                </a>
+              </li>
+            </ul>
+          </div>
+        </footer>
+      </div>
     </div>
   );
 }

@@ -291,47 +291,6 @@ export default function Profile() {
             </div>
           </form>
 
-          <form onSubmit="Booking">
-                        <div className="card shadow-sm border-0">
-              <div className="card-body p-4 p-lg-5">
-                <form onSubmit={handleSubmit}>
-                  <div className="mb-4">
-                    <label className="form-label fw-medium text-secondary">
-                      เบอร์โทรศัพท์
-                    </label>
-                    <div className="fs-5 fw-semibold text-success">
-                      {formData.phone}
-                    </div>
-                  </div>
-
-                  <div className="mb-4">
-                    <label className="form-label fw-medium text-secondary">
-                      คำนำหน้าชื่อ
-                    </label>
-                    <select
-                      name="title"
-                      value={formData.title}
-                      onChange={handleInputChange}
-                      className="form-select"
-                    >
-                      <option value="นาย">นาย</option>
-                      <option value="นาง">นาง</option>
-                      <option value="นางสาว">นางสาว</option>
-                    </select>
-                  </div>
-
-                  <div className="d-flex justify-content-end mt-5">
-                    <button
-                      type="submit"
-                      className="btn btn-success px-5 py-2 fw-medium"
-                    >
-                      บันทึก
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </form>
           </div>
         </div>
       </div>
