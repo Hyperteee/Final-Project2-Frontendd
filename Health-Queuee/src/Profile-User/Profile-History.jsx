@@ -59,10 +59,10 @@ export default function ProfileHistory() {
 
   const historyData = [
     {
-      headerDate: "16/11/68", // วันที่แสดงเหนือการ์ด
+      headerDate: "16/11/68",
       fullName: "นาย ประหยัด จันทร์โทรลา",
       hospital: "โรงพยาบาลเปาโล",
-      visitDate: "17/11/68",
+      visitDate: "16/11/68",
       time: "14:30",
       doctor: "ดร. หาหร่วมน้อย",
       symptom:
@@ -70,11 +70,11 @@ export default function ProfileHistory() {
     },
     {
       headerDate: "5/10/68",
-      fullName: "นาย (UserForm.setUserForm)",
+      fullName: "นาย ประหยัด จันทร์โทรลา",
       hospital: "โรงพยาบาลเปาโล",
-      visitDate: "17/11/68",
-      time: "14:30",
-      doctor: "ดร. หาหร่วมน้อย",
+      visitDate: "5/10/68",
+      time: "17:00",
+      doctor: "ดร. หาหร่วมมาก",
       symptom:
         "น้ำมูกไหล ปวดหัว ตาแห้ง ตัวร้อน กินไม่ได้ นอนหลับไม่สนิท กระดูกข้อตรึงลับ ตับพักกร",
     },
