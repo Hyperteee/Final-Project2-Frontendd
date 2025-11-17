@@ -26,7 +26,7 @@ function App() {
       <UserAppointmentProvider>
       <BrowserRouter basename="/Final-Project2-Frontendd/">
         <Routes>
-          <Route path="/" element={<Layout />} />
+          <Route path="/" element={<HealthcarePage />} />
           <Route path="hospitals" element={<Listsearch />} />
           <Route path="queue1" element={<Queue1 />} />
           <Route path="login" element={<LoginPage />} />
