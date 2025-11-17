@@ -40,22 +40,22 @@ const StatusCard = ({ icon: Icon, label, count, colorClass, borderClass }) => (
 // Lucide icons equivalent to the Bootstrap Icons used
 const Hourglass = (props) => (
     <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M5 22V4m-2 2a4 4 0 0 1 4 4v.5a.5.5 0 0 0 1 0v-.5c0-2.2-.8-4-3-4m-2 16a4 4 0 0 0 4-4v-.5a.5.5 0 0 1 1 0v.5c0 2.2-.8 4-3 4"/>
+        <path d="M5 22V4m-2 2a4 4 0 0 1 4 4v.5a.5.5 0 0 0 1 0v-.5c0-2.2-.8-4-3-4m-2 16a4 4 0 0 0 4-4v-.5a.5.5 0 0 1 1 0v.5c0 2.2-.8 4-3 4" />
     </svg>
 );
 const XCircle = (props) => (
     <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/>
+        <circle cx="12" cy="12" r="10" /><path d="m15 9-6 6" /><path d="m9 9 6 6" />
     </svg>
 );
 const CalendarCheck = (props) => (
     <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
-        <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="m9 16 2 2 4-4"/>
+        <rect width="18" height="18" x="3" y="4" rx="2" ry="2" /><line x1="16" x2="16" y1="2" y2="6" /><line x1="8" x2="8" y1="2" y2="6" /><line x1="3" x2="21" y1="10" y2="10" /><path d="m9 16 2 2 4-4" />
     </svg>
 );
 const User = (props) => (
     <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
     </svg>
 );
 
@@ -129,7 +129,46 @@ const Appointments = () => {
                         borderClass="border-blue-500"
                     />
                 </div>
-                
+
+                {/* --- Doctor Notifications Table --- */}
+                <h2 className="text-xl font-semibold text-gray-700 mb-4">แจ้งเตือนหมอ (คิวใหม่, ขอยกเลิกนัด, เลื่อนนัด)</h2>
+                <div className="bg-white p-4 rounded-xl shadow-lg">
+                    <div className="overflow-x-auto">
+                        <table className="min-w-full divide-y divide-gray-200">
+                            <thead className="bg-gray-50">
+                                <tr>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-16">
+                                        ลำดับ
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        รายชื่อ
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        หมายเหตุ
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        วันที่เปลี่ยน
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody className="bg-white divide-y divide-gray-200">
+                                {notificationData.map((notification) => (
+                                    <tr key={notification.id} className="hover:bg-red-50 transition duration-100">
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{notification.id}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{notification.name}</td>
+                                        <td className={`px-6 py-4 whitespace-nowrap text-sm font-semibold ${notification.status === 'Canceled' ? 'text-red-600' :
+                                                notification.status === 'Rescheduled' ? 'text-blue-600' : 'text-green-600'
+                                            }`}>
+                                            {notification.note}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{notification.date}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
                 {/* --- Appointments Table --- */}
                 <h2 className="text-xl font-semibold text-gray-700 mb-4">ตารางนัดหมาย</h2>
                 <div className="bg-white p-4 rounded-xl shadow-lg mb-10">
@@ -143,7 +182,7 @@ const Appointments = () => {
                             onChange={(e) => setFilterText(e.target.value)}
                         />
                     </div>
-                    
+
                     <div className="overflow-x-auto">
                         <table className="min-w-full divide-y divide-gray-200">
                             <thead className="bg-gray-50">
@@ -195,45 +234,6 @@ const Appointments = () => {
                     </div>
                 </div>
 
-                {/* --- Doctor Notifications Table --- */}
-                <h2 className="text-xl font-semibold text-gray-700 mb-4">แจ้งเตือนหมอ (คิวใหม่, ขอยกเลิกนัด, เลื่อนนัด)</h2>
-                <div className="bg-white p-4 rounded-xl shadow-lg">
-                    <div className="overflow-x-auto">
-                        <table className="min-w-full divide-y divide-gray-200">
-                            <thead className="bg-gray-50">
-                                <tr>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-16">
-                                        ลำดับ
-                                    </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        รายชื่อ
-                                    </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        หมายเหตุ
-                                    </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        วันที่เปลี่ยน
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody className="bg-white divide-y divide-gray-200">
-                                {notificationData.map((notification) => (
-                                    <tr key={notification.id} className="hover:bg-red-50 transition duration-100">
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{notification.id}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{notification.name}</td>
-                                        <td className={`px-6 py-4 whitespace-nowrap text-sm font-semibold ${
-                                            notification.status === 'Canceled' ? 'text-red-600' : 
-                                            notification.status === 'Rescheduled' ? 'text-blue-600' : 'text-green-600'
-                                        }`}>
-                                            {notification.note}
-                                        </td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{notification.date}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
 
             </div>
         </div>
