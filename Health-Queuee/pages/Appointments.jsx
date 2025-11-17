@@ -1,14 +1,14 @@
 import React, { useState, useMemo } from 'react';
 
 const initialAppointmentData = [
-    { name: 'นายเอบีซี', phone: '0942513799', type: 'ติดตามอาการ', time: '08.00-09.00' },
-    { name: 'นายเอบีซี', phone: '0942513799', type: 'อายุรกรรม', time: '08.00-09.00' },
-    { name: 'นายเอบีซี', phone: '0942513799', type: 'จิตเวช', time: '08.00-09.00' },
-    { name: 'นายเอบีซี', phone: '0942513799', type: 'แพคเกจตรวจสุขภาพ', time: '08.00-09.00' },
-    { name: 'นายเอบีซี', phone: '0942513799', type: 'ติดตามอาการ', time: '08.00-09.00' },
-    { name: 'นายเอบีซี', phone: '0942513799', type: 'ศัลยกรรม', time: '09.00-10.00' },
-    { name: 'นายเอบีซี', phone: '0942513799', type: 'ติดตามอาการ', time: '10.00-11.00' },
-    { name: 'นายเอบีซี', phone: '0942513799', type: 'ติดตามอาการ', time: '11.00-12.00' },
+    { name: 'นายเอบีซี', phone: '0942513799', type: 'ติดตามอาการ', time: '08.00-09.00', details: 'ผู้ป่วยมีไข้และไอต่อเนื่อง 3 วัน' },
+    { name: 'นายเอบีซี', phone: '0942513799', type: 'อายุรกรรม', time: '08.00-09.00', details: 'นัดตรวจเลือดและติดตามผล' },
+    { name: 'นายเอบีซี', phone: '0942513799', type: 'จิตเวช', time: '08.00-09.00', details: 'นัดพูดคุยกับนักบำบัด' },
+    { name: 'นายเอบีซี', phone: '0942513799', type: 'แพคเกจตรวจสุขภาพ', time: '08.00-09.00', details: 'แพคเกจพื้นฐานประจำปี' },
+    { name: 'นายเอบีซี', phone: '0942513799', type: 'ติดตามอาการ', time: '08.00-09.00', details: 'อาการปวดหลัง' },
+    { name: 'นายเอบีซี', phone: '0942513799', type: 'ศัลยกรรม', time: '09.00-10.00', details: 'นัดปรึกษาการผ่าตัดเล็ก' },
+    { name: 'นายเอบีซี', phone: '0942513799', type: 'ติดตามอาการ', time: '10.00-11.00', details: 'นัดตรวจแผล' },
+    { name: 'นายเอบีซี', phone: '0942513799', type: 'ติดตามอาการ', time: '11.00-12.00', details: 'อาการภูมิแพ้' },
 ];
 
 const notificationData = [
@@ -17,7 +17,6 @@ const notificationData = [
     { id: 3, name: 'นาย-----------------------', note: 'คิวใหม่', date: '19/11/2568', status: 'New' },
     { id: 4, name: 'นาย-----------------------', note: 'เลื่อนนัด', date: '20/11/2568', status: 'Rescheduled' },
 ];
-
 
 const StatusCard = ({ iconClass, label, count, colorClass }) => (
     <div className={`card shadow-sm border-start border-4 ${colorClass}`}>
@@ -33,11 +32,43 @@ const StatusCard = ({ iconClass, label, count, colorClass }) => (
     </div>
 );
 
+const AppointmentDetailModal = ({ appointment, onClose }) => {
+    if (!appointment) return null;
+
+    return (
+        <div className="modal show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+            <div className="modal-dialog modal-dialog-centered">
+                <div className="modal-content">
+                    <div className="modal-header bg-primary text-white">
+                        <h5 className="modal-title">ข้อมูลนัดหมาย: {appointment.name}</h5>
+                        <button type="button" className="btn-close btn-close-white" onClick={onClose}></button>
+                    </div>
+                    <div className="modal-body">
+                        <p><strong>ชื่อคนไข้:</strong> {appointment.name}</p>
+                        <p><strong>เบอร์โทรศัพท์:</strong> {appointment.phone}</p>
+                        <p><strong>ประเภทการจอง:</strong> <span className="badge bg-info text-dark">{appointment.type}</span></p>
+                        <p><strong>วันเวลา:</strong> <span className="badge bg-secondary">{appointment.time}</span></p>
+                        <hr />
+                        <p className="fw-bold text-muted mb-1">รายละเอียดเพิ่มเติม:</p>
+                        <div className="alert alert-light border p-2">
+                            {appointment.details || "ไม่มีรายละเอียดเพิ่มเติม"}
+                        </div>
+                    </div>
+                    <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" onClick={onClose}>ปิด</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 
 const Appointments = () => {
     const today = new Date().toISOString().split('T')[0];
     const [selectedDate, setSelectedDate] = useState(today);
     const [filterText, setFilterText] = useState('');
+    const [selectedAppointment, setSelectedAppointment] = useState(null);
 
     const filteredAppointments = useMemo(() => {
         const lowerCaseFilter = filterText.toLowerCase();
@@ -51,16 +82,18 @@ const Appointments = () => {
         );
     }, [filterText]);
 
-    // Calculate 
-    const waitingQueues = 5; 
+    const waitingQueues = 5;
     const canceledQueues = notificationData.filter(n => n.status === 'Canceled').length;
     const rescheduledQueues = notificationData.filter(n => n.status === 'Rescheduled').length;
 
-    // Handle 
     const handleDetailsClick = (appointment) => {
-        console.log('Viewing details for:', appointment);
-        console.log(`รายละเอียดการนัดหมาย\nชื่อ: ${appointment.name}\nประเภท: ${appointment.type}\nเวลา: ${appointment.time}`);
+        setSelectedAppointment(appointment);
     };
+
+    const handleCloseModal = () => {
+        setSelectedAppointment(null);
+    };
+
 
     return (
         <div className="min-vh-100 bg-light py-4">
@@ -210,9 +243,14 @@ const Appointments = () => {
                         </div>
                     </div>
                 </div>
-
-
             </div>
+            
+            {selectedAppointment && (
+                <AppointmentDetailModal 
+                    appointment={selectedAppointment} 
+                    onClose={handleCloseModal} 
+                />
+            )}
         </div>
     );
 }
