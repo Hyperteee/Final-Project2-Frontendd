@@ -46,7 +46,8 @@ export default function HealthcarePage() {
 
   function handleSelect(state) {
     setSelectedState(state);
-    navigate("/hospitals", { state: { selectedState: state, showDropdown: false } });
+    console.log(state)
+    navigate("/hospitals", { state: { selectedstate: state, showDropdown: false } });
   }
 
   function handleHospital(hospital) {
@@ -156,41 +157,68 @@ export default function HealthcarePage() {
                       ค้นหา
                     </Button>
                   </div>
-
                   {showDropdown && (
                     <ul className="search-dropdown">
-                      {letterSearch
-                        ? filteredHospitals.map((hospital, index) => {
-                          const name = hospital.name;
-                          const search = letterSearch.toLowerCase();
-                          const startIndex = name.toLowerCase().indexOf(search);
-                          let before = name;
-                          let match = "";
-                          let after = "";
-                          if (startIndex !== -1) {
-                            before = name.slice(0, startIndex);
-                            match = name.slice(startIndex, startIndex + search.length);
-                            after = name.slice(startIndex + search.length);
-                          }
+                      {letterSearch ? (
+                        <>
+                          {filteredHospitals.length > 0 &&
+                            filteredHospitals.map((hospital, index) => {
+                              const name = hospital.name;
+                              const search = letterSearch.toLowerCase();
+                              const startIndex = name.toLowerCase().indexOf(search);
 
-                          return (
-                            <li
-                              key={index}
-                              onClick={() => handleHospital(hospital)}
-                              className="dropdown-item"
-                            >
-                              โรงพยาบาล{before}
-                              {match && <span className="highlight">{match}</span>}
-                              {after}{" "}
-                              <span className="dropdown-state">({hospital.state})</span>
-                            </li>
-                            
-                          );
-                        })
+                              let before = name;
+                              let match = "";
+                              let after = "";
+                              if (startIndex !== -1) {
+                                before = name.slice(0, startIndex);
+                                match = name.slice(startIndex, startIndex + search.length);
+                                after = name.slice(startIndex + search.length);
+                              }
+
+                              return (
+                                <li
+                                  key={`hospital-${index}`}
+                                  onClick={() => handleHospital(hospital)}
+                                  className="dropdown-item"
+                                >
+                                  โรงพยาบาล{before}
+                                  {match && <span className="highlight">{match}</span>}
+                                  {after} <span className="state-text">({hospital.state})</span>
+                                </li>
+                              );
+                            })}
+                          {filteredStates.map((state, index) => {
+                            const search = letterSearch.toLowerCase();
+                            const startIndex = state.toLowerCase().indexOf(search);
+
+                            let before = state;
+                            let match = "";
+                            let after = "";
+                            if (startIndex !== -1) {
+                              before = state.slice(0, startIndex);
+                              match = state.slice(startIndex, startIndex + search.length);
+                              after = state.slice(startIndex + search.length);
+                            }
+
+                            return (
+                              <li
+                                key={`state-${index}`}
+                                onClick={() => handleSelect(state)}
+                                className="dropdown-item"
+                              >
+                                {before}
+                                {match && <span className="highlight">{match}</span>}
+                                {after}
+                              </li>
+                            );
+                          })}
+                        </>
+                      )
                         : filteredStates.map((state, index) => (
                           <li
                             key={index}
-                            onClick={() => handleSelect(state)}
+                            onClick={() => {handleSelect(state), setSelectedState(state)}}
                             className="dropdown-item"
                           >
                             {state}

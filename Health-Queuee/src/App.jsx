@@ -4,7 +4,6 @@ import layout from "./components/Layout/Layout";
 
 import HealthcarePage from "./components/HealthcarePage";
 import Navbar from "./components/Navbar/Navbar";
-import HospitalSearch from "./components/Hospital-Search/Hospital-Search";
 import ChatBot from "./components/ChatBot/ChatBot";
 import PoppularDoc from "./components/PopularDoc/PoppularDoc";
 import PackagePart from "./components/PackagePart/Package";
@@ -20,6 +19,8 @@ import hospitalMap from "./data/hospitaldata.jsx/allhospitaldata";
 import { HospitalScheduleProvider } from "./data/context/allSchedule";
 import { UserAppointmentProvider } from "./data/context/appointment";
 import Testdata from "./components/Hospital-Search/testdata";
+import Profile from "./Profile-User/Profile";
+import ProfileBook from "./Profile-User/Profile-book";
 function App() {
   return (
     <HospitalScheduleProvider>
@@ -34,6 +35,8 @@ function App() {
           <Route path="queue3" element={<Queue3 />} />
           <Route path="queue4" element={<Queue4 />} />
           <Route path="testdata" element={<Testdata />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="profilebook" element={<ProfileBook />} />
         </Routes>
       </BrowserRouter>
       </UserAppointmentProvider>

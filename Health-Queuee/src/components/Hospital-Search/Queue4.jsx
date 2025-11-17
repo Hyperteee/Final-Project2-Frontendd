@@ -144,7 +144,7 @@ const Queue4 = () => {
     };
 
     function handleFinished() {
-        navigate("/testdata")
+        navigate("/profilebook")
         // เดี๋ยวเปลี่บยเป็นไปหน้าโปรไฟล์
     }
 
