@@ -27,6 +27,8 @@ function Queue2() {
         navigate("/queue3", 
             { state: { selectedHospital , selectedDoctor, selectedDepartment} })
     }
+    console.log(optionChooseDoctor)
+
     return (
         <>
             <div className="d-flex flex-column align-items-center">
@@ -56,8 +58,7 @@ function Queue2() {
                         ))}
                     </div>
 
-
-                    <div className="doctor-results-panel">
+                        <div className="doctor-results-panel">
                         <div className="row g-4">
                             {departmentData?.doctors.map((doctor) => {
                                 return (
@@ -81,6 +82,10 @@ function Queue2() {
                             })}
                         </div>
                     </div>
+                         
+                
+                
+                
                 </div>
             </div>
         </>
