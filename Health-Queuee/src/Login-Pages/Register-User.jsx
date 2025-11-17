@@ -1,4 +1,4 @@
-export default function LoginPage() {
+export default function RegisterPage() {
   return (
     <div className="container-fluid vh-100 p-0">
       <div className="row g-0 h-100">
@@ -13,69 +13,62 @@ export default function LoginPage() {
         >
           <div>
             {/* <h3 className="mb-5" style={{ marginTop: "-50px" }}>
-              <img
-                src="./images/HFU-Logo.png"
-                alt="HFU"
-                className="h-48 w-auto "
-              />
+              <img src="./images/HFU-Logo.png" alt="HFU" className="h-48 w-auto " />
             </h3> */}
           </div>
         </div>
 
         <div className="col-md-6 d-flex align-items-center justify-content-center p-5">
           <div className="w-100" style={{ maxWidth: "400px" }}>
-            <h2 className="mb-4">ยินดีต้อนรับ!</h2>
+            <h2 className="mb-4">สมัครสมาชิก</h2>
 
             <form>
               <div className="mb-3">
-                <label htmlFor="login" className="form-label fw-semibold">
-                  Login
+                <label htmlFor="fullname" className="form-label fw-semibold">
+                  ชื่อ-นามสกุล
                 </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="login"
-                  placeholder="ชื่อผู้ใช้งาน"
-                />
+                <input type="text" className="form-control" id="fullname" placeholder="ชื่อ-นามสกุล" />
+              </div>
+
+              <div className="mb-3">
+                <label htmlFor="email" className="form-label fw-semibold">
+                  Email
+                </label>
+                <input type="email" className="form-control" id="email" placeholder="อีเมล" />
+              </div>
+
+              <div className="mb-3">
+                <label htmlFor="phone" className="form-label fw-semibold">
+                  เบอร์โทรศัพท์
+                </label>
+                <input type="tel" className="form-control" id="phone" placeholder="เบอร์โทรศัพท์" />
               </div>
 
               <div className="mb-3">
                 <label htmlFor="password" className="form-label fw-semibold">
                   Password
                 </label>
-                <input
-                  type="password"
-                  className="form-control"
-                  id="password"
-                  placeholder="รหัสผ่าน"
-                />
+                <input type="password" className="form-control" id="password" placeholder="รหัสผ่าน" />
+              </div>
 
-                {/* sign in */}
-                <div
-                  className="d-grid gap-2"
-                  style={{
-                    marginTop: "20px",
-                  }}
-                >
-                  <button
-                    type="button"
-                    className=" border d-flex align-items-center justify-content-center gap-2 py-2"
-                    style={{
-                      backgroundColor: "#3b77fa",
-                      color: "#fff",
-                      borderRadius: "8px",
-                    }}
-                  >
-                    <span className="fw-semibold text-white">Sign In</span>
-                  </button>
-                </div>
+              <div className="mb-3">
+                <label htmlFor="confirmPassword" className="form-label fw-semibold">
+                  Confirm Password
+                </label>
+                <input type="password" className="form-control" id="confirmPassword" placeholder="ยืนยันรหัสผ่าน" />
               </div>
 
               <div className="mb-4">
+                <button type="submit" className="btn btn-primary w-100">
+                  สมัครสมาชิก
+                </button>
+              </div>
+
+              <div className="mb-4 text-center">
                 <small>
-                  หากท่านยังไม่มีบัญชี{" "}
+                  มีบัญชีอยู่แล้ว?{" "}
                   <a href="#" className="text-primary text-decoration-none">
-                    กดตรงนี้
+                    เข้าสู่ระบบ
                   </a>
                 </small>
               </div>
@@ -123,5 +116,5 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
-  );
+  )
 }

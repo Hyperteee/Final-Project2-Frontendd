@@ -17,11 +17,40 @@ function Queue1() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const navigate = useNavigate()
+
+    const hospitalData = hospitalMap[selectedHospital].info || null
+
+
     function handleNext(department, chooseDoctor, selectedHospital) {
-        navigate("/queue2", 
-            { state: { selectedDepartment : department, 
-                optionChooseDoctor : chooseDoctor, 
-                selectedHospital } });
+        if (department == "ไม่รู้แผนก" || department === "") {
+            // const getDontKnowId = hospitalData.departments.find((d)=>{
+            //     d == departmentName
+            //     console.log(d.id)
+            //     return d.id
+            // })
+            console.log(department)
+            navigate("/queue3",
+                { state: { selectedHospital, selectedDoctor: null, selectedDepartment: department } })
+        }
+
+        if (chooseDoctor == "choose") {
+            navigate("/queue2",
+                {
+                    state: {
+                        selectedDepartment: department,
+                        optionChooseDoctor: chooseDoctor,
+                        selectedHospital
+                    }
+                });
+        }
+        else if (chooseDoctor == "dontChoose") {
+
+            console.log(department)
+            navigate("/queue3",
+                { state: { selectedHospital, selectedDoctor: null, selectedDepartment: department } })
+
+        }
+
     }
     //////////////////////////////// stepper ////////////////////////
 
@@ -30,8 +59,8 @@ function Queue1() {
     console.log(department)
     const isStepActive = (stepNumber) => stepNumber <= currentStep;
 
-    
-    const hospitalData= hospitalMap[selectedHospital].info || null
+
+
 
     return (
         <>
@@ -75,75 +104,89 @@ function Queue1() {
                                     handleShow();
                                 }}
 
-                                checked={department !== null && department !== "dontChoose"}
+                                checked={department !== null && department !== "ไม่รู้แผนก"}
                                 onChange={() => { }}
 
                             />{
-                                department == null || department == "dontChoose" ? "เลือกแผนกเอง" : departmentName
+                                department == null || department == "ไม่รู้แผนก" ? "เลือกแผนกเอง" : departmentName
                             }
                         </div>
-                        <div className="option" onClick={() => setDepartment("dontChoose")}>
+                        <div className="option" onClick={() => setDepartment("ไม่รู้แผนก")}>
                             <Form.Check
                                 type="radio"
                                 id="no-department"
                                 name="chooseDepartment"
                                 value="no-Department"
-                                checked={department !== null && department == "dontChoose"}
-                                onChange={() => setDepartment("dontChoose")}
+                                checked={department !== null && department == "ไม่รู้แผนก"}
+                                onChange={() => { setDepartment("ไม่รู้แผนก"), setDepartmentName("ไม่รู้แผนก"), setChooseDoctor(null) }}
                                 onClick={(e) => e.stopPropagation()}
                             />ไม่แน่ใจ
                         </div>
                     </div>
-                    <div className="zone-option d-flex flex-column">
-                        <div>เลือกแพทย์</div>
-                        <div className="d-flex">
-                            <div className="option" onClick={() => setChooseDoctor("choose")}>
-                                <Form.Check
-                                    type="radio"
-                                    id="choose-Doctor"
-                                    name="doctorChoice"
-                                    value="choose-Doctor"
-                                    checked={chooseDoctor !== null && chooseDoctor !== "dontChoose"}
-                                    onChange={(e) => setChooseDoctor("choose")}
-                                />ต้องการเลือกแพทย์เอง
-                            </div>
+                    {
+                        department && department !== "ไม่รู้แผนก" && (
+                            <>
+                                <div className="zone-option d-flex flex-column">
+                                    <div>เลือกแพทย์</div>
+                                    <div className="d-flex">
+                                        <div className="option" onClick={() => setChooseDoctor("choose")}>
+                                            <Form.Check
+                                                type="radio"
+                                                id="choose-Doctor"
+                                                name="doctorChoice"
+                                                value="choose-Doctor"
+                                                checked={chooseDoctor !== null && chooseDoctor !== "dontChoose"}
+                                                onChange={(e) => setChooseDoctor("choose")}
+                                            />ต้องการเลือกแพทย์เอง
+                                        </div>
 
-                            <div className="option" onClick={() => setChooseDoctor("dontChoose")}>
-                                <Form.Check
-                                    type="radio"
-                                    id="no-Doctor"
-                                    name="doctorChoice"
-                                    value="no-Doctor"
-                                    checked={chooseDoctor !== null && chooseDoctor !== "choose"}
-                                    onChange={(e) => setChooseDoctor("dontChoose")}
+                                        <div className="option" onClick={() => setChooseDoctor("dontChoose")}>
+                                            <Form.Check
+                                                type="radio"
+                                                id="no-Doctor"
+                                                name="doctorChoice"
+                                                value="no-Doctor"
+                                                checked={chooseDoctor !== null && chooseDoctor !== "choose"}
+                                                onChange={(e) => setChooseDoctor("dontChoose")}
 
-                                />เลือกแพทย์ให้ฉัน
-                            </div>
-                        </div>
+                                            />เลือกแพทย์ให้ฉัน
+                                        </div>
+                                    </div>
+                                </div>
 
+                            </>
+                        )
+                    }
 
-                    </div>
 
                     <Modal className="department-modal" size="lg" show={show} onHide={handleClose} centered>
                         <Modal.Header closeButton>
-                            <Modal.Title className="fw-semibold modal-title">เลือกแผนกที่ต้องการรักษา</Modal.Title>
+                            <Modal.Title className="fw-semibold modal-title">
+                                เลือกแผนกที่ต้องการรักษา
+                            </Modal.Title>
                         </Modal.Header>
 
                         <Modal.Body className="modal-body department-grid">
-                            {hospitalData?.departments?.map((department) => (
-                                <div
-                                    key={department.id}
-                                    className="option-department"
-                                    onClick={() => { setDepartment(department.id), handleClose(), setDepartmentName(department.name) }}
-                                >
-                                    <img src={department.logo} alt="department icon" />
-                                    {department.name}
-                                </div>
-                            ))}
+                            {hospitalData?.departments
+                                ?.filter((department) => department.name !== "ไม่รู้แผนก") // ← FIXED
+                                ?.map((department) => (                         // ← FIXED
+                                    <div
+                                        key={department.id}
+                                        className="option-department"
+                                        onClick={() => {
+                                            setDepartment(department.id);
+                                            setDepartmentName(department.name);
+                                            handleClose();
+                                        }}
+                                    >
+                                        <img src={department.logo} alt="department icon" />
+                                        {department.name}
+                                    </div>
+                                ))
+                            }
                         </Modal.Body>
-
-
                     </Modal>
+
 
 
                 </div>
