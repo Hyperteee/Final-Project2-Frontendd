@@ -111,7 +111,7 @@ function Queue1() {
                                 department == null || department == "ไม่รู้แผนก" ? "เลือกแผนกเอง" : departmentName
                             }
                         </div>
-                        <div className="option" onClick={() => setDepartment("ไม่รู้แผนก")}>
+                        <div className="option" onClick={() => {setDepartment("ไม่รู้แผนก"), setDepartmentName("ไม่รู้แผนก")}}>
                             <Form.Check
                                 type="radio"
                                 id="no-department"

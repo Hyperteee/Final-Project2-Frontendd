@@ -23,9 +23,7 @@ const Queue4 = () => {
     const [show, setShow] = useState(false);
     const { hospitalSchedules, setHospitalSchedules } = useContext(HospitalScheduleContext);
 
-
-
-
+    
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const selectedDepartmentData = hospitalData.departments.find(
@@ -127,18 +125,18 @@ const Queue4 = () => {
         // Update state
         setHospitalSchedules(updatedSchedules);
 
-        // Save to user's appointments
         const newAppointment = {
             hospitalID: hospitalData.id,
             departmentID: selectedDepartment,
-            doctorID: selectedDoctor, // may be null for "ไม่รู้แผนก"
+            doctorID: selectedDoctor || null,
             date: appointmentDate,
             time: appointmentTime,
             symptom,
-            files
+            files,
         };
+
         addAppointment(newAppointment);
-        console.log("Appointment added:", newAppointment);
+
 
         handleShow()
     };
