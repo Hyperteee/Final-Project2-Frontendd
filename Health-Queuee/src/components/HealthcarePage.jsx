@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 
 import stateData from "../data/liststate";
 import hospitalData from "../data/listhospital";
-
+import "./Home.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 export default function HealthcarePage() {
   const [currentOrgSlide, setCurrentOrgSlide] = useState(0);
@@ -139,75 +139,70 @@ export default function HealthcarePage() {
             </Carousel>
 
             {/* ===== Hospital Search Bar ===== */}
-            <div className="row justify-content-center mt-4">
-              <div className="col-lg-8">
-                <div ref={searchSection} className="d-flex border border-primary rounded-3" style={{ width: "100%", boxSizing: "border-box" }}>
-                  <i
-                    className="bi bi-search"
-                    style={{
-                      padding: "10px",
-                      background: "dodgerblue",
-                      color: "white",
-                      minWidth: "50px",
-                      textAlign: "center",
-                    }}
-                  ></i>
-                  <input
-                    type="text"
-                    placeholder="ค้นหาจากชื่อโรงพยาบาล หรือ จังหวัด"
-                    name="hospital"
-                    onFocus={() => setShowDropdown(true)}
-                    onChange={(e) => setLetterSearch(e.target.value)}
-                    value={letterSearch}
-                    style={{ width: "100%", padding: "10px", outline: "none" }}
-                    className="form-control"
-                  />
-                  <Button variant="primary" onClick={() => handleSelect(letterSearch)}>
-                    ค้นหา
-                  </Button>
-                </div>
+            <div className="search-row">
+              <div className="search-col">
+                <div ref={searchSection} className="search-wrapper">
+                  <div className="search-input-container">
+                    <i className="bi bi-search search-icon"></i>
+                    <input
+                      type="text"
+                      placeholder="ค้นหาจากชื่อโรงพยาบาล หรือ จังหวัด"
+                      className="search-input"
+                      onFocus={() => setShowDropdown(true)}
+                      onChange={(e) => setLetterSearch(e.target.value)}
+                      value={letterSearch}
+                    />
+                    <Button variant="primary" onClick={() => handleSelect(letterSearch)}>
+                      ค้นหา
+                    </Button>
+                  </div>
 
-                {showDropdown && (
-                  <ul className="bg-white border border-gray-300 mt-2 rounded-xl max-h-48 overflow-y-auto shadow-lg text-left">
-                    {letterSearch
-                      ? filteredHospitals.map((hospital, index) => {
-                        const name = hospital.name;
-                        const search = letterSearch.toLowerCase();
-                        const startIndex = name.toLowerCase().indexOf(search);
-                        let before = name;
-                        let match = "";
-                        let after = "";
-                        if (startIndex !== -1) {
-                          before = name.slice(0, startIndex);
-                          match = name.slice(startIndex, startIndex + search.length);
-                          after = name.slice(startIndex + search.length);
-                        }
-                        return (
+                  {showDropdown && (
+                    <ul className="search-dropdown">
+                      {letterSearch
+                        ? filteredHospitals.map((hospital, index) => {
+                          const name = hospital.name;
+                          const search = letterSearch.toLowerCase();
+                          const startIndex = name.toLowerCase().indexOf(search);
+                          let before = name;
+                          let match = "";
+                          let after = "";
+                          if (startIndex !== -1) {
+                            before = name.slice(0, startIndex);
+                            match = name.slice(startIndex, startIndex + search.length);
+                            after = name.slice(startIndex + search.length);
+                          }
+
+                          return (
+                            <li
+                              key={index}
+                              onClick={() => handleHospital(hospital)}
+                              className="dropdown-item"
+                            >
+                              โรงพยาบาล{before}
+                              {match && <span className="highlight">{match}</span>}
+                              {after}{" "}
+                              <span className="dropdown-state">({hospital.state})</span>
+                            </li>
+                            
+                          );
+                        })
+                        : filteredStates.map((state, index) => (
                           <li
-                            key={`hospital-${index}`}
-                            onClick={() => handleHospital(hospital)}
-                            className="px-4 py-2 hover:bg-blue-100 cursor-pointer"
+                            key={index}
+                            onClick={() => handleSelect(state)}
+                            className="dropdown-item"
                           >
-                            โรงพยาบาล{before}
-                            {match && <span className="!text-blue-500 !font-bold">{match}</span>}
-                            {after} <span className="!text-gray-500">({hospital.state})</span>
+                            {state}
                           </li>
+                        ))}
+                    </ul>
+                  )}
 
-                        );
-                      })
-                      : filteredStates.map((state, index) => (
-                        <li
-                          key={`state-${index}`}
-                          onClick={() => handleSelect(state)}
-                          className="px-4 py-2 hover:bg-blue-100 cursor-pointer"
-                        >
-                          {state}
-                        </li>
-                      ))}
-                  </ul>
-                )}
+                </div>
               </div>
             </div>
+
           </div>
           <div
             className="position-absolute rounded-circle"
