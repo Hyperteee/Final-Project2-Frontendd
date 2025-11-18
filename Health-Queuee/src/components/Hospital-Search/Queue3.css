@@ -22,6 +22,22 @@
   justify-content: center;
   align-items: center;
 }
+/* Queue3.css */
+.day-btn.original-date {
+    border: 2px solid #0d6efd;
+    background-color: #cfe2ff!important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+    color: #0d6efd !important;
+    
+}
+.day-btn:disabled,
+.day-btn.disabled {
+    pointer-events: none !important;
+    opacity: 0.5;
+    cursor: not-allowed !important;
+}
+
 
 .week-selector {
   display: flex;
@@ -117,4 +133,10 @@
 }
 .day-btn {
   min-width: 70px; /* fixed width for animation calculation */
+}
+.backButton {
+  margin-top: 70px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  width: fit-content;
 }

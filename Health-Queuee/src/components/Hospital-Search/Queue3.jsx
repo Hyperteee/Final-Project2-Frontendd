@@ -138,7 +138,7 @@ const Queue3 = () => {
       const regularWorkDay = doctorSchedule?.workingDays.includes(dayName);
       return hasBookingForDate || regularWorkDay;
     } else {
-      // Check if any doctor in the department works on this day
+
       return allDoctorSchedules?.some((docSchedule) => {
         const hasBookingForDate = docSchedule.bookings?.[dateKey] !== undefined;
         const regularWorkDay = docSchedule.workingDays.includes(dayName);
@@ -340,9 +340,10 @@ const Queue3 = () => {
                 <button onClick={handlePrevWeek} className="arrow-btn">〈</button>
                 <div className="days-container">
                   {weekDays.map((date) => {
-                    const today = new Date();
-                    today.setHours(0, 0, 0, 0);
-                    const disabled = date < today || !isDoctorWorking(date);
+                    const tomorrow = new Date();
+                    tomorrow.setDate(tomorrow.getDate() + 1);
+                    tomorrow.setHours(0, 0, 0, 0)
+                    const disabled = date < tomorrow || !isDoctorWorking(date);
                     const active =
                       selectedDate && date.toDateString() === selectedDate.toDateString();
                     return (
@@ -430,11 +431,12 @@ const Queue3 = () => {
               <button onClick={handlePrevWeek} className="arrow-btn">〈</button>
               <div className="days-container">
                 {weekDays.map((date) => {
-                  const today = new Date();
-                  today.setHours(0, 0, 0, 0);
+                  const tomorrow = new Date();
+                  tomorrow.setDate(tomorrow.getDate() + 1);
+                  tomorrow.setHours(0, 0, 0, 0)
                   const disabled = selectedDepartment !== "ไม่รู้แผนก"
-                    ? date < today || !allDoctors.some(doc => isDoctorWorking(date, doc))
-                    : date < today || !isDoctorWorking(date);
+                    ? date < tomorrow || !allDoctors.some(doc => isDoctorWorking(date, doc))
+                    : date < tomorrow || !isDoctorWorking(date);
 
                   const active = selectedDate && date.toDateString() === selectedDate.toDateString();
                   return (

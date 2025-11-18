@@ -21,6 +21,7 @@ import { UserAppointmentProvider } from "./data/context/appointment";
 import Testdata from "./components/Hospital-Search/testdata";
 import Profile from "./Profile-User/Profile";
 import ProfileBook from "./Profile-User/Profile-book";
+import Postpone from "./components/Hospital-Search/postpone";
 function App() {
   return (
     <HospitalScheduleProvider>
@@ -37,6 +38,7 @@ function App() {
           <Route path="testdata" element={<Testdata />} />
           <Route path="profile" element={<Profile />} />
           <Route path="profilebook" element={<ProfileBook />} />
+          <Route path="postpone" element={<Postpone />} />
         </Routes>
       </BrowserRouter>
       </UserAppointmentProvider>

@@ -26,6 +26,8 @@ const Queue4 = () => {
     
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    
     const selectedDepartmentData = hospitalData.departments.find(
         (d) => d.id === selectedDepartment
     );
@@ -55,37 +57,7 @@ const Queue4 = () => {
         setSelectedFiles([])
     };
 
-    // const handleConfirm = () => {
-    //     const updatedSchedules = { ...hospitalSchedules };
-    //     const doctorSchedule = updatedSchedules[selectedHospital]
-    //         ?.find(dep => dep.departmentId === selectedDepartment)
-    //         ?.doctors.find(doc => doc.doctorId === selectedDoctor);
-
-    //     if (!doctorSchedule.bookings[appointmentDate]) {
-    //         doctorSchedule.bookings[appointmentDate] = {};
-    //     }
-    //     if (!doctorSchedule.bookings[appointmentDate][appointmentTime]) {
-    //         doctorSchedule.bookings[appointmentDate][appointmentTime] = [];
-    //     }
-    //     doctorSchedule.bookings[appointmentDate][appointmentTime].push({ symptom, files });
-    //     setHospitalSchedules(updatedSchedules);
-
-    //     const newAppointment = {
-    //         hospitalID: hospitalData.id,
-    //         departmentID: selectedDepartment,
-    //         doctorID: selectedDoctor,
-    //         date: appointmentDate,
-    //         time: appointmentTime,
-    //         symptom,
-    //         files
-    //     }
-    //     addAppointment(newAppointment);
-    //     console.log("Appointment added:", newAppointment);
-    //     handleShow()
-
-    // }
     const handleConfirm = () => {
-        // Copy schedules
         const updatedSchedules = { ...hospitalSchedules };
         const departmentSchedule = updatedSchedules[selectedHospital]
             ?.find(dep => dep.departmentId === selectedDepartment);
@@ -122,7 +94,6 @@ const Queue4 = () => {
             departmentSchedule.bookings[appointmentDate][appointmentTime].push({ symptom, files });
         }
 
-        // Update state
         setHospitalSchedules(updatedSchedules);
 
         const newAppointment = {

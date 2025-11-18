@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { User, CreditCard, Calendar, Lock, Shield, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Card, Row, Col, Button, ModalHeader } from "react-bootstrap";
@@ -108,16 +108,47 @@ export default function ProfileBook() {
   }
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
+  const [showPostponeModal, setShowPostponeModal] = useState(false)
+  const [selectedPostponeAppointment, setSelectedPostponeAppointment] = useState(null);
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [passwordInput, setPasswordInput] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const userPassword = "1234"
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
 
   const openCancelModal = (appt) => {
     setSelectedAppointment(appt);
     setShowCancelModal(true);
   };
+  const handleConfirmPostpone = () => {
+    setShowPostponeModal(false);
 
+    navigate("/postpone", {
+      state: {
+        appointmentData: selectedPostponeAppointment
+      }
+    });
+  }
   const closeCancelModal = () => {
-    setSelectedAppointment(null);
+    
     setShowCancelModal(false);
   };
+
+  function handleConfirmDeleted(){
+    cancelAppointment(selectedAppointment.id)
+  }
+
+  useEffect(() => {
+    if (showSuccessModal) {
+      const timer = setTimeout(() => {
+        setShowSuccessModal(false);
+        navigate("/profilebook")
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [showSuccessModal]);
+
 
   return (
     <div className="bg-light min-vh-100">
@@ -332,7 +363,10 @@ export default function ProfileBook() {
                                       borderRadius: "18px",
                                       minWidth: "140px",
                                     }}
-                                    onClick={() => { }}
+                                    onClick={() => {
+                                      setSelectedPostponeAppointment(appt);
+                                      setShowPostponeModal(true);
+                                    }}
                                   >
                                     <i className="bi bi-pen"></i> เลื่อนนัดหมาย
                                   </Button>
@@ -342,7 +376,7 @@ export default function ProfileBook() {
                           ))
                       )}
                       <Modal show={showCancelModal} onHide={closeCancelModal} centered>
-                       
+
                         <Modal.Body className="text-center">
                           <h3 className="fw-bold mt-3">ยืนยันยกเลิกนัดหมาย ?</h3>
                           {selectedAppointment && (
@@ -350,7 +384,7 @@ export default function ProfileBook() {
                               <p><strong>โรงพยาบาล</strong>{getHospitalName(selectedAppointment.hospitalID)}</p>
                               <p><strong>แผนก</strong>{getDepartmentName(selectedAppointment.hospitalID, selectedAppointment.departmentID)}</p>
                               <p><strong>{formatThaiDate(selectedAppointment.date)} &nbsp;{selectedAppointment.time}</strong></p>
-                              
+
                             </div>
                           )}
                         </Modal.Body>
@@ -361,7 +395,7 @@ export default function ProfileBook() {
                           <Button
                             variant="danger"
                             onClick={() => {
-                              cancelAppointment(selectedAppointment.id); // remove from user & hospitalSchedules
+                              setShowPasswordModal(true)
                               closeCancelModal();
                             }}
                           >
@@ -369,7 +403,63 @@ export default function ProfileBook() {
                           </Button>
                         </Modal.Footer>
                       </Modal>
+                      <Modal show={showPostponeModal} onHide={() => setShowPostponeModal(false)} centered>
 
+
+                        <Modal.Body className="text-center mt-4 fs-4">
+                          คุณต้องการเลื่อนนัดหมาย ?
+                        </Modal.Body>
+
+                        <Modal.Footer>
+                          <Button variant="secondary" onClick={() => setShowPostponeModal(false)}>
+                            ยกเลิก
+                          </Button>
+                          <Button variant="primary" onClick={handleConfirmPostpone}>
+                            ต้องการ
+                          </Button>
+                        </Modal.Footer>
+                      </Modal>
+
+
+
+                      <Modal show={showPasswordModal} onHide={() => setShowPasswordModal(false)} centered>
+                        <Modal.Body>
+                          <h5 className="fw-bold mt-3 mb-4">กรุณาใส่รหัสผ่านเพื่อยืนยันการเลื่อนนัด</h5>
+                          <input
+                            type="password"
+                            className="form-control"
+                            placeholder="รหัสผ่าน"
+                            value={passwordInput}
+                            onChange={(e) => setPasswordInput(e.target.value)}
+                          />
+                          {passwordError && <p className="text-danger mt-2">{passwordError}</p>}
+                        </Modal.Body>
+                        <Modal.Footer>
+                          <Button variant="secondary" onClick={() => setShowPasswordModal(false)}>
+                            ยกเลิก
+                          </Button>
+                          <Button
+                            variant="primary"
+                            onClick={() => {
+                              if (passwordInput === userPassword) {
+                                handleConfirmDeleted();
+                                setShowPasswordModal(false);
+                                setShowSuccessModal(true)
+                              } else {
+                                setPasswordError("รหัสผ่านไม่ถูกต้อง");
+                              }
+                            }}
+                          >
+                            ยืนยัน
+                          </Button>
+                        </Modal.Footer>
+                      </Modal>
+                      <Modal show={showSuccessModal} onHide={() => setShowSuccessModal(false)} centered>
+                        <Modal.Body className="text-center">
+                          <h3 className="fw-bold">ยกเลิกนัดหมายเสร็จสิ้น</h3>
+                          <img src="images/check.png" alt="" style={{ width: "80px" }} />
+                        </Modal.Body>
+                      </Modal>
                     </div>
                   </div>
                 </form>
