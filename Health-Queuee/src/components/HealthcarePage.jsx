@@ -1,10 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router";
 
 import stateData from "../data/liststate";
 import hospitalData from "../data/listhospital";
+import { getTopDoctors } from "../utils/doctorUtils";
+import resolveAssetPath from "../utils/assetPath";
 import "./Home.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 export default function HealthcarePage() {
@@ -12,18 +14,61 @@ export default function HealthcarePage() {
   const [currentPackageSlide, setCurrentPackageSlide] = useState(0);
   const [letterSearch, setLetterSearch] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
-  const [selectedState, setSelectedState] = useState("");
-  const [selectedHospital, setSelectedHospital] = useState("");
   const searchSection = useRef(null);
   const navigate = useNavigate();
   const hospitalThai = "โรงพยาบาล";
 
-  const doctors = [
-    { id: 1, name: "นพ. สมชาย ใจดี", specialty: "อายุรแพทย์" },
-    { id: 2, name: "พญ. สมหญิง รักษา", specialty: "กุมารแพทย์" },
-    { id: 3, name: "นพ. วิชัย สุขภาพ", specialty: "ศัลยแพทย์" },
-    { id: 4, name: "พญ. นิภา ดูแล", specialty: "สูติ-นรีแพทย์" },
-  ];
+  // Carousel settings
+  const DOCTORS_PER_SLIDE = 4;
+  const allDoctors = useMemo(() => getTopDoctors(12), []);
+  const totalSlides = Math.ceil(allDoctors.length / DOCTORS_PER_SLIDE);
+  const currentDoctors = allDoctors.slice(
+    currentOrgSlide * DOCTORS_PER_SLIDE,
+    (currentOrgSlide + 1) * DOCTORS_PER_SLIDE
+  );
+
+  const handlePrevDoctors = () => {
+    setCurrentOrgSlide((prev) => (prev === 0 ? totalSlides - 1 : prev - 1));
+  };
+
+  const handleNextDoctors = () => {
+    setCurrentOrgSlide((prev) => (prev === totalSlides - 1 ? 0 : prev + 1));
+  };
+
+  // Avatar paths and gender detection
+  const DOCTOR_AVATAR_PATHS = {
+    male: "images/Doctor-Boy.jpg",
+    female: "images/Doctor-Girl.jpg",
+  };
+  const MALE_MARKERS = ["นพ.", "นายแพทย์", "dr.", "mr.", "sir"];
+  const FEMALE_MARKERS = ["พญ.", "แพทย์หญิง", "นางแพทย์", "mrs.", "ms.", "madam"];
+
+  const detectDoctorGender = (name = "") => {
+    const normalized = name?.toLowerCase?.() ?? "";
+    if (!normalized) return "unknown";
+    if (MALE_MARKERS.some((marker) => normalized.includes(marker.toLowerCase()))) {
+      return "male";
+    }
+    if (FEMALE_MARKERS.some((marker) => normalized.includes(marker.toLowerCase()))) {
+      return "female";
+    }
+    return "unknown";
+  };
+
+  const getDoctorAvatarPath = (name = "") => {
+    const gender = detectDoctorGender(name);
+    return DOCTOR_AVATAR_PATHS[gender] ?? "";
+  };
+
+  const getInitials = (text) => {
+    if (!text) return "DR";
+    const tokens = text
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((token) => token.charAt(0).toUpperCase());
+    return tokens.join("") || "DR";
+  };
 
   const packages = [
     { id: 1, title: "แพ็กเกจตรวจสุขภาพทั่วไป", category: "ตรวจสุขภาพ" },
@@ -45,12 +90,10 @@ export default function HealthcarePage() {
   );
 
   function handleSelect(state) {
-    setSelectedState(state);
     navigate("/hospitals", { state: { selectedState: state, showDropdown: false } });
   }
 
   function handleHospital(hospital) {
-    setSelectedHospital(hospital.name);
     navigate("/queue1", { state: { selectedHospital: hospital.name, showDropdown: false } });
   }
 
@@ -333,16 +376,20 @@ export default function HealthcarePage() {
                 }}
               ></div>
             </div>
-            <a
-              href="#"
+            <button
+              onClick={() => navigate("/doctors")}
               className="btn btn-link text-primary text-decoration-none fw-medium"
             >
               ดูทั้งหมด
-            </a>
+            </button>
           </div>
 
           <div className="row g-4 mb-4">
-            {doctors.map((doctor) => (
+            {currentDoctors.map((doctor) => {
+              const avatarPath = getDoctorAvatarPath(doctor.name);
+              const avatarSrc = avatarPath ? resolveAssetPath(avatarPath) : "";
+              const avatarClassName = `rounded-4 mb-3 d-flex align-items-center justify-content-center overflow-hidden${avatarSrc ? "" : " bg-light"}`;
+              return (
               <div key={doctor.id} className="col-sm-6 col-lg-3">
                 <div
                   className="card border rounded-4 h-100 shadow-sm"
@@ -365,33 +412,31 @@ export default function HealthcarePage() {
                 >
                   <div className="card-body p-4">
                     <div
-                      className="rounded-4 mb-3 d-flex align-items-center justify-content-center overflow-hidden"
+                      className={avatarClassName}
                       style={{
                         width: "100%",
                         aspectRatio: "1",
-                        background:
-                          "linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%)",
+                        background: avatarSrc
+                          ? "transparent"
+                          : "linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%)",
                       }}
                     >
-                      <svg
-                        width="80"
-                        height="80"
-                        fill="none"
-                        stroke="#93c5fd"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={1.5}
-                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                      {avatarSrc ? (
+                        <img
+                          src={avatarSrc}
+                          alt={doctor.name || "Doctor avatar"}
+                          style={{ width: "100%", height: "100%", objectFit: "cover" }}
                         />
-                      </svg>
+                      ) : (
+                        <span className="fw-semibold text-primary" style={{ fontSize: "32px" }}>
+                          {getInitials(doctor.name)}
+                        </span>
+                      )}
                     </div>
                     <div className="text-center">
                       <h5 className="fw-bold mb-1">{doctor.name}</h5>
                       <p className="text-primary small fw-medium mb-3">
-                        {doctor.specialty}
+                        {doctor.specialization}
                       </p>
                       <button className="btn btn-primary w-100 rounded-3">
                         นัดหมาย
@@ -400,17 +445,16 @@ export default function HealthcarePage() {
                   </div>
                 </div>
               </div>
-            ))}
+            );
+            })}
           </div>
 
           <div className="d-flex gap-3 justify-content-center">
             <button
-              onClick={() =>
-                setCurrentOrgSlide(Math.max(0, currentOrgSlide - 1))
-              }
+              onClick={handlePrevDoctors}
               className="btn btn-outline-secondary rounded-circle"
               style={{ width: "48px", height: "48px" }}
-              aria-label="ก่อนหน้า"
+              aria-label="หมอป่หน้า"
             >
               <svg
                 width="20"
@@ -428,7 +472,7 @@ export default function HealthcarePage() {
               </svg>
             </button>
             <button
-              onClick={() => setCurrentOrgSlide(currentOrgSlide + 1)}
+              onClick={handleNextDoctors}
               className="btn btn-outline-secondary rounded-circle"
               style={{ width: "48px", height: "48px" }}
               aria-label="ถัดไป"
