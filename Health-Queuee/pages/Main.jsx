@@ -24,30 +24,6 @@ const Main = () => {
 
     return (
         <div className="flex bg-gray-50 min-h-screen">
-
-            {/* Sidebar (คงเดิม) */}
-            <div className="w-1/5 bg-white shadow-lg p-4 border-r border-gray-200">
-                <div className="mb-8">
-                    <div className="rounded-full bg-gray-200 h-16 w-16 mb-2"></div>
-                    <p className="font-bold">ชื่อ-นามสกุล</p>
-                    <p className="text-sm text-gray-500">ชื่อโรงพยาบาล</p>
-                </div>
-                <ul className="space-y-2 text-gray-700">
-                    <li className="p-2 hover:bg-gray-100 rounded-lg cursor-pointer">
-                        <i className="bi bi-calendar-check mr-2"></i> รายการนัด
-                    </li>
-                    <li className="bg-blue-100 text-blue-800 p-2 rounded-lg font-semibold cursor-pointer">
-                        <i className="bi bi-people mr-2"></i> จัดการคนไข้
-                    </li>
-                    <li className="p-2 hover:bg-gray-100 rounded-lg cursor-pointer">
-                        <i className="bi bi-person-badge mr-2"></i> จัดการหมอ
-                    </li>
-                    <li className="p-2 hover:bg-gray-100 rounded-lg cursor-pointer">
-                        <i className="bi bi-gear mr-2"></i> จัดการข้อมูลอื่นๆ
-                    </li>
-                </ul>
-            </div>
-
             {/* Main Content Area */}
             <div className="flex-grow p-8">
 
