@@ -1,35 +1,90 @@
-import React from 'react'
+import React from "react";
 
 export default function ChatBot() {
   return (
     <div>
       <section
-        className="relative py-12 px-6 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('./images/BG/BG2.png')" }}
+        className="position-relative mx-3 mt-3 overflow-hidden"
+        style={{
+          background: "linear-gradient(135deg, #2d3561 0%, #1a1f3a 100%)",
+          borderRadius: "2rem",
+        }}
       >
         {/* ชั้น overlay มืดและเบลอ */}
         <div className="absolute inset-0 bg-black/0 backdrop-blur-sm"></div>
 
         {/* เนื้อหาหลัก */}
-        <div className="relative max-w-7xl mx-auto">
+        <div className="relative max-w-7xl mx-auto mt-4">
           <h1 className="text-center text-3xl font-semibold text-white mb-8 drop-shadow-md">
             Trusted by teams at
           </h1>
 
           {/* เส้นขาวตกแต่ง */}
-          <div className="h-1 w-24 bg-white mx-auto rounded-full mb-10"></div>
+          <div className="h-1 w-24 bg-white mx-auto rounded-full mb-10 "></div>
 
           {/* ช่องโลโก้ */}
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
-            {[1, 2, 3, 4, 5].map((i) => (
-              <div
-                key={i}
-                className="bg-white/90 backdrop-blur-md rounded-lg p-8 flex items-center justify-center h-32 shadow-lg hover:scale-105 transition-transform duration-300"
-              >
-                <span className="text-gray-600 font-medium">Logo</span>
-              </div>
-            ))}
+            <div
+              className="position-relative mx-3 mt-3 overflow-hidden"
+              style={{
+                backgroundImage: "url('./images/Hos-Chula.svg')",
+                backgroundSize: "contain",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                width: "100%",
+                aspectRatio: "1/1",
+              }}
+            ></div>
+
+            <div
+              className="position-relative mx-3 mt-3 overflow-hidden"
+              style={{
+                backgroundImage: "url('./images/Hos-Paolo.png')",
+                backgroundSize: "contain",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                width: "100%",
+                aspectRatio: "1/1",
+              }}
+            ></div>
+
+            <div
+              className="position-relative mx-3 mt-3 overflow-hidden"
+              style={{
+                backgroundImage: "url('./images/Hos-Bangkok.png')",
+                backgroundSize: "contain",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                width: "100%",
+                aspectRatio: "1/1",
+              }}
+            ></div>
+
+            <div
+              className="position-relative mx-3 mt-3 overflow-hidden"
+              style={{
+                backgroundImage: "url('./images/Hos-Phyathai.png')",
+                backgroundSize: "contain",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                width: "100%",
+                aspectRatio: "1/1",
+              }}
+            ></div>
+
+            <div
+              className="position-relative mx-3 mt-3 overflow-hidden"
+              style={{
+                backgroundImage: "url('./images/hos-samitivej.png')",
+                backgroundSize: "contain",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                width: "100%",
+                aspectRatio: "1/1",
+              }}
+            ></div>
           </div>
+
           <div className="relative max-w-7xl mx-auto m-[35px] grid grid-cols-2 gap-12 items-center m">
             {/* ฝั่งข้อความ */}
             <div>
@@ -49,7 +104,7 @@ export default function ChatBot() {
             </div>
 
             {/* กล่องแชทจำลอง */}
-            <div className="bg-white/90 rounded-2xl shadow-2xl p-6 backdrop-blur-md">
+            <div className="bg-white/90 rounded-2xl shadow-2xl p-6 backdrop-blur-md ">
               <div className="bg-gray-100 rounded-lg p-4 mb-4 h-64 flex items-end overflow-hidden">
                 <div className="text-gray-500 italic">
                   เริ่มพิมพ์เพื่อสนทนา...
@@ -82,5 +137,5 @@ export default function ChatBot() {
         </div>
       </section>
     </div>
-  )
+  );
 }

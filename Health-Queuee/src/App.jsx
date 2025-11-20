@@ -4,45 +4,45 @@ import layout from "./components/Layout/Layout";
 
 import HealthcarePage from "./components/HealthcarePage";
 import Navbar from "./components/Navbar/Navbar";
-import HospitalSearch from "./components/Hospital-Search/Hospital-Search";
 import ChatBot from "./components/ChatBot/ChatBot";
 import PoppularDoc from "./components/PopularDoc/PoppularDoc";
 import PackagePart from "./components/PackagePart/Package";
 import Footer from "./components/Footer/Footer";
 import Layout from "./components/Layout/Layout";
+import Listsearch from "./components/Hospital-Search/listsearch";
+import Queue1 from "./components/Hospital-Search/Queue1";
 import LoginPage from "./login-Pages/Login-user";
-import RegisterPage from "./Login-Pages/Register-User";
+import Queue2 from "./components/Hospital-Search/Queue2";
+import Queue3 from "./components/Hospital-Search/Queue3";
+import Queue4 from "./components/Hospital-Search/Queue4";
+import hospitalMap from "./data/hospitaldata.jsx/allhospitaldata";
+import { HospitalScheduleProvider } from "./data/context/allSchedule";
+import { UserAppointmentProvider } from "./data/context/appointment";
+import Testdata from "./components/Hospital-Search/testdata";
 import Profile from "./Profile-User/Profile";
-import Login2 from "./Login-Pages/Login2";
 import ProfileBook from "./Profile-User/Profile-book";
-import ProfileHistory from "./Profile-User/Profile-History";
-import ProfilePrivacy from "./Profile-User/Profile-Privacy";
-
-
+import Postpone from "./components/Hospital-Search/postpone";
 function App() {
   return (
-    <>
-      {/* <Toaster/> */}
-      {/* <HealthcarePage />, */}
-      {/* <Login2 />, */}
-      {/* <Profile /> */}
-      {/* <LoginPage />, */}
-      {/* <RegisterPage /> */}
-      {/* <Navbar /> */}
-      {/* <Login /> */}
+    <HospitalScheduleProvider>
+      <UserAppointmentProvider>
       <BrowserRouter basename="/Final-Project2-Frontendd/">
         <Routes>
-          <Route path="/" element={<Login2 />} />
-          <Route path="Login2" element={<Login2 />} />
-          <Route path="LoginPage" element={<LoginPage />} />
-          <Route path="HealthcarePage" element={<HealthcarePage />} />
-          <Route path="Profile" element={<Profile />} />
-          <Route path="ProfileBook" element={<ProfileBook />} />
-          <Route path ="ProfileHistory" element={<ProfileHistory />} />
-          <Route path="ProfilePrivacy" element={<ProfilePrivacy />} />
+          <Route path="/" element={<HealthcarePage />} />
+          <Route path="hospitals" element={<Listsearch />} />
+          <Route path="queue1" element={<Queue1 />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="queue2" element={<Queue2 />} />
+          <Route path="queue3" element={<Queue3 />} />
+          <Route path="queue4" element={<Queue4 />} />
+          <Route path="testdata" element={<Testdata />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="profilebook" element={<ProfileBook />} />
+          <Route path="postpone" element={<Postpone />} />
         </Routes>
       </BrowserRouter>
-    </>
+      </UserAppointmentProvider>
+    </HospitalScheduleProvider>
   );
 }
 

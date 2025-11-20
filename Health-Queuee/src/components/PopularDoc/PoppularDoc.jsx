@@ -38,22 +38,244 @@ export default function PoppularDoc() {
           </div>
 
           {/* การ์ดแพทย์ */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-6">
-            {[1, 2, 3, 4].map((i) => (
-              <div
-                key={i}
-                className="bg-gray-100 rounded-2xl p-6 min-h-[400px]"
+      <section className="container py-5" >
+        <div className="row" >
+          <div className="col-12">
+            {/* <h1 className="fw-bold mb-4" style={{ color: "#2d3561", fontSize: "2.5rem" }}>
+              Book an appointment for an
+              <br />
+              in-clinic consultation
+            </h1> */}
+
+            {/* Specialty Filter Pills
+            <div className="d-flex gap-3 mb-5 flex-wrap">
+              <button
+                className="btn d-flex align-items-center gap-2 px-4 py-2"
+                style={{
+                  backgroundColor: "#f8f9fa",
+                  color: "#2d3561",
+                  borderRadius: "2rem",
+                  border: "none",
+                }}
               >
-                <div className="w-full aspect-[4/3] bg-gray-300 rounded-2xl mb-4 flex items-center justify-center overflow-hidden">
-                  <span className="text-gray-500 text-sm">Image</span>
-                </div>
-                <div className="text-center">
-                  <h3 className="font-semibold text-gray-900">ชื่อแพทย์</h3>
-                  <p className="text-sm text-gray-500">ความเชี่ยวชาญ</p>
+                <span>🦴</span>
+                <span>Orthopedists</span>
+              </button>
+
+              <button
+                className="btn d-flex align-items-center gap-2 px-4 py-2"
+                style={{
+                  backgroundColor: "#2d3561",
+                  color: "white",
+                  borderRadius: "2rem",
+                  border: "none",
+                }}
+              >
+                <span>👤</span>
+                <span>Obesity</span>
+              </button>
+
+              <button
+                className="btn d-flex align-items-center gap-2 px-4 py-2"
+                style={{
+                  backgroundColor: "#f8f9fa",
+                  color: "#2d3561",
+                  borderRadius: "2rem",
+                  border: "none",
+                }}
+              >
+                <span>🦒</span>
+                <span>Neck pain</span>
+              </button>
+
+              <button
+                className="btn d-flex align-items-center gap-2 px-4 py-2"
+                style={{
+                  backgroundColor: "#f8f9fa",
+                  color: "#2d3561",
+                  borderRadius: "2rem",
+                  border: "none",
+                }}
+              >
+                <span>🧠</span>
+                <span>Neurology</span>
+              </button>
+
+              <button
+                className="btn d-flex align-items-center gap-2 px-4 py-2"
+                style={{
+                  backgroundColor: "#f8f9fa",
+                  color: "#2d3561",
+                  borderRadius: "2rem",
+                  border: "none",
+                }}
+              >
+                <span>🤕</span>
+                <span>Headache</span>
+              </button>
+
+              <button
+                className="btn d-flex align-items-center gap-2 px-4 py-2"
+                style={{
+                  backgroundColor: "#f8f9fa",
+                  color: "#2d3561",
+                  borderRadius: "2rem",
+                  border: "none",
+                }}
+              >
+                <span>💪</span>
+                <span>Shoulder</span>
+              </button>
+
+              <button
+                className="btn d-flex align-items-center gap-2 px-4 py-2"
+                style={{
+                  backgroundColor: "#f8f9fa",
+                  color: "#2d3561",
+                  borderRadius: "2rem",
+                  border: "none",
+                }}
+              >
+                <span>👁️</span>
+                <span>Eye care</span>
+              </button>
+            </div> */}
+
+            {/* Doctor Cards Grid */}
+            <div className="row g-4" >
+              <div className="col-12 col-md-6 col-lg-3" >
+                <div className="card border-0 shadow-sm h-100" style={{
+          background: "linear-gradient(135deg, #2d3561 0%, #1a1f3a 100%)",
+          borderRadius: "2rem",
+        }}>
+                  <div className="card-body p-0">
+                    <div
+                      className="d-flex align-items-end justify-content-center"
+                      style={{
+                        height: "280px",
+                        backgroundColor: "#ecf6ffff",
+                        borderRadius: "1rem 1rem 0 0",
+                        overflow: "hidden",
+                      }}
+                    >
+                      <img
+                        src="./images/Doctor-Oshi.png"
+                        alt="Dr. Oshi"
+                        className="img-fluid"
+                        style={{ height: "100%", objectFit: "cover" }}
+                      />
+                    </div>
+                    <div className="p-3">
+                      <h5 className="fw-bold mb-1 text-white">
+                        Dr. Oshi
+                      </h5>
+                      <p className="mb-0 text-white">แผนก: อยุรกรรม</p>
+                    </div>
+                  </div>
                 </div>
               </div>
-            ))}
+
+              <div className="col-12 col-md-6 col-lg-3">
+                <div className="card border-0 shadow-sm h-100" style={{ borderRadius: "1rem" }}>
+                  <div className="card-body p-0" style={{
+          background: "linear-gradient(135deg, #2d3561 0%, #1a1f3a 100%)",
+          borderRadius: "2rem",
+        }}>
+                    <div
+                      className="d-flex align-items-end justify-content-center"
+                      style={{
+                        height: "280px",
+                        backgroundColor: "#ecf6ffff",
+                        borderRadius: "1rem 1rem 0 0",
+                        overflow: "hidden",
+                      }}
+                    >
+                      <img
+                        src="./images/Doctor-Mook.png"
+                        alt="Dr. Mook"
+                        className="img-fluid"
+                        style={{ height: "100%", objectFit: "cover" }}
+                      />
+                    </div>
+                    <div className="p-3">
+                      <h5 className="fw-bold mb-1 text-white">
+                        Dr. Mook
+                      </h5>
+                      <p className="text-white small mb-0">แผนก: เวชกรรม</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Dr. Sanjana Gupta */}
+              <div className="col-12 col-md-6 col-lg-3">
+                <div className="card border-0 shadow-sm h-100" style={{ borderRadius: "1rem" }}>
+                  <div className="card-body p-0"style={{
+          background: "linear-gradient(135deg, #2d3561 0%, #1a1f3a 100%)",
+          borderRadius: "2rem",
+        }}>
+                    <div
+                      className="d-flex align-items-end justify-content-center"
+                      style={{
+                        height: "280px",
+                        backgroundColor: "#ecf6ffff",
+                        borderRadius: "1rem 1rem 0 0",
+                        overflow: "hidden",
+                      }}
+                    >
+                      <img
+                        src="./images/Doctor-Frame.png"
+                        alt="Dr. Frame"
+                        className="img-fluid"
+                        style={{ height: "100%", objectFit: "cover" }}
+                      />
+                    </div>
+                    <div className="p-3">
+                      <h5 className="fw-bold mb-1 text-white" >
+                        Dr. Frame
+                      </h5>
+                      <p className="text-white small mb-0">แผนก: ศูนย์ระบบทางเดินอาหารและตับ</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Dr. Jen Gunter */}
+              <div className="col-12 col-md-6 col-lg-3">
+                <div className="card border-0 shadow-sm h-100" style={{ borderRadius: "1rem" }}>
+                  <div className="card-body p-0"style={{
+          background: "linear-gradient(135deg, #2d3561 0%, #1a1f3a 100%)",
+          borderRadius: "2rem",
+        }}>
+                    <div
+                      className="d-flex align-items-end justify-content-center"
+                      style={{
+                        height: "280px",
+                        backgroundColor: "#ecf6ffff",
+                        borderRadius: "1rem 1rem 0 0",
+                        overflow: "hidden",
+                      }}
+                    >
+                      <img
+                        src="./images/Doctor-T.png"
+                        alt="Dr. Jen Gunter"
+                        className="img-fluid"
+                        style={{ height: "100%", objectFit: "cover" }}
+                      />
+                    </div>
+                    <div className="p-3">
+                      <h5 className="fw-bold mb-1 text-white" >
+                        Dr. TEE
+                      </h5>
+                      <p className="text-white small mb-0">แผนก: กุมารเวชกรรม</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+        </div>
+      </section>
 
           {/* ปุ่มเลื่อนซ้ายขวา */}
           <div className="flex gap-3 mb-6">

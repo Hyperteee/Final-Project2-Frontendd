@@ -6,14 +6,17 @@ export default function PackagePart() {
   return (
     <div>
       <section
-        className="relative py-12 px-6 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('./images/BG/BG2.png')" }}
+        className="position-relative mx-3 mt-3 overflow-hidden"
+        style={{
+          background: "linear-gradient(135deg, #2d3561 0%, #1a1f3a 100%)",
+          borderRadius: "2rem",
+        }}
       >
         {/* ชั้น overlay มืด + เบลอ */}
         <div className="absolute inset-0 bg-black/0 backdrop-blur-[3px]"></div>
 
         {/* เนื้อหาหลัก */}
-        <div className="relative max-w-7xl mx-auto">
+        <div className="relative max-w-7xl mx-auto mt-5">
           <h2 className="text-3xl font-bold text-white mb-1">
             แพ็กเกจ <span className="text-blue-300">และโปรโมชั่น</span>
           </h2>

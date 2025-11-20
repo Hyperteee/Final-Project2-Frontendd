@@ -1,0 +1,156 @@
+.body{
+  height: 100vh;
+}
+/* Stepper circles (shared base) */
+.step {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Inactive step */
+.step-inactive {
+  border: 2px solid #ccc;
+  color: #666;
+  background-color: #fff;
+}
+
+/* Active or completed step */
+.step-active {
+  background-color: #1a237e;
+  color: #fff;
+  border: 2px solid #1a237e;
+}
+
+/* Connector line */
+.connector {
+  height: 2px;
+  width: 40px;
+  background-color: #ccc;
+}
+
+.connector-active {
+  background-color: #1a237e;
+}
+
+/* Option buttons */
+.option {
+  width: 300px;
+  height: 80px;
+  margin-right: 20px;
+  padding: 15px 25px;
+  border-radius: 15px;
+  background-color: #E0E0E0;
+  color: black;
+  font-weight: normal;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  transition: background-color 0.3s ease;
+  font-size: 18px;
+  margin-left: 8px;
+  cursor: pointer;
+  gap: 10px;
+}
+
+.option:hover {
+  background-color: #d0d0d0;
+}
+/* Custom styled checkbox */
+.option .form-check-input {
+  width: 30px;
+  height: 30px;
+  accent-color: #1a237e;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 2px solid #1a237e;
+}
+
+.zone-option{
+    gap:20px;
+    font-size: larger;
+    font-weight: 600;
+}
+.modal-content {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  /* color: #1a237e; */
+}
+
+.modal-header {
+  background-color: #11248f;
+  color: #fff;
+  border-bottom: none;
+  padding: 1rem 1.5rem;
+}
+
+.modal-title {
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.modal-footer {
+  border-top: none;
+  padding: 1rem 1.5rem;
+}
+
+/* ===== Department grid inside modal ===== */
+.department-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  padding: 20px;
+}
+
+/* ===== Department option boxes ===== */
+.option-department {
+  background: #ffffff;
+  border: 2px solid #e6e6e6;
+  border-radius: 12px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+  gap: 12px;
+}
+
+.option-department:hover {
+  border-color: #007bff;
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.option-department img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  background-color: #c3e0fe;
+  border-radius: 10px;
+  padding: 3px;
+}
+
+.option-department span {
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+  text-align: left;
+}
+.nextButton {
+  background-color: #1a237e;
+  margin-top: 70px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  width: fit-content;
+}

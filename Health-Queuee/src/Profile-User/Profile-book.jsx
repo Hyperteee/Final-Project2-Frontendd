@@ -1,9 +1,16 @@
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
 import { User, CreditCard, Calendar, Lock, Shield, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { Card, Row, Col, Button } from "react-bootstrap";
-
+import { Card, Row, Col, Button, ModalHeader } from "react-bootstrap";
+import { useContext } from "react";
+import { UserAppointment } from "../data/context/appointment";
+import hospitalMap from "../data/hospitaldata.jsx/allhospitaldata";
+import Modal from 'react-bootstrap/Modal'
 export default function ProfileBook() {
+  const { appointments, cancelAppointment } = useContext(UserAppointment);
+  console.log(appointments)
+
   const [formData, setFormData] = useState({
     phone: "เบอร์โทรศัพท์",
     title: "นาย",
@@ -58,6 +65,90 @@ export default function ProfileBook() {
   };
 
   const navigate = useNavigate();
+
+  function getHospitalName(hospitalID) {
+    const hospital = Object.values(hospitalMap).find(h => h.info.id === hospitalID);
+    return hospital ? hospital.info.name : hospitalID;
+  }
+
+  function getDepartmentName(hospitalID, departmentID) {
+    const hospital = Object.values(hospitalMap).find(h => h.info.id === hospitalID);
+    if (!hospital) return departmentID;
+
+    const department = hospital.info.departments.find(d => d.id === departmentID);
+    if (department.name == "ไม่รู้แผนก") {
+      return "คัดกรอง"
+    }
+    return department ? department.name : departmentID;
+  }
+
+  function getDoctorName(hospitalID, departmentID, doctorID) {
+    if (!doctorID) return "-";
+
+    const hospital = Object.values(hospitalMap).find(h => h.info.id === hospitalID);
+    if (!hospital) return doctorID;
+
+    const department = hospital.info.departments.find(d => d.id === departmentID);
+    if (!department || !department.doctors) return doctorID;
+
+    const doctor = department.doctors.find(doc => doc.id === doctorID);
+    return doctor ? doctor.name : doctorID;
+  }
+  console.log("All appointments:", appointments);
+  function formatThaiDate(dateString) {
+    const thaiMonths = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.",
+      "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
+
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = thaiMonths[date.getMonth()]
+    const year = date.getFullYear() + 543
+
+    return `${day} ${month} ${year}`;
+  }
+  const [showCancelModal, setShowCancelModal] = useState(false);
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
+  const [showPostponeModal, setShowPostponeModal] = useState(false)
+  const [selectedPostponeAppointment, setSelectedPostponeAppointment] = useState(null);
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [passwordInput, setPasswordInput] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const userPassword = "1234"
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+
+  const openCancelModal = (appt) => {
+    setSelectedAppointment(appt);
+    setShowCancelModal(true);
+  };
+  const handleConfirmPostpone = () => {
+    setShowPostponeModal(false);
+
+    navigate("/postpone", {
+      state: {
+        appointmentData: selectedPostponeAppointment
+      }
+    });
+  }
+  const closeCancelModal = () => {
+    
+    setShowCancelModal(false);
+  };
+
+  function handleConfirmDeleted(){
+    cancelAppointment(selectedAppointment.id)
+  }
+
+  useEffect(() => {
+    if (showSuccessModal) {
+      const timer = setTimeout(() => {
+        setShowSuccessModal(false);
+        navigate("/profilebook")
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [showSuccessModal]);
+
 
   return (
     <div className="bg-light min-vh-100">
@@ -161,16 +252,16 @@ export default function ProfileBook() {
                   <span>นัดหมาย</span>
                 </button>
 
-                <button 
-                onClick={() => navigate("/ProfileHistory")}
-                className="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">
+                <button
+                  onClick={() => navigate("/ProfileHistory")}
+                  className="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">
                   <Calendar size={20} />
                   <span>ประวัติการรักษา</span>
                 </button>
 
-                <button 
-                onClick={() => navigate("/ProfilePrivacy")}
-                className="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">
+                <button
+                  onClick={() => navigate("/ProfilePrivacy")}
+                  className="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">
                   <Shield size={20} />
                   <span>จัดการข้อมูลส่วนบุคคล</span>
                 </button>
@@ -190,114 +281,185 @@ export default function ProfileBook() {
               <div className="card-body p-4 p-lg-5">
                 <form onSubmit={handleSubmit}>
                   <div className="">
-                    <label className="form-label fw-medium text-secondary">
-                      นัดหมาย
+                    <label className="form-label fw-medium">
+                      นัดหมายที่กำลังมาถึง
                     </label>
                   </div>
 
                   <div className="mb-4">
-                    <div className="d-flex my-5">
-                      <Card
-                        className="shadow-sm"
-                        style={{
-                          width: "600px",
-                          borderRadius: "24px",
-                          borderWidth: "1.9px",
-                          borderColor: "#000000",
-                        }}
-                      >
-                        <Card.Body style={{ padding: "32px 40px" }}>
-                          <h4
-                            className="fw-bold mb-2"
-                            style={{ color: "#1f3bb3" }}
-                          >
-                            แจ้งเตือนนัดหมาย
-                          </h4>
-                          <div className="mb-3" style={{ fontSize: "16px" }}>
-                            {UserForm.fullName}
-                          </div>
+                    <div className="d-flex flex-column my-5">
 
-                          <div
-                            className="mb-3"
-                            style={{
-                              height: "1px",
-                              backgroundColor: "#000",
-                              width: "100%",
+                      {appointments.length === 0 ? (
+                        <p>คุณยังไม่มีนัดหมาย</p>
+                      ) : (
+                        appointments
+                          .sort((a, b) => new Date(a.date) - new Date(b.date)) // Sort by date ascending
+                          .map((appt, index) => (
+                            <Card
+                              key={index}
+                              className="shadow-sm mb-3"
+                              style={{
+                                width: "600px",
+                                borderRadius: "24px",
+                                borderWidth: "1.9px",
+                                borderColor: "#000000",
+                              }}
+                            >
+                              <Card.Body style={{ padding: "32px 40px" }}>
+                                <h4 className="fw-bold mb-2" style={{ color: "#1f3bb3" }}>
+                                  ศูนย์การรักษา {getDepartmentName(appt.hospitalID, appt.departmentID)}
+                                </h4>
+
+                                <div className="mb-3" style={{ fontSize: "16px" }}>
+                                  โรงพยาบาล {getHospitalName(appt.hospitalID)}
+                                </div>
+
+                                <div
+                                  className="mb-3"
+                                  style={{ height: "1px", backgroundColor: "#000", width: "100%" }}
+                                />
+
+                                <div style={{ fontSize: "16px", lineHeight: 1.7 }}>
+                                  <div className="d-flex justify-content-start gap-3 mb-3">
+                                    <span className="fs-6 fw-bold bg-primary-subtle py-2 px-5 rounded-5" style={{ color: "#060e7cff" }}>
+                                      <i className="bi bi-calendar"></i> {formatThaiDate(appt.date)}
+                                    </span>
+                                    <span className="fs-6 fw-bold bg-primary-subtle py-2 px-5 rounded-5" style={{ color: "#060e7cff" }}>
+                                      <i className="bi bi-clock"></i> {appt.time}
+                                    </span>
+                                  </div>
+
+                                  <Row>
+                                    <Col xs={2} sm={2}>
+                                      <span className="fw-semibold">แพทย์ :</span>
+                                    </Col>
+                                    <Col>{getDoctorName(appt.hospitalID, appt.departmentID, appt.doctorID) || "-"}</Col>
+                                  </Row>
+                                  <Row>
+                                    <Col xs={2} sm={2}>
+                                      <span className="fw-semibold">อาการ :</span>
+                                    </Col>
+                                    <Col>{appt.symptom}</Col>
+                                  </Row>
+                                </div>
+
+                                <div className="d-flex justify-content-end mt-4 gap-3">
+                                  <Button
+                                    style={{
+                                      backgroundColor: "#ff3131ff",
+                                      borderColor: "#ff3131ff",
+                                      borderRadius: "18px",
+                                      minWidth: "140px",
+                                    }}
+                                    // onClick={() => { cancelAppointment(appt.id) }}
+                                    onClick={() => openCancelModal(appt)}
+                                  >
+                                    <i className="bi bi-x-circle"></i> ยกเลิกนัดหมาย
+                                  </Button>
+                                  <Button
+                                    style={{
+                                      backgroundColor: "#3155ff",
+                                      borderColor: "#3155ff",
+                                      borderRadius: "18px",
+                                      minWidth: "140px",
+                                    }}
+                                    onClick={() => {
+                                      setSelectedPostponeAppointment(appt);
+                                      setShowPostponeModal(true);
+                                    }}
+                                  >
+                                    <i className="bi bi-pen"></i> เลื่อนนัดหมาย
+                                  </Button>
+                                </div>
+                              </Card.Body>
+                            </Card>
+                          ))
+                      )}
+                      <Modal show={showCancelModal} onHide={closeCancelModal} centered>
+
+                        <Modal.Body className="text-center">
+                          <h3 className="fw-bold mt-3">ยืนยันยกเลิกนัดหมาย ?</h3>
+                          {selectedAppointment && (
+                            <div className="mt-5 text-danger">
+                              <p><strong>โรงพยาบาล</strong>{getHospitalName(selectedAppointment.hospitalID)}</p>
+                              <p><strong>แผนก</strong>{getDepartmentName(selectedAppointment.hospitalID, selectedAppointment.departmentID)}</p>
+                              <p><strong>{formatThaiDate(selectedAppointment.date)} &nbsp;{selectedAppointment.time}</strong></p>
+
+                            </div>
+                          )}
+                        </Modal.Body>
+                        <Modal.Footer>
+                          <Button variant="secondary" onClick={closeCancelModal}>
+                            ยกเลิก
+                          </Button>
+                          <Button
+                            variant="danger"
+                            onClick={() => {
+                              setShowPasswordModal(true)
+                              closeCancelModal();
                             }}
+                          >
+                            ยืนยันการยกเลิก
+                          </Button>
+                        </Modal.Footer>
+                      </Modal>
+                      <Modal show={showPostponeModal} onHide={() => setShowPostponeModal(false)} centered>
+
+
+                        <Modal.Body className="text-center mt-4 fs-4">
+                          คุณต้องการเลื่อนนัดหมาย ?
+                        </Modal.Body>
+
+                        <Modal.Footer>
+                          <Button variant="secondary" onClick={() => setShowPostponeModal(false)}>
+                            ยกเลิก
+                          </Button>
+                          <Button variant="primary" onClick={handleConfirmPostpone}>
+                            ต้องการ
+                          </Button>
+                        </Modal.Footer>
+                      </Modal>
+
+
+
+                      <Modal show={showPasswordModal} onHide={() => setShowPasswordModal(false)} centered>
+                        <Modal.Body>
+                          <h5 className="fw-bold mt-3 mb-4">กรุณาใส่รหัสผ่านเพื่อยืนยันการเลื่อนนัด</h5>
+                          <input
+                            type="password"
+                            className="form-control"
+                            placeholder="รหัสผ่าน"
+                            value={passwordInput}
+                            onChange={(e) => setPasswordInput(e.target.value)}
                           />
-
-                          <div style={{ fontSize: "14px", lineHeight: 1.7 }}>
-                            <Row>
-                              <Col xs={4} sm={3}>
-                                <span className="fw-semibold">Hospital:</span>
-                              </Col>
-                              <Col>{UserForm.hospital}</Col>
-                            </Row>
-                            <Row>
-                              <Col xs={4} sm={3}>
-                                <span className="fw-semibold">วันที่:</span>
-                              </Col>
-                              <Col>{UserForm.date}</Col>
-                            </Row>
-                            <Row>
-                              <Col xs={4} sm={3}>
-                                <span className="fw-semibold">เวลา:</span>
-                              </Col>
-                              <Col>{UserForm.time}</Col>
-                            </Row>
-                            <Row>
-                              <Col xs={4} sm={3}>
-                                <span className="fw-semibold">แพทย์:</span>
-                              </Col>
-                              <Col>{UserForm.doctor}</Col>
-                            </Row>
-                            <Row>
-                              <Col xs={4} sm={3}>
-                                <span className="fw-semibold">หมายเหตุ:</span>
-                              </Col>
-                              <Col>{UserForm.reason}</Col>
-                            </Row>
-                          </div>
-
-                          <div className="d-flex justify-content-end mt-4 gap-3">
-                            <Button
-                              variant="light"
-                              style={{
-                                borderRadius: "18px",
-                                minWidth: "120px",
-                                marginRight: "100px",
-                                border: "1px solid #d0d0d0",
-                              }}
-                              onClick={""}
-                            >
-                              รายละเอียด
-                            </Button>
-
-                            <Button
-                              style={{
-                                backgroundColor: "#ff3131ff",
-                                borderColor: "#ff3131ff",
-                                borderRadius: "18px",
-                                minWidth: "140px",
-                              }}
-                              onClick={""}
-                            >
-                              ยกเลิกนัดหมาย
-                            </Button>
-                            <Button
-                              style={{
-                                backgroundColor: "#3155ff",
-                                borderColor: "#3155ff",
-                                borderRadius: "18px",
-                                minWidth: "140px",
-                              }}
-                              onClick={""}
-                            >
-                              ยืนยันนัดหมาย
-                            </Button>
-                          </div>
-                        </Card.Body>
-                      </Card>
+                          {passwordError && <p className="text-danger mt-2">{passwordError}</p>}
+                        </Modal.Body>
+                        <Modal.Footer>
+                          <Button variant="secondary" onClick={() => setShowPasswordModal(false)}>
+                            ยกเลิก
+                          </Button>
+                          <Button
+                            variant="primary"
+                            onClick={() => {
+                              if (passwordInput === userPassword) {
+                                handleConfirmDeleted();
+                                setShowPasswordModal(false);
+                                setShowSuccessModal(true)
+                              } else {
+                                setPasswordError("รหัสผ่านไม่ถูกต้อง");
+                              }
+                            }}
+                          >
+                            ยืนยัน
+                          </Button>
+                        </Modal.Footer>
+                      </Modal>
+                      <Modal show={showSuccessModal} onHide={() => setShowSuccessModal(false)} centered>
+                        <Modal.Body className="text-center">
+                          <h3 className="fw-bold">ยกเลิกนัดหมายเสร็จสิ้น</h3>
+                          <img src="images/check.png" alt="" style={{ width: "80px" }} />
+                        </Modal.Body>
+                      </Modal>
                     </div>
                   </div>
                 </form>
