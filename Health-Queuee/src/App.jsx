@@ -18,7 +18,6 @@ import ProfileBook from "./Profile-User/Profile-book";
 import ProfileHistory from "./Profile-User/Profile-History";
 import ProfilePrivacy from "./Profile-User/Profile-Privacy";
 
-import { Toaster, toast } from "react-hot-toast";
 
 function App() {
   return (
@@ -33,7 +32,10 @@ function App() {
       {/* <Login /> */}
       <BrowserRouter basename="/Final-Project2-Frontendd/">
         <Routes>
-          <Route path="/" element={<LoginPage />} />
+          <Route path="/" element={<Login2 />} />
+          <Route path="Login2" element={<Login2 />} />
+          <Route path="LoginPage" element={<LoginPage />} />
+          <Route path="HealthcarePage" element={<HealthcarePage />} />
           <Route path="Profile" element={<Profile />} />
           <Route path="ProfileBook" element={<ProfileBook />} />
           <Route path ="ProfileHistory" element={<ProfileHistory />} />

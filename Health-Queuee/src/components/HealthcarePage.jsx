@@ -1,12 +1,14 @@
 import { useState } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useNavigate } from "react-router-dom";
 
 export default function HealthcarePage() {
   const [currentOrgSlide, setCurrentOrgSlide] = useState(0);
   const [currentPackageSlide, setCurrentPackageSlide] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [chatMessage, setChatMessage] = useState("");
+  const navigate = useNavigate();
 
   const doctors = [
     { id: 1, name: "นพ. สมชาย ใจดี", specialty: "อายุรแพทย์" },
@@ -78,7 +80,10 @@ export default function HealthcarePage() {
             </nav>
 
             {/* Button */}
-            <button className="btn btn-primary px-4 py-2 fw-semibold">
+            <button
+              onClick={() => navigate("/login2")}
+              className="btn btn-primary px-4 py-2 fw-semibold"
+            >
               เข้าสู่ระบบ
             </button>
           </div>

@@ -1,8 +1,6 @@
 import React, { useState, useRef } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import { Toaster, toast } from "react-hot-toast"; // ✅ เพิ่มตรงนี้
 import { useNavigate } from "react-router-dom";
-import Userspass from "./Users/Userspass";
 
 export default function Login2() {
   const [showOtp, setShowOtp] = useState(false);
@@ -10,6 +8,7 @@ export default function Login2() {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [otp, setOtp] = useState(Array(6).fill(""));
+  const navigate = useNavigate();
 
   const otpRefs = useRef([]);
 
@@ -19,7 +18,7 @@ export default function Login2() {
 
     setShowOtp(true);
 
-  //   toast.success("ส่ง OTP ไปยังเบอร์/อีเมลของคุณแล้ว");
+    //   toast.success("ส่ง OTP ไปยังเบอร์/อีเมลของคุณแล้ว");
   };
 
   const handleOtpChange = (index, value) => {
@@ -223,6 +222,7 @@ export default function Login2() {
                         </p>
 
                         <Button
+                          onClick={() => navigate("/HealthCarePage")}
                           type="submit"
                           size="lg"
                           className="w-100 text-white fw-semibold"
