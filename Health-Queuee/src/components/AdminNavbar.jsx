@@ -26,6 +26,12 @@ const AdminNavbar = () => {
 
             
             <div className="nav-buttons-section">
+
+                <Link to="/main" className="nav-link-wrapper">
+                    <Button variant="light" className={`nav-button ${getButtonClass('/main')}`}>
+                        หน้าแรก
+                    </Button>
+                </Link>
                 
                 <Link to="/appointments" className="nav-link-wrapper">
                     <Button variant="light" className={`nav-button ${getButtonClass('/appointments')}`}>
