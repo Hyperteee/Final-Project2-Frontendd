@@ -3,61 +3,55 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function NavigationBar() {
   return (
-    <section>
-    <Navbar className="position-relative mx-3 mt-3 overflow-hidden"
-        style={{
-          background: "linear-gradient(135deg, #1a1f3a 0%, #0f1327ff 100%)",
-          borderRadius: "2rem",
-        }}
-      >
-      <Container fluid className="px-4">
-        <Navbar.Brand href="#" className="d-flex align-items-center text-white">
-          <img src="./images/HFU-Logo.png" alt="HFU" className="h-24 w-auto" />
-          {/* <span className="ms-3 fs-4 fw-semibold">HFU</span> */}
-        </Navbar.Brand>
+    <header
+      className="py-3 shadow-lg sticky-top"
+      style={{ backgroundColor: "#020A1B", backdropFilter: "blur(12px)" }}
+    >
+      <div className="container d-flex align-items-center justify-content-between">
+        <div className="d-flex align-items-center gap-3">
+          <div
+            className="d-flex align-items-center justify-content-center bg-primary rounded-3"
+            style={{ width: "50px", height: "50px" }}
+          >
+            <span className="text-white fw-bold fs-4">H</span>
+          </div>
+          <div>
+            <h1 className="text-white fw-bold fs-5 mb-0">HFU</h1>
+            <p className="text-light small mb-0 opacity-75">Health Queue</p>
+          </div>
+        </div>
 
-        <Navbar.Toggle aria-controls="navbar-dropdown" />
+        <nav className="d-none d-md-flex align-items-center gap-4 ">
+          <a
+            href="#services"
+            className="text-light text-decoration-none opacity-75 hover-opacity-100"
+          >
+            บริการ
+          </a>
+          <a
+            href="#doctors"
+            className="text-light text-decoration-none opacity-75 hover-opacity-100"
+          >
+            แพทย์
+          </a>
+          <a
+            href="#packages"
+            className="text-light text-decoration-none opacity-75 hover-opacity-100"
+          >
+            แพ็กเกจ
+          </a>
+          <a
+            href="#contact"
+            className="text-light text-decoration-none opacity-75 hover-opacity-100"
+          >
+            ติดต่อ
+          </a>
+        </nav>
 
-        <Navbar.Collapse id="navbar-dropdown">
-          <Nav className="ms-auto">
-            <Nav.Link href="#" className="text-white" active>
-              Home
-            </Nav.Link>
-
-            {/* ✅ เปลี่ยนสี title และ items เป็น text-white */}
-            <NavDropdown
-              title={<span className="text-white">Dropdown</span>}
-              id="dropdown-navbar"
-              menuVariant="dark" // ทำให้พื้นหลัง dropdown เป็นสีเข้มด้วย
-            >
-              <NavDropdown.Item href="#" className="text-white">
-                Dashboard
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#" className="text-white">
-                Settings
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#" className="text-white">
-                Earnings
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#" className="text-white">
-                Sign out
-              </NavDropdown.Item>
-            </NavDropdown>
-
-            <Nav.Link href="#" className="text-white">
-              Services
-            </Nav.Link>
-            <Nav.Link href="#" className="text-white">
-              Pricing
-            </Nav.Link>
-            <Nav.Link href="#" className="text-white">
-              Contact
-            </Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
-    </section>
+        <button className="btn btn-primary px-4 py-2 fw-semibold">
+          เข้าสู่ระบบ
+        </button>
+      </div>
+    </header>
   );
 }

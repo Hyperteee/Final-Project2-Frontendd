@@ -118,6 +118,8 @@ const Queue4 = () => {
     }
 
     return (<>
+    <div>
+
         <div className="d-flex flex-column align-items-center">
             <div className="mt-5 fs-4 text-center">
                 <div className="fw-bold fs-3 mb-2">ทำนัด</div>
@@ -136,7 +138,7 @@ const Queue4 = () => {
                             <div className={`step ${isStepActive(stepNumber) ? "step-active" : "step-inactive"}`}>{stepNumber}</div>
                             {index < steps.length - 1 && (
                                 <div
-                                    className={`connector ${isStepActive(steps[index + 1]) ? "connector-active" : ""}`}
+                                className={`connector ${isStepActive(steps[index + 1]) ? "connector-active" : ""}`}
                                 ></div>
                             )}
                         </React.Fragment>
@@ -161,12 +163,12 @@ const Queue4 = () => {
                             type="file"
                             multiple
                             onChange={handleFileSelect}
-                        />
+                            />
                         <Button
                             className="mt-2"
                             onClick={handleAddFiles}
                             style={{ display: selectedFiles.length === 0 ? "none" : "inline-block" }}
-                        >เพิ่มไฟล์นี้</Button>
+                            >เพิ่มไฟล์นี้</Button>
 
 
                         <div className="mt-2">
@@ -186,7 +188,7 @@ const Queue4 = () => {
                     className="nextButton px-5 py-2"
                     onClick={() => handleConfirm()}
                     disabled={!(symptom != null)}
-                >
+                    >
                     <span>ยืนยันการจอง</span>
                     &nbsp;<i className="bi bi-arrow-right"></i>
                 </Button>
@@ -196,7 +198,7 @@ const Queue4 = () => {
                 onHide={handleClose}
                 backdrop="static"
                 keyboard={false}
-            >
+                >
                 <Modal.Body>
                     จองสำเร็จ
                 </Modal.Body>
@@ -205,6 +207,7 @@ const Queue4 = () => {
                 </Modal.Footer>
             </Modal>
         </div >
+                </div>
     </>);
 }
 
