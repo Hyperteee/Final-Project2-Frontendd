@@ -20,20 +20,18 @@
 }
 
 .option:hover {
-  background-color: #F7F9FF; /* Light hover effect */
-  transform: translateY(-2px); /* Subtle lift */
+  background-color: #F7F9FF;
+  transform: translateY(-2px);
   box-shadow: 0 10px 25px rgba(0, 30, 108, 0.15);
 }
 
 .option-active {
-  border: 2px solid #001E6C; /* Highlight border with primary color */
-  background-color: #E6ECFF; /* Light blue background when active */
+  border: 2px solid #001E6C;
+  background-color: #E6ECFF;
   color: #001E6C;
-  /* สร้างเงาที่ชัดเจนเมื่อ Active */
   box-shadow: 0 0 0 3px rgba(0, 30, 108, 0.2), 0 6px 20px rgba(0, 30, 108, 0.1);
 }
 
-/* ปรับปุ่มเลือกแผนกใน Modal ให้ดูเรียบหรูขึ้น */
 .option-department {
   background: #ffffff;
   border: 1px solid #E6ECFF; /* ใช้ border ที่อ่อนลง */
@@ -58,12 +56,10 @@
   margin-right: 15px;
 }
 
-/* แก้ไข container ที่ใช้ flexbox */
 .zone-option .d-flex.flex-wrap {
     gap: 20px; /* เพิ่ม gap ระหว่าง option */
 }
 
-/* --- 1. Department Modal General Styles --- */
 .department-modal .modal-content {
   border-radius: 16px;
   overflow: hidden;
@@ -71,9 +67,8 @@
   border: none;
 }
 
-/* --- 2. Modal Header Styling (ใช้สีธีมหลัก) --- */
 .department-modal .modal-header {
-  background-color: #001E6C; /* สีน้ำเงินเข้ม */
+  background-color: #001E6C; 
   color: #fff;
   border-bottom: none;
   padding: 1.25rem 1.5rem;
@@ -91,15 +86,13 @@
 }
 
 .department-modal .btn-close {
-  /* ทำให้ปุ่มปิดเป็นสีขาว */
   filter: invert(1) grayscale(100%) brightness(200%); 
   position: absolute;
   right: 20px;
 }
 
-/* --- 3. Grid Container --- */
 .department-grid-container {
-    padding: 20px 30px; /* เพิ่ม padding ด้านข้าง */
+    padding: 20px 30px; 
 }
 
 .department-instruction {
@@ -110,12 +103,10 @@
 
 .department-grid-list {
   display: grid;
-  /* ปรับให้เป็น Grid ยืดหยุ่น: 3 คอลัมน์สำหรับจอใหญ่, 2 คอลัมน์สำหรับจอเล็ก */
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); 
   gap: 20px;
 }
 
-/* --- 4. Department Option Card (Focus Card Style) --- */
 .option-department {
   background: #ffffff;
   border: 1px solid #e0e0e0;
@@ -127,18 +118,16 @@
   text-align: center;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Soft shadow */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-/* Hover Effect: ยกขึ้นและไฮไลท์ด้วยสีธีม */
 .option-department:hover {
   border-color: #001E6C; 
-  background-color: #f7f9ff; /* สีพื้นหลังอ่อนๆ ตอน Hover */
+  background-color: #f7f9ff;
   box-shadow: 0 8px 20px rgba(0, 30, 108, 0.15); 
-  transform: translateY(-5px); /* ยก Card ขึ้นเล็กน้อย */
+  transform: translateY(-5px);
 }
 
-/* Icon/Image Styling */
 .option-department img {
   width: 60px;
   height: 60px;
@@ -146,7 +135,6 @@
   margin-bottom: 12px;
 }
 
-/* Fallback Icon Placeholder */
 .default-icon-placeholder {
     width: 60px;
     height: 60px;
@@ -156,9 +144,13 @@
     justify-content: center;
 }
 
-/* Department Name Styling */
 .option-department span {
   font-weight: 600;
   font-size: 1.1rem;
   color: #333;
+}
+
+.container {
+    width: 100%;
+    background-color: rgb(2, 10, 27);
 }

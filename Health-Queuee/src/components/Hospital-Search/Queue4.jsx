@@ -111,13 +111,63 @@ const Queue4 = () => {
     };
 
     return (
+        <>
+              <header
+        className="py-3 shadow-lg"
+        style={{ backgroundColor: "#020A1B", backdropFilter: "blur(12px)" }}
+      >
+        <div className="container d-flex align-items-center justify-content-between">
+          <div className="d-flex align-items-center gap-3">
+            <div
+              className="d-flex align-items-center justify-content-center bg-primary rounded-3"
+              style={{ width: "50px", height: "50px" }}
+            >
+              <span className="text-white fw-bold fs-4">H</span>
+            </div>
+            <div>
+              <h1 className="text-white fw-bold fs-5 mb-0">HFU</h1>
+              <p className="text-light small mb-0 opacity-75">Health Queue</p>
+            </div>
+          </div>
+
+          <nav className="d-none d-md-flex align-items-center gap-4 ">
+            <a
+              href="#services"
+              className="text-light text-decoration-none opacity-75 hover-opacity-100"
+            >
+              บริการ
+            </a>
+            <a
+              href="#doctors"
+              className="text-light text-decoration-none opacity-75 hover-opacity-100"
+            >
+              แพทย์
+            </a>
+            <a
+              href="#packages"
+              className="text-light text-decoration-none opacity-75 hover-opacity-100"
+            >
+              แพ็กเกจ
+            </a>
+            <a
+              href="#contact"
+              className="text-light text-decoration-none opacity-75 hover-opacity-100"
+            >
+              ติดต่อ
+            </a>
+          </nav>
+
+          <button className="btn btn-primary px-4 py-2 fw-semibold">
+            เข้าสู่ระบบ
+          </button>
+        </div>
+      </header>
+        
         <div className="d-flex flex-column align-items-center bg-light min-vh-100 pb-5">
             
-            {/* Header */}
             <div className="mt-5 fs-4 text-center w-100" style={{ maxWidth: '800px' }}>
-                <div className="fw-bold fs-3 mb-2" style={{ color: 'black' }}>ทำนัด</div>
+                <div className="fw-bold fs-3 mb-2" style={{ color: 'black', marginTop: '35px' }}>ทำนัด</div>
                 
-                {/* Header Info (ปรับปรุงสีและ fw-semibold) */}
                 <div className="d-flex justify-content-center gap-3 mb-4">
                     <div className="bg-primary-subtle rounded-2 px-3 py-2 fw-semibold" style={{ color: "#001E6C" }}>
                         โรงพยาบาล{selectedHospital}
@@ -127,10 +177,9 @@ const Queue4 = () => {
                     </div>
                 </div>
 
-                {/* Stepper */}
                 <div 
                     className="d-flex justify-content-center align-items-start px-3 mb-4 mx-auto" 
-                    style={{ maxWidth: '600px', width: '100%' }}
+                    style={{ maxWidth: '600px', width: '100%'  }}
                 >
                     {steps.map((step, index) => {
                         const active = isStepActive(step.id);
@@ -153,17 +202,14 @@ const Queue4 = () => {
                 </div>
             </div>
 
-            {/* Content Card */}
             <div className="container bg-white shadow-lg rounded-4 p-5 mt-4" style={{ maxWidth: '900px' }}>
                 <div className="row">
                     
-                    {/* Left Column: Summary (ปรับปรุง Icon และสี) */}
                     <div className="col-md-5 border-end pe-4">
                         <h5 className="fw-bold mb-4 text-dark border-bottom pb-2">สรุปข้อมูลการนัด</h5>
                         
                         <div className="d-flex flex-column align-items-center text-center mb-4">
                             <div className="doctor-card__avatar">
-                                {/* ใช้ Icon ของ Bootstrap */}
                                 {selectedDoctor ? 
                                     <i className="bi bi-person-fill fs-2 text-secondary"></i> : 
                                     <i className="bi bi-hospital-fill fs-2 text-secondary"></i>
@@ -171,7 +217,7 @@ const Queue4 = () => {
                             </div>
                             <h6 
                                 className="fw-bold mb-1" 
-                                style={{ color: '#001E6C' }} // ใช้สีธีมหลัก
+                                style={{ color: '#001E6C' }}
                             >
                                 {doctorName || (selectedDepartment === "ไม่รู้แผนก" ? "เจ้าหน้าที่คัดกรอง" : "แพทย์เวร")}
                             </h6>
@@ -198,7 +244,6 @@ const Queue4 = () => {
                         </div>
                     </div>
 
-                    {/* Right Column: Form */}
                     <div className="col-md-7 ps-md-5 pt-3 pt-md-0">
                         <h5 className="fw-bold mb-3">อธิบายอาการเบื้องต้น <span className="text-danger">*</span></h5>
                         <Form>
@@ -240,7 +285,6 @@ const Queue4 = () => {
                 </div>
             </div>
 
-            {/* Buttons (ปรับปรุง) */}
             <div className="d-flex justify-content-between w-100 mt-4 px-4" style={{ maxWidth: '900px' }}>
                 <Button 
                     variant="outline-primary" 
@@ -262,7 +306,6 @@ const Queue4 = () => {
                 </Button>
             </div>
 
-            {/* Modal */}
             <Modal 
                 show={show} 
                 onHide={handleClose} 
@@ -274,7 +317,6 @@ const Queue4 = () => {
                 <Modal.Body className="p-0">
                     <div className="success-modal-content text-center">
                         
-                        {/* ส่วน Icon Animation */}
                         <div className="success-icon-wrapper mb-4">
                             <div className="success-icon-circle">
                                 <i className="bi bi-check-lg"></i>
@@ -282,14 +324,12 @@ const Queue4 = () => {
                             <div className="success-icon-ripple"></div>
                         </div>
 
-                        {/* ส่วนเนื้อหา */}
                         <h3 className="fw-bold mb-3" style={{ color: '#001E6C' }}>จองสำเร็จ!</h3>
                         <p className="text-muted mb-4 px-4">
                             ระบบได้รับข้อมูลการนัดหมายของท่านเรียบร้อยแล้ว
                             ท่านสามารถตรวจสอบสถานะได้ที่เมนูประวัติการจอง
                         </p>
 
-                        {/* ปุ่มกด (ใช้สีธีมหลัก) */}
                         <Button 
                             variant="primary" 
                             className="success-btn rounded-pill px-5 py-2 fw-bold" 
@@ -303,6 +343,7 @@ const Queue4 = () => {
             </Modal>
 
         </div>
+        </>
     );
 }
 
