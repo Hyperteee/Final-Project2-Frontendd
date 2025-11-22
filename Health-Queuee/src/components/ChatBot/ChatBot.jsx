@@ -1,0 +1,141 @@
+import React from "react";
+
+export default function ChatBot() {
+  return (
+    <div>
+      <section
+        className="position-relative mx-3 mt-3 overflow-hidden"
+        style={{
+          background: "linear-gradient(135deg, #2d3561 0%, #1a1f3a 100%)",
+          borderRadius: "2rem",
+        }}
+      >
+        {/* ชั้น overlay มืดและเบลอ */}
+        <div className="absolute inset-0 bg-black/0 backdrop-blur-sm"></div>
+
+        {/* เนื้อหาหลัก */}
+        <div className="relative max-w-7xl mx-auto mt-4">
+          <h1 className="text-center text-3xl font-semibold text-white mb-8 drop-shadow-md">
+            Trusted by teams at
+          </h1>
+
+          {/* เส้นขาวตกแต่ง */}
+          <div className="h-1 w-24 bg-white mx-auto rounded-full mb-10 "></div>
+
+          {/* ช่องโลโก้ */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
+            <div
+              className="position-relative mx-3 mt-3 overflow-hidden"
+              style={{
+                backgroundImage: "url('./images/Hos-Chula.svg')",
+                backgroundSize: "contain",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                width: "100%",
+                aspectRatio: "1/1",
+              }}
+            ></div>
+
+            <div
+              className="position-relative mx-3 mt-3 overflow-hidden"
+              style={{
+                backgroundImage: "url('./images/Hos-Paolo.png')",
+                backgroundSize: "contain",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                width: "100%",
+                aspectRatio: "1/1",
+              }}
+            ></div>
+
+            <div
+              className="position-relative mx-3 mt-3 overflow-hidden"
+              style={{
+                backgroundImage: "url('./images/Hos-Bangkok.png')",
+                backgroundSize: "contain",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                width: "100%",
+                aspectRatio: "1/1",
+              }}
+            ></div>
+
+            <div
+              className="position-relative mx-3 mt-3 overflow-hidden"
+              style={{
+                backgroundImage: "url('./images/Hos-Phyathai.png')",
+                backgroundSize: "contain",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                width: "100%",
+                aspectRatio: "1/1",
+              }}
+            ></div>
+
+            <div
+              className="position-relative mx-3 mt-3 overflow-hidden"
+              style={{
+                backgroundImage: "url('./images/hos-samitivej.png')",
+                backgroundSize: "contain",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                width: "100%",
+                aspectRatio: "1/1",
+              }}
+            ></div>
+          </div>
+
+          <div className="relative max-w-7xl mx-auto m-[35px] grid grid-cols-2 gap-12 items-center m">
+            {/* ฝั่งข้อความ */}
+            <div>
+              <h2 className="text-7xl font-bold text-white mb-4 drop-shadow-lg">
+                Chat Bot Doctor
+              </h2>
+              <p className="text-white text-[20px] leading-relaxed mb-6 drop-shadow-md">
+                ผู้ป่วยสามารถสอบถามข้อมูลเบื้องต้น
+                <br />
+                เกี่ยวกับอาการเจ็บป่วยและรับคำแนะนำ
+                <br />
+                จากแชทบอทก่อนพบแพทย์
+              </p>
+              <button className="bg-[#000066] text-white px-8 py-4 rounded-pill hover:bg-[#000088] transition-colors shadow-lg">
+                ChatBot
+              </button>
+            </div>
+
+            {/* กล่องแชทจำลอง */}
+            <div className="bg-white/90 rounded-2xl shadow-2xl p-6 backdrop-blur-md ">
+              <div className="bg-gray-100 rounded-lg p-4 mb-4 h-64 flex items-end overflow-hidden">
+                <div className="text-gray-500 italic">
+                  เริ่มพิมพ์เพื่อสนทนา...
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  className="flex-1 border border-gray-300 rounded-full px-4 py-2 outline-none"
+                  placeholder="พิมพ์ข้อความ..."
+                />
+                <button className="bg-[#000066] text-white w-10 h-10 rounded-pill flex items-center justify-center hover:bg-[#000088] transition-colors">
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M14 5l7 7m0 0l-7 7m7-7H3"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
