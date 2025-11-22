@@ -1,6 +1,7 @@
-.body{
+.body {
   height: 100vh;
 }
+
 /* Stepper circles (shared base) */
 .step {
   width: 40px;
@@ -9,38 +10,39 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
   font-weight: bold;
-}
-
-/* Inactive step */
-.step-inactive {
-  border: 2px solid #ccc;
-  color: #666;
+  font-size: 18px;
+  z-index: 2;
   background-color: #fff;
 }
 
-/* Active or completed step */
 .step-active {
-  background-color: #1a237e;
-  color: #fff;
-  border: 2px solid #1a237e;
+  background-color: #001E6C;
+  color: white;
+  border: 2px solid #001E6C;
 }
 
-/* Connector line */
+.step-inactive {
+  background-color: white;
+  color: #9ca3af;
+  border: 2px solid #e5e7eb;
+}
+
 .connector {
-  height: 2px;
-  width: 40px;
-  background-color: #ccc;
+  background-color: #e5e7eb;
 }
 
 .connector-active {
-  background-color: #1a237e;
+  background-color: #001E6C !important;
 }
 
-/* Option buttons */
+/* --- Option buttons (แก้ไขตรงนี้) --- */
 .option {
-  width: 300px;
+  /* width: 300px;  <-- ลบค่าตายตัวนี้ออก */
+  width: auto;      /* ให้กว้างตามเนื้อหา */
+  min-width: 240px; /* กำหนดความกว้างขั้นต่ำให้ดูสวยงาม */
+  max-width: 100%;  /* กันล้นจอในมือถือ */
+  
   height: 80px;
   margin-right: 20px;
   padding: 15px 25px;
@@ -55,27 +57,31 @@
   font-size: 18px;
   margin-left: 8px;
   cursor: pointer;
-  gap: 10px;
+  gap: 15px; /* เพิ่มระยะห่างระหว่าง Checkbox กับข้อความ */
 }
 
 .option:hover {
   background-color: #d0d0d0;
 }
+
 /* Custom styled checkbox */
 .option .form-check-input {
-  width: 30px;
-  height: 30px;
+  width: 24px;  /* ปรับขนาดลงนิดนึงให้สมดุล */
+  height: 24px;
   accent-color: #1a237e;
   cursor: pointer;
   border-radius: 50%;
   border: 2px solid #1a237e;
+  flex-shrink: 0; /* ป้องกัน checkbox บี้ */
 }
 
-.zone-option{
-    gap:20px;
-    font-size: larger;
-    font-weight: 600;
+.zone-option {
+  gap: 20px;
+  font-size: larger;
+  font-weight: 600;
 }
+
+/* ... (ส่วน Modal และอื่นๆ คงเดิม) ... */
 .modal-content {
   border-radius: 16px;
   overflow: hidden;
@@ -83,7 +89,6 @@
   border: none;
   font-size: 20px;
   font-weight: bold;
-  /* color: #1a237e; */
 }
 
 .modal-header {
@@ -103,7 +108,6 @@
   padding: 1rem 1.5rem;
 }
 
-/* ===== Department grid inside modal ===== */
 .department-grid {
   display: grid !important;
   grid-template-columns: repeat(2, 1fr);
@@ -111,7 +115,6 @@
   padding: 20px;
 }
 
-/* ===== Department option boxes ===== */
 .option-department {
   background: #ffffff;
   border: 2px solid #e6e6e6;
@@ -147,6 +150,7 @@
   color: #333;
   text-align: left;
 }
+
 .nextButton {
   background-color: #1a237e;
   margin-top: 70px;

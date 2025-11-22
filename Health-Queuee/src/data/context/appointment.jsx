@@ -17,29 +17,15 @@ export const UserAppointmentProvider = ({ children }) => {
   // const cancelAppointment = (appointmentId) => {
   //   setAppointments(prev => prev.filter(appt => appt.id !== appointmentId))
   // }
-  const cancelAppointment = (appointmentId) => {
-    // 1. Remove from user appointments
-    setAppointments(prev => prev.filter(a => a.id !== appointmentId));
-
-    // 2. Remove from hospitalSchedules
-    const updatedSchedules = { ...hospitalSchedules };
-    Object.values(updatedSchedules).forEach(departmentObj => {
-      Object.values(departmentObj || {}).forEach(dep => {
-        dep.doctors?.forEach(doc => {
-          if (doc.bookings) {
-            Object.keys(doc.bookings).forEach(date => {
-              Object.keys(doc.bookings[date]).forEach(time => {
-                doc.bookings[date][time] = doc.bookings[date][time].filter(b => b.id !== appointmentId);
-              });
-            });
-          }
-        });
-      });
-    });
-
-
-    setHospitalSchedules(updatedSchedules);
-  }
+const cancelAppointment = (appointmentId) => {
+    setAppointments((prevAppointments) =>
+      prevAppointments.map((appt) => {
+        if (appt.id === appointmentId) {
+          return { ...appt, status: "CANCELLED" };
+        }
+        return appt;
+      })
+    )}
 
 
   return (
