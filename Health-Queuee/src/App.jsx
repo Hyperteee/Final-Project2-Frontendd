@@ -21,26 +21,41 @@ import { UserAppointmentProvider } from "./data/context/appointment";
 import Testdata from "./components/Hospital-Search/testdata";
 import Profile from "./Profile-User/Profile";
 import ProfileBook from "./Profile-User/Profile-book";
-import Postpone from "./components/Hospital-Search/postpone";
+import Adminlayout from "../Layout/Adminlayout"
+import ManagePatients from "../pages/ManagePatients"
+import ManageTheDocter from "../pages/ManageTheDocter"
+import Other from "../pages/Other"
+import Appointments from "../pages/Appointments"
+import Main from "../pages/Main"
+
+
+
 function App() {
   return (
     <HospitalScheduleProvider>
       <UserAppointmentProvider>
-      <BrowserRouter basename="/Final-Project2-Frontendd/">
-        <Routes>
-          <Route path="/" element={<HealthcarePage />} />
-          <Route path="hospitals" element={<Listsearch />} />
-          <Route path="queue1" element={<Queue1 />} />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="queue2" element={<Queue2 />} />
-          <Route path="queue3" element={<Queue3 />} />
-          <Route path="queue4" element={<Queue4 />} />
-          <Route path="testdata" element={<Testdata />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="profilebook" element={<ProfileBook />} />
-          <Route path="postpone" element={<Postpone />} />
-        </Routes>
-      </BrowserRouter>
+        <BrowserRouter basename="/Final-Project2-Frontendd/">
+          <Routes>
+            <Route path="/" element={<HealthcarePage />} />
+            <Route path="hospitals" element={<Listsearch />} />
+            <Route path="queue1" element={<Queue1 />} />
+            <Route path="login" element={<LoginPage />} />
+            <Route path="queue2" element={<Queue2 />} />
+            <Route path="queue3" element={<Queue3 />} />
+            <Route path="queue4" element={<Queue4 />} />
+            <Route path="testdata" element={<Testdata />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="profilebook" element={<ProfileBook />} />
+            <Route element={<Adminlayout />}>
+              <Route path="/other" element={<Other />} />
+              <Route path="/managepatients" element={<ManagePatients />} />
+              <Route path="/managethedocter" element={<ManageTheDocter />} />
+              <Route path="/appointments" element={<Appointments />} />
+              <Route path="*" element={<Main />} />
+            </Route>
+          </Routes>
+
+        </BrowserRouter>
       </UserAppointmentProvider>
     </HospitalScheduleProvider>
   );
