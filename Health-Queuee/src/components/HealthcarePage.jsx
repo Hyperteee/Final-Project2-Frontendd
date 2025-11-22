@@ -258,78 +258,8 @@ export default function HealthcarePage() {
               pointerEvents: "none",
             }}
           ></div>
-
-          <div className="container mt-5" >
-            {/* Trusted by */}
-            <div className="text-center mt-5">
-              <h3 className="h2 fw-bold text-white mb-4">
-                Trusted by teams at
-              </h3>
-              <div className="d-flex flex-wrap justify-content-center align-items-center gap-4">
-                <img
-                  src="./images/Hos-Chula.svg"
-                  alt="Chula"
-                  width="180"
-                  height="160"
-                  loading="lazy"
-                />
-                <img
-                  src="./images/Hos-Paolo.png"
-                  alt="Paolo"
-                  width="180"
-                  height="160"
-                  loading="lazy"
-                />
-                <img
-                  src="./images/Hos-Bangkok.png"
-                  alt="Bangkok"
-                  width="180"
-                  height="160"
-                  loading="lazy"
-                />
-                <img
-                  src="./images/Hos-Phyathai.png"
-                  alt="Phyathai"
-                  width="180"
-                  height="160"
-                  loading="lazy"
-                />
-                <img
-                  src="./images/hos-samitivej.png"
-                  alt="Samitivej"
-                  width="180"
-                  height="160"
-                  loading="lazy"
-                />
-              </div>
-            </div>
-
-            <div className="row g-5 align-items-center mt-5">
-              <div className="col-lg-6">
-                <span className="badge bg-primary bg-opacity-10 text-primary px-3 py-2 mb-3">
-                  AI Assistant
-                </span>
-                <h2 className="display-4 fw-bold mb-4 text-white">
-                  Chat Bot
-                  <br />
-                  <span className="text-primary">Doctor</span>
-                </h2>
-                <p className="fs-5 text-white mb-4 lh-lg">
-                  ปรึกษาอาการเบื้องต้นกับแชทบอทอัจฉริยะ
-                  รับคำแนะนำด้านสุขภาพก่อนพบแพทย์ พร้อมบริการตลอด 24 ชั่วโมง
-                </p>
-                <button className="btn btn-primary btn-lg px-5 py-3 shadow">
-                  เริ่มสนทนา
-                </button>
-              </div>
-
-              <div className="col-lg-6"></div>
-            </div>
-          </div>
         </section>
       </div>
-
-
 
       <svg viewBox="0 0 100 15" preserveAspectRatio="none" className="bl_g0">
         <ellipse

@@ -368,114 +368,118 @@ function Queue1() {
         </div>
       </div>
 
-        <footer class="row row-cols-5 py-5 my-5 border-top text-white">
-          <div class="col">
-            <a
-              href="/"
-              class="d-flex align-items-center mb-3 link-dark text-decoration-none " 
-            >
-              <svg class="bi me-2" width="40" height="32">
-                <use xlink:href="#bootstrap" />
-              </svg>
-            </a>
-            <p class="text-muted text-white">&copy; 2021</p>
-          </div>
+      <div style={{ width: "100%", overflow: "hidden", lineHeight: 0 }}>
+        <img
+          src={"./images/wave.png"}
+          alt="footer wave"
+          style={{
+            width: "100%",
+            height: "120px",
+            display: "block",
+            marginBottom: "-5px",
+            marginTop: "-5px",
+            
+          }}
+        />
+      </div>
 
-          <div class="col"></div>
+      <footer
+        id="contact"
+        className="custom-footer py-5"
+        style={{ backgroundColor: "rgb(2, 10, 27)" }}
+      >
+        <div className="row mb-5">
 
-          <div class="col">
-            <h5>Section</h5>
-            <ul class="nav flex-column">
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
-                  Home
-                </a>
+          <div className="col-12 col-lg-4 mb-4 mb-lg-0">
+            <div className="d-flex align-items-center mb-4">
+              <span className="h3 fw-bold text-white mb-0">HFU</span>
+            </div>
+            <p className="text-light small opacity-75 mb-4">
+              Health Queue Management System
+            </p>
+
+            <h5 className="fw-bold fs-5 mb-3">Contact</h5>
+            <ul className="list-unstyled small contact-list">
+              <li className="d-flex align-items-start mb-2">
+                <i className="bi bi-geo-alt-fill"></i>
+                <p className="mb-0">
+                  123 Bangkhen, Sripatum, Bangkok, Thailand 10110
+                </p>
               </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
-                  Features
-                </a>
+              <li className="d-flex align-items-center mb-2">
+                <i className="bi bi-telephone-fill"></i>
+                <a href="tel:+6621234567">(66) 9 999 9999</a>
               </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
-                  Pricing
-                </a>
-              </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
-                  FAQs
-                </a>
-              </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
-                  About
-                </a>
+              <li className="d-flex align-items-center">
+                <i className="bi bi-envelope-fill"></i>
+                <a href="mailto:support@hfu.co">support@hfu.co.th</a>
               </li>
             </ul>
           </div>
 
-          <div class="col">
-            <h5>Section</h5>
-            <ul class="nav flex-column">
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
-                  Home
-                </a>
+          <div className="col-6 col-md-4 col-lg-2">
+            <h4 className="fw-bold fs-5 mb-4">Products</h4>
+            <ul className="list-unstyled space-y-3">
+              <li>
+                <a href="#">Queue Management</a>
               </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
-                  Features
-                </a>
+              <li>
+                <a href="#">Appointment System</a>
               </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
-                  Pricing
-                </a>
+              <li>
+                <a href="#">Analytics Dashboard</a>
               </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
-                  FAQs
-                </a>
-              </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
-                  About
-                </a>
+              <li>
+                <a href="#">Mobile App</a>
               </li>
             </ul>
           </div>
 
-          <div class="col">
-            <h5>Section</h5>
-            <ul class="nav flex-column">
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
-                  Home
+          <div className="col-6 col-md-4 col-lg-2">
+            <h4 className="fw-bold fs-5 mb-4">Company</h4>
+            <ul className="list-unstyled space-y-3">
+              <li>
+                <a href="#">About Us</a>
+              </li>
+              <li>
+                <a href="#">
+                  Careers
                 </a>
               </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
-                  Features
-                </a>
+              <li>
+                <a href="#">Blog & News</a>
               </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
-                  Pricing
-                </a>
-              </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
-                  FAQs
-                </a>
-              </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
-                  About
-                </a>
+              <li>
+                <a href="#">Our Vision</a>
               </li>
             </ul>
           </div>
-        </footer>
+
+          <div className="col-12 col-md-4 col-lg-4 mt-4 mt-md-0">
+            <h4 className="fw-bold fs-5 mb-4">Support & Legal</h4>
+            <ul className="list-unstyled space-y-3">
+              <li>
+                <a href="#">Help Center (FAQ)</a>
+              </li>
+              <li>
+                <a href="#">API Documentation</a>
+              </li>
+              <li>
+                <a href="#">Terms of Service</a>
+              </li>
+              <li>
+                <a href="#">Privacy Policy</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="border-top border-secondary-subtle pt-4 mt-4 d-flex flex-column flex-md-row justify-content-between align-items-center">
+          <p className="text-light opacity-50 small mb-3 mb-md-0">
+            &copy; 2025 HFU Healthcare Technologies. All rights reserved.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }

@@ -150,7 +150,50 @@
   color: #333;
 }
 
-.container {
-    width: 100%;
-    background-color: rgb(2, 10, 27);
+/* ------------------------------------------------------------------- */
+/* 1. Base Footer and Color Scheme (Navy Blue) */
+/* ------------------------------------------------------------------- */
+.custom-footer {
+  background-color: #001E6C; /* Navy Blue: สีหลักของ Healthcare */
+  color: #E0E7FF; /* Light Blue/White Text */
+  font-family: 'Prompt', sans-serif; /* แนะนำให้ใช้ Font ที่เป็นมิตร */
+}
+
+/* ------------------------------------------------------------------- */
+/* 2. Headings and Links */
+/* ------------------------------------------------------------------- */
+.custom-footer h4, .custom-footer h5 {
+  color: #FFFFFF;
+  font-weight: 600;
+  border-left: 3px solid #4A90E2; /* Accent line for headings */
+  padding-left: 10px;
+  margin-left: -10px; /* ชดเชย padding */
+}
+
+.custom-footer a {
+  color: #B4C4FF; /* Link Color: ดูสว่างขึ้นบนพื้นหลังมืด */
+  transition: color 0.2s ease-in-out;
+  text-decoration: none; /* ลบขีดเส้นใต้ */
+}
+
+.custom-footer a:hover {
+  color: #FFFFFF; /* Hover Color: เปลี่ยนเป็นสีขาว */
+  text-decoration: underline;
+}
+
+.social-icons a {
+  color: #4A90E2; /* Icon Color */
+  font-size: 1.5rem;
+  transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.social-icons a:hover {
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+.contact-list i {
+  color: #4A90E2; /* Icon Color */
+  margin-right: 8px;
+  font-size: 1.1rem;
 }
