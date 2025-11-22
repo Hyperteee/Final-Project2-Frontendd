@@ -345,7 +345,7 @@ const Queue4 = () => {
         </div>
               <div style={{ width: "100%", overflow: "hidden", lineHeight: 0 }}>
         <img
-          src={"./images/wave.png"}
+          src={"./images/wave-navy.png"}
           alt="footer wave"
           style={{
             width: "100%",
