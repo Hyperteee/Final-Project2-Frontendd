@@ -5,8 +5,6 @@ import Form from 'react-bootstrap/Form'
 import Button from "react-bootstrap/esm/Button";
 import { UserAppointment } from "../../data/context/appointment";
 import Modal from 'react-bootstrap/Modal'
-// ❌ ลบ import นี้ออกได้เลยครับ ไม่ได้ใช้แล้วในหน้านี้
-// import { HospitalScheduleContext } from "../../data/context/allSchedule"; 
 import "./Queue4.css"; 
 
 const Queue4 = () => {
@@ -23,6 +21,7 @@ const Queue4 = () => {
         if (!date) return "-";
         const d = new Date(date);
         const thaiMonths = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
+        // แปลงปีเป็น พ.ศ. (d.getFullYear() + 543)
         return `${d.getDate()} ${thaiMonths[d.getMonth()]} ${d.getFullYear() + 543}`;
     };
 
@@ -88,7 +87,7 @@ const Queue4 = () => {
             
             // ข้อมูลอาการ
             symptom: symptom,
-            files: files,
+            files: files.map(file => ({ name: file.name, size: file.size, type: file.type })), // เก็บเฉพาะ metadata ของไฟล์
 
             // สถานะเริ่มต้น = รอส่ง
             status: "NEW", 
@@ -107,6 +106,7 @@ const Queue4 = () => {
     };
 
     const handleFinished = () => {
+        // เมื่อจองเสร็จแล้ว ให้ไปที่หน้าประวัติการจอง
         navigate("/profilebook");
     };
 
@@ -117,11 +117,12 @@ const Queue4 = () => {
             <div className="mt-5 fs-4 text-center w-100" style={{ maxWidth: '800px' }}>
                 <div className="fw-bold fs-3 mb-2" style={{ color: 'black' }}>ทำนัด</div>
                 
+                {/* Header Info (ปรับปรุงสีและ fw-semibold) */}
                 <div className="d-flex justify-content-center gap-3 mb-4">
-                    <div className="bg-primary-subtle rounded-2 px-3 py-2" style={{ color: "#11248fff" }}>
+                    <div className="bg-primary-subtle rounded-2 px-3 py-2 fw-semibold" style={{ color: "#001E6C" }}>
                         โรงพยาบาล{selectedHospital}
                     </div>
-                    <div className="bg-primary-subtle rounded-2 px-2 py-2" style={{ color: "#11248fff" }}>
+                    <div className="bg-primary-subtle rounded-2 px-2 py-2 fw-semibold" style={{ color: "#001E6C" }}>
                         {departmentName || (selectedDepartment === "ไม่รู้แผนก" ? "คัดกรอง" : "แผนกทั่วไป")}
                     </div>
                 </div>
@@ -156,16 +157,25 @@ const Queue4 = () => {
             <div className="container bg-white shadow-lg rounded-4 p-5 mt-4" style={{ maxWidth: '900px' }}>
                 <div className="row">
                     
-                    {/* Left Column: Summary */}
+                    {/* Left Column: Summary (ปรับปรุง Icon และสี) */}
                     <div className="col-md-5 border-end pe-4">
                         <h5 className="fw-bold mb-4 text-dark border-bottom pb-2">สรุปข้อมูลการนัด</h5>
                         
                         <div className="d-flex flex-column align-items-center text-center mb-4">
                             <div className="doctor-card__avatar">
-                                {selectedDoctor ? <span className="fs-1">👨‍⚕️</span> : <span className="fs-1">🏥</span>}
+                                {/* ใช้ Icon ของ Bootstrap */}
+                                {selectedDoctor ? 
+                                    <i className="bi bi-person-fill fs-2 text-secondary"></i> : 
+                                    <i className="bi bi-hospital-fill fs-2 text-secondary"></i>
+                                }
                             </div>
-                            <h6 className="fw-bold text-primary">{doctorName || "-"}</h6>
-                            <small className="text-muted">{departmentName}</small>
+                            <h6 
+                                className="fw-bold mb-1" 
+                                style={{ color: '#001E6C' }} // ใช้สีธีมหลัก
+                            >
+                                {doctorName || (selectedDepartment === "ไม่รู้แผนก" ? "เจ้าหน้าที่คัดกรอง" : "แพทย์เวร")}
+                            </h6>
+                            <small className="text-muted">{departmentName || "ไม่ระบุ"}</small>
                         </div>
 
                         <div className="info-group mb-3">
@@ -200,6 +210,9 @@ const Queue4 = () => {
                                     value={symptom}
                                     onChange={(e) => setSymptom(e.target.value)} 
                                 />
+                                <Form.Text className="text-muted mt-2">
+                                    <i className="bi bi-exclamation-triangle-fill text-warning me-1"></i> กรุณากรอกรายละเอียดอาการให้ชัดเจน
+                                </Form.Text>
                             </Form.Group>
 
                             <Form.Group className="mb-3">
@@ -214,8 +227,8 @@ const Queue4 = () => {
                                     <p className="small text-muted mb-1">ไฟล์ที่เลือก:</p>
                                     <div className="file-list">
                                         {files.map((file, index) => (
-                                            <div key={index} className="file-list-item d-flex justify-content-between">
-                                                <span><i className="bi bi-file-earmark-text"></i> {file.name}</span>
+                                            <div key={index} className="file-list-item d-flex justify-content-between align-items-center border p-2 mb-1 rounded">
+                                                <span><i className="bi bi-file-earmark-text me-2"></i> {file.name}</span>
                                                 <button type="button" className="btn-close" style={{fontSize: '0.7rem'}} onClick={() => handleRemoveFile(index)}></button>
                                             </div>
                                         ))}
@@ -227,15 +240,21 @@ const Queue4 = () => {
                 </div>
             </div>
 
-            {/* Buttons */}
+            {/* Buttons (ปรับปรุง) */}
             <div className="d-flex justify-content-between w-100 mt-4 px-4" style={{ maxWidth: '900px' }}>
-                <Button variant="outline-dark" className="rounded-pill px-4 py-2" onClick={() => navigate(-1)}>
-                    &lt; ย้อนกลับ
+                <Button 
+                    variant="outline-primary" 
+                    className="rounded-pill px-4 py-2 fw-bold" 
+                    style={{ borderColor: '#001E6C', color: '#001E6C' }} // Outline Primary
+                    onClick={() => navigate(-1)}
+                >
+                    <i className="bi bi-arrow-left me-2"></i>
+                    ย้อนกลับ
                 </Button>
                 <Button
                     variant="primary"
                     className="rounded-pill px-5 py-2 fw-bold shadow-sm"
-                    style={{ backgroundColor: '#001E6C' }}
+                    style={{ backgroundColor: '#001E6C', border: 'none' }} // Solid Primary
                     onClick={handleConfirm}
                     disabled={!symptom.trim()}
                 >
@@ -250,9 +269,9 @@ const Queue4 = () => {
                 backdrop="static" 
                 keyboard={false} 
                 centered
-                className="success-modal" // ✅ เพิ่ม Class นี้
+                className="success-modal"
             >
-                <Modal.Body className="p-0"> {/* ลบ padding เดิมออกเพื่อจัด Layout เอง */}
+                <Modal.Body className="p-0">
                     <div className="success-modal-content text-center">
                         
                         {/* ส่วน Icon Animation */}
@@ -264,15 +283,17 @@ const Queue4 = () => {
                         </div>
 
                         {/* ส่วนเนื้อหา */}
-                        <h3 className="fw-bold text-dark mb-3">จองสำเร็จ!</h3>
+                        <h3 className="fw-bold mb-3" style={{ color: '#001E6C' }}>จองสำเร็จ!</h3>
                         <p className="text-muted mb-4 px-4">
                             ระบบได้รับข้อมูลการนัดหมายของท่านเรียบร้อยแล้ว
+                            ท่านสามารถตรวจสอบสถานะได้ที่เมนูประวัติการจอง
                         </p>
 
-                        {/* ปุ่มกด */}
+                        {/* ปุ่มกด (ใช้สีธีมหลัก) */}
                         <Button 
                             variant="primary" 
                             className="success-btn rounded-pill px-5 py-2 fw-bold" 
+                            style={{ backgroundColor: '#001E6C', border: 'none' }} 
                             onClick={handleFinished} 
                         >
                             ตกลง

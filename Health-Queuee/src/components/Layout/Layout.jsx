@@ -13,8 +13,6 @@ export default function Layout() {
   return (
     <div>
         <NavigationBar />
-        <Outlet />
-        <Footer />
     </div>
   )
 }

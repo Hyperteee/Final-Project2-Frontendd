@@ -7,6 +7,7 @@ import Modal from 'react-bootstrap/Modal';
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./Queue3.css"; 
+// ต้องมั่นใจว่ามีการ import bootstrap icons ใน project หลัก เช่น <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
 const thaiDays = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"];
 
@@ -28,6 +29,7 @@ const Queue3 = () => {
   useEffect(() => {
     if (selectedDepartment === "ไม่รู้แผนก") {
       const dontKnowDept = hospitalData?.departments.find(d => d.name === "ไม่รู้แผนก" || d.name === "แผนก 0");
+      // ใช้ Department ID ของแผนกคัดกรอง หรือ default เป็น BKK001-D00 ถ้าหาไม่เจอ
       setCurrentDepartmentId(dontKnowDept ? dontKnowDept.id : "BKK001-D00");
     } else {
       setCurrentDepartmentId(selectedDepartment);
@@ -70,18 +72,20 @@ const Queue3 = () => {
     return false;
   }
 
-
   const getMinDate = () => {
     const today = new Date();
     const minBookingDate = new Date(today);
+    // ต้องจองล่วงหน้าอย่างน้อย 7 วัน
     minBookingDate.setDate(today.getDate() + 7);
 
     if (activeField === 'P1') return minBookingDate;
     
+    // วันรอง P2 ต้องห่างจาก P1 อย่างน้อย 3 วัน
     if (activeField === 'P2' && priority1Date) {
       const minP2Date = new Date(priority1Date);
       minP2Date.setDate(priority1Date.getDate() + 3);
-      return minP2Date;
+      // ต้องไม่ต่ำกว่าวันจองขั้นต่ำ 7 วันด้วย (กรณี P1 เลือกวันสุดท้ายที่ทำได้)
+      return minP2Date > minBookingDate ? minP2Date : minBookingDate;
     }
     return minBookingDate;
   };
@@ -89,7 +93,10 @@ const Queue3 = () => {
   function handleDateClick(date) {
     if (activeField === 'P1') {
       setPriority1Date(date);
-      if (priority2Date && date >= priority2Date) setPriority2Date(null);
+      // หากวัน P1 ที่เลือกใหม่ทำให้ P2 ที่มีอยู่ผิดเงื่อนไข ให้รีเซ็ต P2
+      if (priority2Date && date.getTime() + (3 * 24 * 60 * 60 * 1000) > priority2Date.getTime()) {
+        setPriority2Date(null);
+      }
     } else if (activeField === 'P2') {
       setPriority2Date(date);
     }
@@ -102,8 +109,8 @@ const Queue3 = () => {
         ...state,
         priority1Date,
         priority2Date,
-        departmentName: selectedDepartmentData?.name || "คัดกรอง/ทั่วไป",
-        doctorName: DoctorData?.name || (selectedDepartment === "ไม่รู้แผนก" ? "-" : "แพทย์เวร")
+        departmentName: selectedDepartmentData?.name || (selectedDepartment === "ไม่รู้แผนก" ? "คัดกรอง/ทั่วไป" : "ไม่ระบุ"),
+        doctorName: DoctorData?.name || (selectedDepartment === "ไม่รู้แผนก" ? "เจ้าหน้าที่คัดกรอง" : "แพทย์เวร")
       }
     });
   }
@@ -122,20 +129,24 @@ const Queue3 = () => {
   return (
     <div className="d-flex flex-column align-items-center bg-light min-vh-100 pb-5">
 
-      <div className="mt-5 fs-4 text-center w-100" style={{ maxWidth: '600px', width: '100%' }}>
+      <div className="mt-5 fs-4 text-center w-100" style={{ maxWidth: '800px', width: '100%' }}>
         <div className="fw-bold fs-3 mb-2" style={{ color: 'black' }}>ทำนัด</div>
         
+        {/* Header Info Styling (ปรับปรุงสี) */}
         <div className="d-flex justify-content-center gap-3 mb-4">
-          <div className="bg-primary-subtle rounded-2 px-3 py-2" style={{ color: "#11248fff" }}>
+          <div className="bg-primary-subtle rounded-2 px-3 py-2 fw-semibold" style={{ color: "#001E6C" }}>
             โรงพยาบาล{selectedHospital}
           </div>
-          <div className="bg-primary-subtle rounded-2 px-2 py-2" style={{ color: "#11248fff" }}>
+          <div className="bg-primary-subtle rounded-2 px-2 py-2 fw-semibold" style={{ color: "#001E6C" }}>
             {selectedDepartment === "ไม่รู้แผนก" ? "คัดกรอง" : `แผนก ${selectedDepartmentData?.name || selectedDepartment}`}
           </div>
         </div>
 
-
-        <div className="d-flex justify-content-center align-items-start px-3">
+        {/* Stepper Section */}
+        <div 
+            className="d-flex justify-content-center align-items-start px-3 mb-4 mx-auto" 
+            style={{ maxWidth: '600px', width: '100%' }}
+        >
           {steps.map((step, index) => {
             const active = isStepActive(step.id);
             return (
@@ -172,6 +183,8 @@ const Queue3 = () => {
             );
           })}
         </div>
+
+        <h4 className="fw-bold mb-4 mt-3" style={{ color: '#001E6C' }}>เลือกวันนัดหมายที่สะดวก</h4>
       </div>
 
       {/* Content Card */}
@@ -181,7 +194,8 @@ const Queue3 = () => {
           {/* Left: Doctor Info */}
           <div className="col-md-5 d-flex flex-column align-items-center text-center border-end pe-4">
             <div className="doctor-avatar shadow-sm mb-3">
-              {selectedDoctor ? <span className="fs-1">👨‍⚕️</span> : selectedDepartment !== "ไม่รู้แผนก" ? <span className="fs-1">🏥</span> : <span className="fs-1">📋</span>}
+              {/* ใช้ Bootstrap Icon แทน Emojis เพื่อความสม่ำเสมอ */}
+              {selectedDoctor ? <i className="bi bi-person-fill fs-1 text-secondary"></i> : selectedDepartment !== "ไม่รู้แผนก" ? <i className="bi bi-hospital-fill fs-1 text-secondary"></i> : <i className="bi bi-clipboard-check-fill fs-1 text-secondary"></i>}
             </div>
             
             <h4 className="fw-bold text-dark mb-1">
@@ -189,7 +203,7 @@ const Queue3 = () => {
             </h4>
             
             <p className="text-muted small mb-3">
-              {selectedDepartment === "ไม่รู้แผนก" ? "โรงพยาบาลจะทำการคัดกรองให้" : `สาขา: ${selectedDepartmentData?.name || ""}`}
+              {selectedDepartment === "ไม่รู้แผนก" ? "โรงพยาบาลจะทำการคัดกรองให้" : `แผนก: ${selectedDepartmentData?.name || "ไม่ระบุ"}`}
             </p>
 
             <div className="alert alert-info border-0 bg-info-subtle text-info-emphasis w-100 py-2 small mb-1">
@@ -244,19 +258,25 @@ const Queue3 = () => {
         </div>
       </div>
 
-      {/* Buttons */}
       <div className="d-flex justify-content-between w-100 mt-4 px-4" style={{ maxWidth: '900px' }}>
-        <Button variant="outline-dark" className="rounded-pill px-4 py-2" onClick={() => navigate(-1)}>
-          &lt; เริ่มใหม่
+        <Button 
+            variant="outline-primary" 
+            className="rounded-pill px-4 py-2 fw-bold" 
+            style={{ borderColor: '#001E6C', color: '#001E6C' }}
+            onClick={() => navigate(-1)}
+        >
+          <i className="bi bi-arrow-left me-2"></i>
+          ย้อนกลับ
         </Button>
         <Button
           variant="primary"
           className="rounded-pill px-5 py-2 fw-bold"
-          style={{ backgroundColor: '#001E6C' }}
+          style={{ backgroundColor: '#001E6C', border: 'none' }}
           onClick={handleNext}
-          disabled={!priority1Date || !priority2Date}
+          disabled={!priority1Date}
         >
-          ต่อไป &gt;
+          ถัดไป
+          <i className="bi bi-arrow-right ms-2"></i>
         </Button>
       </div>
 
@@ -270,10 +290,16 @@ const Queue3 = () => {
         <Modal.Body className="d-flex justify-content-center">
           <Calendar
             onChange={handleDateClick}
-            value={activeField === 'P1' ? (priority1Date || getMinDate()) : (priority2Date || getMinDate())}
+            value={activeField === 'P1' ? priority1Date : priority2Date}
             minDate={getMinDate()} 
             tileDisabled={({ date }) => !isDoctorWorking(date)}
-            tileClassName={({ date }) => isDoctorWorking(date) ? "working-day" : "non-working-day"}
+            tileClassName={({ date }) => {
+                let classes = isDoctorWorking(date) ? "working-day" : "non-working-day";
+                if (activeField === 'P2' && priority1Date && date.toDateString() === priority1Date.toDateString()) {
+                    classes += " non-working-day";
+                }
+                return classes;
+            }}
             locale="th-TH"
             prev2Label={null}
             next2Label={null}

@@ -23,18 +23,20 @@ function Queue1() {
     const hospitalData = hospitalMap[selectedHospital]?.info || null;
 
     function handleNext(department, chooseDoctor, selectedHospital) {
-        if (department === "ไม่รู้แผนก" || department === "") {
-            navigate("/queue3", { state: { selectedHospital, selectedDoctor: null, selectedDepartment: department } })
+        // หากเลือก "ไม่รู้แผนก" หรือเลือกแผนกแล้วและเลือก "ไม่เลือกแพทย์" ให้ข้ามไป Queue3 เลย
+        if (department === "ไม่รู้แผนก" || chooseDoctor === "dontChoose") {
+            // ✅ "ไม่รู้แผนก" หรือ "ไม่เลือกแพทย์" จะข้ามไปหน้าเลือกวันนัดทันที
+            navigate("/queue3", { state: { selectedHospital, selectedDoctor: null, selectedDepartment: department, departmentName } })
         } else if (chooseDoctor === "choose") {
+            // ✅ เลือกแพทย์ ให้ไปหน้า Queue2
             navigate("/queue2", {
                 state: {
                     selectedDepartment: department,
                     optionChooseDoctor: chooseDoctor,
-                    selectedHospital
+                    selectedHospital,
+                    departmentName
                 }
             });
-        } else if (chooseDoctor === "dontChoose") {
-            navigate("/queue3", { state: { selectedHospital, selectedDoctor: null, selectedDepartment: department } })
         }
     }
 
@@ -49,21 +51,19 @@ function Queue1() {
     const isStepActive = (stepNumber) => stepNumber <= currentStep;
 
     return (
-        // ✅ เพิ่ม bg-light min-vh-100 pb-5 ให้เหมือน Queue3
         <div className="d-flex flex-column align-items-center bg-light min-vh-100 pb-5">
             
             {/* Header Section */}
-            {/* ✅ เพิ่ม w-100 และ maxWidth เพื่อให้จัดกึ่งกลางสวยงาม */}
             <div className="mt-5 fs-4 text-center " style={{ maxWidth: '600px', width: '100%' }}>
                 <div className="fw-bold fs-3 mb-2" style={{ color: 'black' }}>ทำนัด</div>
                 
                 <div className="d-flex justify-content-center mb-4">
-                    <div className="bg-primary-subtle rounded-2 px-3 py-2" style={{ color: "#11248fff" }}>
+                    <div className="bg-primary-subtle rounded-2 px-3 py-2 fw-semibold" style={{ color: "#11248f" }}>
                         โรงพยาบาล{selectedHospital}
                     </div>
                 </div>
 
-                {/* Stepper Section (Copy จาก Queue3 เพื่อความเป๊ะ) */}
+                {/* Stepper Section */}
                 <div className="d-flex justify-content-center align-items-start px-3 mb-4">
                     {steps.map((step, index) => {
                         const active = isStepActive(step.id);
@@ -103,110 +103,138 @@ function Queue1() {
                 </div>
             </div>
 
-            {/* Content Section (Logic เดิมของคุณ) */}
-            <div className="d-flex flex-column align-items-center w-100" style={{ maxWidth: '800px' }}>
-                <div className="zone-option d-flex flex-column mb-4">
-                    <div>ศูนย์การรักษา</div>
-                    <div className="d-flex flex-wrap gap-3">
-                        <div className="option" onClick={handleShow}>
-                            <Form.Check
-                                type="radio"
-                                id="choose-department"
-                                name="chooseDepartment"
-                                value="choose-Department"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleShow();
-                                }}
-                                checked={department !== null && department !== "ไม่รู้แผนก"}
-                                onChange={() => { }}
-                            />
-                            {department == null || department == "ไม่รู้แผนก" ? "เลือกแผนกเอง" : departmentName}
+                    
+            <div className="d-flex flex-column align-items-center w-100 px-4" style={{ maxWidth: '900px' }}>
+                <div className="zone-option d-flex flex-column mb-5 w-100">
+                    <div className="fw-bold mb-4 fs-5" style={{ color: '#001E6C' }}>1. เลือกศูนย์การรักษา/แผนก</div>
+                    <div className="d-flex justify-content-center gap-4 w-100">
+                        
+                        {/* เลือกศูนย์การรักษา/แผนกเฉพาะทาง */}
+                        <div 
+                            className={`option ${department !== null && department !== "ไม่รู้แผนก" ? "option-active" : ""}`} 
+                            onClick={handleShow}
+                        >
+                            <i className="bi bi-hospital fs-3 me-3" style={{color: '#001E6C'}}></i> 
+                            <div className="d-flex p-5 flex-column align-items-start">
+                                <span className="fw-bold">เลือกศูนย์การรักษา/แผนกเฉพาะทาง</span>
+                                {departmentName && department !== "ไม่รู้แผนก" ? (
+                                    <span className="small text-success">เลือกแล้ว: {departmentName}</span>
+                                ) : (
+                                    <span className="small text-muted">คลิกเพื่อเลือกจากรายชื่อแผนกทั้งหมด</span>
+                                )}
+                            </div>
                         </div>
-                        <div className="option" onClick={() => { setDepartment("ไม่รู้แผนก"); setDepartmentName("ไม่รู้แผนก"); setChooseDoctor(null); }}>
-                            <Form.Check
-                                type="radio"
-                                id="no-department"
-                                name="chooseDepartment"
-                                value="no-Department"
-                                checked={department !== null && department === "ไม่รู้แผนก"}
-                                onChange={() => { }}
-                                onClick={(e) => e.stopPropagation()}
-                            />
-                            ไม่แน่ใจ
+
+                        {/* ไม่รู้แผนก */}
+                        <div 
+                            className={`option ${department === "ไม่รู้แผนก" ? "option-active" : ""}`} 
+                            onClick={() => { 
+                                setDepartment("ไม่รู้แผนก"); 
+                                setDepartmentName("ไม่รู้แผนก"); 
+                                setChooseDoctor("dontChoose");
+                            }}
+                        >
+                            <i className="bi bi-question-circle-fill fs-3 me-3" style={{color: '#001E6C'}}></i> 
+                             <div className="d-flex flex-column align-items-start ">
+                                <span className="fw-bold">ไม่รู้แผนก/ต้องการให้แพทย์คัดกรอง</span>
+                                <span className="small text-muted">ระบบจะส่งไปยังแพทย์เวรเพื่อคัดกรองอาการ (ข้ามการเลือกแพทย์)</span>
+                            </div>
                         </div>
                     </div>
+                </div>
 
-                    {department && department !== "ไม่รู้แผนก" && (
-                        <div className="zone-option d-flex flex-column mt-4">
-                            <div>เลือกแพทย์</div>
-                            <div className="d-flex flex-wrap gap-3">
-                                <div className="option" onClick={() => setChooseDoctor("choose")}>
-                                    <Form.Check
-                                        type="radio"
-                                        id="choose-Doctor"
-                                        name="doctorChoice"
-                                        value="choose-Doctor"
-                                        checked={chooseDoctor !== null && chooseDoctor !== "dontChoose"}
-                                        onChange={() => setChooseDoctor("choose")}
-                                    />
-                                    ต้องการเลือกแพทย์เอง
+                {department && department !== "ไม่รู้แผนก" && (
+                    <div className="zone-option d-flex flex-column mb-5 w-100">
+                        <div className="fw-bold mb-3 fs-5" style={{ color: '#001E6C' }}>2. ต้องการเลือกแพทย์เฉพาะเจาะจงหรือไม่</div>
+                        <div className="d-flex justify-content-center gap-4 w-100">
+                            
+                            {/* เลือกแพทย์เฉพาะทาง */}
+                            <div 
+                                className={`option ${chooseDoctor === "choose" ? "option-active" : ""}`}
+                                onClick={() => setChooseDoctor("choose")}
+                            >
+                                <i className="bi bi-person-fill fs-3 me-3" style={{color: '#001E6C'}}></i> 
+                                 <div className="d-flex flex-column align-items-start">
+                                    <span className="fw-bold">เลือกแพทย์เฉพาะทาง</span>
+                                    <span className="small text-muted">นัดแพทย์ตามชื่อหรือความเชี่ยวชาญ</span>
                                 </div>
+                            </div>
 
-                                <div className="option" onClick={() => setChooseDoctor("dontChoose")}>
-                                    <Form.Check
-                                        type="radio"
-                                        id="no-Doctor"
-                                        name="doctorChoice"
-                                        value="no-Doctor"
-                                        checked={chooseDoctor !== null && chooseDoctor !== "choose"}
-                                        onChange={() => setChooseDoctor("dontChoose")}
-                                    />
-                                    เลือกแพทย์ให้ฉัน
+                            {/* ไม่เลือกแพทย์ */}
+                            <div 
+                                className={`option ${chooseDoctor === "dontChoose" ? "option-active" : ""}`}
+                                onClick={() => setChooseDoctor("dontChoose")}
+                            >
+                                <i className="bi bi-people-fill fs-3 me-3" style={{color: '#001E6C'}}></i> 
+                                <div className="d-flex flex-column align-items-start">
+                                    <span className="fw-bold">ไม่เลือกแพทย์ (แพทย์เวร/แผนกทั่วไป)</span>
+                                    <span className="small text-muted">ระบบจะเลือกแพทย์ที่มีตารางว่างให้</span>
                                 </div>
                             </div>
                         </div>
-                    )}
+                    </div>
+                )}
 
-                    {/* Modal เลือกแผนก */}
-                    <Modal className="department-modal" size="lg" show={show} onHide={handleClose} centered>
-                        <Modal.Header closeButton>
-                            <Modal.Title className="fw-semibold modal-title">
-                                เลือกแผนกที่ต้องการรักษา
-                            </Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body className="modal-body department-grid">
-                            {hospitalData?.departments
-                                ?.filter((dep) => dep.name !== "ไม่รู้แผนก")
-                                ?.map((dep) => (
-                                    <div
-                                        key={dep.id}
-                                        className="option-department"
-                                        onClick={() => {
-                                            setDepartment(dep.id);
-                                            setDepartmentName(dep.name);
-                                            handleClose();
-                                        }}
-                                    >
-                                        <img src={dep.logo} alt="icon" />
-                                        <span>{dep.name}</span>
-                                    </div>
-                                ))
-                            }
-                        </Modal.Body>
-                    </Modal>
-                </div>
-
-                <div className="d-flex justify-content-end w-100 px-3">
-                    <Button 
-                        className="nextButton px-5 py-2 rounded-pill fw-bold shadow-sm" 
-                        style={{ backgroundColor: '#001E6C', border: 'none' }}
-                        onClick={() => handleNext(department, chooseDoctor, selectedHospital)}
+                {/* Modal เลือกแผนก */}
+<Modal className="department-modal" size="lg" show={show} onHide={handleClose} centered>
+    <Modal.Header closeButton>
+        <Modal.Title className="fw-bold modal-title">
+            เลือกแผนกที่ต้องการรักษา
+        </Modal.Title>
+    </Modal.Header>
+    
+    <Modal.Body className="modal-body department-grid-container"> {/* เปลี่ยนชื่อคลาสเพื่อให้แยกสไตล์ได้ชัดเจน */}
+        {/* เพิ่มข้อความแนะนำ เพื่อให้ UX ดีขึ้น */}
+        <p className="text-center text-muted mb-4 department-instruction">
+            กรุณาเลือกแผนกที่ตรงกับอาการของท่าน เพื่อดำเนินการขั้นตอนถัดไป
+        </p>
+        
+        <div className="department-grid-list">
+            {hospitalData?.departments
+                ?.filter((dep) => dep.name !== "ไม่รู้แผนก")
+                ?.map((dep) => (
+                    <div
+                        key={dep.id}
+                        className="option-department"
+                        onClick={() => {
+                            setDepartment(dep.id);
+                            setDepartmentName(dep.name);
+                            setChooseDoctor(null); // Reset ตัวเลือกแพทย์เมื่อเลือกแผนกใหม่
+                            handleClose();
+                        }}
                     >
-                        <span>ต่อไป </span>
-                        <i className="bi bi-arrow-right ms-2"></i>
-                    </Button>
-                </div>
+                        {/* ปรับขนาด Icon ให้ดูเด่นขึ้น */}
+                        {dep.logo ? (
+                            <img src={dep.logo} alt={`Icon for ${dep.name}`} />
+                        ) : (
+                            // Fallback icon กรณีไม่มีโลโก้ (ใช้ Bootstrap Icon)
+                            <div className="default-icon-placeholder">
+                                <i className="bi bi-hospital fs-1" style={{ color: '#001E6C' }}></i> 
+                            </div>
+                        )}
+                        <span className="fw-semibold">{dep.name}</span>
+                    </div>
+                ))
+            }
+        </div>
+    </Modal.Body>
+</Modal>
+            </div>
+
+            <div className="d-flex justify-content-end w-100 px-4" style={{ maxWidth: '900px' }}>
+                <Button 
+                    className="nextButton px-5 py-2 rounded-pill fw-bold shadow-lg" 
+                    style={{ backgroundColor: '#001E6C', border: 'none' }}
+                    onClick={() => handleNext(department, chooseDoctor, selectedHospital)}
+                    // ปุ่ม Disabled เมื่อยังไม่เลือกแผนก หรือเลือกแผนกแล้วแต่ยังไม่เลือกแพทย์
+                    disabled={
+                        department === null || 
+                        (department !== "ไม่รู้แผนก" && chooseDoctor === null)
+                    } 
+                >
+                    <span>ต่อไป </span>
+                    <i className="bi bi-arrow-right ms-2"></i>
+                </Button>
             </div>
         </div>
     )

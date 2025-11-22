@@ -16,8 +16,15 @@ function Queue2() {
     );
 
     function handleBook(selectedHospital, selectedDoctor, selectedDepartment) {
+        // ดึงชื่อแผนกที่ถูกส่งมาด้วย
+        const departmentName = departmentData?.name; 
+        
+        // ค้นหาชื่อแพทย์
+        const doctor = departmentData?.doctors.find(doc => doc.id === selectedDoctor);
+        const doctorName = doctor?.name;
+        
         navigate("/queue3", { 
-            state: { selectedHospital, selectedDoctor, selectedDepartment } 
+            state: { selectedHospital, selectedDoctor, selectedDepartment, departmentName, doctorName } 
         });
     }
 
@@ -39,10 +46,10 @@ function Queue2() {
                 <div className="fw-bold fs-3 mb-2" style={{ color: 'black' }}>ทำนัด</div>
                 
                 <div className="d-flex justify-content-center gap-3 mb-4">
-                    <div className="bg-primary-subtle rounded-2 px-3 py-2" style={{ color: "#11248fff" }}>
+                    <div className="bg-primary-subtle rounded-2 px-3 py-2 fw-semibold" style={{ color: "#001E6C" }}>
                         โรงพยาบาล{selectedHospital}
                     </div>
-                    <div className="bg-primary-subtle rounded-2 px-2 py-2" style={{ color: "#11248fff" }}>
+                    <div className="bg-primary-subtle rounded-2 px-2 py-2 fw-semibold" style={{ color: "#001E6C" }}>
                         แผนก{departmentData?.name}
                     </div>
                 </div>
@@ -88,25 +95,32 @@ function Queue2() {
                         );
                     })}
                 </div>
+                
+                <h4 className="fw-bold mb-4" style={{ color: '#001E6C' }}>เลือกแพทย์ที่ต้องการนัดหมาย</h4>
             </div>
 
-            {/* Doctor Selection Section (Restore Original Code) */}
-            {/* ใช้โครงสร้างเดิมของคุณ ไม่มีการเปลี่ยน Class หรือ Layout */}
+            {/* Doctor Selection Section */}
             <div className="doctor-results-panel" style={{ width: '100%', maxWidth: '900px', padding: '0 15px' }}>
                 <div className="row g-4">
                     {departmentData?.doctors.map((doctor) => {
                         return (
-                            <div className="col-12 col-md-6" key={doctor.id}>
+                            <div className="col-md-6" key={doctor.id}>
                                 <div className="card border-0 shadow-sm rounded-4 position-relative h-100 doctor-card">
                                     <div className="card-body text-center pt-4 pb-4 d-flex flex-column align-items-center doctor-card__body">
                                         <div className="doctor-card__avatar">
-                                            <span className="fw-semibold">รูป</span>
+                                            <i className="bi bi-person-fill fs-2"></i> 
                                         </div>
                                         <p className="fw-semibold mt-3 mb-1 text-truncate w-100">{doctor.name || "Unnamed doctor"}</p>
                                         <p className="small mb-1 doctor-card__subtitle">{doctor.department}</p>
                                         {doctor.specialization && <p className="small text-secondary mb-3">{doctor.specialization}</p>}
                                         <div className="d-grid gap-2 w-100 mt-auto doctor-card__actions">
-                                            <button className="btn btn-primary rounded-pill py-2" onClick={() => { handleBook(selectedHospital, doctor.id, selectedDepartment) }}>นัดหมาย</button>
+                                            <button 
+                                                className="btn btn-primary rounded-pill py-2" 
+                                                style={{ backgroundColor: '#001E6C', border: 'none' }} 
+                                                onClick={() => { handleBook(selectedHospital, doctor.id, selectedDepartment) }}
+                                            >
+                                                นัดหมาย
+                                            </button>
                                             <button className="btn btn-outline-secondary rounded-pill py-2">รายละเอียด</button>
                                         </div>
                                     </div>
@@ -117,9 +131,16 @@ function Queue2() {
                 </div>
             </div>
             
+            {/* แก้ไขปุ่มย้อนกลับให้เป็น Outline Primary และมี Icon */}
             <div className="mt-5">
-                <Button variant="outline-dark" className="rounded-pill px-4 py-2" onClick={() => navigate(-1)}>
-                    &lt; ย้อนกลับ
+                <Button 
+                    variant="outline-primary" 
+                    className="rounded-pill px-4 py-2 fw-bold" 
+                    style={{ borderColor: '#001E6C', color: '#001E6C' }}
+                    onClick={() => navigate(-1)}
+                >
+                    <i className="bi bi-arrow-left me-2"></i>
+                    ย้อนกลับ
                 </Button>
             </div>
 
