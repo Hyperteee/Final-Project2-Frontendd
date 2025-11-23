@@ -5,32 +5,89 @@ import 'bootstrap-icons/font/bootstrap-icons.min.css'
 
 const Loginpage = () => {
 
-    const [action,setAction] = useState("Sign Up")
+    const [action, setAction] = useState("Sign Up");
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-    return ( 
-        <div className="container">
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        if (action === "Sign Up") {
+            console.log("Submitting Sign Up Data:", { name, email, password });
+            alert(`Sign Up Successful for: ${email}`);
+        } else {
+            console.log("Submitting Login Data:", { email, password });
+            alert(`Attempting Login for: ${email}`);
+        }
+    };
+
+    return (
+        <form className="container" onSubmit={handleSubmit}>
             <div className="header">
                 <div className="text">{action}</div>
                 <div className="underline"></div>
             </div>
+
             <div className="inputs">
-                <div className="input bi bi-person">
-                    <input type="text" placeholder="์Name" />
-                </div>
+                {action === "Login" ? null : (
+                    <div className="input bi bi-person">
+                        <input
+                            type="text"
+                            placeholder="Name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            required={action === "Sign Up"}
+                        />
+                    </div>
+                )}
+
                 <div className="input bi bi-envelope">
-                    <input type="email" placeholder="Email Id"/>
+                    <input
+                        type="email"
+                        placeholder="Email Id"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
                 </div>
+
                 <div className="input bi bi-lock">
-                    <input type="password" placeholder="Password"/>
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
                 </div>
             </div>
-            <div className="forgot-password">Lost Password? <span>Click Here</span></div>
+
+            {action === "Sign Up" ? null : (
+                <div className="forgot-password">Lost Password? <span>Click Here</span></div>
+            )}
+
             <div className="submit-container">
-                <div className={action === "Login"?"submit gray":"submit"}>Sign Up</div>
-                <div className={action === "Sign Up"?"submit gray":"submit" }>Login</div>
+                <div
+                    className={action === "Login" ? "submit gray" : "submit"}
+                    onClick={() => { setAction("Sign Up") }}
+                >
+                    Sign Up
+                </div>
+                <div
+                    className={action === "Sign Up" ? "submit gray" : "submit"}
+                    onClick={() => { setAction("Login") }}
+                >
+                    Login
+                </div>
+                <button type="submit" style={{ display: 'none' }}></button>
             </div>
-        </div>
-     );
+
+            <button type="submit" className="submit-main">
+                {action}
+            </button>
+        </form>
+    );
 }
- 
-export default Loginpage   ;
+
+export default Loginpage;

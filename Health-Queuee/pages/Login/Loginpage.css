@@ -1,21 +1,15 @@
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-}
+/* Loginpage.css */
 
-.container  {
+.container {
     display: flex;
     flex-direction: column;
+    margin: auto;
     width: 600px;
+    /* Adjust size as needed */
     background: #fff;
     padding-bottom: 30px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .header {
@@ -50,12 +44,15 @@ body {
 .input {
     display: flex;
     align-items: center;
-    gap: 15px;
     margin: auto;
     width: 480px;
     height: 80px;
     background: #eaeaea;
     border-radius: 6px;
+    padding-left: 20px;
+    /* Space for the Bootstrap icon */
+    font-size: 24px;
+    /* Size for the icon */
 }
 
 .input input {
@@ -66,6 +63,8 @@ body {
     outline: none;
     color: #797979;
     font-size: 19px;
+    margin-left: 10px;
+    /* Space between icon and input text */
 }
 
 .forgot-password {
@@ -102,5 +101,11 @@ body {
 
 .gray {
     background: #eaeaea;
-    color: #677767;
+    color: #676767;
+}
+
+/* Optional: Style for the main submit button */
+.submit-main {
+    display: none;
+    /* Hide the main button in favor of the two toggle buttons */
 }
