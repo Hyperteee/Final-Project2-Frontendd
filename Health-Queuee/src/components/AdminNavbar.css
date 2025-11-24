@@ -1,99 +1,134 @@
-/* Container สำหรับ Navbar ทั้งหมด */
-.admin-navbar-container {
-    width: 250px; 
-    background-color: #f0f0f0; /* สีเทาอ่อนของพื้นหลัง Navbar */
-    height: 100vh; 
-    padding: 20px 15px; 
-    box-sizing: border-box; 
-    display: flex;
-    flex-direction: column; 
-    box-shadow: 2px 0 5px rgba(0,0,0,0.1); /* เพิ่มเงาด้านขวาเล็กน้อย */
+/* --- Sidebar Container (Main Fix) --- */
+.admin-sidebar {
+  width: 260px;
+  height: 100vh;
+  background-color: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000; /* อยู่บนสุดเสมอ */
+  box-shadow: 2px 0 10px rgba(0,0,0,0.03);
 }
 
-/* ส่วนข้อมูลผู้ใช้/โรงพยาบาล */
-.profile-section {
-    /* จัด layout ของ ชื่อ-นามสกุล และ ชื่อโรงพยาบาล ให้อยู่ด้านขวาของรูป */
-    display: flex;
-    align-items: center;
-    gap: 15px; /* ระยะห่างระหว่างรูปกับข้อความ */
-    padding-bottom: 15px;
+/* --- 1. Header & Profile --- */
+.sidebar-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 20px;
+  flex-shrink: 0;
 }
 
-.profile-image-wrapper {
-    border: 2px solid #333; /* ขอบรูป */
-    border-radius: 50%;
-    padding: 2px;
+.profile-img-wrapper {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 12px;
+  border: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.profile-image {
-    width: 50px; /* ขนาดรูปโปรไฟล์ให้เล็กลงตามรูปที่ 1 */
-    height: 50px;
-    border-radius: 50%; 
-    object-fit: cover; 
-}
-
-.profile-text {
-    text-align: left;
-    /* ข้อความ: ชื่อ-นามสกุล และ ชื่อโรงพยาบาล */
+.profile-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .profile-name {
-    font-size: 1em;
-    font-weight: bold;
-    margin: 0;
-    color: #333;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
 }
 
-.profile-hospital {
-    font-size: 0.85em;
-    color: #666;
-    margin: 0;
+/* Divider */
+.sidebar-divider {
+  height: 1px;
+  background-color: #f3f4f6;
+  margin: 10px 0 20px 0;
+  width: 100%;
+  flex-shrink: 0;
 }
 
-.divider {
-    border: 0;
-    height: 1px;
-    background-color: #ccc; 
-    margin: 10px 0 20px 0; /* เว้นระยะห่างด้านล่าง */
+.menu-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: #9ca3af;
+  font-weight: 700;
+  margin-bottom: 10px;
+  margin-top: 5px;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
 }
 
-/* ส่วนปุ่มนำทาง */
-.nav-buttons-section {
-    display: flex;
-    flex-direction: column;
-    gap: 5px; /* ลดระยะห่างระหว่างปุ่ม */
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10px;
+  flex: 1;
 }
 
-.nav-link-wrapper {
-    text-decoration: none; 
-    width: 100%; 
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  text-decoration: none;
+  color: #4b5563;
+  font-weight: 500;
+  font-size: 0.95rem;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  white-space: nowrap; /* ห้ามตัดคำ */
 }
 
-.nav-button {
-    width: 100%; 
-    /* ใช้สีพื้นหลังที่โปร่งใสเพื่อให้เห็นสีเทาอ่อนของ Navbar */
-    background-color: transparent !important; 
-    border: none !important; 
-    color: #333 !important; /* สีข้อความปกติ */
-    padding: 10px 15px;
-    font-size: 1em;
-    text-align: center; /* จัดให้อยู่กึ่งกลาง */
-    font-weight: normal; 
-    border-radius: 15px !important; /* ขอบมนมากๆ */
-    transition: all 0.2s ease-in-out; 
-    box-shadow: none !important; /* ลบเงาเริ่มต้นของ Bootstrap Button */
-    margin: 5px 0; /* เพิ่มระยะห่างระหว่างปุ่มตามรูป */
-    height: 45px; /* กำหนดความสูงของปุ่ม */
+.menu-item:hover {
+  background-color: #f9fafb;
+  color: #001E6C;
 }
 
-/* Style เมื่อปุ่มถูกเลือก (active) */
-.nav-button.active-nav-button {
-    background-color: #87CEEB !important; /* สีฟ้าอ่อนตามรูป (Sky Blue) */
-    color: #333 !important; /* สีข้อความเปลี่ยนเป็นดำตามรูป */
-    font-weight: bold; 
+/* Active State */
+.menu-item.active {
+  background-color: #eef2ff; 
+  color: #001E6C;
+  font-weight: 700;
 }
 
-/* Hover effect สำหรับปุ่มที่ไม่ active */
-.nav-button:not(.active-nav-button):hover {
-    background-color: #e8e8e8 !important; /* สีพื้นหลังเมื่อ hover */
+/* --- 3. Footer (Logout) --- */
+.sidebar-footer {
+  margin-top: auto; /* 🌟 ดัน Footer ไปติดขอบล่างสุดเสมอ */
+  border-top: 1px solid #f3f4f6;
+  padding-top: 20px;
+  flex-shrink: 0;
+}
+
+.logout-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px;
+  background-color: #fff;
+  color: #ef4444; /* สีแดง */
+  border: 1px solid #fee2e2;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.logout-btn:hover {
+  background-color: #fef2f2;
+  border-color: #ef4444;
 }

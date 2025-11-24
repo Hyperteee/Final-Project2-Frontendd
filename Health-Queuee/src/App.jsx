@@ -22,14 +22,9 @@ import Testdata from "./components/Hospital-Search/testdata";
 import Profile from "./Profile-User/Profile";
 import ProfileBook from "./Profile-User/Profile-book";
 import Adminlayout from "../Layout/Adminlayout"
-import ManagePatients from "../pages/ManagePatients"
-import ManageTheDocter from "../pages/ManageTheDocter"
-import Other from "../pages/Other"
-import Appointments from "../pages/Appointments"
-import Main from "../pages/Main"
-
-
-
+import AdminDashboard from "../pages/Dashboard";
+import AdminExport from "../pages/Export";
+import AdminTracking from "../pages/Tracking";
 function App() {
   return (
     <HospitalScheduleProvider>
@@ -47,11 +42,10 @@ function App() {
             <Route path="profile" element={<Profile />} />
             <Route path="profilebook" element={<ProfileBook />} />
             <Route element={<Adminlayout />}>
-              <Route path="/other" element={<Other />} />
-              <Route path="/managepatients" element={<ManagePatients />} />
-              <Route path="/managethedocter" element={<ManageTheDocter />} />
-              <Route path="/appointments" element={<Appointments />} />
-              <Route path="*" element={<Main />} />
+              <Route path="/admin/export" element={<AdminExport />} />
+              <Route path="/admin/dashboard" element={<AdminDashboard/>} />
+              <Route path="/admin/tracking" element={<AdminTracking/>} />
+              <Route path="/admin" element={<AdminDashboard/>} />
             </Route>
           </Routes>
 

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { queueData, summaryData, patientData } from '../data/MainData';
 
 const Main = () => {
     const { waitingQueues, canceledVisited, rescheduled, date } = summaryData;

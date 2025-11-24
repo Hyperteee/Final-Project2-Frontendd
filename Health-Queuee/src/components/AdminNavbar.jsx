@@ -1,62 +1,76 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import { 
+  LayoutDashboard, 
+  FileUp,        // สำหรับ Export
+  Search,        // สำหรับ Tracking
+  Users,         // สำหรับจัดการ User
+  Stethoscope,   // สำหรับจัดการหมอ
+  LogOut 
+} from 'lucide-react';
 import './AdminNavbar.css';
 
 const AdminNavbar = () => {
-
     const location = useLocation(); 
 
-    const getButtonClass = (path) => {
-        return location.pathname === path ? 'active-nav-button' : '';
+    // ฟังก์ชันเช็ค Active Menu เพื่อเปลี่ยนสีพื้นหลัง
+    const isActive = (path) => {
+        return location.pathname === path ? 'active' : '';
     };
 
     return (
-        <div className="admin-navbar-container">
-            <div className="profile-section">
-                <div className="profile-image-wrapper">
-                    <img src="https://via.placeholder.com/80" alt="Profile" className="profile-image" />
-                </div>
-                <div className="profile-text">
-                    <p className="profile-name">ชื่อ-นามสกุล</p>
-                    <p className="profile-hospital">ชื่อโรงพยาบาล</p>
-                </div>
-                <hr className="divider" />
-            </div>
-
+        <div className="admin-sidebar">
             
-            <div className="nav-buttons-section">
+            {/* 1. ส่วนโปรไฟล์ */}
+            <div className="sidebar-header">
+                <div className="profile-img-wrapper">
+                     <img src="https://via.placeholder.com/1200x400/eef2ff/001E6C?text=Admin+Dashboard+Banner+(Placeholder)" alt="" />
+                </div>
+                <div className="profile-info">
+                    <h5 className="profile-name">แอดมิน</h5>
+                </div>
+            </div>
 
-                <Link to="/main" className="nav-link-wrapper">
-                    <Button variant="light" className={`nav-button ${getButtonClass('/main')}`}>
-                        หน้าแรก
-                    </Button>
+            <div className="sidebar-divider"></div>
+
+            <div className="menu-label">งานประจำวัน</div>
+            <div className="sidebar-menu">
+                <Link to="/admin/dashboard" className={`menu-item ${isActive('/admin/dashboard')}`}>
+                    <LayoutDashboard size={20} />
+                    <span>ภาพรวมระบบ</span>
                 </Link>
-                
-                <Link to="/appointments" className="nav-link-wrapper">
-                    <Button variant="light" className={`nav-button ${getButtonClass('/appointments')}`}>
-                        รายการนัด
-                    </Button>
+
+                <Link to="/admin/export" className={`menu-item ${isActive('/admin/export')}`}>
+                    <FileUp size={20} />
+                    <span>ส่งข้อมูลนัด (Export)</span>
                 </Link>
-                
-                <Link to="/managepatients" className="nav-link-wrapper">
-                    <Button variant="light" className={`nav-button ${getButtonClass('/patients')}`}>
-                        จัดการคนไข้
-                    </Button>
-                </Link>
-                
-                <Link to="/managethedocter" className="nav-link-wrapper">
-                    <Button variant="light" className={`nav-button ${getButtonClass('/doctors')}`}>
-                        จัดการหมอ
-                    </Button>
-                </Link>
-                
-                <Link to="/other" className="nav-link-wrapper">
-                    <Button variant="light" className={`nav-button ${getButtonClass('/other-data')}`}>
-                        จัดการข้อมูลอื่นๆ
-                    </Button>
+
+                <Link to="/admin/tracking" className={`menu-item ${isActive('/admin/tracking')}`}>
+                    <Search size={20} />
+                    <span>ติดตามผล (Tracking)</span>
                 </Link>
             </div>
+
+            <div className="menu-label">จัดการข้อมูล</div>
+            <div className="sidebar-menu">
+                <Link to="/admin/users" className={`menu-item ${isActive('/admin/users')}`}>
+                    <Users size={20} />
+                    <span>จัดการผู้ใช้</span>
+                </Link>
+
+                <Link to="/admin/resources" className={`menu-item ${isActive('/admin/resources')}`}>
+                    <Stethoscope size={20} />
+                    <span>ข้อมูลแพทย์/แผนก</span>
+                </Link>
+            </div>
+
+            <div className="sidebar-footer">
+                <button className="logout-btn">
+                    <LogOut size={18} />
+                    <span>ออกจากระบบ</span>
+                </button>
+            </div>
+
         </div>
     );
 }

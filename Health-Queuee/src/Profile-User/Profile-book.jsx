@@ -30,8 +30,8 @@ export default function ProfileBook() {
     switch (status) {
       case "NEW":
         return <span className="status-badge status-new"><AlertCircle size={14}/> ส่งคำขอแล้ว</span>;
-      case "SENT_TO_HOSPITAL":
-        return <span className="status-badge status-new"><AlertCircle size={14}/> รอการยืนยัน</span>;
+      case "SENT":
+        return <span className="status-badge status-new"><AlertCircle size={14}/> รอการยืนยันจากรพ.</span>;
       case "CONFIRMED":
         return <span className="status-badge status-confirmed"><CheckCircle2 size={14}/> นัดหมายสำเร็จ</span>;
       case "FAILED":

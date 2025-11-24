@@ -5,8 +5,6 @@ import Form from 'react-bootstrap/Form'
 import Button from "react-bootstrap/esm/Button";
 import { UserAppointment } from "../../data/context/appointment";
 import Modal from 'react-bootstrap/Modal'
-// ❌ ลบ import นี้ออกได้เลยครับ ไม่ได้ใช้แล้วในหน้านี้
-// import { HospitalScheduleContext } from "../../data/context/allSchedule"; 
 import "./Queue4.css"; 
 
 const Queue4 = () => {
@@ -98,6 +96,7 @@ const Queue4 = () => {
             
             // เตรียมไว้สำหรับผลลัพธ์
             batchId: null,
+            suggestedDate: null,
             confirmedDate: null,
             resultNote: null
         };
