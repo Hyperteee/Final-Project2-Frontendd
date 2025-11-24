@@ -69,13 +69,13 @@ const Loginpage = () => {
 
             <div className="submit-container">
                 <div
-                    className={action === "Login" ? "submit gray" : "submit"}
+                    className={action === "Login" ? "submit small gray" : "submit small"}
                     onClick={() => { setAction("Sign Up") }}
                 >
                     Sign Up
                 </div>
                 <div
-                    className={action === "Sign Up" ? "submit gray" : "submit"}
+                    className={action === "Sign Up" ? "submit small gray" : "submit small"}
                     onClick={() => { setAction("Login") }}
                 >
                     Login
@@ -86,6 +86,8 @@ const Loginpage = () => {
             <button type="submit" className="submit-main">
                 {action}
             </button>
+
+            <button className="submit-large" onClick={(e) => { e.preventDefault(); handleSubmit(e); }}>Enter</button>
         </form>
     );
 }

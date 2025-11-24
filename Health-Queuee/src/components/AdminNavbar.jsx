@@ -41,7 +41,7 @@ const AdminNavbar = () => {
                 
                 <Link to="/managepatients" className="nav-link-wrapper">
                     <Button variant="light" className={`nav-button ${getButtonClass('/patients')}`}>
-                        จัดการคนไข้
+                        จัดการผู้ใช้
                     </Button>
                 </Link>
                 

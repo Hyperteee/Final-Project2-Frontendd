@@ -13,19 +13,19 @@ import AdminHeader from "./components/AdminHeader"
 function App() {
   return (
 
-    <Loginpage/>
-    // <BrowserRouter basename="/Health-Queuee/">
-    //   <Routes>
-    //     <Route element={<Adminlayout />}>
-    //       <Route path="/other" element={<Other/>}/>
-    //       <Route path="/managepatients" element={<ManagePatients/>}/>
-    //       <Route path="/managethedocter" element={<ManageTheDocter/>}/>
-    //       <Route path="/appointments" element={<Appointments />} />
-    //       <Route path="*" element={<Main/> } />
-    //     </Route>
+    // <Loginpage/>
+    <BrowserRouter basename="/Health-Queuee/">
+      <Routes>
+        <Route element={<Adminlayout />}>
+          <Route path="/other" element={<Other/>}/>
+          <Route path="/managepatients" element={<ManagePatients/>}/>
+          <Route path="/managethedocter" element={<ManageTheDocter/>}/>
+          <Route path="/appointments" element={<Appointments />} />
+          <Route path="*" element={<Main/> } />
+        </Route>
 
-    //   </Routes>
-    // </BrowserRouter>
+      </Routes>
+    </BrowserRouter>
   )
 
 }

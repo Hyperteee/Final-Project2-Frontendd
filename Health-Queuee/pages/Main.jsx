@@ -20,14 +20,10 @@ const Main = () => {
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
     const prevPage = () => setCurrentPage(prev => Math.max(prev - 1, 1));
     const nextPage = () => setCurrentPage(prev => Math.min(prev + 1, totalPages));
-    // -----------------------------
 
     return (
         <div className="flex bg-gray-50 min-h-screen">
-            {/* Main Content Area */}
             <div className="flex-grow p-8">
-
-                {/* Summary Cards (คงเดิม) */}
                 <div className="mb-6">
                     <h2 className="text-xl font-bold text-gray-700 mb-4">All Queue Date {date}</h2>
                     <div className="grid grid-cols-3 gap-6">
@@ -59,19 +55,15 @@ const Main = () => {
                             </div>
                         </div>
                     </div>
-                </div>
-
-                {/* ตารางรายการคิว (คงเดิม) */}
-                <div className="bg-white p-6 rounded-xl shadow-lg mb-8">
-                    <h3 className="text-lg font-bold text-gray-700 mb-4">รายการคิววันนี้</h3>
+                </div>         
+                {/* <div className="bg-white p-6 rounded-xl shadow-lg mb-8">
                     <table className="table-auto w-full text-left">
                         <thead>
                             <tr className="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
-                                <th className="py-3 px-6 text-left">ชื่อคนไข้</th>
-                                <th className="py-3 px-6 text-left">เบอร์โทรศัพท์</th>
-                                <th className="py-3 px-6 text-left">ประเภทการจอง</th>
+                                <th className="py-3 px-6 text-left">ลำดับ</th>
+                                <th className="py-3 px-6 text-left">รายชื่อ</th>
+                                <th className="py-3 px-6 text-left">หมายเห</th>
                                 <th className="py-3 px-6 text-left">วันเวลา</th>
-                                <th className="py-3 px-6 text-center">รายละเอียด</th>
                             </tr>
                         </thead>
                         <tbody className="text-gray-600 text-sm font-light">
@@ -81,21 +73,17 @@ const Main = () => {
                                     <td className="py-3 px-6">{item.phone}</td>
                                     <td className="py-3 px-6">{item.type}</td>
                                     <td className="py-3 px-6">{item.time}</td>
-                                    <td className="py-3 px-6 text-center">
-                                        <button className="text-blue-500 font-semibold hover:text-blue-700 transition duration-150">Details</button>
-                                    </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
-                </div>
+                </div> */}
 
-                {/* ตารางจัดการคนไข้ (Patient Table) */}
-                <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col min-h-[600px]"> {/* เพิ่ม min-h เพื่อกันตารางหดเวลาข้อมูลน้อย */}
+                <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col min-h-[600px]">
                     <div className="flex justify-between items-center mb-4">
                         <h3 className="text-lg font-bold text-gray-700">
                             <i className="bi bi-people-fill mr-2 text-blue-600"></i>
-                            จัดการคนไข้ (Patient Management)
+                            คำขอจองนัดล่าสุด
                         </h3>
                         <div className="flex space-x-2">
                             <div className="relative">
@@ -105,7 +93,7 @@ const Main = () => {
                         </div>
                     </div>
 
-                    <div className="flex-grow"> {/* ให้ส่วนตารางขยายเต็มพื้นที่ */}
+                    <div className="flex-grow"> 
                         <table className="table-auto w-full text-left">
                             <thead>
                                 <tr className="bg-blue-50 text-blue-800 uppercase text-sm leading-normal">
@@ -117,7 +105,6 @@ const Main = () => {
                                 </tr>
                             </thead>
                             <tbody className="text-gray-600 text-sm font-light">
-                                {/* 👈 ใช้ currentPatients แทน patientData ทั้งหมด */}
                                 {currentPatients.map((patient) => (
                                     <tr key={patient.id} className="border-b border-gray-200 hover:bg-gray-50">
                                         <td className="py-3 px-6 font-semibold">{patient.id}</td>
@@ -149,15 +136,15 @@ const Main = () => {
                             « ก่อนหน้า
                         </button>
 
-                        {/* เลขหน้า (Page Numbers) */}
+                        
                         {Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
                             <button
                                 key={number}
                                 onClick={() => paginate(number)}
                                 className={`px-3 py-1 rounded-md text-sm font-medium border transition-colors
                                     ${currentPage === number
-                                        ? 'bg-blue-600 text-white border-blue-600' // สถานะ Active (สีฟ้า)
-                                        : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50' // สถานะปกติ
+                                        ? 'bg-blue-600 text-white border-blue-600' 
+                                        : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50' 
                                     }`}
                             >
                                 {number}
