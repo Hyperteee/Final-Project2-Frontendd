@@ -46,18 +46,25 @@ export default function HealthcarePage() {
 
   function handleSelect(state) {
     setSelectedState(state);
-    console.log(state)
-    navigate("/hospitals", { state: { selectedstate: state, showDropdown: false } });
+    console.log(state);
+    navigate("/hospitals", {
+      state: { selectedstate: state, showDropdown: false },
+    });
   }
 
   function handleHospital(hospital) {
     setSelectedHospital(hospital.name);
-    navigate("/queue1", { state: { selectedHospital: hospital.name, showDropdown: false } });
+    navigate("/queue1", {
+      state: { selectedHospital: hospital.name, showDropdown: false },
+    });
   }
 
   useEffect(() => {
     function closedropdown(event) {
-      if (searchSection.current && !searchSection.current.contains(event.target)) {
+      if (
+        searchSection.current &&
+        !searchSection.current.contains(event.target)
+      ) {
         setShowDropdown(false);
       }
     }
@@ -66,6 +73,8 @@ export default function HealthcarePage() {
       document.removeEventListener("mousedown", closedropdown);
     };
   }, []);
+
+  const NAVY_BLUE = "#004080";
 
   return (
     <>
@@ -89,61 +98,76 @@ export default function HealthcarePage() {
             </div>
 
             <nav className="d-none d-md-flex align-items-center gap-4 ">
-              <a href="#services" className="text-light text-decoration-none opacity-75 hover-opacity-100">
+              <a
+                href="#services"
+                className="text-light text-decoration-none opacity-75 hover-opacity-100"
+              >
                 บริการ
               </a>
-              <a href="#doctors" className="text-light text-decoration-none opacity-75 hover-opacity-100">
+              <a
+                href="#doctors"
+                className="text-light text-decoration-none opacity-75 hover-opacity-100"
+              >
                 แพทย์
               </a>
-              <a href="#packages" className="text-light text-decoration-none opacity-75 hover-opacity-100">
+              <a
+                href="#packages"
+                className="text-light text-decoration-none opacity-75 hover-opacity-100"
+              >
                 แพ็กเกจ
               </a>
-              <a href="#contact" className="text-light text-decoration-none opacity-75 hover-opacity-100">
+              <a
+                href="#contact"
+                className="text-light text-decoration-none opacity-75 hover-opacity-100"
+              >
                 ติดต่อ
               </a>
             </nav>
 
-            <button className="btn btn-primary px-4 py-2 fw-semibold">เข้าสู่ระบบ</button>
+            <button className="btn btn-primary px-4 py-2 fw-semibold">
+              เข้าสู่ระบบ
+            </button>
           </div>
         </header>
 
         <section
           className="position-relative py-5"
-          style={{ background: "linear-gradient(180deg, #020A1B 0%, #000000 100%)", minHeight: "500px" }}
+          style={{
+            background: "linear-gradient(180deg, #020A1B 0%, #000000 100%)",
+            minHeight: "500px",
+          }}
         >
           <div className="container py-5">
-            <Carousel className="rounded-4 overflow-hidden mb-5">
-              <Carousel.Item>
+            <div className="row align-items-center">
+              {/* ===== Left Text ===== */}
+              <div className="col-lg-5 mb-5 mb-lg-0">
+                <h2 className="Headtext display-4 fw-bold mb-4 text-white">
+                  เลือกจองคิวหมอ
+                  <br />
+                  <span className="SecHead text-primary">ในไม่กี่คลิก</span>
+                </h2>
+
+                <p className="textPro text-white mb-4 lh-lg">
+                  พร้อมระบบแชทบอทประเมินอาการ เบื้องต้น
+                </p>
+              </div>
+
+              {/* ===== Right Image ===== */}
+              <div className="picphone col-lg-6 text-center">
                 <img
-                  className="d-block w-100"
-                  src="./images/smart-healthcare-dashboard.png"
-                  alt="สไลด์ 1"
-                  style={{ height: "500px", objectFit: "cover" }}
+                  src="./images/PhoneHQ.png"
+                  alt="Phone Mockup"
+                  className="img-fluid phone-hero"
                 />
-              </Carousel.Item>
-              <Carousel.Item>
-                <img
-                  className="d-block w-100"
-                  src="./images/col2.jpg"
-                  alt="สไลด์ 2"
-                  style={{ height: "500px", objectFit: "cover" }}
-                />
-              </Carousel.Item>
-              <Carousel.Item>
-                <img
-                  className="d-block w-100"
-                  src="./images/BG-Hospital.jpg"
-                  alt="สไลด์ 3"
-                  style={{ height: "500px", objectFit: "cover" }}
-                />
-              </Carousel.Item>
-            </Carousel>
+              </div>
+            </div>
 
             {/* ===== Hospital Search Bar ===== */}
             <div className="search-row">
               <div className="search-col">
                 <div ref={searchSection} className="search-wrapper">
                   <div className="search-input-container">
+                    {/* search-icon ถูกปรับปรุงใน Home.css ให้ดูเรียบหรู */}
                     <i className="bi bi-search search-icon"></i>
                     <input
                       type="text"
@@ -153,7 +177,17 @@ export default function HealthcarePage() {
                       onChange={(e) => setLetterSearch(e.target.value)}
                       value={letterSearch}
                     />
-                    <Button variant="primary" onClick={() => handleSelect(letterSearch)}>
+                    {/* ใช้ Deep Navy Blue สำหรับปุ่ม */}
+                    <Button
+                      style={{
+                        backgroundColor: NAVY_BLUE,
+                        borderColor: NAVY_BLUE,
+                        color: "white",
+                        // ปรับให้ปุ่มดูทันสมัยขึ้นเล็กน้อย
+                        borderRadius: "0 12px 12px 0",
+                      }}
+                      onClick={() => handleSelect(letterSearch)}
+                    >
                       ค้นหา
                     </Button>
                   </div>
@@ -165,14 +199,19 @@ export default function HealthcarePage() {
                             filteredHospitals.map((hospital, index) => {
                               const name = hospital.name;
                               const search = letterSearch.toLowerCase();
-                              const startIndex = name.toLowerCase().indexOf(search);
+                              const startIndex = name
+                                .toLowerCase()
+                                .indexOf(search);
 
                               let before = name;
                               let match = "";
                               let after = "";
                               if (startIndex !== -1) {
                                 before = name.slice(0, startIndex);
-                                match = name.slice(startIndex, startIndex + search.length);
+                                match = name.slice(
+                                  startIndex,
+                                  startIndex + search.length
+                                );
                                 after = name.slice(startIndex + search.length);
                               }
 
@@ -183,21 +222,31 @@ export default function HealthcarePage() {
                                   className="dropdown-item"
                                 >
                                   โรงพยาบาล{before}
-                                  {match && <span className="highlight">{match}</span>}
-                                  {after} <span className="state-text">({hospital.state})</span>
+                                  {match && (
+                                    <span className="highlight">{match}</span>
+                                  )}
+                                  {after}{" "}
+                                  <span className="state-text">
+                                    ({hospital.state})
+                                  </span>
                                 </li>
                               );
                             })}
                           {filteredStates.map((state, index) => {
                             const search = letterSearch.toLowerCase();
-                            const startIndex = state.toLowerCase().indexOf(search);
+                            const startIndex = state
+                              .toLowerCase()
+                              .indexOf(search);
 
                             let before = state;
                             let match = "";
                             let after = "";
                             if (startIndex !== -1) {
                               before = state.slice(0, startIndex);
-                              match = state.slice(startIndex, startIndex + search.length);
+                              match = state.slice(
+                                startIndex,
+                                startIndex + search.length
+                              );
                               after = state.slice(startIndex + search.length);
                             }
 
@@ -208,29 +257,43 @@ export default function HealthcarePage() {
                                 className="dropdown-item"
                               >
                                 {before}
-                                {match && <span className="highlight">{match}</span>}
+                                {match && (
+                                  <span className="highlight">{match}</span>
+                                )}
                                 {after}
                               </li>
                             );
                           })}
                         </>
-                      )
-                        : filteredStates.map((state, index) => (
+                      ) : (
+                        filteredStates.map((state, index) => (
                           <li
                             key={index}
-                            onClick={() => {handleSelect(state), setSelectedState(state)}}
+                            onClick={() => {
+                              handleSelect(state), setSelectedState(state);
+                            }}
                             className="dropdown-item"
                           >
                             {state}
                           </li>
-                        ))}
+                        ))
+                      )}
                     </ul>
                   )}
-
                 </div>
               </div>
             </div>
-
+            <div className="d-flex justify-content-center mt-4">
+              <button className="btn btn-primary btn-lg px-5 py-3 shadow mx-2">
+                เริ่มสนทนา
+              </button>
+              <button className="btn btn-primary btn-lg px-5 py-3 shadow mx-2">
+                เริ่มสนทนา
+              </button>
+              <button className="btn btn-primary btn-lg px-5 py-3 shadow mx-2">
+                เริ่มสนทนา
+              </button>
+            </div>
           </div>
           <div
             className="position-absolute rounded-circle"
@@ -275,7 +338,7 @@ export default function HealthcarePage() {
         id="doctors"
         className=""
         style={{
-          background: "linear-gradient(135deg, #eff6ff 0%, #ffffff 100%)",
+          background: "linear-gradient(135deg, #ffffffff 0%, #ffffff 100%)",
         }}
       >
         <div className="container py-4">
@@ -619,117 +682,102 @@ export default function HealthcarePage() {
         </div>
       </section>
 
-      <div class="container">
-        <footer class="row row-cols-5 py-5 my-5 border-top">
-          <div class="col">
-            <a
-              href="/"
-              class="d-flex align-items-center mb-3 link-dark text-decoration-none"
-            >
-              <svg class="bi me-2" width="40" height="32">
-                <use xlink:href="#bootstrap" />
-              </svg>
-            </a>
-            <p class="text-muted">&copy; 2021</p>
+      <div>
+        <footer
+          id="contact"
+          className="custom-footer py-5"
+          style={{ backgroundColor: "rgba(0, 0, 0, 1)" }}
+        >
+          <div className="row mb-5 ms-5 me-5">
+            <div className="col-12 col-lg-4 mb-4 mb-lg-0">
+              <div className="d-flex align-items-center mb-4">
+                <span className="h3 fw-bold text-white mb-0">HFU</span>
+              </div>
+              <p className="text-light small opacity-75 mb-4">
+                Health Queue Management System
+              </p>
+
+              <h5 className="fw-bold fs-5 mb-3">Contact</h5>
+              <ul className="list-unstyled small contact-list">
+                <li className="d-flex align-items-start mb-2">
+                  <i className="bi bi-geo-alt-fill"></i>
+                  <p className="mb-0">
+                    123 Bangkhen, Sripatum, Bangkok, Thailand 10110
+                  </p>
+                </li>
+                <li className="d-flex align-items-center mb-2">
+                  <i className="bi bi-telephone-fill"></i>
+                  <a href="tel:+6621234567">(66) 9 999 9999</a>
+                </li>
+                <li className="d-flex align-items-center">
+                  <i className="bi bi-envelope-fill"></i>
+                  <a href="mailto:support@hfu.co">support@hfu.co.th</a>
+                </li>
+              </ul>
+            </div>
+
+            <div className="col-6 col-md-4 col-lg-2">
+              <h4 className="fw-bold fs-5 mb-4">Products</h4>
+              <ul className="list-unstyled space-y-3">
+                <li>
+                  <a href="#">Queue Management</a>
+                </li>
+                <li>
+                  <a href="#">Appointment System</a>
+                </li>
+                <li>
+                  <a href="#">Analytics Dashboard</a>
+                </li>
+                <li>
+                  <a href="#">Mobile App</a>
+                </li>
+              </ul>
+            </div>
+
+            <div className="col-6 col-md-4 col-lg-2">
+              <h4 className="fw-bold fs-5 mb-4">Company</h4>
+              <ul className="list-unstyled space-y-3">
+                <li>
+                  <a href="#">About Us</a>
+                </li>
+                <li>
+                  <a href="#">Careers</a>
+                </li>
+                <li>
+                  <a href="#">Blog & News</a>
+                </li>
+                <li>
+                  <a href="#">Our Vision</a>
+                </li>
+              </ul>
+            </div>
+
+            <div className="col-12 col-md-4 col-lg-4 mt-4 mt-md-0">
+              <h4 className="fw-bold fs-5 mb-4">Support & Legal</h4>
+              <ul className="list-unstyled space-y-3">
+                <li>
+                  <a href="#">Help Center (FAQ)</a>
+                </li>
+                <li>
+                  <a href="#">API Documentation</a>
+                </li>
+                <li>
+                  <a href="#">Terms of Service</a>
+                </li>
+                <li>
+                  <a href="#">Privacy Policy</a>
+                </li>
+              </ul>
+            </div>
           </div>
 
-          <div class="col"></div>
-
-          <div class="col">
-            <h5>Section</h5>
-            <ul class="nav flex-column">
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
-                  Home
-                </a>
-              </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
-                  Features
-                </a>
-              </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
-                  Pricing
-                </a>
-              </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
-                  FAQs
-                </a>
-              </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
-                  About
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div class="col">
-            <h5>Section</h5>
-            <ul class="nav flex-column">
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
-                  Home
-                </a>
-              </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
-                  Features
-                </a>
-              </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
-                  Pricing
-                </a>
-              </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
-                  FAQs
-                </a>
-              </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
-                  About
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div class="col">
-            <h5>Section</h5>
-            <ul class="nav flex-column">
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
-                  Home
-                </a>
-              </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
-                  Features
-                </a>
-              </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
-                  Pricing
-                </a>
-              </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
-                  FAQs
-                </a>
-              </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
-                  About
-                </a>
-              </li>
-            </ul>
+          <div className="border-top border-secondary-subtle pt-4 mt-4 d-flex flex-column flex-md-row justify-content-between align-items-center">
+            <p className="text-light opacity-50 small mb-3 mb-md-0">
+              &copy; 2025 HFU Healthcare Technologies. All rights reserved.
+            </p>
           </div>
         </footer>
       </div>
-
     </>
   );
 }

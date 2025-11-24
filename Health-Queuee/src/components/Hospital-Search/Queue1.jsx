@@ -382,13 +382,13 @@ function Queue1() {
           }}
         />
       </div>
-
+      
       <footer
         id="contact"
         className="custom-footer py-5"
         style={{ backgroundColor: "rgb(2, 10, 27)" }}
       >
-        <div className="row mb-5">
+        <div className="row mb-5 ms-5 me-5">
 
           <div className="col-12 col-lg-4 mb-4 mb-lg-0">
             <div className="d-flex align-items-center mb-4">
