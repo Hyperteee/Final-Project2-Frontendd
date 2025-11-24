@@ -21,6 +21,8 @@ import { UserAppointmentProvider } from "./data/context/appointment";
 import Testdata from "./components/Hospital-Search/testdata";
 import Profile from "./Profile-User/Profile";
 import ProfileBook from "./Profile-User/Profile-book";
+import Login2 from "./Login-Pages/Login2";
+import RegisterPage from "./Login-Pages/Register-User";
 // import Postpone from "./components/Hospital-Search/postpone";
 
 function App() {
@@ -32,7 +34,8 @@ function App() {
           <Route path="/" element={<HealthcarePage />} />
           <Route path="hospitals" element={<Listsearch />} />
           <Route path="queue1" element={<Queue1 />} />
-          <Route path="login" element={<LoginPage />} />
+          <Route path="login" element={<Login2 />} />
+          <Route path="register" element={<RegisterPage />} />
           <Route path="queue2" element={<Queue2 />} />
           <Route path="queue3" element={<Queue3 />} />
           <Route path="queue4" element={<Queue4 />} />
