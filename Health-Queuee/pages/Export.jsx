@@ -1,13 +1,14 @@
 import React, { useState, useMemo, useEffect, useRef, useContext } from "react";
 import {
-  Search, FileDown, CheckCircle2, FileSpreadsheet, Filter, MapPin, Building2, X, 
+  Search, FileDown, CheckCircle2, FileSpreadsheet, Filter, MapPin, Building2, X,
   ChevronDown, FileText, Paperclip, AlertCircle, AlertTriangle,
   Calendar as CalendarIcon, ChevronLeft, ChevronRight
 } from "lucide-react";
 import "./Export.css";
 import hospitalData from "../src/data/listhospital";
 import { UserAppointment } from "../src/data/context/appointment";
-
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 // --- Helper: Highlight Text ---
 const HighlightText = ({ text, highlight }) => {
   if (!highlight) return <span>{text}</span>;
@@ -69,7 +70,7 @@ const CustomDatePicker = ({ value, onChange, placeholder = "เลือกว�
 
   const daysInMonth = getDaysInMonth(currentDate.getFullYear(), currentDate.getMonth());
   const firstDay = getFirstDayOfMonth(currentDate.getFullYear(), currentDate.getMonth());
-  
+
   const days = [];
   for (let i = 0; i < firstDay; i++) days.push(null);
   for (let i = 1; i <= daysInMonth; i++) days.push(i);
@@ -78,7 +79,7 @@ const CustomDatePicker = ({ value, onChange, placeholder = "เลือกว�
 
   return (
     <div className="position-relative" ref={containerRef} style={{ width: '100%' }}>
-      <div 
+      <div
         className="form-control d-flex align-items-center justify-content-between cursor-pointer bg-white"
         onClick={() => setIsOpen(!isOpen)}
         style={{ cursor: 'pointer' }}
@@ -90,7 +91,7 @@ const CustomDatePicker = ({ value, onChange, placeholder = "เลือกว�
       </div>
 
       {isOpen && (
-        <div 
+        <div
           style={{
             position: 'absolute',
             top: '100%',
@@ -116,18 +117,18 @@ const CustomDatePicker = ({ value, onChange, placeholder = "เลือกว�
               <ChevronRight size={20} />
             </button>
           </div>
-          
+
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '5px', marginBottom: '10px' }}>
             {thaiDaysShort.map(d => <div key={d} className="text-center text-muted small fw-bold">{d}</div>)}
           </div>
-          
+
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '5px' }}>
             {days.map((day, index) => {
               if (!day) return <div key={index}></div>;
-              
+
               const isSelected = value && new Date(value).getDate() === day && new Date(value).getMonth() === currentDate.getMonth() && new Date(value).getFullYear() === currentDate.getFullYear();
               const isToday = new Date().getDate() === day && new Date().getMonth() === currentDate.getMonth() && new Date().getFullYear() === currentDate.getFullYear();
-              
+
               // Logic เช็คจุด Event
               const dateObj = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
               const offset = dateObj.getTimezoneOffset();
@@ -136,8 +137,8 @@ const CustomDatePicker = ({ value, onChange, placeholder = "เลือกว�
               const hasEvent = eventCount > 0;
 
               return (
-                <div 
-                  key={index} 
+                <div
+                  key={index}
                   onClick={(e) => { e.stopPropagation(); handleDateClick(day); }}
                   style={{
                     height: '35px',
@@ -155,19 +156,19 @@ const CustomDatePicker = ({ value, onChange, placeholder = "เลือกว�
                     position: 'relative',
                     transition: 'all 0.2s'
                   }}
-                  onMouseEnter={(e) => { if(!isSelected) { e.currentTarget.style.backgroundColor = '#f0f8ff'; e.currentTarget.style.color = '#0d6efd'; } }}
-                  onMouseLeave={(e) => { if(!isSelected) { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = isToday ? '#0d6efd' : '#333'; } }}
+                  onMouseEnter={(e) => { if (!isSelected) { e.currentTarget.style.backgroundColor = '#f0f8ff'; e.currentTarget.style.color = '#0d6efd'; } }}
+                  onMouseLeave={(e) => { if (!isSelected) { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = isToday ? '#0d6efd' : '#333'; } }}
                   title={hasEvent ? `มี ${eventCount} รายการ` : ''}
                 >
                   <span>{day}</span>
                   {/* จุดสีส้มแสดงจำนวนงาน */}
                   {hasEvent && (
                     <div style={{
-                        width: '4px',
-                        height: '4px',
-                        backgroundColor: isSelected ? 'white' : '#fd7e14',
-                        borderRadius: '50%',
-                        marginTop: '2px'
+                      width: '4px',
+                      height: '4px',
+                      backgroundColor: isSelected ? 'white' : '#fd7e14',
+                      borderRadius: '50%',
+                      marginTop: '2px'
                     }}></div>
                   )}
                 </div>
@@ -204,10 +205,10 @@ const CustomModal = ({ isOpen, type, title, content, onConfirm, onCancel, confir
     <div className="custom-modal-overlay">
       <div className="custom-modal-content shadow-lg">
         <div className={`custom-modal-header ${getHeaderStyle()}`}>
-            <div className="d-flex align-items-center gap-2">
-                {getIcon()}
-                <h5 className="mb-0 fw-bold">{title}</h5>
-            </div>
+          <div className="d-flex align-items-center gap-2">
+            {getIcon()}
+            <h5 className="mb-0 fw-bold">{title}</h5>
+          </div>
           <button onClick={onCancel} className={`btn-close ${type === 'success' ? 'btn-close-white' : ''}`} />
         </div>
         <div className="custom-modal-body p-4 text-center">
@@ -219,8 +220,8 @@ const CustomModal = ({ isOpen, type, title, content, onConfirm, onCancel, confir
               {cancelText}
             </button>
           )}
-          <button 
-            className={`btn ${type === 'success' ? 'btn-success' : type === 'warning' ? 'btn-warning' : 'btn-primary'} px-4`} 
+          <button
+            className={`btn ${type === 'success' ? 'btn-success' : type === 'warning' ? 'btn-warning' : 'btn-primary'} px-4`}
             onClick={onConfirm}
           >
             {confirmText}
@@ -329,7 +330,7 @@ const SearchableSelect = ({ options, value, onChange, placeholder, icon: Icon, d
 // --- Main Component: AdminExport ---
 export default function AdminExport() {
   const { appointments, createBatchExport } = useContext(UserAppointment);
-  
+
   const [selectedProvince, setSelectedProvince] = useState("");
   const [selectedHospital, setSelectedHospital] = useState("");
   const [startDate, setStartDate] = useState("");
@@ -353,7 +354,7 @@ export default function AdminExport() {
         bookingCount: count
       };
     }),
-  [appointments]);
+    [appointments]);
 
   const provinces = useMemo(() => {
     const provinceCounts = {};
@@ -367,10 +368,10 @@ export default function AdminExport() {
       value: p,
       bookingCount: provinceCounts[p]
     })).sort((a, b) => {
-       if (b.bookingCount !== a.bookingCount) {
-           return b.bookingCount - a.bookingCount;
-       }
-       return a.label.localeCompare(b.label, "th");
+      if (b.bookingCount !== a.bookingCount) {
+        return b.bookingCount - a.bookingCount;
+      }
+      return a.label.localeCompare(b.label, "th");
     });
   }, [allHospitals]);
 
@@ -379,12 +380,12 @@ export default function AdminExport() {
     if (selectedProvince) {
       filtered = filtered.filter(h => h.province === selectedProvince);
     }
-    
+
     return filtered.sort((a, b) => {
-        if (b.bookingCount !== a.bookingCount) {
-            return b.bookingCount - a.bookingCount;
-        }
-        return a.name.localeCompare(b.name, "th");
+      if (b.bookingCount !== a.bookingCount) {
+        return b.bookingCount - a.bookingCount;
+      }
+      return a.name.localeCompare(b.name, "th");
     });
   }, [selectedProvince, allHospitals]);
 
@@ -400,8 +401,8 @@ export default function AdminExport() {
 
       // 3. ถ้าเลือกแค่จังหวัด (แต่ไม่เลือก รพ.) กรองตามจังหวัด
       if (selectedProvince && !selectedHospital) {
-         const hosp = allHospitals.find(h => String(h.id) === String(appt.hospitalId));
-         if (!hosp || hosp.province !== selectedProvince) return;
+        const hosp = allHospitals.find(h => String(h.id) === String(appt.hospitalId));
+        if (!hosp || hosp.province !== selectedProvince) return;
       }
 
       // 4. นับจำนวน
@@ -419,19 +420,19 @@ export default function AdminExport() {
     const result = appointments.filter(appt => {
       if (appt.status !== "NEW") return false;
       if (selectedHospital && String(appt.hospitalId) !== String(selectedHospital)) return false;
-      
+
       const itemDate = new Date(appt.priority1Date);
       if (startDate) {
-          const start = new Date(startDate);
-          start.setHours(0, 0, 0, 0);
-          itemDate.setHours(0, 0, 0, 0);
-          if (itemDate < start) return false;
+        const start = new Date(startDate);
+        start.setHours(0, 0, 0, 0);
+        itemDate.setHours(0, 0, 0, 0);
+        if (itemDate < start) return false;
       }
       if (endDate) {
-          const end = new Date(endDate);
-          end.setHours(23, 59, 59, 999);
-          itemDate.setHours(0, 0, 0, 0);
-          if (itemDate > end) return false;
+        const end = new Date(endDate);
+        end.setHours(23, 59, 59, 999);
+        itemDate.setHours(0, 0, 0, 0);
+        if (itemDate > end) return false;
       }
       return true;
     });
@@ -467,13 +468,129 @@ export default function AdminExport() {
     });
   };
 
-  const handleConfirmExport = () => {
-    const idsToExport = filteredAppointments.map((appt) => appt.id);
+  // const handleConfirmExport = () => {
+  //   const idsToExport = filteredAppointments.map((appt) => appt.id);
+  //   const newBatchId = createBatchExport(idsToExport);
+
+  //   setModalState({
+  //     isOpen: true,
+  //     type: 'success',
+  //     batchId: newBatchId
+  //   });
+  // // };
+  // const handleConfirmExport = () => {
+  //   const idsToExport = filteredAppointments.map((appt) => appt.id);
+  //   const selectedItems = appointments.filter(app => idsToExport.includes(app.id));
+  //   if (selectedItems.length === 0) return;
+
+  //   // สร้างข้อมูลสำหรับ Excel
+  //   const excelData = selectedItems.map(appt => ({
+  //     "ชื่อ-นามสกุล": appt.name,
+  //     "วันเกิด": appt.birthDate || "", // ถ้ามีข้อมูล
+  //     "อายุ": appt.age || "",
+  //     "บัตรประชาชน": appt.idCard || "",
+  //     "อาการ": appt.symptom,
+  //     "ไฟล์แนบ": appt.files.map(f => f.name).join(", "),
+  //     "วันจองนัดหลัก": appt.priority1Date || "",
+  //     "วันจองนัดรอง": appt.priority2Date || "",
+  //     "เหตุผลที่ไม่ได้จอง": "", // ให้พยาบาลกรอก
+  //     "วันนัดแนะนำ": "" // ให้พยาบาลกรอก
+  //   }));
+
+  //   // สร้าง workbook และ worksheet
+  //   const ws = XLSX.utils.json_to_sheet(excelData, { skipHeader: false });
+  //   ws['!cols'] = [
+  //     { wch: 20 }, // ชื่อ-นามสกุล
+  //     { wch: 15 }, // วันเกิด
+  //     { wch: 5 },  // อายุ
+  //     { wch: 15 }, // บัตรประชาชน
+  //     { wch: 30 }, // อาการ
+  //     { wch: 30 }, // ไฟล์แนบ
+  //     { wch: 15 }, // วันจองนัดหลัก
+  //     { wch: 15 }, // วันจองนัดรอง
+  //     { wch: 25 }, // เหตุผลที่ไม่ได้จอง
+  //     { wch: 20 }  // วันนัดแนะนำ
+  //   ];
+  //   const wb = XLSX.utils.book_new();
+  //   XLSX.utils.book_append_sheet(wb, ws, "BatchExport");
+
+  //   // สร้างชื่อไฟล์
+  //   const now = new Date();
+  //   const filename = `BatchExport-${now.toISOString().slice(0, 10)}.xlsx`;
+
+  //   // บันทึกไฟล์
+  //   XLSX.writeFile(wb, filename);
+
+  //   // อัปเดต status appointments เหมือนเดิม
+  //   const newBatchId = createBatchExport(idsToExport);
+  //   setModalState({
+  //     isOpen: true,
+  //     type: "success",
+  //     batchId: newBatchId
+  //   });
+  // };
+
+const handleConfirmExport = () => {
+    // ❌ ลบส่วนนี้ออก
+    // const idsToExport = filteredAppointments.map((appt) => appt.id);
+    // const selectedItems = appointments.filter(app => idsToExport.includes(app.id));
+
+    // ✅ ใช้อันนี้แทน: ใช้ข้อมูลที่กรองและเรียงลำดับมาแล้วจากหน้าเว็บโดยตรง
+    const selectedItems = filteredAppointments;
+
+    if (selectedItems.length === 0) return;
+
+    // --- ส่วนสร้าง Excel (เหมือนเดิม + เพิ่ม Safety check) ---
+    const excelData = selectedItems.map((appt, index) => ({
+      "ลำดับ": index + 1, // เพิ่มลำดับให้ตรงกับตาราง
+      "ชื่อ-นามสกุล": appt.name,
+      "วันเกิด": appt.birthDate || "", 
+      "อายุ": appt.age || "",
+      "บัตรประชาชน": appt.idCard || "",
+      "อาการ": appt.symptom || "-",
+      "ไฟล์แนบ": (appt.files || []).map(f => f.name).join(", "),
+      // จัด Format วันที่ให้เรียงสวยและอ่านง่าย
+      "วันจองนัดหลัก": appt.priority1Date ? new Date(appt.priority1Date).toLocaleDateString('th-TH') : "",
+      "วันจองนัดรอง": appt.priority2Date ? new Date(appt.priority2Date).toLocaleDateString('th-TH') : "",
+      "เหตุผลที่ไม่ได้จอง": "", 
+      "วันนัดแนะนำ": "" 
+    }));
+
+    // สร้าง workbook และ worksheet
+    const ws = XLSX.utils.json_to_sheet(excelData, { skipHeader: false });
+    
+    // จัดความกว้างคอลัมน์
+    ws['!cols'] = [
+      { wch: 10 }, // ลำดับ
+      { wch: 20 }, // ชื่อ-นามสกุล
+      { wch: 15 }, // วันเกิด
+      { wch: 5 },  // อายุ
+      { wch: 15 }, // บัตรประชาชน
+      { wch: 30 }, // อาการ
+      { wch: 30 }, // ไฟล์แนบ
+      { wch: 15 }, // วันจองนัดหลัก
+      { wch: 15 }, // วันจองนัดรอง
+      { wch: 25 }, // เหตุผลที่ไม่ได้จอง
+      { wch: 20 }  // วันนัดแนะนำ
+    ];
+
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "BatchExport");
+
+    // สร้างชื่อไฟล์
+    const now = new Date();
+    const filename = `BatchExport-${now.toISOString().slice(0, 10)}.xlsx`;
+
+    // บันทึกไฟล์
+    XLSX.writeFile(wb, filename);
+
+    // อัปเดต status appointments (ใช้ logic เดิมในการดึง ID ไปอัปเดต)
+    const idsToExport = selectedItems.map(appt => appt.id); // ดึง ID จากตัวที่เรียงแล้ว
     const newBatchId = createBatchExport(idsToExport);
     
     setModalState({
       isOpen: true,
-      type: 'success',
+      type: "success",
       batchId: newBatchId
     });
   };
@@ -490,31 +607,30 @@ export default function AdminExport() {
 
   return (
     <div className="export-container">
-      {/* --- Modal Injection --- */}
-      <CustomModal 
+      <CustomModal
         isOpen={modalState.isOpen}
         type={modalState.type}
         title={
-            modalState.type === 'warning' ? "แจ้งเตือน" :
-            modalState.type === 'confirm' ? "ยืนยันการส่งออกข้อมูล" : 
-            "ดำเนินการสำเร็จ"
+          modalState.type === 'warning' ? "แจ้งเตือน" :
+            modalState.type === 'confirm' ? "ยืนยันการส่งออกข้อมูล" :
+              "ดำเนินการสำเร็จ"
         }
         content={
-            modalState.type === 'warning' ? (
-                <div>
-                   <p className="mb-0 text-muted">กรุณาเลือก <strong>โรงพยาบาล</strong> ก่อนกดค้นหารายการ</p>
-                </div>
-            ) : modalState.type === 'confirm' ? (
-                <div>
-                   <p className="mb-2">คุณต้องการสร้าง Batch สำหรับรายการจำนวน <strong>{filteredAppointments.length}</strong> รายการ ใช่หรือไม่?</p>
-                   <small className="text-muted">(รายการเหล่านี้จะถูกย้ายไปหน้า "ติดตามผล" ทันที)</small>
-                </div>
-            ) : (
-                <div>
-                    <h4 className="text-success fw-bold mb-3">สร้าง Batch: {modalState.batchId} สำเร็จ!</h4>
-                    <p>รายการถูกย้ายไปสถานะ "รอผลตอบกลับ" เรียบร้อยแล้ว</p>
-                </div>
-            )
+          modalState.type === 'warning' ? (
+            <div>
+              <p className="mb-0 text-muted">กรุณาเลือก <strong>โรงพยาบาล</strong> ก่อนกดค้นหารายการ</p>
+            </div>
+          ) : modalState.type === 'confirm' ? (
+            <div>
+              <p className="mb-2">คุณต้องการสร้าง Batch สำหรับรายการจำนวน <strong>{filteredAppointments.length}</strong> รายการ ใช่หรือไม่?</p>
+              <small className="text-muted">(รายการเหล่านี้จะถูกย้ายไปหน้า "ติดตามผล" ทันที)</small>
+            </div>
+          ) : (
+            <div>
+              <h4 className="text-success fw-bold mb-3">สร้าง Batch: {modalState.batchId} สำเร็จ!</h4>
+              <p>รายการถูกย้ายไปสถานะ "รอผลตอบกลับ" เรียบร้อยแล้ว</p>
+            </div>
+          )
         }
         confirmText={modalState.type === 'confirm' ? "ยืนยัน, สร้าง Batch" : "ตกลง"}
         cancelText="ยกเลิก"
@@ -576,36 +692,36 @@ export default function AdminExport() {
             <div className="d-flex gap-2 align-items-center">
               {/* 🔥 ใช้ CustomDatePicker + ส่ง dailyCounts เข้าไป */}
               <div style={{ flex: 1 }}>
-                <CustomDatePicker 
-                  value={startDate} 
-                  onChange={setStartDate} 
-                  placeholder="วันเริ่มต้น" 
+                <CustomDatePicker
+                  value={startDate}
+                  onChange={setStartDate}
+                  placeholder="วันเริ่มต้น"
                   eventCounts={dailyCounts}
                 />
               </div>
               <span className="text-muted">-</span>
               <div style={{ flex: 1 }}>
-                <CustomDatePicker 
-                  value={endDate} 
-                  onChange={setEndDate} 
-                  placeholder="วันสิ้นสุด" 
+                <CustomDatePicker
+                  value={endDate}
+                  onChange={setEndDate}
+                  placeholder="วันสิ้นสุด"
                   eventCounts={dailyCounts}
                 />
               </div>
             </div>
           </div>
           <div className="d-flex gap-2">
-             <button 
-                className="btn btn-light border px-3" 
-                onClick={() => {
-                    setSelectedHospital("");
-                    setSelectedProvince("");
-                    setStartDate("");
-                    setEndDate("");
-                    setIsSearched(false);
-                }}
+            <button
+              className="btn btn-light border px-3"
+              onClick={() => {
+                setSelectedHospital("");
+                setSelectedProvince("");
+                setStartDate("");
+                setEndDate("");
+                setIsSearched(false);
+              }}
             >
-                ล้างค่า
+              ล้างค่า
             </button>
             <button className="btn-search" onClick={handleSearch}>
               <Search size={18} className="me-2" /> ค้นหารายการ

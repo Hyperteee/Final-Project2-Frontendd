@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, 
   FileUp,        // สำหรับ Export
@@ -11,6 +11,7 @@ import {
 import './AdminNavbar.css';
 
 const AdminNavbar = () => {
+    const navigate = useNavigate()
     const location = useLocation(); 
 
     // ฟังก์ชันเช็ค Active Menu เพื่อเปลี่ยนสีพื้นหลัง
@@ -65,7 +66,7 @@ const AdminNavbar = () => {
             </div>
 
             <div className="sidebar-footer">
-                <button className="logout-btn">
+                <button className="logout-btn" onClick={()=>navigate("/profilebook")}>
                     <LogOut size={18} />
                     <span>ออกจากระบบ</span>
                 </button>

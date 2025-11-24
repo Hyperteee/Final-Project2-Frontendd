@@ -106,7 +106,7 @@ const Queue4 = () => {
     };
 
     const handleFinished = () => {
-        navigate("/profilebook");
+        navigate("/admin");
     };
 
     return (
