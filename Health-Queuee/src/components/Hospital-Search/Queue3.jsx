@@ -18,9 +18,6 @@ const thaiDays = [
   "ศุกร์",
   "เสาร์",
 ];
-import Button from "react-bootstrap/esm/Button";
-import Calendar from "react-calendar";
-import Modal from "react-bootstrap/Modal";
 
 const Queue3 = () => {
   const { state } = useLocation();

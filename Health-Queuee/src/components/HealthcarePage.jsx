@@ -76,6 +76,14 @@ export default function HealthcarePage() {
 
   const NAVY_BLUE = "#004080";
 
+  const DOCTORS_PER_SLIDE = 4;
+  const allDoctors = useMemo(() => getTopDoctors(12), []);
+  const totalSlides = Math.ceil(allDoctors.length / DOCTORS_PER_SLIDE);
+  const currentDoctors = allDoctors.slice(
+  currentOrgSlide * DOCTORS_PER_SLIDE,
+  (currentOrgSlide + 1) * DOCTORS_PER_SLIDE
+  );
+
   return (
     <>
       <div style={{ backgroundColor: "#f8f9fa" }}>
