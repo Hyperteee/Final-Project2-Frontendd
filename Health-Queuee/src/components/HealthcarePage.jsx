@@ -9,7 +9,8 @@ import "./Home.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { getTopDoctors } from "../utils/doctorUtils";
 import resolveAssetPath from "../utils/assetPath";
-import handlePrevDoctors from "../utils/handlePrevDoctors";
+
+
 export default function HealthcarePage() {
   const [currentOrgSlide, setCurrentOrgSlide] = useState(0);
   const [currentPackageSlide, setCurrentPackageSlide] = useState(0);
@@ -120,6 +121,10 @@ export default function HealthcarePage() {
       .slice(0, 2)
       .map((token) => token.charAt(0).toUpperCase());
     return tokens.join("") || "DR";
+  };
+
+    const handlePrevDoctors = () => {
+    setCurrentOrgSlide((prev) => (prev === 0 ? totalSlides - 1 : prev - 1));
   };
 
   return (
