@@ -3,7 +3,6 @@ import React, { createContext, useState, useEffect } from "react";
 export const UserAppointment = createContext();
 
 export const UserAppointmentProvider = ({ children }) => {
-  // --- 1. ข้อมูลนัดหมาย (Appointments) ---
   const [appointments, setAppointments] = useState([
     {
       id: "BK-1701001",
@@ -21,7 +20,7 @@ export const UserAppointmentProvider = ({ children }) => {
       priority2Date: "2025-12-05",
       status: "NEW",
       createdAt: "2025-11-20T09:00:00Z"
-    }, //////////////// 20-11 9โมง
+    }, 
     {
       id: "BK-1701002",
       userId: "15418797",
@@ -38,7 +37,7 @@ export const UserAppointmentProvider = ({ children }) => {
       priority2Date: "2025-12-05",
       status: "NEW",
       createdAt: "2025-11-20T10:00:00Z"
-    },    /////////////// 20-11 10โมง
+    }, 
     {
       id: "BK-1701003",
       userId: "47895497",
@@ -91,7 +90,6 @@ export const UserAppointmentProvider = ({ children }) => {
     const now = new Date();
     const timeStr = now.toTimeString().slice(0, 5).replace(/:/g, "");
 
-    //สร้าง ID
     const newBatchId = `BATCH-${hospId}-${startDate}-${endDate}-${timeStr}`;
     const exportedDate = now.toISOString();
 

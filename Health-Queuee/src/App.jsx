@@ -25,6 +25,7 @@ import Adminlayout from "../Layout/Adminlayout"
 import AdminDashboard from "../pages/Dashboard";
 import AdminExport from "../pages/Export";
 import AdminTracking from "../pages/Tracking";
+import AdminDataManagement from "../pages/Manage";
 function App() {
   return (
     <HospitalScheduleProvider>
@@ -46,6 +47,7 @@ function App() {
               <Route path="/admin/dashboard" element={<AdminDashboard/>} />
               <Route path="/admin/tracking" element={<AdminTracking/>} />
               <Route path="/admin" element={<AdminDashboard/>} />
+              <Route path="/admin/resources" element={<AdminDataManagement />} />
             </Route>
           </Routes>
 

@@ -8,8 +8,7 @@ import "./Dashboard.css";
 import { UserAppointment } from "../src/data/context/appointment";
 
 export default function AdminDashboard() {
-  const navigate = useNavigate();
-  // ดึงข้อมูลจาก Context
+  const navigate = useNavigate()
   const { appointments, batches } = useContext(UserAppointment);
 
   const stats = useMemo(() => {
@@ -42,7 +41,6 @@ export default function AdminDashboard() {
     return `${day}/${month}/${year}`;
   };
 
-  // Recent Batches (ตัดมา 5 อันดับแรก)
   const recentBatches = batches.slice(0, 5);
 
   const notifications = [
@@ -62,7 +60,6 @@ export default function AdminDashboard() {
   return (
     <div className="admin-content-wrapper">
 
-      {/* --- Header --- */}
       <header className="dashboard-header">
         <div>
           <h1 className="page-title">ภาพรวมระบบ</h1>
@@ -73,7 +70,6 @@ export default function AdminDashboard() {
         </div>
       </header>
 
-      {/* --- Stats Grid --- */}
       <div className="stats-grid">
         <div className="stat-card" onClick={() => navigate('/admin/export')}>
           <div className="stat-icon-box bg-blue"><FileUp size={24} /></div>

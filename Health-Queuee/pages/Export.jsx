@@ -1,15 +1,17 @@
+
 import React, { useState, useMemo, useEffect, useRef, useContext } from "react";
 import {
   Search, FileDown, CheckCircle2, FileSpreadsheet, Filter, MapPin, Building2, X,
   ChevronDown, FileText, Paperclip, AlertCircle, AlertTriangle,
-  Calendar as CalendarIcon, ChevronLeft, ChevronRight
+  Calendar as CalendarIcon, ChevronLeft, ChevronRight,
+  Mail // <--- Icon สำหรับปุ่มส่งเมล
 } from "lucide-react";
 import "./Export.css";
 import hospitalData from "../src/data/listhospital";
 import { UserAppointment } from "../src/data/context/appointment";
 import * as XLSX from "xlsx";
-import { saveAs } from "file-saver";
-// --- Helper: Highlight Text ---
+
+// --- Helper Component: Highlight Text ---
 const HighlightText = ({ text, highlight }) => {
   if (!highlight) return <span>{text}</span>;
   const parts = text.split(new RegExp(`(${highlight})`, "gi"));
@@ -26,7 +28,7 @@ const HighlightText = ({ text, highlight }) => {
   );
 };
 
-// --- Helper: Custom Date Picker (Updated with Event Counts) ---
+// --- Helper Component: DatePicker ---
 const CustomDatePicker = ({ value, onChange, placeholder = "เลือกวันที่...", eventCounts = {} }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentDate, setCurrentDate] = useState(value ? new Date(value) : new Date());
@@ -42,7 +44,6 @@ const CustomDatePicker = ({ value, onChange, placeholder = "เลือกว�
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // อัปเดตปฏิทินเมื่อค่า value เปลี่ยน
   useEffect(() => {
     if (value) {
       setCurrentDate(new Date(value));
@@ -99,7 +100,7 @@ const CustomDatePicker = ({ value, onChange, placeholder = "เลือกว�
             zIndex: 9999,
             width: '280px',
             marginTop: '5px',
-            backgroundColor: '#ffffff', // พื้นหลังขาว
+            backgroundColor: '#ffffff',
             border: '1px solid #dee2e6',
             boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
             borderRadius: '8px',
@@ -129,7 +130,6 @@ const CustomDatePicker = ({ value, onChange, placeholder = "เลือกว�
               const isSelected = value && new Date(value).getDate() === day && new Date(value).getMonth() === currentDate.getMonth() && new Date(value).getFullYear() === currentDate.getFullYear();
               const isToday = new Date().getDate() === day && new Date().getMonth() === currentDate.getMonth() && new Date().getFullYear() === currentDate.getFullYear();
 
-              // Logic เช็คจุด Event
               const dateObj = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
               const offset = dateObj.getTimezoneOffset();
               const localDateKey = new Date(dateObj.getTime() - (offset * 60 * 1000)).toISOString().split('T')[0];
@@ -161,7 +161,6 @@ const CustomDatePicker = ({ value, onChange, placeholder = "เลือกว�
                   title={hasEvent ? `มี ${eventCount} รายการ` : ''}
                 >
                   <span>{day}</span>
-                  {/* จุดสีส้มแสดงจำนวนงาน */}
                   {hasEvent && (
                     <div style={{
                       width: '4px',
@@ -181,6 +180,7 @@ const CustomDatePicker = ({ value, onChange, placeholder = "เลือกว�
   );
 };
 
+// --- Helper Component: Modal ---
 const CustomModal = ({ isOpen, type, title, content, onConfirm, onCancel, confirmText = "ตกลง", cancelText = "ยกเลิก" }) => {
   if (!isOpen) return null;
 
@@ -336,6 +336,9 @@ export default function AdminExport() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [isSearched, setIsSearched] = useState(false);
+  
+  // [NEW] State สำหรับเก็บว่า ID ไหนส่งอีเมลแล้ว (Checklist)
+  const [sentEmailIds, setSentEmailIds] = useState([]); 
 
   // --- Modal State ---
   const [modalState, setModalState] = useState({
@@ -389,30 +392,24 @@ export default function AdminExport() {
     });
   }, [selectedProvince, allHospitals]);
 
-  // --- 🔥 NEW: Logic นับจำนวนงาน (โดยแยกตาม รพ. ที่เลือก) ---
   const dailyCounts = useMemo(() => {
     const counts = {};
     appointments.forEach(appt => {
-      // 1. ต้องเป็นสถานะ NEW และมีวันนัด
       if (appt.status !== 'NEW' || !appt.priority1Date) return;
 
-      // 2. ถ้ามีการเลือกโรงพยาบาล ต้องกรองให้ตรง
       if (selectedHospital && String(appt.hospitalId) !== String(selectedHospital)) return;
 
-      // 3. ถ้าเลือกแค่จังหวัด (แต่ไม่เลือก รพ.) กรองตามจังหวัด
       if (selectedProvince && !selectedHospital) {
         const hosp = allHospitals.find(h => String(h.id) === String(appt.hospitalId));
         if (!hosp || hosp.province !== selectedProvince) return;
       }
 
-      // 4. นับจำนวน
       const dateKey = new Date(appt.priority1Date).toISOString().split('T')[0];
       counts[dateKey] = (counts[dateKey] || 0) + 1;
     });
     return counts;
   }, [appointments, selectedHospital, selectedProvince, allHospitals]);
 
-  // --- Filter Logic ---
   const filteredAppointments = useMemo(() => {
     if (!isSearched) return [];
     if (!selectedHospital) return [];
@@ -456,6 +453,8 @@ export default function AdminExport() {
       });
       return;
     }
+    // เมื่อกดค้นหาใหม่ ให้ล้างรายการที่เคยติ๊กส่งเมลไว้ด้วย เพื่อความชัวร์ (หรือจะเก็บไว้ก็ได้แล้วแต่ logic)
+    // setSentEmailIds([]);
     setIsSearched(true);
   };
 
@@ -468,126 +467,52 @@ export default function AdminExport() {
     });
   };
 
-  // const handleConfirmExport = () => {
-  //   const idsToExport = filteredAppointments.map((appt) => appt.id);
-  //   const newBatchId = createBatchExport(idsToExport);
+  // --- [NEW] Function for Single Email Action ---
+  const handleSendEmail = (appt) => {
+    // 1. Logic เปลี่ยนสถานะปุ่ม (Visual Feedback)
+    if (!sentEmailIds.includes(appt.id)) {
+      setSentEmailIds(prev => [...prev, appt.id]);
+    }
 
-  //   setModalState({
-  //     isOpen: true,
-  //     type: 'success',
-  //     batchId: newBatchId
-  //   });
-  // // };
-  // const handleConfirmExport = () => {
-  //   const idsToExport = filteredAppointments.map((appt) => appt.id);
-  //   const selectedItems = appointments.filter(app => idsToExport.includes(app.id));
-  //   if (selectedItems.length === 0) return;
+  };
 
-  //   // สร้างข้อมูลสำหรับ Excel
-  //   const excelData = selectedItems.map(appt => ({
-  //     "ชื่อ-นามสกุล": appt.name,
-  //     "วันเกิด": appt.birthDate || "", // ถ้ามีข้อมูล
-  //     "อายุ": appt.age || "",
-  //     "บัตรประชาชน": appt.idCard || "",
-  //     "อาการ": appt.symptom,
-  //     "ไฟล์แนบ": appt.files.map(f => f.name).join(", "),
-  //     "วันจองนัดหลัก": appt.priority1Date || "",
-  //     "วันจองนัดรอง": appt.priority2Date || "",
-  //     "เหตุผลที่ไม่ได้จอง": "", // ให้พยาบาลกรอก
-  //     "วันนัดแนะนำ": "" // ให้พยาบาลกรอก
-  //   }));
 
-  //   // สร้าง workbook และ worksheet
-  //   const ws = XLSX.utils.json_to_sheet(excelData, { skipHeader: false });
-  //   ws['!cols'] = [
-  //     { wch: 20 }, // ชื่อ-นามสกุล
-  //     { wch: 15 }, // วันเกิด
-  //     { wch: 5 },  // อายุ
-  //     { wch: 15 }, // บัตรประชาชน
-  //     { wch: 30 }, // อาการ
-  //     { wch: 30 }, // ไฟล์แนบ
-  //     { wch: 15 }, // วันจองนัดหลัก
-  //     { wch: 15 }, // วันจองนัดรอง
-  //     { wch: 25 }, // เหตุผลที่ไม่ได้จอง
-  //     { wch: 20 }  // วันนัดแนะนำ
-  //   ];
-  //   const wb = XLSX.utils.book_new();
-  //   XLSX.utils.book_append_sheet(wb, ws, "BatchExport");
-
-  //   // สร้างชื่อไฟล์
-  //   const now = new Date();
-  //   const filename = `BatchExport-${now.toISOString().slice(0, 10)}.xlsx`;
-
-  //   // บันทึกไฟล์
-  //   XLSX.writeFile(wb, filename);
-
-  //   // อัปเดต status appointments เหมือนเดิม
-  //   const newBatchId = createBatchExport(idsToExport);
-  //   setModalState({
-  //     isOpen: true,
-  //     type: "success",
-  //     batchId: newBatchId
-  //   });
-  // };
-
-const handleConfirmExport = () => {
-    // ❌ ลบส่วนนี้ออก
-    // const idsToExport = filteredAppointments.map((appt) => appt.id);
-    // const selectedItems = appointments.filter(app => idsToExport.includes(app.id));
-
-    // ✅ ใช้อันนี้แทน: ใช้ข้อมูลที่กรองและเรียงลำดับมาแล้วจากหน้าเว็บโดยตรง
+  const handleConfirmExport = () => {
     const selectedItems = filteredAppointments;
-
     if (selectedItems.length === 0) return;
 
-    // --- ส่วนสร้าง Excel (เหมือนเดิม + เพิ่ม Safety check) ---
+    // เตรียมข้อมูล Excel
     const excelData = selectedItems.map((appt, index) => ({
-      "ลำดับ": index + 1, // เพิ่มลำดับให้ตรงกับตาราง
+      "ลำดับ": index + 1,
       "ชื่อ-นามสกุล": appt.name,
-      "วันเกิด": appt.birthDate || "", 
+      "วันเกิด": appt.birthDate || "",
       "อายุ": appt.age || "",
       "บัตรประชาชน": appt.idCard || "",
       "อาการ": appt.symptom || "-",
       "ไฟล์แนบ": (appt.files || []).map(f => f.name).join(", "),
-      // จัด Format วันที่ให้เรียงสวยและอ่านง่าย
       "วันจองนัดหลัก": appt.priority1Date ? new Date(appt.priority1Date).toLocaleDateString('th-TH') : "",
       "วันจองนัดรอง": appt.priority2Date ? new Date(appt.priority2Date).toLocaleDateString('th-TH') : "",
-      "เหตุผลที่ไม่ได้จอง": "", 
-      "วันนัดแนะนำ": "" 
+      "เหตุผลที่ไม่ได้จอง": "",
+      "วันนัดแนะนำ": ""
     }));
 
-    // สร้าง workbook และ worksheet
     const ws = XLSX.utils.json_to_sheet(excelData, { skipHeader: false });
-    
-    // จัดความกว้างคอลัมน์
     ws['!cols'] = [
-      { wch: 10 }, // ลำดับ
-      { wch: 20 }, // ชื่อ-นามสกุล
-      { wch: 15 }, // วันเกิด
-      { wch: 5 },  // อายุ
-      { wch: 15 }, // บัตรประชาชน
-      { wch: 30 }, // อาการ
-      { wch: 30 }, // ไฟล์แนบ
-      { wch: 15 }, // วันจองนัดหลัก
-      { wch: 15 }, // วันจองนัดรอง
-      { wch: 25 }, // เหตุผลที่ไม่ได้จอง
-      { wch: 20 }  // วันนัดแนะนำ
+      { wch: 10 }, { wch: 20 }, { wch: 15 }, { wch: 5 }, { wch: 15 },
+      { wch: 30 }, { wch: 30 }, { wch: 15 }, { wch: 15 }, { wch: 25 }, { wch: 20 }
     ];
 
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "BatchExport");
 
-    // สร้างชื่อไฟล์
     const now = new Date();
     const filename = `BatchExport-${now.toISOString().slice(0, 10)}.xlsx`;
+    // XLSX.writeFile(wb, filename);
 
-    // บันทึกไฟล์
-    XLSX.writeFile(wb, filename);
-
-    // อัปเดต status appointments (ใช้ logic เดิมในการดึง ID ไปอัปเดต)
-    const idsToExport = selectedItems.map(appt => appt.id); // ดึง ID จากตัวที่เรียงแล้ว
+    // Update DB/Context
+    const idsToExport = selectedItems.map(appt => appt.id);
     const newBatchId = createBatchExport(idsToExport);
-    
+
     setModalState({
       isOpen: true,
       type: "success",
@@ -602,8 +527,13 @@ const handleConfirmExport = () => {
     if (wasSuccess) {
       setIsSearched(false);
       setSelectedHospital("");
+      setSentEmailIds([]); // ล้าง session การส่งเมลหลังจบงาน
     }
   };
+
+
+  const pendingItemsCount = filteredAppointments.filter(appt => !sentEmailIds.includes(appt.id)).length;
+  const isReadyToExport = filteredAppointments.length > 0 && pendingItemsCount === 0;
 
   return (
     <div className="export-container">
@@ -690,7 +620,6 @@ const handleConfirmExport = () => {
           <div className="flex-fill me-3">
             <label className="text-muted small mb-1">ช่วงวันที่นัด (หลัก)</label>
             <div className="d-flex gap-2 align-items-center">
-              {/* 🔥 ใช้ CustomDatePicker + ส่ง dailyCounts เข้าไป */}
               <div style={{ flex: 1 }}>
                 <CustomDatePicker
                   value={startDate}
@@ -768,50 +697,81 @@ const handleConfirmExport = () => {
                   <th style={{ minWidth: "100px" }}>วันนัดหลัก</th>
                   <th style={{ minWidth: "100px" }}>วันนัดรอง</th>
                   <th>Status</th>
+                  {/* --- Header ปุ่มส่งเรื่อง --- */}
+                  <th className="text-center" style={{ minWidth: "80px" }}>ส่งเรื่อง</th>
                 </tr>
               </thead>
               <tbody>
-                {filteredAppointments.map((appt, index) => (
-                  <tr key={appt.id}>
-                    <td>{index + 1}</td>
-                    <td>
-                      <div className="fw-bold">{appt.name}</div>
-                    </td>
-                    <td>{appt.departmentName || "-"}</td>
-                    <td>{appt.doctorName || "-"}</td>
-                    <td>
-                      <div className="d-flex align-items-start gap-1">
-                        <FileText size={16} className="text-muted mt-1 flex-shrink-0" />
-                        <span className="text-break">{appt.symptom || "-"}</span>
-                      </div>
-                    </td>
-                    <td>
-                      {appt.files && appt.files.length > 0 ? (
-                        <div className="d-flex flex-column gap-1">
-                          {appt.files.map((file, i) => (
-                            <a
-                              key={i}
-                              href={file.url || "#"}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="d-flex align-items-center gap-1 text-decoration-none text-primary small"
-                              style={{ maxWidth: "80px", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis", display: "inline-flex" }}
-                              title={file.name}
-                            >
-                              <Paperclip size={14} style={{ minWidth: "14px", flexShrink: 0 }} />
-                              <span style={{ overflow: "hidden", textOverflow: "ellipsis" }}>{file.name || `File ${i + 1}`}</span>
-                            </a>
-                          ))}
+                {filteredAppointments.map((appt, index) => {
+                  // เช็คว่าคนนี้กดส่งไปหรือยัง
+                  const isSent = sentEmailIds.includes(appt.id);
+                  
+                  return (
+                    <tr key={appt.id}>
+                      <td>{index + 1}</td>
+                      <td>
+                        <div className="fw-bold">{appt.name}</div>
+                      </td>
+                      <td>{appt.departmentName || "-"}</td>
+                      <td>{appt.doctorName || "-"}</td>
+                      <td>
+                        <div className="d-flex align-items-start gap-1">
+                          <FileText size={16} className="text-muted mt-1 flex-shrink-0" />
+                          <span className="text-break">{appt.symptom || "-"}</span>
                         </div>
-                      ) : <span className="text-muted">-</span>}
-                    </td>
-                    <td>{appt.priority1Date ? new Date(appt.priority1Date).toLocaleDateString('th-TH') : "-"}</td>
-                    <td>{appt.priority2Date ? new Date(appt.priority2Date).toLocaleDateString('th-TH') : "-"}</td>
-                    <td>
-                      <span className={`badge ${appt.status === 'NEW' ? 'bg-success' : 'bg-secondary'}`}>{appt.status}</span>
-                    </td>
-                  </tr>
-                ))}
+                      </td>
+                      <td>
+                        {appt.files && appt.files.length > 0 ? (
+                          <div className="d-flex flex-column gap-1">
+                            {appt.files.map((file, i) => (
+                              <a
+                                key={i}
+                                href={file.url || "#"}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="d-flex align-items-center gap-1 text-decoration-none text-primary small"
+                                style={{ maxWidth: "80px", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis", display: "inline-flex" }}
+                                title={file.name}
+                              >
+                                <Paperclip size={14} style={{ minWidth: "14px", flexShrink: 0 }} />
+                                <span style={{ overflow: "hidden", textOverflow: "ellipsis" }}>{file.name || `File ${i + 1}`}</span>
+                              </a>
+                            ))}
+                          </div>
+                        ) : <span className="text-muted">-</span>}
+                      </td>
+                      <td>{appt.priority1Date ? new Date(appt.priority1Date).toLocaleDateString('th-TH') : "-"}</td>
+                      <td>{appt.priority2Date ? new Date(appt.priority2Date).toLocaleDateString('th-TH') : "-"}</td>
+                      <td>
+                        <span className={`badge ${appt.status === 'NEW' ? 'bg-success' : 'bg-secondary'}`}>{appt.status}</span>
+                      </td>
+                      
+                      {/* --- ปุ่มส่งเรื่อง --- */}
+                      <td className="text-center">
+                        {isSent ? (
+                          // ถ้าส่งแล้ว: แสดงปุ่มเขียว + เครื่องหมายถูก (คลิกไม่ได้)
+                          <button
+                            className="btn btn-sm btn-success rounded-circle p-2"
+                            disabled
+                            title="บันทึกว่าส่งแล้ว"
+                            style={{ cursor: "default" }}
+                          >
+                            <CheckCircle2 size={16} />
+                          </button>
+                        ) : (
+                          // ถ้ายังไม่ส่ง: แสดงปุ่มซองจดหมาย (คลิกแล้วเปลี่ยนสถานะ)
+                          <button
+                            className="btn btn-sm btn-outline-primary rounded-circle p-2"
+                            onClick={() => handleSendEmail(appt)}
+                            title="ส่งอีเมล / แจ้งเรื่อง"
+                          >
+                            <Mail size={16} />
+                          </button>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           )}
@@ -819,8 +779,31 @@ const handleConfirmExport = () => {
 
         {filteredAppointments.length > 0 && (
           <div className="preview-footer">
-            <div className="summary-text">*ตรวจสอบรายการก่อนกดส่งออก</div>
-            <button className="btn-export" onClick={handleInitiateExport}>
+            <div className="d-flex flex-column align-items-end me-3">
+               {/* แสดงสถานะข้อความ */}
+               {!isReadyToExport ? (
+                 <span className="text-danger small fw-bold">
+                   * เหลืออีก {pendingItemsCount} รายการที่ยังไม่ได้ส่งเรื่อง
+                 </span>
+               ) : (
+                 <span className="text-success small fw-bold">
+                   <CheckCircle2 size={14} className="me-1"/> ครบถ้วน พร้อมส่งออก
+                 </span>
+               )}
+               <div className="summary-text text-muted" style={{fontSize: '0.75rem'}}>
+                 *ต้องส่งเรื่องให้ครบทุกรายการจึงจะกดปุ่มได้
+               </div>
+            </div>
+
+            <button 
+              className="btn-export"
+              onClick={handleInitiateExport}
+              disabled={!isReadyToExport}
+              style={{ 
+                opacity: !isReadyToExport ? 0.5 : 1, 
+                cursor: !isReadyToExport ? 'not-allowed' : 'pointer' 
+              }}
+            >
               <FileDown size={20} /> สร้าง Batch & Export
             </button>
           </div>

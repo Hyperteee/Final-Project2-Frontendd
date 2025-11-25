@@ -26,6 +26,7 @@
 
 //   // Status Badge Logic
 //   const getStatusBadge = (status, suggestedDate) => {
+//     // กรณีพิเศษ: ถูกปฏิเสธแต่มีวันเสนอใหม่ -> แสดงสถานะ "รอคุณยืนยันนัดใหม่"
 //     if (status === 'REJECTED' && suggestedDate) {
 //         return <span className="status-badge bg-warning text-dark border-warning"><AlertTriangle size={14}/> รอคุณยืนยันนัดใหม่</span>;
 //     }
@@ -66,12 +67,11 @@
 //   };
 
 //   const handlePostponeClick = (appt) => {
+//     // Logic เดิม: อนุญาตเฉพาะ NEW หรือ SENT
 //     if (appt.status === 'NEW' || appt.status === 'SENT_TO_HOSPITAL') {
 //         setSelectedAppointment(appt);
 //         setShowPostponeModal(true);
-//     } else if (appt.status === 'CONFIRMED') {
-//         alert("รายการนี้ได้รับการยืนยันแล้ว กรุณาติดต่อเจ้าหน้าที่เพื่อเลื่อนนัดหมาย");
-//     }
+//     } 
 //   };
 
 //   const confirmPostpone = () => {
@@ -130,7 +130,7 @@
 //               <p className="text-light small mb-0 opacity-75">Health Queue</p>
 //             </div>
 //           </div>
-//           <button className="btn btn-primary px-4 py-2 fw-semibold">ออกจากระบบ</button>
+//           <button className="btn btn-primary px-4 py-2 fw-semibold" onClick={()=>navigate("/login")}>ออกจากระบบ</button>
 //         </div>
 //       </header>
 
@@ -217,12 +217,13 @@
 //                                 </div>
 //                               </Col>
 
+//                               {/* ส่วนแสดงวันที่: ถ้า Confirmed แล้วให้โชว์วันจริง */}
 //                               <Col md={6}>
 //                                 <div className="date-box">
 //                                   {appt.status === 'CONFIRMED' ? (
 //                                     <div className="text-success animate-slide-up">
 //                                         <div className="d-flex align-items-center mb-2 fw-bold text-success">
-//                                             <CheckCircle2 size={16} className="me-1"/> วันเวลานัดหมายที่ได้
+//                                             <CheckCircle2 size={16} className="me-1"/> วันเวลานัดหมายจริง
 //                                         </div>
 //                                         <div className="p-2 bg-success-subtle rounded border border-success">
 //                                             <div className="fs-5 fw-bold text-dark">{formatThaiDate(appt.confirmedDate)}</div>
@@ -248,6 +249,7 @@
 //                               </Col>
 //                             </Row>
                             
+//                             {/* อาการ */}
 //                             {appt.symptom && (
 //                               <div className="symptom-box">
 //                                 <div className="d-flex align-items-center mb-1 fw-bold text-dark" style={{fontSize: '0.85rem'}}>
@@ -257,6 +259,7 @@
 //                               </div>
 //                             )}
 
+//                             {/* กล่องข้อเสนอนัดใหม่ (สีเหลือง) */}
 //                             {appt.status === 'REJECTED' && appt.suggestedDate && (
 //                                 <div className="mt-3 p-3 bg-warning-subtle border border-warning rounded-3">
 //                                     <div className="d-flex align-items-start gap-2 mb-2">
@@ -267,9 +270,10 @@
 //                                         </div>
 //                                     </div>
 
-//                                     {appt.rejectReason && (
+//                                     {/* แสดงเหตุผลของแอดมิน */}
+//                                     {(appt.rejectReason || appt.note) && (
 //                                         <div className="mb-2 ms-4 small text-danger bg-white px-2 py-1 rounded d-inline-block border border-danger-subtle">
-//                                             สาเหตุ: {appt.rejectReason}
+//                                             <span className="fw-bold">เหตุผล:</span> {appt.rejectReason || appt.note}
 //                                         </div>
 //                                     )}
 
@@ -292,34 +296,51 @@
 //                           {/* Footer Actions */}
 //                           {!isInactive(appt.status) && !(appt.status === 'REJECTED' && appt.suggestedDate) && (
 //                             <div className="appt-card-footer">
-//                               <Button 
-//                                 variant="outline-danger" 
-//                                 size="sm" 
-//                                 className="rounded-pill px-3"
-//                                 onClick={() => handleCancelClick(appt)}
-//                               >
-//                                 ยกเลิกนัด
-//                               </Button>
                               
-//                               {(appt.status === 'NEW' || appt.status === 'SENT_TO_HOSPITAL') ? (
-//                                 <Button 
-//                                     variant="outline-primary" 
-//                                     size="sm" 
-//                                     className="rounded-pill px-3"
-//                                     onClick={() => handlePostponeClick(appt)}
-//                                 >
-//                                     เลื่อนนัด
-//                                 </Button>
-//                               ) : (
+//                               {/* --- 🔥 ส่วนที่แก้ไข Logic ตามคำขอ --- */}
+//                               {appt.status === 'CONFIRMED' ? (
 //                                 <Button 
 //                                     variant="outline-secondary" 
 //                                     size="sm" 
-//                                     className="rounded-pill px-3"
-//                                     onClick={() => alert("กรุณาติดต่อ 02-xxx-xxxx เพื่อเปลี่ยนแปลงนัดหมาย")}
+//                                     className="rounded-pill px-3 w-100"
+//                                     onClick={() => alert(`กรุณาติดต่อ ${appt.hospitalName} โดยตรงเพื่อทำการเปลี่ยนแปลงหรือยกเลิกนัดหมาย`)}
 //                                 >
-//                                     <Phone size={14} className="me-1"/> ติดต่อเจ้าหน้าที่
+//                                     <Phone size={14} className="me-1"/> ติดต่อรพ.เพื่อเปลี่ยนแปลง/ยกเลิก
 //                                 </Button>
+//                               ) : (
+//                                 <>
+//                                     <Button 
+//                                         variant="outline-danger" 
+//                                         size="sm" 
+//                                         className="rounded-pill px-3"
+//                                         onClick={() => handleCancelClick(appt)}
+//                                     >
+//                                         ยกเลิกนัด
+//                                     </Button>
+                                    
+//                                     {(appt.status === 'NEW' || appt.status === 'SENT_TO_HOSPITAL') ? (
+//                                         <Button 
+//                                             variant="outline-primary" 
+//                                             size="sm" 
+//                                             className="rounded-pill px-3"
+//                                             onClick={() => handlePostponeClick(appt)}
+//                                         >
+//                                             เลื่อนนัด
+//                                         </Button>
+//                                     ) : (
+//                                         <Button 
+//                                             variant="outline-secondary" 
+//                                             size="sm" 
+//                                             className="rounded-pill px-3"
+//                                             onClick={() => alert("กรุณาติดต่อเจ้าหน้าที่เพื่อตรวจสอบสถานะ")}
+//                                         >
+//                                             <Phone size={14} className="me-1"/> ติดต่อเจ้าหน้าที่
+//                                         </Button>
+//                                     )}
+//                                 </>
 //                               )}
+//                               {/* --------------------------------- */}
+
 //                             </div>
 //                           )}
 //                         </div>
@@ -332,7 +353,7 @@
 //         </div>
 //       </div>
 
-//       {/* Modals ... (คงเดิม ไม่เปลี่ยนแปลง) */}
+//       {/* Modals */}
 //       <Modal show={showCancelModal} onHide={() => setShowCancelModal(false)} centered>
 //         <Modal.Header closeButton className="border-0">
 //           <Modal.Title className="fw-bold fs-5">ยืนยันการยกเลิก</Modal.Title>
@@ -412,7 +433,6 @@ export default function ProfileBook() {
 
   // Status Badge Logic
   const getStatusBadge = (status, suggestedDate) => {
-    // กรณีพิเศษ: ถูกปฏิเสธแต่มีวันเสนอใหม่ -> แสดงสถานะ "รอคุณยืนยันนัดใหม่"
     if (status === 'REJECTED' && suggestedDate) {
         return <span className="status-badge bg-warning text-dark border-warning"><AlertTriangle size={14}/> รอคุณยืนยันนัดใหม่</span>;
     }
@@ -435,6 +455,8 @@ export default function ProfileBook() {
   };
 
   const isInactive = (status) => {
+    // เพิ่ม REJECTED เข้าไปในกลุ่ม inactive เพื่อให้การ์ดเป็นสีเทา (ถ้าต้องการ)
+    // หรือถ้าอยากให้ REJECTED ยังเด่นอยู่ ก็ไม่ต้องใส่ในนี้
     return ['CANCELLED', 'FAILED', 'NO_SHOW'].includes(status);
   };
 
@@ -456,9 +478,7 @@ export default function ProfileBook() {
     if (appt.status === 'NEW' || appt.status === 'SENT_TO_HOSPITAL') {
         setSelectedAppointment(appt);
         setShowPostponeModal(true);
-    } else if (appt.status === 'CONFIRMED') {
-        alert("รายการนี้ได้รับการยืนยันแล้ว กรุณาติดต่อเจ้าหน้าที่เพื่อเลื่อนนัดหมาย");
-    }
+    } 
   };
 
   const confirmPostpone = () => {
@@ -604,7 +624,6 @@ export default function ProfileBook() {
                                 </div>
                               </Col>
 
-                              {/* ส่วนแสดงวันที่: ถ้า Confirmed แล้วให้โชว์วันจริง */}
                               <Col md={6}>
                                 <div className="date-box">
                                   {appt.status === 'CONFIRMED' ? (
@@ -646,70 +665,92 @@ export default function ProfileBook() {
                               </div>
                             )}
 
-                            {/* กล่องข้อเสนอนัดใหม่ (สีเหลือง) */}
-                            {appt.status === 'REJECTED' && appt.suggestedDate && (
-                                <div className="mt-3 p-3 bg-warning-subtle border border-warning rounded-3">
-                                    <div className="d-flex align-items-start gap-2 mb-2">
-                                        <AlertTriangle className="text-warning-emphasis flex-shrink-0" size={20} />
-                                        <div>
-                                            <h6 className="fw-bold text-dark mb-1">เจ้าหน้าที่เสนอนัดใหม่</h6>
-                                            <p className="text-muted small mb-0">เนื่องจากวันที่เลือกไม่ว่าง รพ.เสนอเป็นวันที่:</p>
-                                        </div>
-                                    </div>
-
-                                    {/* แสดงเหตุผลของแอดมิน */}
+                            {/* --- 🔥 ปรับปรุงส่วน REJECTED --- */}
+                            {appt.status === 'REJECTED' && (
+                                <div className="mt-3">
+                                    {/* 1. แสดงเหตุผลเสมอ ถ้ามี (ไม่ว่าจะแนะนำวันใหม่หรือไม่) */}
                                     {(appt.rejectReason || appt.note) && (
-                                        <div className="mb-2 ms-4 small text-danger bg-white px-2 py-1 rounded d-inline-block border border-danger-subtle">
-                                            <span className="fw-bold">เหตุผล:</span> {appt.rejectReason || appt.note}
+                                        <div className="mb-3 p-2 bg-danger-subtle border border-danger rounded d-flex align-items-start gap-2">
+                                            <XCircle size={18} className="text-danger flex-shrink-0 mt-1" />
+                                            <div>
+                                                <span className="fw-bold text-danger">เหตุผลที่ปฏิเสธ:</span>
+                                                <span className="ms-2 text-dark">{appt.rejectReason || appt.note}</span>
+                                            </div>
                                         </div>
                                     )}
 
-                                    <div className="bg-white rounded p-2 text-center border mb-3">
-                                        <span className="fw-bold fs-5 text-primary">{formatThaiDate(appt.suggestedDate)}</span>
-                                    </div>
-                                    <div className="d-flex gap-2">
-                                        <Button variant="success" size="sm" className="w-100 rounded-pill fw-bold" onClick={() => handleAcceptProposal(appt)}>
-                                            <CheckCircle2 size={16} className="me-1"/> ยืนยันวันใหม่
-                                        </Button>
-                                        <Button variant="outline-danger" size="sm" className="w-100 rounded-pill" onClick={() => handleDeclineProposal(appt.id)}>
-                                            <XCircle size={16} className="me-1"/> ปฏิเสธ/ยกเลิก
-                                        </Button>
-                                    </div>
+                                    {/* 2. กล่องแนะนำวันใหม่ (แสดงเฉพาะเมื่อมี suggestedDate) */}
+                                    {appt.suggestedDate && (
+                                        <div className="p-3 bg-warning-subtle border border-warning rounded-3">
+                                            <div className="d-flex align-items-start gap-2 mb-2">
+                                                <AlertTriangle className="text-warning-emphasis flex-shrink-0" size={20} />
+                                                <div>
+                                                    <h6 className="fw-bold text-dark mb-1">เจ้าหน้าที่เสนอนัดใหม่</h6>
+                                                    <p className="text-muted small mb-0">เนื่องจากวันที่เลือกไม่ว่าง รพ.เสนอเป็นวันที่:</p>
+                                                </div>
+                                            </div>
+
+                                            <div className="bg-white rounded p-2 text-center border mb-3">
+                                                <span className="fw-bold fs-5 text-primary">{formatThaiDate(appt.suggestedDate)}</span>
+                                            </div>
+                                            <div className="d-flex gap-2">
+                                                <Button variant="success" size="sm" className="w-100 rounded-pill fw-bold" onClick={() => handleAcceptProposal(appt)}>
+                                                    <CheckCircle2 size={16} className="me-1"/> ยืนยันวันใหม่
+                                                </Button>
+                                                <Button variant="outline-danger" size="sm" className="w-100 rounded-pill" onClick={() => handleDeclineProposal(appt.id)}>
+                                                    <XCircle size={16} className="me-1"/> ปฏิเสธ/ยกเลิก
+                                                </Button>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             )}
-
                           </div>
 
-                          {/* Footer Actions */}
-                          {!isInactive(appt.status) && !(appt.status === 'REJECTED' && appt.suggestedDate) && (
+                          {/* --- Footer Actions --- */}
+                          {/* 🔥 ซ่อน Footer ทันทีถ้า status เป็น REJECTED หรือ Inactive */}
+                          {!isInactive(appt.status) && appt.status !== 'REJECTED' && (
                             <div className="appt-card-footer">
-                              <Button 
-                                variant="outline-danger" 
-                                size="sm" 
-                                className="rounded-pill px-3"
-                                onClick={() => handleCancelClick(appt)}
-                              >
-                                ยกเลิกนัด
-                              </Button>
-                              
-                              {(appt.status === 'NEW' || appt.status === 'SENT_TO_HOSPITAL') ? (
-                                <Button 
-                                    variant="outline-primary" 
-                                    size="sm" 
-                                    className="rounded-pill px-3"
-                                    onClick={() => handlePostponeClick(appt)}
-                                >
-                                    เลื่อนนัด
-                                </Button>
-                              ) : (
+                              {appt.status === 'CONFIRMED' ? (
                                 <Button 
                                     variant="outline-secondary" 
                                     size="sm" 
-                                    className="rounded-pill px-3"
-                                    onClick={() => alert("กรุณาติดต่อ 02-xxx-xxxx เพื่อเปลี่ยนแปลงนัดหมาย")}
+                                    className="rounded-pill px-3 w-100"
+                                    onClick={() => alert(`กรุณาติดต่อ ${appt.hospitalName} โดยตรงเพื่อทำการเปลี่ยนแปลงหรือยกเลิกนัดหมาย`)}
                                 >
-                                    <Phone size={14} className="me-1"/> ติดต่อเจ้าหน้าที่
+                                    <Phone size={14} className="me-1"/> ติดต่อรพ.เพื่อเปลี่ยนแปลง/ยกเลิก
                                 </Button>
+                              ) : (
+                                <>
+                                    <Button 
+                                        variant="outline-danger" 
+                                        size="sm" 
+                                        className="rounded-pill px-3"
+                                        onClick={() => handleCancelClick(appt)}
+                                    >
+                                        ยกเลิกนัด
+                                    </Button>
+                                    
+                                    {(appt.status === 'NEW' || appt.status === 'SENT_TO_HOSPITAL') ? (
+                                        <Button 
+                                            variant="outline-primary" 
+                                            size="sm" 
+                                            className="rounded-pill px-3"
+                                            onClick={() => handlePostponeClick(appt)}
+                                        >
+                                            เลื่อนนัด
+                                        </Button>
+                                    ) : (
+                                        <Button 
+                                            variant="outline-secondary" 
+                                            size="sm" 
+                                            className="rounded-pill px-3"
+                                            onClick={() => alert("กรุณาติดต่อเจ้าหน้าที่เพื่อตรวจสอบสถานะ")}
+                                        >
+                                            <Phone size={14} className="me-1"/> ติดต่อเจ้าหน้าที่
+                                        </Button>
+                                    )}
+                                </>
                               )}
                             </div>
                           )}
