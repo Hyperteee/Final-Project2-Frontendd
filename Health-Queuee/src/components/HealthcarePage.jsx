@@ -142,9 +142,9 @@ export default function HealthcarePage() {
               {/* ===== Left Text ===== */}
               <div className="col-lg-5 mb-5 mb-lg-0">
                 <h2 className="Headtext display-4 fw-bold mb-4 text-white">
-                  เลือกจองคิวหมอ
+                  Health
                   <br />
-                  <span className="SecHead text-primary">ในไม่กี่คลิก</span>
+                  <span className="SecHead text-primary">Queue</span>
                 </h2>
 
                 <p className="textPro text-white mb-4 lh-lg">
