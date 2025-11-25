@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router";
@@ -7,6 +7,8 @@ import stateData from "../data/liststate";
 import hospitalData from "../data/listhospital";
 import "./Home.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { getTopDoctors } from "../utils/doctorUtils";
+import { getDoctorAvatarPath } from "../utils/doctorUtils";
 export default function HealthcarePage() {
   const [currentOrgSlide, setCurrentOrgSlide] = useState(0);
   const [currentPackageSlide, setCurrentPackageSlide] = useState(0);
@@ -346,7 +348,7 @@ export default function HealthcarePage() {
         id="doctors"
         className=""
         style={{
-          background: "linear-gradient(135deg, #ffffffff 0%, #ffffff 100%)",
+          background: "linear-gradient(135deg, #eff6ff 0%, #ffffff 100%)",
         }}
       >
         <div className="container py-4">
@@ -362,16 +364,20 @@ export default function HealthcarePage() {
                 }}
               ></div>
             </div>
-            <a
-              href="#"
+            <button
+              onClick={() => navigate("/doctors")}
               className="btn btn-link text-primary text-decoration-none fw-medium"
             >
               ดูทั้งหมด
-            </a>
+            </button>
           </div>
 
           <div className="row g-4 mb-4">
-            {doctors.map((doctor) => (
+            {currentDoctors.map((doctor) => {
+              const avatarPath = getDoctorAvatarPath(doctor.name);
+              const avatarSrc = avatarPath ? resolveAssetPath(avatarPath) : "";
+              const avatarClassName = `rounded-4 mb-3 d-flex align-items-center justify-content-center overflow-hidden${avatarSrc ? "" : " bg-light"}`;
+              return (
               <div key={doctor.id} className="col-sm-6 col-lg-3">
                 <div
                   className="card border rounded-4 h-100 shadow-sm"
@@ -394,33 +400,31 @@ export default function HealthcarePage() {
                 >
                   <div className="card-body p-4">
                     <div
-                      className="rounded-4 mb-3 d-flex align-items-center justify-content-center overflow-hidden"
+                      className={avatarClassName}
                       style={{
                         width: "100%",
                         aspectRatio: "1",
-                        background:
-                          "linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%)",
+                        background: avatarSrc
+                          ? "transparent"
+                          : "linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%)",
                       }}
                     >
-                      <svg
-                        width="80"
-                        height="80"
-                        fill="none"
-                        stroke="#93c5fd"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={1.5}
-                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                      {avatarSrc ? (
+                        <img
+                          src={avatarSrc}
+                          alt={doctor.name || "Doctor avatar"}
+                          style={{ width: "100%", height: "100%", objectFit: "cover" }}
                         />
-                      </svg>
+                      ) : (
+                        <span className="fw-semibold text-primary" style={{ fontSize: "32px" }}>
+                          {getInitials(doctor.name)}
+                        </span>
+                      )}
                     </div>
                     <div className="text-center">
                       <h5 className="fw-bold mb-1">{doctor.name}</h5>
                       <p className="text-primary small fw-medium mb-3">
-                        {doctor.specialty}
+                        {doctor.specialization}
                       </p>
                       <button className="btn btn-primary w-100 rounded-3">
                         นัดหมาย
@@ -429,17 +433,16 @@ export default function HealthcarePage() {
                   </div>
                 </div>
               </div>
-            ))}
+            );
+            })}
           </div>
 
           <div className="d-flex gap-3 justify-content-center">
             <button
-              onClick={() =>
-                setCurrentOrgSlide(Math.max(0, currentOrgSlide - 1))
-              }
+              onClick={handlePrevDoctors}
               className="btn btn-outline-secondary rounded-circle"
               style={{ width: "48px", height: "48px" }}
-              aria-label="ก่อนหน้า"
+              aria-label="หมอป่หน้า"
             >
               <svg
                 width="20"
@@ -457,7 +460,7 @@ export default function HealthcarePage() {
               </svg>
             </button>
             <button
-              onClick={() => setCurrentOrgSlide(currentOrgSlide + 1)}
+              onClick={handleNextDoctors}
               className="btn btn-outline-secondary rounded-circle"
               style={{ width: "48px", height: "48px" }}
               aria-label="ถัดไป"
