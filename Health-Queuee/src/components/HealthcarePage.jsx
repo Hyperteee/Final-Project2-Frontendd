@@ -8,6 +8,8 @@ import hospitalData from "../data/listhospital";
 import "./Home.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { getTopDoctors } from "../utils/doctorUtils";
+import resolveAssetPath from "../utils/assetPath";
+import handlePrevDoctors from "../utils/handlePrevDoctors";
 export default function HealthcarePage() {
   const [currentOrgSlide, setCurrentOrgSlide] = useState(0);
   const [currentPackageSlide, setCurrentPackageSlide] = useState(0);
