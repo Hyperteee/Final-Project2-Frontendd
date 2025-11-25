@@ -8,7 +8,6 @@ import hospitalData from "../data/listhospital";
 import "./Home.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { getTopDoctors } from "../utils/doctorUtils";
-import { getDoctorAvatarPath } from "../utils/doctorUtils";
 export default function HealthcarePage() {
   const [currentOrgSlide, setCurrentOrgSlide] = useState(0);
   const [currentPackageSlide, setCurrentPackageSlide] = useState(0);
@@ -85,6 +84,41 @@ export default function HealthcarePage() {
   currentOrgSlide * DOCTORS_PER_SLIDE,
   (currentOrgSlide + 1) * DOCTORS_PER_SLIDE
   );
+
+    // Avatar paths and gender detection
+  const DOCTOR_AVATAR_PATHS = {
+    male: "images/Doctor-Boy.jpg",
+    female: "images/Doctor-Girl.jpg",
+  };
+  const MALE_MARKERS = ["นพ.", "นายแพทย์", "dr.", "mr.", "sir"];
+  const FEMALE_MARKERS = ["พญ.", "แพทย์หญิง", "นางแพทย์", "mrs.", "ms.", "madam"];
+
+  const detectDoctorGender = (name = "") => {
+    const normalized = name?.toLowerCase?.() ?? "";
+    if (!normalized) return "unknown";
+    if (MALE_MARKERS.some((marker) => normalized.includes(marker.toLowerCase()))) {
+      return "male";
+    }
+    if (FEMALE_MARKERS.some((marker) => normalized.includes(marker.toLowerCase()))) {
+      return "female";
+    }
+    return "unknown";
+  };
+
+  const getDoctorAvatarPath = (name = "") => {
+    const gender = detectDoctorGender(name);
+    return DOCTOR_AVATAR_PATHS[gender] ?? "";
+  };
+
+  const getInitials = (text) => {
+    if (!text) return "DR";
+    const tokens = text
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((token) => token.charAt(0).toUpperCase());
+    return tokens.join("") || "DR";
+  };
 
   return (
     <>
