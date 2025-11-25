@@ -5,9 +5,10 @@ import './AdminNavbar.css';
 
 const AdminNavbar = () => {
 
-    const location = useLocation(); 
+    const location = useLocation();
 
     const getButtonClass = (path) => {
+        // ใช้ startsWith เพื่อให้ครอบคลุม path ย่อยๆ ด้วย หรือใช้ === ถ้าต้องการเป๊ะๆ
         return location.pathname === path ? 'active-nav-button' : '';
     };
 
@@ -24,7 +25,7 @@ const AdminNavbar = () => {
                 <hr className="divider" />
             </div>
 
-            
+
             <div className="nav-buttons-section">
 
                 <Link to="/main" className="nav-link-wrapper">
@@ -32,27 +33,30 @@ const AdminNavbar = () => {
                         หน้าแรก
                     </Button>
                 </Link>
-                
+
                 <Link to="/appointments" className="nav-link-wrapper">
                     <Button variant="light" className={`nav-button ${getButtonClass('/appointments')}`}>
                         รายการนัด
                     </Button>
                 </Link>
-                
+
+                {/* --- แก้ตรงนี้ให้ path ตรงกัน --- */}
                 <Link to="/managepatients" className="nav-link-wrapper">
-                    <Button variant="light" className={`nav-button ${getButtonClass('/patients')}`}>
+                    <Button variant="light" className={`nav-button ${getButtonClass('/managepatients')}`}>
                         จัดการผู้ใช้
                     </Button>
                 </Link>
-                
+
+                {/* --- แก้ตรงนี้ให้ path ตรงกัน --- */}
                 <Link to="/managethedocter" className="nav-link-wrapper">
-                    <Button variant="light" className={`nav-button ${getButtonClass('/doctors')}`}>
+                    <Button variant="light" className={`nav-button ${getButtonClass('/managethedocter')}`}>
                         จัดการหมอ
                     </Button>
                 </Link>
-                
+
+                {/* --- แก้ตรงนี้ให้ path ตรงกัน --- */}
                 <Link to="/other" className="nav-link-wrapper">
-                    <Button variant="light" className={`nav-button ${getButtonClass('/other-data')}`}>
+                    <Button variant="light" className={`nav-button ${getButtonClass('/other')}`}>
                         จัดการข้อมูลอื่นๆ
                     </Button>
                 </Link>
