@@ -104,16 +104,16 @@ export default function ChatBot() {
             </div>
 
             {/* กล่องแชทจำลอง */}
-            <div className="bg-white/90 rounded-2xl shadow-2xl p-6 backdrop-blur-md ">
-              <div className="bg-gray-100 rounded-lg p-4 mb-4 h-64 flex items-end overflow-hidden">
-                <div className="text-gray-500 italic">
+            <div className="bg-white rounded-2xl shadow-2xl p-6 border border-white/70">
+              <div className="bg-gray-100 rounded-lg p-4 mb-4 h-64 flex items-end overflow-hidden border border-gray-200">
+                <div className="text-gray-600 italic font-medium">
                   เริ่มพิมพ์เพื่อสนทนา...
                 </div>
               </div>
               <div className="flex gap-2">
                 <input
                   type="text"
-                  className="flex-1 border border-gray-300 rounded-full px-4 py-2 outline-none"
+                  className="flex-1 border border-gray-300 rounded-full px-4 py-2 outline-none bg-white"
                   placeholder="พิมพ์ข้อความ..."
                 />
                 <button className="bg-[#000066] text-white w-10 h-10 rounded-pill flex items-center justify-center hover:bg-[#000088] transition-colors">

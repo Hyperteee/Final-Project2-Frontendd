@@ -27,6 +27,7 @@ import hospitalData from "../../data/listhospital";
 import stateData from "../../data/liststate";
 import BTSstations from "../../data/btsstation";
 import "./listsearch.css";
+import resolveAssetPath from "../../utils/assetPath.js";
 
 const HospitalCard = ({ hospital, handleHospital, userLocation }) => {
   const ratingText =
