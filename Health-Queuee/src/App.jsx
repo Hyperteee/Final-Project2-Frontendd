@@ -21,14 +21,7 @@ function App() {
     <BrowserRouter basename="/Health-Queuee/">
       <Routes>
         <Route element={<AdminLayout /> }>
-          <Route path="/manage" element={<Manage/>}/>
-          <Route path="/managepatients" element={<ManagePatients/>}/>
-          <Route path="/managesthedocter" element={<ManageTheDocter/>}/>
-          <Route path="other" element={<Other />} />
-          <Route path="dashboard" element={<Dashboard/> } />
-          <Route path="/export" element={<Export/>}/>
-          <Route path="/tracking" element={<Tracking/>}/>
-          <Route path="*" element={<Main/>}/>
+          
         </Route>
       </Routes>
     </BrowserRouter>
