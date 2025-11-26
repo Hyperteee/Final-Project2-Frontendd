@@ -27,6 +27,11 @@ import RegisterPage from "./Login-Pages/Register-User";
 import Register2 from "./Login-Pages/register2.jsx";
 // import Postpone from "./components/Hospital-Search/postpone";
 
+import Adminlayout from "../Layout/Adminlayout"
+import AdminDashboard from "../pages/Dashboard";
+import AdminExport from "../pages/Export";
+import AdminTracking from "../pages/Tracking";
+import AdminDataManagement from "../pages/Manage";
 function App() {
   return (
     <HospitalScheduleProvider>
@@ -47,6 +52,13 @@ function App() {
           <Route path="profile" element={<Profile />} />
           <Route path="profilebook" element={<ProfileBook />} />
         </Routes>
+              <Route element={<Adminlayout />}>
+              <Route path="/admin/export" element={<AdminExport />} />
+              <Route path="/admin/dashboard" element={<AdminDashboard/>} />
+              <Route path="/admin/tracking" element={<AdminTracking/>} />
+              <Route path="/admin" element={<AdminDashboard/>} />
+              <Route path="/admin/resources" element={<AdminDataManagement />} />
+            </Route>
       </BrowserRouter>
       </UserAppointmentProvider>
 

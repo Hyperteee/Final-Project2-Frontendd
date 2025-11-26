@@ -75,7 +75,7 @@ const Queue4 = () => {
             // ข้อมูลสถานที่
             hospitalId: hospitalData?.id || selectedHospital,
             hospitalName: selectedHospital,
-            departmentId: selectedDepartment === "ไม่รู้แผนก" ? null : selectedDepartment,
+            departmentId: selectedDepartment,
             departmentName: departmentName,
             doctorId: selectedDoctor || null,
             doctorName: doctorName,
@@ -97,6 +97,7 @@ const Queue4 = () => {
             
             // เตรียมไว้สำหรับผลลัพธ์
             batchId: null,
+            suggestedDate: null,
             confirmedDate: null,
             resultNote: null
         };

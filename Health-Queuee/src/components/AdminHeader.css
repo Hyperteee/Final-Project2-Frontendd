@@ -1,0 +1,33 @@
+/* Styles for the "Health-Queue" bar */
+.health-queue-bar {
+    /* Main deep blue background color */
+    background-color: #000080; 
+    
+    /* Set a consistent height */
+    height: 60px; 
+    
+    /* Use Flexbox for vertical alignment */
+    display: flex;
+    align-items: center; 
+    
+    /* Add padding to space out the text from the left edge */
+    padding-left: 20px; 
+}
+
+/* Styles for the text "Health-Queue" */
+.health-queue-bar h1 {
+    /* Apply the custom font family */
+    font-family: 'Balsamiq Sans', 'Comic Sans MS', cursive; 
+    
+    /* White text color */
+    color: white; 
+    
+    /* Font size to match the image scale */
+    font-size: 28px;
+    
+    /* Ensure the font is bold */
+    font-weight: 700;
+    
+    /* Remove default margin from the h1 element */
+    margin: 0; 
+}

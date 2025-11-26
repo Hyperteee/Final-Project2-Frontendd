@@ -1,6 +1,7 @@
-const hospitalData = [
+const hospitalData = [ 
   {
     name: "จุฬาลงกรณ์",
+    id: "BKK001",
     state: "กรุงเทพมหานคร",
     type: "โรงพยาบาลรัฐ",
     logo: "images/logohospital/chula.png",
@@ -11,6 +12,7 @@ const hospitalData = [
   },
   {
     name: "สินแพทย์",
+    id: "BKK002",
     state: "กรุงเทพมหานคร",
     type: "โรงพยาบาลเอกชน",
     logo: "images/logohospital/สินแพทย์.jpeg",
@@ -21,6 +23,7 @@ const hospitalData = [
   },
   {
     name: "เชียงใหม่ราม",
+    id: "CHM001",
     state: "เชียงใหม่",
     type: "โรงพยาบาลเอกชน",
     logo: "images/logohospital/chiangmai.png",
@@ -31,6 +34,7 @@ const hospitalData = [
   },
   {
     name: "ศิริราช",
+    id: "BKK003",
     state: "กรุงเทพมหานคร",
     type: "โรงพยาบาลรัฐ",
     logo: "images/logohospital/siriraj.png",
@@ -41,6 +45,7 @@ const hospitalData = [
   },
   {
     name: "กรุงเทพ",
+    id: "BKK004",
     state: "กรุงเทพมหานคร",
     type: "โรงพยาบาลเอกชน",
     logo: "images/logohospital/bangkok.png",
@@ -51,6 +56,7 @@ const hospitalData = [
   },
   {
     name: "มหาราชนครเชียงใหม่",
+    id: "CHM002",
     state: "เชียงใหม่",
     type: "โรงพยาบาลรัฐ",
     logo: "images/logohospital/maharajcm.png",
@@ -61,6 +67,7 @@ const hospitalData = [
   },
   {
     name: "ราชวิถี",
+    id: "BKK005",
     state: "กรุงเทพมหานคร",
     type: "โรงพยาบาลรัฐ",
     logo: "images/logohospital/rajvithi.png",
@@ -71,6 +78,7 @@ const hospitalData = [
   },
   {
     name: "บำรุงราษฎร์",
+    id: "BKK006",
     state: "กรุงเทพมหานคร",
     type: "โรงพยาบาลเอกชน",
     logo: "images/logohospital/bumrungrad.png",
@@ -81,6 +89,7 @@ const hospitalData = [
   },
   {
     name: "ขอนแก่นราม",
+    id: "KNK001",
     state: "ขอนแก่น",
     type: "โรงพยาบาลเอกชน",
     logo: "images/logohospital/khonkaenram.png",
@@ -91,6 +100,7 @@ const hospitalData = [
   },
   {
     name: "สงขลานครินทร์",
+    id: "SGK001",
     state: "สงขลา",
     type: "โรงพยาบาลรัฐ",
     logo: "images/logohospital/psu.png",
@@ -101,6 +111,7 @@ const hospitalData = [
   },
   {
     name: "วิภาวดี",
+    id: "BKK007",
     state: "กรุงเทพมหานคร",
     type: "โรงพยาบาลเอกชน",
     logo: "images/logohospital/vibhavadi.png",
@@ -111,6 +122,7 @@ const hospitalData = [
   },
   {
     name: "สมิติเวช สุขุมวิท",
+    id: "BKK008",
     state: "กรุงเทพมหานคร",
     type: "โรงพยาบาลเอกชน",
     logo: "images/logohospital/samitivej.png",
@@ -121,6 +133,7 @@ const hospitalData = [
   },
   {
     name: "พระมงกุฎเกล้า",
+    id: "BKK009",
     state: "กรุงเทพมหานคร",
     type: "โรงพยาบาลรัฐ",
     logo: "images/logohospital/phramongkut.png",
@@ -131,6 +144,7 @@ const hospitalData = [
   },
   {
     name: "หาดใหญ่",
+    id: "SGK002",
     state: "สงขลา",
     type: "โรงพยาบาลรัฐ",
     logo: "images/logohospital/hatyai.png",
@@ -141,6 +155,7 @@ const hospitalData = [
   },
   {
     name: "เปาโล สมุทรปราการ",
+    id: "SPK001",
     state: "สมุทรปราการ",
     type: "โรงพยาบาลเอกชน",
     logo: "images/logohospital/paolo.png",
@@ -151,6 +166,7 @@ const hospitalData = [
   },
   {
     name: "ศรีนครินทร์",
+    id: "KNK002",
     state: "ขอนแก่น",
     type: "โรงพยาบาลรัฐ",
     logo: "images/logohospital/srinagarind.png",
