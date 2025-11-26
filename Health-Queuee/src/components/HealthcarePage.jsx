@@ -1,7 +1,7 @@
+import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import Button from "react-bootstrap/Button";
-import { useNavigate } from "react-router";
 
 import stateData from "../../data/liststate";
 import hospitalData from "../../data/listhospital";
@@ -103,7 +103,14 @@ export default function HealthcarePage() {
               </a>
             </nav>
 
-            <button className="btn btn-primary px-4 py-2 fw-semibold">เข้าสู่ระบบ</button>
+            <button
+              className="btn btn-primary px-4 py-2 fw-semibold"
+              onClick={() => navigate('/login')}
+            >
+              เข้าสู่ระบบ
+            </button>
+            {/* <button className="btn btn-primary px-4 py-2 fw-semibold">เข้าสู่ระบบ</button> */}
+            {/* <Link to="/login" className="text-primary text-decoration-none">เข้าสู่ระบบ</Link> */}
           </div>
         </header>
 

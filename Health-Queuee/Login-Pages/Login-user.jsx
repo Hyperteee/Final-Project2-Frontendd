@@ -1,9 +1,12 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 export default function LoginPage() {
+
+  const navigate = useNavigate();
+
   return (
     <div className="container-fluid vh-100 p-0">
       <div className="row g-0 h-100">
@@ -79,7 +82,12 @@ export default function LoginPage() {
               <div className="mb-4">
                 <small>
                   หากท่านยังไม่มีบัญชี{" "}
-                  <Link to="/register" className="text-primary text-decoration-none">กดตรงนี้</Link>
+                  <button
+                    className="text-primary text-decoration-none"
+                    onClick={() => navigate('/register')}
+                  >
+                    กดตรงนี้
+                  </button>
                   {/* <a href="#" className="text-primary text-decoration-none">
                     กดตรงนี้
                   </a> */}

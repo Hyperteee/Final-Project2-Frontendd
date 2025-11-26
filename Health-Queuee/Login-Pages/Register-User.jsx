@@ -87,7 +87,7 @@ export default function RegisterPage() {
                 <input type="password" className="form-control" id="confirmPassword" placeholder="ยืนยันรหัสผ่าน" />
               </div>
 
-              <div className="mb-4">
+              <div className="mb-4" >
                 <button type="submit" className="btn btn-primary w-100">
                   สมัครสมาชิก
                 </button>
@@ -96,6 +96,12 @@ export default function RegisterPage() {
               <div className="mb-4 text-center">
                 <small>
                   มีบัญชีอยู่แล้ว?{" "}
+                  {/* <button
+                    className="text-primary text-decoration-none"
+                    onClick={() => navigate('/login')}
+                  >
+                    เข้าสู่ระบบ
+                  </button> */}
                   <Link to="/" className="text-primary text-decoration-none">เข้าสู่ระบบ</Link>
                   {/* <a href="#" className="text-primary text-decoration-none">
                     เข้าสู่ระบบ
