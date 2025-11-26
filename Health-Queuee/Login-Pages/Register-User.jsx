@@ -1,4 +1,19 @@
+import { Link, useNavigate } from 'react-router-dom';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
 export default function RegisterPage() {
+  const navigate = useNavigate(); 
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    alert("สมัครสมาชิกสำเร็จ!");
+    navigate("/");
+  };
+
+
   return (
     <div className="container-fluid vh-100 p-0">
       <div className="row g-0 h-100">
@@ -22,7 +37,7 @@ export default function RegisterPage() {
           <div className="w-100" style={{ maxWidth: "400px" }}>
             <h2 className="mb-4">สมัครสมาชิก</h2>
 
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label htmlFor="fullname" className="form-label fw-semibold">
                   ชื่อ-นามสกุล
@@ -38,10 +53,24 @@ export default function RegisterPage() {
               </div>
 
               <div className="mb-3">
+                <label htmlFor="IdentificationNumber" className="form-label fw-semibold">
+                  เลขบัตรปประชาชน
+                </label>
+                <input type="tel" className="form-control" id="IdentificationNumber" placeholder="เลขบัตรประชาชน" />
+              </div>
+
+              <div className="mb-3">
                 <label htmlFor="phone" className="form-label fw-semibold">
                   เบอร์โทรศัพท์
                 </label>
                 <input type="tel" className="form-control" id="phone" placeholder="เบอร์โทรศัพท์" />
+              </div>
+
+              <div className="mb-3">
+                <label htmlFor="Date" className="form-label fw-semibold">
+                  วันเดือนปีเกิด
+                </label>
+                <input type="date" className="form-control" id="Date"/>
               </div>
 
               <div className="mb-3">
@@ -67,41 +96,11 @@ export default function RegisterPage() {
               <div className="mb-4 text-center">
                 <small>
                   มีบัญชีอยู่แล้ว?{" "}
-                  <a href="#" className="text-primary text-decoration-none">
+                  <Link to="/" className="text-primary text-decoration-none">เข้าสู่ระบบ</Link>
+                  {/* <a href="#" className="text-primary text-decoration-none">
                     เข้าสู่ระบบ
-                  </a>
+                  </a> */}
                 </small>
-              </div>
-
-              <div className="mb-3">
-                <p className="text-center mb-3">หรือ เข้าสู่ระบบด้วย</p>
-                <div className="d-grid gap-2">
-                  <button
-                    type="button"
-                    className="btn btn-light border d-flex align-items-center justify-content-center gap-2 py-2"
-                    style={{ borderRadius: "8px" }}
-                  >
-                    <img
-                      src="./images/facebook-logo.png"
-                      alt="Facebook"
-                      style={{ width: "24px", height: "24px" }}
-                    />
-                    <span className="fw-semibold text-dark">หมายเลขประจำตัวผู้ป่วย</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    className="btn btn-light border d-flex align-items-center justify-content-center gap-2 py-2"
-                    style={{ borderRadius: "8px" }}
-                  >
-                    <img
-                      src="./images/google-logo.png"
-                      alt="Google"
-                      style={{ width: "24px", height: "24px" }}
-                    />
-                    <span className="fw-semibold text-dark">เบอร์โทร</span>
-                  </button>
-                </div>
               </div>
             </form>
 

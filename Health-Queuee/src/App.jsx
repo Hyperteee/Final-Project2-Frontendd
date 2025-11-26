@@ -1,31 +1,30 @@
 import { BrowserRouter, Route, Router, Routes } from "react-router"
-import HealthcarePage from "./components/HealthcarePage"
-import Adminlayout from "../Layout/Adminlayout"
-import ManagePatients from "../pages/ManagePatients"
-import ManageTheDocter from "../pages/ManageTheDocter"
-import Other from "../pages/Other"
-import Appointments from "../pages/Appointments"
-import Main from "../pages/Main"
-import Loginpage from "../pages/Login/Loginpage"
-import AdminHeader from "./components/AdminHeader"
+import LoginPages from "../Login-Pages/Login-user"
+import RegisterPage from "../Login-Pages/Register-User"
 
 
 function App() {
   return (
 
-    // <Loginpage/>
     <BrowserRouter basename="/Health-Queuee/">
       <Routes>
-        <Route element={<Adminlayout />}>
-          <Route path="/other" element={<Other/>}/>
-          <Route path="/managepatients" element={<ManagePatients/>}/>
-          <Route path="/managethedocter" element={<ManageTheDocter/>}/>
-          <Route path="/appointments" element={<Appointments />} />
-          <Route path="*" element={<Main/> } />
-        </Route>
-
+        <Route path="/" element={<LoginPages/>} />
+        <Route path="/register" element={<RegisterPage />} />
       </Routes>
     </BrowserRouter>
+
+    // <BrowserRouter basename="/Health-Queuee/">
+    //   <Routes>
+    //     <Route element={<Adminlayout />}>
+    //       <Route path="/other" element={<Other/>}/>
+    //       <Route path="/managepatients" element={<ManagePatients/>}/>
+    //       <Route path="/managethedocter" element={<ManageTheDocter/>}/>
+    //       <Route path="/appointments" element={<Appointments />} />
+    //       <Route path="*" element={<Main/> } />
+    //     </Route>
+
+    //   </Routes>
+    // </BrowserRouter>
   )
 
 }

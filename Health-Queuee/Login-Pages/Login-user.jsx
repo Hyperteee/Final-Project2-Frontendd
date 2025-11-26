@@ -1,3 +1,8 @@
+import { Link } from 'react-router-dom';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
 export default function LoginPage() {
   return (
     <div className="container-fluid vh-100 p-0">
@@ -74,41 +79,11 @@ export default function LoginPage() {
               <div className="mb-4">
                 <small>
                   หากท่านยังไม่มีบัญชี{" "}
-                  <a href="#" className="text-primary text-decoration-none">
+                  <Link to="/register" className="text-primary text-decoration-none">กดตรงนี้</Link>
+                  {/* <a href="#" className="text-primary text-decoration-none">
                     กดตรงนี้
-                  </a>
+                  </a> */}
                 </small>
-              </div>
-
-              <div className="mb-3">
-                <p className="text-center mb-3">หรือ เข้าสู่ระบบด้วย</p>
-                <div className="d-grid gap-2">
-                  <button
-                    type="button"
-                    className="btn btn-light border d-flex align-items-center justify-content-center gap-2 py-2"
-                    style={{ borderRadius: "8px" }}
-                  >
-                    <img
-                      src="./images/facebook-logo.png"
-                      alt="Facebook"
-                      style={{ width: "24px", height: "24px" }}
-                    />
-                    <span className="fw-semibold text-dark">หมายเลขประจำตัวผู้ป่วย</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    className="btn btn-light border d-flex align-items-center justify-content-center gap-2 py-2"
-                    style={{ borderRadius: "8px" }}
-                  >
-                    <img
-                      src="./images/google-logo.png"
-                      alt="Google"
-                      style={{ width: "24px", height: "24px" }}
-                    />
-                    <span className="fw-semibold text-dark">เบอร์โทร</span>
-                  </button>
-                </div>
               </div>
             </form>
 
