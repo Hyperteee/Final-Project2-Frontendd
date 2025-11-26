@@ -1,4 +1,4 @@
-import dataIcon from "../../../images/icon-department/icon-department";
+import dataIcon from "../../images/icon-department/icon-department";
 
 const synphaet_ramintra = {
   id: "BKK002", // Bangkok hospital #2

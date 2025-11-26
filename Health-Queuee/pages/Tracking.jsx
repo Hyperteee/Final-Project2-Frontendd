@@ -968,7 +968,7 @@ import {
 } from "lucide-react";
 import * as XLSX from "xlsx";
 
-import { UserAppointment } from "../src/data/context/appointment";
+import { UserAppointment } from "../data/context/appointment";
 import "./Export.css";
 import "./Tracking.css";
 

@@ -7,8 +7,8 @@ import {
   Mail // <--- Icon สำหรับปุ่มส่งเมล
 } from "lucide-react";
 import "./Export.css";
-import hospitalData from "../src/data/listhospital";
-import { UserAppointment } from "../src/data/context/appointment";
+import hospitalData from "../data/listhospital";
+import { UserAppointment } from "../data/context/appointment";
 import * as XLSX from "xlsx";
 
 // --- Helper Component: Highlight Text ---
