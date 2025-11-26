@@ -485,7 +485,7 @@ export default function AdminTracking() {
   return (
     <div className="export-container">
       <div className="export-header">
-        <h2>🔎 ติดตามผลการนัด (Tracking)</h2>
+        <h2>ติดตามผลการนัด (Tracking)</h2>
         <p>ตรวจสอบสถานะและอัปเดตผลตอบกลับจากโรงพยาบาล</p>
       </div>
 
@@ -670,13 +670,7 @@ export default function AdminTracking() {
                         </div>
                       </td>
                       <td>
-                        {item.status === 'USER_CANCELLED' ? (
-                            <span className="badge bg-danger text-white border border-white shadow-sm">
-                                <AlertTriangle size={12} className="me-1"/> ผู้ใช้ขอยกเลิก
-                            </span>
-                        ) : (
-                            <StatusBadge status={item.status} hasSuggestion={!!item.suggestedDate} />
-                        )}
+                        <StatusBadge status={item.status} hasSuggestion={!!item.suggestedDate} />
                       </td>
                       
                       <td className="text-end">
@@ -705,7 +699,7 @@ export default function AdminTracking() {
                                 </button>
 
                             ) : (
-                                <button className="btn btn-primary btn-sm rounded-pill px-3" onClick={() => handleOpenUpdate(item)}>
+                                <button className="btn btn-primary btn-sm rounded-pill px-3 text-nowrap" onClick={() => handleOpenUpdate(item)}>
                                     อัปเดตผล
                                 </button>
                             )}
@@ -747,8 +741,11 @@ export default function AdminTracking() {
                   >
                     <div className="d-flex justify-content-between align-items-start mb-1">
                       <span className="fw-bold text-primary small" style={{ fontSize: '0.8rem' }}>{batch.id}</span>
-                      <span className="text-muted small" style={{ fontSize: '0.75rem' }}>{new Date(batch.date).toLocaleDateString('th-TH')}</span>
-                    </div>
+                      <div className="d-flex flex-column">
+                        <span className="text-muted small" style={{ fontSize: '0.75rem' }}>{new Date(batch.date).toLocaleDateString('th-TH')}</span>
+                        <span className="text-primary small text-end" style={{ fontSize: '0.75rem' }}>{currentBatchInfo.hospitalName}</span>
+                      </div>
+                      </div>
                     <div className="d-flex justify-content-between small text-muted mb-1">
                       <span>{batch.totalItems} รายการ</span>
                       {batch.status === 'COMPLETED' 
@@ -768,7 +765,9 @@ export default function AdminTracking() {
                 <div className="preview-header border-bottom pb-3 mb-3">
                   <div>
                     <div className="d-flex align-items-center gap-2"><FileSpreadsheet className="text-primary" size={24} /><h5 className="mb-0 fw-bold">รายละเอียด {currentBatchInfo.id}</h5></div>
-                    <small className="text-muted ms-1">ส่งเมื่อ: {new Date(currentBatchInfo.date).toLocaleString('th-TH')}</small>
+                    <div className="d-flex gap-5"><small className="text-muted ms-1">ส่งเมื่อ: {new Date(currentBatchInfo.date).toLocaleString('th-TH')}</small>
+                    <small className="text-muted">โรงพยาบาล<span className="text-primary">{currentBatchInfo.hospitalName}</span></small>
+                    </div>
                   </div>
                   {selectedItemIds.length > 0 ? (
                     <div className="d-flex gap-2 animate-slide-up">
@@ -794,7 +793,7 @@ export default function AdminTracking() {
                       <tr>
                         <th style={{ width: '40px' }}><input type="checkbox" onChange={handleSelectAll} checked={selectedItemIds.length > 0 && selectedItemIds.length === currentBatchItems.filter(i => i.status === 'SENT').length} /></th>
                         <th>คนไข้</th>
-                        <th>โรงพยาบาล</th>
+                        <th>แผนก</th>
                         <th>วันนัด (P1)</th>
                         <th>สถานะ</th>
                         <th className="text-end">จัดการ</th>
@@ -805,7 +804,7 @@ export default function AdminTracking() {
                         <tr key={item.id} className={selectedItemIds.includes(item.id) ? 'bg-light-blue' : ''}>
                           <td>{(item.status === 'SENT' || item.status === 'REJECTED') ? (<input type="checkbox" checked={selectedItemIds.includes(item.id)} onChange={() => handleSelectItem(item.id)} />) : <CheckCircle2 size={16} className="text-muted" />}</td>
                           <td><div className="fw-bold">{item.name}</div><div className="small text-muted">{item.userId}</div></td>
-                          <td>{item.hospitalName}</td>
+                          <td>{item.departmentName}</td>
                           <td>{new Date(item.priority1Date).toLocaleDateString('th-TH')}</td>
                           <td><StatusBadge status={item.status} /></td>
                           
