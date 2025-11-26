@@ -1,45 +1,63 @@
-import { BrowserRouter, Route, Router, Routes } from "react-router"
-import LoginPages from "../Login-Pages/Login-user"
-import RegisterPage from "../Login-Pages/Register-User"
-import AdminLayout from "../Layout/AdminLayout"
-import Dashboard from "../pages/Dashboard"
-import Export from "../pages/Export"
-import Main from "../pages/Main"
-import Manage from "../pages/Manage"
-import ManagePatients from "../pages/ManagePatients"
-import ManageTheDocter from "../pages/ManageTheDocter"
-import Other from "../pages/Other"
-import Tracking from "../pages/Tracking"
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
+import layout from "./components/Layout/Layout";
 
+import HealthcarePage from "./components/HealthcarePage";
+import Navbar from "./components/Navbar/Navbar";
+import ChatBot from "./components/ChatBot/ChatBot";
+import PoppularDoc from "./components/PopularDoc/PoppularDoc";
+import PackagePart from "./components/PackagePart/Package";
+import Footer from "./components/Footer/Footer";
+import Layout from "./components/Layout/Layout";
+import Listsearch from "./components/Hospital-Search/listsearch";
+import Queue1 from "./components/Hospital-Search/Queue1";
+import LoginPage from "./login-Pages/Login-user";
+import Queue2 from "./components/Hospital-Search/Queue2";
+import Queue3 from "./components/Hospital-Search/Queue3";
+import Queue4 from "./components/Hospital-Search/Queue4";
+import hospitalMap from "./data/hospitaldata.jsx/allhospitaldata";
+import { HospitalScheduleProvider } from "./data/context/allSchedule";
+import { UserAppointmentProvider } from "./data/context/appointment";
+import Testdata from "./components/Hospital-Search/testdata";
+import Profile from "./Profile-User/Profile";
+import ProfileBook from "./Profile-User/Profile-book";
+import Adminlayout from "../Layout/Adminlayout"
+import AdminDashboard from "../pages/Dashboard";
+import AdminExport from "../pages/Export";
+import AdminTracking from "../pages/Tracking";
+import AdminDataManagement from "../pages/Manage";
 
 
 
 function App() {
   return (
+    <HospitalScheduleProvider>
+      <UserAppointmentProvider>
+        <BrowserRouter basename="/Final-Project2-Frontendd/">
+          <Routes>
+            <Route path="/" element={<HealthcarePage />} />
+            <Route path="hospitals" element={<Listsearch />} />
+            <Route path="queue1" element={<Queue1 />} />
+            <Route path="login" element={<LoginPage />} />
+            <Route path="queue2" element={<Queue2 />} />
+            <Route path="queue3" element={<Queue3 />} />
+            <Route path="queue4" element={<Queue4 />} />
+            <Route path="testdata" element={<Testdata />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="profilebook" element={<ProfileBook />} />
+            <Route element={<Adminlayout />}>
+              <Route path="/admin/export" element={<AdminExport />} />
+              <Route path="/admin/dashboard" element={<AdminDashboard />} />
+              <Route path="/admin/tracking" element={<AdminTracking />} />
+              <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/admin/resources" element={<AdminDataManagement />} />
+            </Route>
+          </Routes>
 
-    <BrowserRouter basename="/Health-Queuee/">
-      <Routes>
-        <Route element={<AdminLayout /> }>
-          
-        </Route>
-      </Routes>
-    </BrowserRouter>
-
-    // <BrowserRouter basename="/Health-Queuee/">
-    //   <Routes>
-    //     <Route element={<Adminlayout />}>
-    //       <Route path="/other" element={<Other/>}/>
-    //       <Route path="/managepatients" element={<ManagePatients/>}/>
-    //       <Route path="/managethedocter" element={<ManageTheDocter/>}/>
-    //       <Route path="/appointments" element={<Appointments />} />
-    //       <Route path="*" element={<Main/> } />
-    //     </Route>
-
-    //   </Routes>
-    // </BrowserRouter>
-  )
-
+        </BrowserRouter>
+      </UserAppointmentProvider>
+    </HospitalScheduleProvider>
+  );
 }
 
-export default App
+export default App;
