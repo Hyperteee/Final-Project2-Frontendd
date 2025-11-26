@@ -26,6 +26,7 @@ import AdminDashboard from "../pages/Dashboard";
 import AdminExport from "../pages/Export";
 import AdminTracking from "../pages/Tracking";
 import AdminDataManagement from "../pages/Manage";
+import AdminPatients from "../pages/ManagePatients"
 
 
 
@@ -52,6 +53,7 @@ function App() {
               <Route path="/admin/tracking" element={<AdminTracking />} />
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/admin/resources" element={<AdminDataManagement />} />
+              <Route path="/adminpatients" element={<AdminPatients/> } />
             </Route>
           </Routes>
 

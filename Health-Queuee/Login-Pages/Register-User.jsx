@@ -10,7 +10,7 @@ export default function RegisterPage() {
     e.preventDefault();
 
     alert("สมัครสมาชิกสำเร็จ!");
-    navigate("/");
+    navigate("/login");
   };
 
 
@@ -98,11 +98,11 @@ export default function RegisterPage() {
                   มีบัญชีอยู่แล้ว?{" "}
                   {/* <button
                     className="text-primary text-decoration-none"
-                    onClick={() => navigate('/login')}
+                    onClick={() => navigate1('/login')}
                   >
                     เข้าสู่ระบบ
                   </button> */}
-                  <Link to="/" className="text-primary text-decoration-none">เข้าสู่ระบบ</Link>
+                  <Link to="/login" className="text-primary text-decoration-none">เข้าสู่ระบบ</Link>
                   {/* <a href="#" className="text-primary text-decoration-none">
                     เข้าสู่ระบบ
                   </a> */}

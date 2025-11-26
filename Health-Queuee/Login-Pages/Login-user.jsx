@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -6,6 +7,29 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 export default function LoginPage() {
 
   const navigate = useNavigate();
+
+  //email admin
+  const [inputs, setInputs] = useState({
+    email: "",
+    password: ""
+  });
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setInputs((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (inputs.email === "admin@gmail.com" && inputs.password === "1234") {
+      alert("ยินดีต้อนรับ Admin!");
+      navigate("/admin");
+    } else {
+      alert("เข้าสู่ระบบสำเร็จ!");
+      navigate("/");
+    }
+  };
 
   return (
     <div className="container-fluid vh-100 p-0">
@@ -34,16 +58,19 @@ export default function LoginPage() {
           <div className="w-100" style={{ maxWidth: "400px" }}>
             <h2 className="mb-4">ยินดีต้อนรับ!</h2>
 
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="mb-3">
-                <label htmlFor="login" className="form-label fw-semibold">
+                <label htmlFor="email" className="form-label fw-semibold">
                   Login
                 </label>
                 <input
-                  type="text"
+                  type="email"
                   className="form-control"
-                  id="login"
+                  id="email"
                   placeholder="ชื่อผู้ใช้งาน"
+                  value={inputs.email}
+                  onChange={handleChange}
+                  required
                 />
               </div>
 
@@ -56,6 +83,9 @@ export default function LoginPage() {
                   className="form-control"
                   id="password"
                   placeholder="รหัสผ่าน"
+                  value={inputs.password}
+                  onChange={handleChange}
+                  required
                 />
 
                 {/* sign in */}
@@ -66,7 +96,7 @@ export default function LoginPage() {
                   }}
                 >
                   <button
-                    type="button"
+                    type="submit"
                     className=" border d-flex align-items-center justify-content-center gap-2 py-2"
                     style={{
                       backgroundColor: "#3b77fa",
@@ -83,7 +113,8 @@ export default function LoginPage() {
                 <small>
                   หากท่านยังไม่มีบัญชี{" "}
                   <button
-                    className="text-primary text-decoration-none"
+                    type="button"
+                    className="text-primary text-decoration-none btn-link border-0 bg-transparent p-0"
                     onClick={() => navigate('/register')}
                   >
                     กดตรงนี้
