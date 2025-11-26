@@ -1,4 +1,3 @@
-
 import { createContext, useState } from "react";
 import hospitalMap from "../hospitaldata.jsx/allhospitaldata";
 

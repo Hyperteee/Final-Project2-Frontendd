@@ -1,4 +1,4 @@
-import dataIcon from "../../../images/icon-department/icon-department";
+import dataIcon from "../../../../images/icon-department/icon-department";
 
 const chulalongkorn = {
   id: "BKK001",
@@ -12,7 +12,11 @@ const chulalongkorn = {
   district: "ปทุมวัน",
 
   departments: [
-    // -------------------- อายุรกรรม --------------------
+    ///////////////////// ไม่รู้แผนก
+    {
+      id: "BKK001-D00",
+      name:"ไม่รู้แผนก"
+    },// -------------------- อายุรกรรม --------------------
     {
       id: "BKK001-D01",
       name: "อายุรกรรม",
