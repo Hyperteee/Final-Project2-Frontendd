@@ -24,6 +24,7 @@ import Profile from "./Profile-User/Profile";
 import ProfileBook from "./Profile-User/Profile-book";
 import Login2 from "./Login-Pages/Login2";
 import RegisterPage from "./Login-Pages/Register-User";
+import Register2 from "./Login-Pages/register2.jsx";
 // import Postpone from "./components/Hospital-Search/postpone";
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
           <Route path="/" element={<HealthcarePage />} />
           <Route path="hospitals" element={<Listsearch />} />
           <Route path="queue1" element={<Queue1 />} />
+          <Route path="Register" element={<Register2 />} />
           <Route path="login" element={<Login2 />} />
           <Route path="register" element={<RegisterPage />} />
           <Route path="queue2" element={<Queue2 />} />
@@ -47,6 +49,26 @@ function App() {
         </Routes>
       </BrowserRouter>
       </UserAppointmentProvider>
+
+      <AuthProvider> {/* ห่อหุ้ม App ด้วย AuthProvider */}
+        <Routes>
+          {/* เส้นทางสาธารณะ */}
+          <Route path="/login" element={<Login2 />} />
+          <Route path="/register" element={<Register2 />} />
+          
+          {/* Protected Routes: ต้องล็อกอินเท่านั้น */}
+          <Route element={<ProtectedRoute />}>
+              <Route path="/" element={<HealthcarePage />} /> {/* หน้าหลัก/User */}
+          </Route>
+
+          {/* Admin Protected Route: ต้องเป็น Admin เท่านั้น */}
+          <Route element={<ProtectedRoute requiredRoles={['admin']} />}>
+            <Route path="/admin-dashboard" element={<AdminDashboard />} /> 
+          </Route>
+
+          <Route path="*" element={<h1>404 Not Found</h1>} />
+        </Routes>
+      </AuthProvider>
     </HospitalScheduleProvider>
   );
 }

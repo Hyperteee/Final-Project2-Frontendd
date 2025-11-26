@@ -10,6 +10,7 @@ import hospitalMap from "../../data/hospitaldata.jsx/allhospitaldata";
 function Queue1() {
   const { state } = useLocation();
   const { selectedHospital } = state || {};
+  console.log("selectedHospital:", selectedHospital);
   const [department, setDepartment] = useState(null);
   const [show, setShow] = useState(false);
   const [chooseDoctor, setChooseDoctor] = useState(null);

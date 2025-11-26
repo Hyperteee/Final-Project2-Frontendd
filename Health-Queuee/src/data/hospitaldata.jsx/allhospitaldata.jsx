@@ -22,11 +22,11 @@ import somdetPhraThepratHospital from "./somdet-phra-theprat/somdet-phra-theprat
 import somdetSchedule from "./somdet-phra-theprat/somdetSchedule";
 
 const hospitalMap = {
-  [chulalongkorn.name]: {
+  "จุฬาลงกรณ์": {
     info: chulalongkorn,
     schedule: chulaSchedule,
   },
-  [synphaet_ramintra.name]: {
+  "สินแพทย์": {
     info: synphaet_ramintra,
     schedule: synphaetSchedule,
   },

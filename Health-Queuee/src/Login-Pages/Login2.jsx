@@ -3,53 +3,71 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 export default function Login2() {
-  const [showOtp, setShowOtp] = useState(false);
+  // const [showOtp, setShowOtp] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-  const [otp, setOtp] = useState(Array(6).fill(""));
+  // const [otp, setOtp] = useState(Array(6).fill(""));
   const navigate = useNavigate();
 
-  const otpRefs = useRef([]);
+  // const otpRefs = useRef([]);
 
   const handleLogin = (e) => {
     e.preventDefault();
     console.log("Login attempt:", { email, password, rememberMe });
 
     setShowOtp(true);
-
-    //   toast.success("ส่ง OTP ไปยังเบอร์/อีเมลของคุณแล้ว");
   };
 
-  const handleOtpChange = (index, value) => {
-    const digit = value.replace(/\D/g, "").slice(-1);
-
-    const newOtp = [...otp];
-    newOtp[index] = digit;
-    setOtp(newOtp);
-
-    if (digit && index < otp.length - 1) {
-      otpRefs.current[index + 1]?.focus();
+  let userRole = null;
+    
+    // ตัวอย่างการกำหนดบทบาทตาม Email (สำหรับทดสอบ)
+    if (email === "thee@gmail.com", "mook@gmail.com" && password === "1234") {
+      userRole = "admin";
+    } else if (email === "user@gmail.com" && password === "1234") {
+      userRole = "user";
+    } else {
+      alert("เข้าสู่ระบบไม่สำเร็จ: อีเมลหรือรหัสผ่านไม่ถูกต้อง!");
+      return; 
     }
-  };
 
-  const handleOtpKeyDown = (index, e) => {
-    if (e.key === "Backspace") {
-      if (!otp[index] && index > 0) {
-        otpRefs.current[index - 1]?.focus();
-      }
+    if (userRole === "admin") {
+      alert("เข้าสู่ระบบสำเร็จ! (Role: Admin) กำลังพาไปหน้า Admin Dashboard");
+      navigate("/admin-dashboard"); 
+    } else if (userRole === "user") {
+      alert("เข้าสู่ระบบสำเร็จ!");
+      navigate("/"); 
     }
-  };
 
-  const handleOtpSubmit = (e) => {
-    e.preventDefault();
-    const code = otp.join("");
-    console.log("OTP submit:", code);
+  // const handleOtpChange = (index, value) => {
+  //   const digit = value.replace(/\D/g, "").slice(-1);
+
+  //   const newOtp = [...otp];
+  //   newOtp[index] = digit;
+  //   setOtp(newOtp);
+
+  //   if (digit && index < otp.length - 1) {
+  //     otpRefs.current[index + 1]?.focus();
+  //   }
+  // };
+
+  // const handleOtpKeyDown = (index, e) => {
+  //   if (e.key === "Backspace") {
+  //     if (!otp[index] && index > 0) {
+  //       otpRefs.current[index - 1]?.focus();
+  //     }
+  //   }
+  // };
+
+  // const handleOtpSubmit = (e) => {
+  //   e.preventDefault();
+  //   const code = otp.join("");
+  //   console.log("OTP submit:", code);
 
     // toast.success("ยืนยัน OTP สำเร็จ! กำลังพาไปหน้า Dashboard");
 
-    alert(`Entered OTP: ${code}`);
-  };
+  //   alert(`Entered OTP: ${code}`);
+  // };
 
   // const showSuccess = () => {
   //   toast.success("บันทึกข้อมูลสำเร็จ!");
@@ -125,6 +143,7 @@ export default function Login2() {
                       <h1 className="text-white text-center mb-2 fw-bold">
                         LOGIN
                       </h1>
+
                       <p className="text-white text-center mb-4 opacity-75">
                         เข้าสู่ระบบหรือสมัครสมาชิก
                       </p>
@@ -137,6 +156,21 @@ export default function Login2() {
                             placeholder="อีเมล หรือ เบอร์โทรศัพท์"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            required
+                            style={{
+                              borderRadius: 8,
+                              border: "none",
+                            }}
+                          />
+                        </Form.Group>
+
+                        <Form.Group className="mb-3" controlId="loginPassword">
+                          <Form.Control
+                            type="password"
+                            size="lg"
+                            placeholder="รหัสผ่าน"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                             required
                             style={{
                               borderRadius: 8,
@@ -168,6 +202,15 @@ export default function Login2() {
                         >
                           Login
                         </Button>
+                        <p className="text-white text-center mt-3 small">
+                          ยังไม่มีบัญชีใช่มั้ย?{" "}
+                          <a
+                            onClick={() => navigate("/register")}
+                            className="text-white fw-semibold text-decoration-underline"
+                          >
+                            สมัครสมาชิก
+                          </a>
+                        </p>
                       </Form>
                     </div>
                   ) : (
@@ -175,6 +218,7 @@ export default function Login2() {
                       <h1 className="text-white text-center mb-2 fw-bold">
                         LOGIN
                       </h1>
+
                       <p className="text-white text-center mb-2 fw-semibold">
                         ยืนยันตัวตนผ่าน เบอร์โทรศัพท์
                       </p>
@@ -222,7 +266,7 @@ export default function Login2() {
                         </p>
 
                         <Button
-                          onClick={() => navigate("/HealthCarePage")}
+                          onClick={() => navigate("/")}
                           type="submit"
                           size="lg"
                           className="w-100 text-white fw-semibold"

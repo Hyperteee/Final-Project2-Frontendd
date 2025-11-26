@@ -10,7 +10,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { getTopDoctors } from "../utils/doctorUtils";
 import resolveAssetPath from "../utils/assetPath";
 
-
 export default function HealthcarePage() {
   const [currentOrgSlide, setCurrentOrgSlide] = useState(0);
   const [currentPackageSlide, setCurrentPackageSlide] = useState(0);
@@ -78,31 +77,43 @@ export default function HealthcarePage() {
     };
   }, []);
 
-  const NAVY_BLUE = "#004080";
+  const PRIMARY_BLUE = "#0040FF"; // สีน้ำเงินสดสำหรับเน้น
+  const DARK_BLUE = "#020A1B"; // สีน้ำเงินเข้มสำหรับพื้นหลัง
 
   const DOCTORS_PER_SLIDE = 4;
   const allDoctors = useMemo(() => getTopDoctors(12), []);
   const totalSlides = Math.ceil(allDoctors.length / DOCTORS_PER_SLIDE);
   const currentDoctors = allDoctors.slice(
-  currentOrgSlide * DOCTORS_PER_SLIDE,
-  (currentOrgSlide + 1) * DOCTORS_PER_SLIDE
+    currentOrgSlide * DOCTORS_PER_SLIDE,
+    (currentOrgSlide + 1) * DOCTORS_PER_SLIDE
   );
 
-    // Avatar paths and gender detection
+  // Avatar paths and gender detection
   const DOCTOR_AVATAR_PATHS = {
     male: "images/Doctor-Boy.jpg",
     female: "images/Doctor-Girl.jpg",
   };
   const MALE_MARKERS = ["นพ.", "นายแพทย์", "dr.", "mr.", "sir"];
-  const FEMALE_MARKERS = ["พญ.", "แพทย์หญิง", "นางแพทย์", "mrs.", "ms.", "madam"];
+  const FEMALE_MARKERS = [
+    "พญ.",
+    "แพทย์หญิง",
+    "นางแพทย์",
+    "mrs.",
+    "ms.",
+    "madam",
+  ];
 
   const detectDoctorGender = (name = "") => {
     const normalized = name?.toLowerCase?.() ?? "";
     if (!normalized) return "unknown";
-    if (MALE_MARKERS.some((marker) => normalized.includes(marker.toLowerCase()))) {
+    if (
+      MALE_MARKERS.some((marker) => normalized.includes(marker.toLowerCase()))
+    ) {
       return "male";
     }
-    if (FEMALE_MARKERS.some((marker) => normalized.includes(marker.toLowerCase()))) {
+    if (
+      FEMALE_MARKERS.some((marker) => normalized.includes(marker.toLowerCase()))
+    ) {
       return "female";
     }
     return "unknown";
@@ -123,8 +134,12 @@ export default function HealthcarePage() {
     return tokens.join("") || "DR";
   };
 
-    const handlePrevDoctors = () => {
+  const handlePrevDoctors = () => {
     setCurrentOrgSlide((prev) => (prev === 0 ? totalSlides - 1 : prev - 1));
+  };
+
+  const handleNextDoctors = () => {
+    setCurrentOrgSlide((prev) => (prev === totalSlides - 1 ? 0 : prev + 1));
   };
 
   return (
@@ -132,13 +147,17 @@ export default function HealthcarePage() {
       <div style={{ backgroundColor: "#f8f9fa" }}>
         <header
           className="py-3 shadow-lg sticky-top"
-          style={{ backgroundColor: "#020A1B", backdropFilter: "blur(12px)" }}
+          style={{ backgroundColor: DARK_BLUE, backdropFilter: "blur(12px)" }}
         >
           <div className="container d-flex align-items-center justify-content-between">
             <div className="d-flex align-items-center gap-3">
               <div
                 className="d-flex align-items-center justify-content-center bg-primary rounded-3"
-                style={{ width: "50px", height: "50px" }}
+                style={{
+                  width: "50px",
+                  height: "50px",
+                  backgroundColor: PRIMARY_BLUE,
+                }}
               >
                 <span className="text-white fw-bold fs-4">H</span>
               </div>
@@ -150,33 +169,41 @@ export default function HealthcarePage() {
 
             <nav className="d-none d-md-flex align-items-center gap-4 ">
               <a
-                href="#services"
-                className="text-light text-decoration-none opacity-75 hover-opacity-100"
+                href="#"
+                className="text-white text-decoration-none fw-semibold opacity-100"
               >
-                บริการ
+                HOME
               </a>
               <a
-                href="#doctors"
+                href="#"
                 className="text-light text-decoration-none opacity-75 hover-opacity-100"
               >
-                แพทย์
+                ABOUT US
               </a>
               <a
-                href="#packages"
+                href="#"
                 className="text-light text-decoration-none opacity-75 hover-opacity-100"
               >
-                แพ็กเกจ
+                DEPARTMENT
               </a>
               <a
-                href="#contact"
+                href="#"
                 className="text-light text-decoration-none opacity-75 hover-opacity-100"
               >
-                ติดต่อ
+                PAGES
               </a>
             </nav>
 
-            <button className="btn btn-primary px-4 py-2 fw-semibold">
-              เข้าสู่ระบบ
+            <button
+             onClick={() => navigate("/queue1")}
+              className="btn px-4 py-2 fw-semibold"
+              style={{
+                backgroundColor: PRIMARY_BLUE,
+                borderColor: PRIMARY_BLUE,
+                color: "white",
+              }}
+            >
+              BOOK AN APPOINTMENT
             </button>
           </div>
         </header>
@@ -184,194 +211,130 @@ export default function HealthcarePage() {
         <section
           className="position-relative py-5"
           style={{
-            background: "linear-gradient(180deg, #020A1B 0%, #000000 100%)",
-            minHeight: "500px",
+            background: `linear-gradient(180deg, ${DARK_BLUE} 0%, #000000 100%)`,
+            minHeight: "700px",
+            paddingTop: "120px",
           }}
         >
-          <div className="container py-5">
-            <div className="row align-items-center">
-              {/* ===== Left Text ===== */}
-              <div className="col-lg-5 mb-5 mb-lg-0">
-                <h2 className="Headtext display-4 fw-bold mb-4 text-white">
-                  Health
+          <div className="container position-relative z-1">
+            <div className="row">
+              <div className="col-lg-6 d-flex flex-column justify-content-center">
+                <p
+                  className="small text-uppercase fw-semibold"
+                  style={{ color: PRIMARY_BLUE }}
+                ></p>
+                <h2
+                  className="display-5 fw-bold text-white mb-4"
+                  style={{
+                    fontSize: "4.4rem",
+                  }}
+                >
+                  Easy Appointments
                   <br />
-                  <span className="SecHead text-primary">Queue</span>
+                  Fast Queue
                 </h2>
-
-                <p className="textPro text-white mb-4 lh-lg">
-                  พร้อมระบบแชทบอทประเมินอาการ เบื้องต้น
+                <p
+                  className="text-light opacity-75 mb-5"
+                  style={{
+                    fontSize: "1.3rem",
+                  }}
+                >
+                  Book your doctor's appointment easily.
+                  <br />
+                  Professional healthcare for your family.
+                  <br />
                 </p>
+                <div className="d-flex align-items-center gap-3">
+                  <button
+                    onClick={() => navigate("/hospitals")}
+                    className="btn btn-lg px-5 py-3 fw-semibold"
+                    style={{
+                      backgroundColor: PRIMARY_BLUE,
+                      borderColor: PRIMARY_BLUE,
+                      color: "white",
+                    }}
+                  >
+                    Bookings
+                  </button>
+                  <a
+                    onClick={() => navigate("/register")}
+                    className="btn btn-outline-light btn-lg px-4 py-3 fw-semibold rounded-pill"
+                  >
+                    Sign Up
+                  </a>
+                </div>
               </div>
 
-              {/* ===== Right Image ===== */}
-              <div className="picphone col-lg-6 text-center">
-                <img
-                  src="./images/PhoneHQ.png"
-                  alt="Phone Mockup"
-                  className="img-fluid phone-hero"
-                />
-              </div>
-            </div>
-
-            {/* ===== Hospital Search Bar ===== */}
-            <div className="search-row">
-              <div className="search-col">
-                <div ref={searchSection} className="search-wrapper">
-                  <div className="search-input-container">
-                    {/* search-icon ถูกปรับปรุงใน Home.css ให้ดูเรียบหรู */}
-                    <i className="bi bi-search search-icon"></i>
-                    <input
-                      type="text"
-                      placeholder="ค้นหาจากชื่อโรงพยาบาล หรือ จังหวัด"
-                      className="search-input"
-                      onFocus={() => setShowDropdown(true)}
-                      onChange={(e) => setLetterSearch(e.target.value)}
-                      value={letterSearch}
-                    />
-                    {/* ใช้ Deep Navy Blue สำหรับปุ่ม */}
-                    <Button
+              <div className="col-lg-6 position-relative d-flex justify-content-center mt-5">
+                <div
+                  className="rounded-bottom-pill shadow-lg"
+                  style={{
+                    position: "absolute",
+                    top: "-100px",
+                    right: "0",
+                    width: "450px",
+                    height: "750px",
+                    backgroundColor: PRIMARY_BLUE,
+                  }}
+                >
+                  <div
+                    style={{
+                      height: "100%",
+                      width: "100%",
+                      backgroundColor: "#002B7A",
+                    }}
+                  >
+                    <img
+                      src="./images/Doctor-Mook.png"
+                      alt="Doctor Mook"
                       style={{
-                        backgroundColor: NAVY_BLUE,
-                        borderColor: NAVY_BLUE,
-                        color: "white",
-                        // ปรับให้ปุ่มดูทันสมัยขึ้นเล็กน้อย
-                        borderRadius: "0 12px 12px 0",
+                        width: "600px",
+                        height: "auto",
+                        marginLeft: "-120px",
                       }}
-                      onClick={() => handleSelect(letterSearch)}
-                    >
-                      ค้นหา
-                    </Button>
+                    />
+                    <p className="text-white text-center pt-5"></p>
                   </div>
-                  {showDropdown && (
-                    <ul className="search-dropdown">
-                      {letterSearch ? (
-                        <>
-                          {filteredHospitals.length > 0 &&
-                            filteredHospitals.map((hospital, index) => {
-                              const name = hospital.name;
-                              const search = letterSearch.toLowerCase();
-                              const startIndex = name
-                                .toLowerCase()
-                                .indexOf(search);
+                </div>
 
-                              let before = name;
-                              let match = "";
-                              let after = "";
-                              if (startIndex !== -1) {
-                                before = name.slice(0, startIndex);
-                                match = name.slice(
-                                  startIndex,
-                                  startIndex + search.length
-                                );
-                                after = name.slice(startIndex + search.length);
-                              }
-
-                              return (
-                                <li
-                                  key={`hospital-${index}`}
-                                  onClick={() => handleHospital(hospital)}
-                                  className="dropdown-item"
-                                >
-                                  โรงพยาบาล{before}
-                                  {match && (
-                                    <span className="highlight">{match}</span>
-                                  )}
-                                  {after}{" "}
-                                  <span className="state-text">
-                                    ({hospital.state})
-                                  </span>
-                                </li>
-                              );
-                            })}
-                          {filteredStates.map((state, index) => {
-                            const search = letterSearch.toLowerCase();
-                            const startIndex = state
-                              .toLowerCase()
-                              .indexOf(search);
-
-                            let before = state;
-                            let match = "";
-                            let after = "";
-                            if (startIndex !== -1) {
-                              before = state.slice(0, startIndex);
-                              match = state.slice(
-                                startIndex,
-                                startIndex + search.length
-                              );
-                              after = state.slice(startIndex + search.length);
-                            }
-
-                            return (
-                              <li
-                                key={`state-${index}`}
-                                onClick={() => handleSelect(state)}
-                                className="dropdown-item"
-                              >
-                                {before}
-                                {match && (
-                                  <span className="highlight">{match}</span>
-                                )}
-                                {after}
-                              </li>
-                            );
-                          })}
-                        </>
-                      ) : (
-                        filteredStates.map((state, index) => (
-                          <li
-                            key={index}
-                            onClick={() => {
-                              handleSelect(state), setSelectedState(state);
-                            }}
-                            className="dropdown-item"
-                          >
-                            {state}
-                          </li>
-                        ))
-                      )}
-                    </ul>
-                  )}
+                <div
+                  className="bg-white rounded-4 shadow p-4 "
+                  style={{
+                    position: "absolute",
+                    bottom: "-305px",
+                    width: "100%",
+                    maxWidth: "550px",
+                    backgroundColor: "white",
+                  }}
+                >
+                  <div className="row text-center ">
+                    <div className="col-6 p-3 border-end ">
+                      <i
+                        className="bi bi-clock-fill fs-3 mb-2"
+                        style={{ color: PRIMARY_BLUE }}
+                      ></i>
+                      <h6 className="fw-bold mb-1">Our Admin team</h6>
+                      <p className="small text-muted mb-0">
+                        is available 24 hours to process queue requests
+                      </p>
+                    </div>
+                    <div className="col-6 p-3">
+                      <i
+                        className="bi bi-person-workspace fs-3 mb-2"
+                        style={{ color: PRIMARY_BLUE }}
+                      ></i>
+                      <h6 className="fw-bold mb-1">
+                        We are Partnered
+                      </h6>
+                      <p className="small text-muted mb-0">
+                        multiple specialized hospitals.
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="d-flex justify-content-center mt-4">
-              <button className="btn btn-primary btn-lg px-5 py-3 shadow mx-2">
-                เริ่มสนทนา
-              </button>
-              <button className="btn btn-primary btn-lg px-5 py-3 shadow mx-2">
-                เริ่มสนทนา
-              </button>
-              <button className="btn btn-primary btn-lg px-5 py-3 shadow mx-2">
-                เริ่มสนทนา
-              </button>
-            </div>
           </div>
-          <div
-            className="position-absolute rounded-circle"
-            aria-hidden="true"
-            style={{
-              top: "80px",
-              left: "40px",
-              width: "80px",
-              height: "80px",
-              backgroundColor: "rgba(59, 130, 246, 0.1)",
-              filter: "blur(40px)",
-              pointerEvents: "none",
-            }}
-          ></div>
-          <div
-            className="position-absolute rounded-circle"
-            aria-hidden="true"
-            style={{
-              bottom: "80px",
-              right: "40px",
-              width: "128px",
-              height: "128px",
-              backgroundColor: "rgba(59, 130, 246, 0.1)",
-              filter: "blur(40px)",
-              pointerEvents: "none",
-            }}
-          ></div>
         </section>
       </div>
 
@@ -389,13 +352,13 @@ export default function HealthcarePage() {
         id="doctors"
         className=""
         style={{
-          background: "linear-gradient(135deg, #eff6ff 0%, #ffffff 100%)",
+          background: "linear-gradient(135deg, #ffffffff 0%, #ffffff 100%)",
         }}
       >
         <div className="container py-4">
           <div className="d-flex justify-content-between align-items-end mb-5">
             <div>
-              <h2 className="display-5 fw-bold mb-2">แพทย์ยอดนิยม</h2>
+              <h2 className="display-5 fw-bold mb-2">Top Doctors</h2>
               <div
                 style={{
                   height: "4px",
@@ -417,64 +380,73 @@ export default function HealthcarePage() {
             {currentDoctors.map((doctor) => {
               const avatarPath = getDoctorAvatarPath(doctor.name);
               const avatarSrc = avatarPath ? resolveAssetPath(avatarPath) : "";
-              const avatarClassName = `rounded-4 mb-3 d-flex align-items-center justify-content-center overflow-hidden${avatarSrc ? "" : " bg-light"}`;
+              const avatarClassName = `rounded-4 mb-3 d-flex align-items-center justify-content-center overflow-hidden${
+                avatarSrc ? "" : " bg-light"
+              }`;
               return (
-              <div key={doctor.id} className="col-sm-6 col-lg-3">
-                <div
-                  className="card border rounded-4 h-100 shadow-sm"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%)",
-                    transition: "all 0.3s ease",
-                    cursor: "pointer",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = "translateY(-8px)";
-                    e.currentTarget.style.boxShadow =
-                      "0 12px 24px rgba(0,0,0,0.15)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = "translateY(0)";
-                    e.currentTarget.style.boxShadow =
-                      "0 2px 8px rgba(0,0,0,0.1)";
-                  }}
-                >
-                  <div className="card-body p-4">
-                    <div
-                      className={avatarClassName}
-                      style={{
-                        width: "100%",
-                        aspectRatio: "1",
-                        background: avatarSrc
-                          ? "transparent"
-                          : "linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%)",
-                      }}
-                    >
-                      {avatarSrc ? (
-                        <img
-                          src={avatarSrc}
-                          alt={doctor.name || "Doctor avatar"}
-                          style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                        />
-                      ) : (
-                        <span className="fw-semibold text-primary" style={{ fontSize: "32px" }}>
-                          {getInitials(doctor.name)}
-                        </span>
-                      )}
-                    </div>
-                    <div className="text-center">
-                      <h5 className="fw-bold mb-1">{doctor.name}</h5>
-                      <p className="text-primary small fw-medium mb-3">
-                        {doctor.specialization}
-                      </p>
-                      <button className="btn btn-primary w-100 rounded-3">
-                        นัดหมาย
-                      </button>
+                <div key={doctor.id} className="col-sm-6 col-lg-3">
+                  <div
+                    className="card border rounded-4 h-100 shadow-sm"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%)",
+                      transition: "all 0.3s ease",
+                      cursor: "pointer",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = "translateY(-8px)";
+                      e.currentTarget.style.boxShadow =
+                        "0 12px 24px rgba(0,0,0,0.15)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = "translateY(0)";
+                      e.currentTarget.style.boxShadow =
+                        "0 2px 8px rgba(0,0,0,0.1)";
+                    }}
+                  >
+                    <div className="card-body p-4">
+                      <div
+                        className={avatarClassName}
+                        style={{
+                          width: "100%",
+                          aspectRatio: "1",
+                          background: avatarSrc
+                            ? "transparent"
+                            : "linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%)",
+                        }}
+                      >
+                        {avatarSrc ? (
+                          <img
+                            src={avatarSrc}
+                            alt={doctor.name || "Doctor avatar"}
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              objectFit: "cover",
+                            }}
+                          />
+                        ) : (
+                          <span
+                            className="fw-semibold text-primary"
+                            style={{ fontSize: "32px" }}
+                          >
+                            {getInitials(doctor.name)}
+                          </span>
+                        )}
+                      </div>
+                      <div className="text-center">
+                        <h5 className="fw-bold mb-1">{doctor.name}</h5>
+                        <p className="text-primary small fw-medium mb-3">
+                          {doctor.specialization}
+                        </p>
+                        <button className="btn btn-primary w-100 rounded-3">
+                          นัดหมาย
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            );
+              );
             })}
           </div>
 
@@ -561,7 +533,7 @@ export default function HealthcarePage() {
         <div className="container py-4">
           <div className="mb-5">
             <h2 className="display-5 fw-bold text-white mb-2">
-              แพ็กเกจ <span style={{ color: "#001B45" }}>และโปรโมชั่น</span>
+              Packages <span style={{ color: "#001B45" }}>and Promotions</span>
             </h2>
             <div
               style={{
