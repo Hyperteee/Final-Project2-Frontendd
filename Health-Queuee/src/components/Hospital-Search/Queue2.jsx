@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import React from "react";
-import hospitalMap from "../../data/hospitaldata.jsx/allhospitaldata";
+import hospitalMap from "../../../data/hospitaldata.jsx/allhospitaldata";
 import './Queue2.css'
 import Button from "react-bootstrap/esm/Button";
 

@@ -18,8 +18,8 @@ import Queue4 from "./components/Hospital-Search/Queue4";
 import { HospitalScheduleProvider } from "../data/context/allSchedule";
 import { UserAppointmentProvider } from "../data/context/appointment";
 import Testdata from "./components/Hospital-Search/testdata";
-import Profile from "../";
-import ProfileBook from "./Profile-User/Profile-book";
+import Profile from "../src/Profile-User/Profile";
+import ProfileBook from "../src/Profile-User/Profile-book";
 import Adminlayout from "../Layout/Adminlayout"
 import AdminDashboard from "../pages/Dashboard";
 import AdminExport from "../pages/Export";
@@ -32,7 +32,7 @@ function App() {
   return (
     <HospitalScheduleProvider>
       <UserAppointmentProvider>
-        <BrowserRouter basename="/Final-Project2-Frontendd/">
+        <BrowserRouter>
           <Routes>
             <Route path="/" element={<HealthcarePage />} />
             <Route path="hospitals" element={<Listsearch />} />

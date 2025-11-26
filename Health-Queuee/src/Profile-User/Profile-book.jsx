@@ -410,7 +410,7 @@ import { useEffect, useState, useContext } from "react";
 import { User, CreditCard, Calendar, Shield, LogOut, MapPin, Clock, FileText, AlertCircle, CheckCircle2, XCircle, ArrowRightCircle, Phone, AlertTriangle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Row, Col, Button, Modal } from "react-bootstrap";
-import { UserAppointment } from "../data/context/appointment";
+import { UserAppointment } from "../../data/context/appointment";
 import "./Profile.css";
 
 export default function ProfileBook() {

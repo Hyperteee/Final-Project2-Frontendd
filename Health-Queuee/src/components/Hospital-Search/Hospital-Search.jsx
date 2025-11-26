@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import Button from 'react-bootstrap/Button'
 import { useNavigate } from 'react-router';
-import stateData from '../../data/liststate';
-import hospitalData from '../../data/listhospital';
+import stateData from '../../../data/liststate';
+import hospitalData from '../../../data/listhospital';
+
 export default function HospitalSearch() {
     const [showDropdown, setShowDropdown] = useState(false)
     const [selectedstate, setSelectedState] = useState("")

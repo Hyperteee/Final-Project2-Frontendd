@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import Button from "react-bootstrap/Button";
-import hospitalData from "../../data/listhospital";
-import stateData from "../../data/liststate";
+import hospitalData from "../../../data/listhospital";
+import stateData from "../../../data/liststate";
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Badge from 'react-bootstrap/Badge'
-import BTSstations from "../../data/btsstation";
+import BTSstations from "../../../data/btsstation";
 import './listsearch.css'
 
 export default function Listsearch() {
