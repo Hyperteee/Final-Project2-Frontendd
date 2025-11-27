@@ -2,14 +2,6 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import Button from "react-bootstrap/Button";
-
-import stateData from "../../data/liststate";
-import hospitalData from "../../data/listhospital";
-import { useEffect, useRef, useState } from "react";
-import Carousel from "react-bootstrap/Carousel";
-import Button from "react-bootstrap/Button";
-import { useNavigate } from "react-router";
-
 import stateData from "../data/liststate";
 import hospitalData from "../data/listhospital";
 import "./Home.css";

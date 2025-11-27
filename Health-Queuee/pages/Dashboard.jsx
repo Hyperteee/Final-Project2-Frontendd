@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from "react";
+import React, { useContext, useEffect, useMemo } from "react";
 import {
   FileUp, Clock, Users, CheckCircle,
   ChevronRight, Bell, Package
@@ -10,7 +10,13 @@ import { UserAppointment } from "../src/data/context/appointment";
 export default function AdminDashboard() {
   const navigate = useNavigate()
   const { appointments, batches } = useContext(UserAppointment);
-
+  useEffect(() => {
+    const loggedInUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (!loggedInUser || (loggedInUser.role !== "admin" && loggedInUser.role !== "super_admin")) {
+        alert("คุณไม่มีสิทธิเข้าถึงหน้านี้");
+        navigate('/'); 
+    }
+  }, [])
   const stats = useMemo(() => {
     const now = new Date();
     const year = now.getFullYear();

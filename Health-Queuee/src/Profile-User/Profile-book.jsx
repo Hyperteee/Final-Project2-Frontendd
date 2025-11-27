@@ -51,7 +51,10 @@ export default function ProfileBook() {
         return <span className="status-badge status-new">{status}</span>;
     }
   };
-
+function handleLogout(){
+        localStorage.removeItem('currentUser');
+        navigate('/login')
+    }
   const isInactive = (status) => {
     // เพิ่ม REJECTED เข้าไปในกลุ่ม inactive เพื่อให้การ์ดเป็นสีเทา (ถ้าต้องการ)
     // หรือถ้าอยากให้ REJECTED ยังเด่นอยู่ ก็ไม่ต้องใส่ในนี้
@@ -171,7 +174,7 @@ export default function ProfileBook() {
                 </button>
               </div>
               <div className="card-footer bg-white border-top p-3">
-                <button className="btn btn-outline-danger w-100 d-flex align-items-center justify-content-center gap-2" onClick={() => navigate("/admin")}>
+                <button className="btn btn-outline-danger w-100 d-flex align-items-center justify-content-center gap-2" onClick={() => handleLogout()}>
                   <LogOut size={18} /> ออกจากระบบ
                 </button>
               </div>

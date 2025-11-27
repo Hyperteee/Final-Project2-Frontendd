@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router"
 import hospitalMap from "../../data/hospitaldata.jsx/allhospitaldata";
 import Form from 'react-bootstrap/Form'

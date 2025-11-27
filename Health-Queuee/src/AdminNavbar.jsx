@@ -19,6 +19,10 @@ const AdminNavbar = () => {
         return location.pathname === path ? 'active' : '';
     };
 
+    function handleLogout(){
+        localStorage.removeItem('currentUser');
+        navigate('/login')
+    }
     return (
         <div className="admin-sidebar">
             
@@ -66,7 +70,7 @@ const AdminNavbar = () => {
             </div>
 
             <div className="sidebar-footer">
-                <button className="logout-btn" onClick={()=>navigate("/profilebook")}>
+                <button className="logout-btn" onClick={()=>handleLogout()}>
                     <LogOut size={18} />
                     <span>ออกจากระบบ</span>
                 </button>

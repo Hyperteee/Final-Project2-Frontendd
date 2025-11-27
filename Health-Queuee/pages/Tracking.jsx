@@ -745,7 +745,7 @@ export default function AdminTracking() {
                       <span className="fw-bold text-primary small" style={{ fontSize: '0.8rem' }}>{batch.id}</span>
                       <div className="d-flex flex-column">
                         <span className="text-muted small" style={{ fontSize: '0.75rem' }}>{new Date(batch.date).toLocaleDateString('th-TH')}</span>
-                        <span className="text-primary small text-end" style={{ fontSize: '0.75rem' }}>{currentBatchInfo.hospitalName}</span>
+                        <span className="text-primary small text-end" style={{ fontSize: '0.75rem' }}>{batch.hospitalName}</span>
                       </div>
                       </div>
                     <div className="d-flex justify-content-between small text-muted mb-1">
