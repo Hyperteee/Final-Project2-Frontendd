@@ -13,12 +13,16 @@ import './AdminNavbar.css';
 const AdminNavbar = () => {
     const navigate = useNavigate()
     const location = useLocation(); 
-
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'))
     // ฟังก์ชันเช็ค Active Menu เพื่อเปลี่ยนสีพื้นหลัง
     const isActive = (path) => {
         return location.pathname === path ? 'active' : '';
     };
 
+    function handleLogout(){
+        localStorage.removeItem('currentUser');
+        navigate('/login')
+    }
     return (
         <div className="admin-sidebar">
             
@@ -28,7 +32,8 @@ const AdminNavbar = () => {
                      <img src="https://via.placeholder.com/1200x400/eef2ff/001E6C?text=Admin+Dashboard+Banner+(Placeholder)" alt="" />
                 </div>
                 <div className="profile-info">
-                    <h5 className="profile-name">แอดมิน</h5>
+                    <h5 className="profile-name">{currentUser.role}</h5>
+                    <small className='text-primary'>{currentUser.adminScope == "all" ? "ดูแลทั้งระบบ" : currentUser.adminScope }</small>
                 </div>
             </div>
 
@@ -66,7 +71,7 @@ const AdminNavbar = () => {
             </div>
 
             <div className="sidebar-footer">
-                <button className="logout-btn" onClick={()=>navigate("/profilebook")}>
+                <button className="logout-btn" onClick={()=>handleLogout()}>
                     <LogOut size={18} />
                     <span>ออกจากระบบ</span>
                 </button>

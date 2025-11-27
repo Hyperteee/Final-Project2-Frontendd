@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import {
   FileUp, Clock, Users, CheckCircle,
   ChevronRight, Bell, Package
@@ -10,7 +10,21 @@ import { UserAppointment } from "../src/data/context/appointment";
 export default function AdminDashboard() {
   const navigate = useNavigate()
   const { appointments, batches } = useContext(UserAppointment);
-
+  const [users, setUsers] = useState([])
+  useEffect(() => {
+    const loggedInUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (!loggedInUser || (loggedInUser.role !== "admin" && loggedInUser.role !== "super_admin")) {
+        alert("คุณไม่มีสิทธิเข้าถึงหน้านี้");
+        navigate('/'); 
+    }
+  }, [])  
+  const filteredUsers = users.filter(user => {
+        if (activeTab === 'pending') {
+            return user.role === 'pending';
+        } else {
+            return user.role === 'user' || user.role === 'admin'
+        }
+    });
   const stats = useMemo(() => {
     const now = new Date();
     const year = now.getFullYear();
@@ -21,7 +35,7 @@ export default function AdminDashboard() {
     return {
       newRequests: appointments.filter(a => a.status === "NEW").length,
       pendingBatches: batches.filter(b => b.status === "SENT").length,
-      pendingUsers: 3,
+      pendingUsers: filteredUsers.length,
       todayAppts: appointments.filter(a => {
           const isConfirmed = a.status === 'CONFIRMED';
           const apptDate = a.confirmedDate || a.priority1Date;

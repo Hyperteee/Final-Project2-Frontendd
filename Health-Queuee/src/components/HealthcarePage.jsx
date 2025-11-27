@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
+
 import Carousel from "react-bootstrap/Carousel";
 import Button from "react-bootstrap/Button";
-import { useNavigate } from "react-router";
-
 import stateData from "../data/liststate";
 import hospitalData from "../data/listhospital";
 import "./Home.css";

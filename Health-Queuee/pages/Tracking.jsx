@@ -13,10 +13,6 @@ import { UserAppointment } from "../src/data/context/appointment";
 import "./Export.css";
 import "./Tracking.css";
 
-// ==========================================
-// 1. HELPER FUNCTIONS
-// ==========================================
-
 function getLocalYMD(dateString) {
   if (!dateString) return null;
   const d = new Date(dateString);
@@ -34,10 +30,6 @@ function formatDateCard(dateString) {
     date: d.toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: '2-digit' })
   };
 }
-
-// ==========================================
-// 2. SUB-COMPONENTS
-// ==========================================
 
 function StatusBadge({ status, hasSuggestion }) {
   const styles = {
@@ -439,10 +431,12 @@ export default function AdminTracking() {
 
     const excelData = itemsInBatch.map((appt, index) => ({
       "ลำดับ": index + 1,
-      "ชื่อ-นามสกุล": appt.name,
+      "ชื่อ": appt.name,
+      "นามสกุล" : appt.lastname,
       "วันเกิด": appt.birthDate || "",
       "อายุ": appt.age || "",
-      "บัตรประชาชน": appt.idCard || "",
+      "บัตรประชาชน/พาสปอร์ต": appt.identificationNumber || "",
+      "สัญชาติ": currentUser.nationality || "",
       "อาการ": appt.symptom || "-",
       "ไฟล์แนบ": (appt.files || []).map(f => f.name).join(", "),
       "วันจองนัดหลัก": appt.priority1Date ? new Date(appt.priority1Date).toLocaleDateString('th-TH') : "",
@@ -485,7 +479,7 @@ export default function AdminTracking() {
   return (
     <div className="export-container">
       <div className="export-header">
-        <h2>🔎 ติดตามผลการนัด (Tracking)</h2>
+        <h2>ติดตามผลการนัด (Tracking)</h2>
         <p>ตรวจสอบสถานะและอัปเดตผลตอบกลับจากโรงพยาบาล</p>
       </div>
 
@@ -656,7 +650,7 @@ export default function AdminTracking() {
                   ) : filteredList.map((item) => (
                     <tr key={item.id} className={item.status === 'USER_CANCELLED' ? 'table-danger' : ''}>
                       <td><span className="font-monospace text-muted small">{item.batchId || "-"}</span></td>
-                      <td><div className="fw-bold">{item.name}</div><div className="small text-muted">{item.userId || "No ID"}</div></td>
+                      <td><div className="fw-bold">{item.name} {item.lastname}</div><div className="small text-muted">{item.userId || "No ID"}</div></td>
                       <td><div>{item.hospitalName}</div><div className="small text-primary">{item.doctorName || "-"}</div></td>
                       <td>
                         <div className="d-flex flex-column">
@@ -670,13 +664,7 @@ export default function AdminTracking() {
                         </div>
                       </td>
                       <td>
-                        {item.status === 'USER_CANCELLED' ? (
-                            <span className="badge bg-danger text-white border border-white shadow-sm">
-                                <AlertTriangle size={12} className="me-1"/> ผู้ใช้ขอยกเลิก
-                            </span>
-                        ) : (
-                            <StatusBadge status={item.status} hasSuggestion={!!item.suggestedDate} />
-                        )}
+                        <StatusBadge status={item.status} hasSuggestion={!!item.suggestedDate} />
                       </td>
                       
                       <td className="text-end">
@@ -705,7 +693,7 @@ export default function AdminTracking() {
                                 </button>
 
                             ) : (
-                                <button className="btn btn-primary btn-sm rounded-pill px-3" onClick={() => handleOpenUpdate(item)}>
+                                <button className="btn btn-primary btn-sm rounded-pill px-3 text-nowrap" onClick={() => handleOpenUpdate(item)}>
                                     อัปเดตผล
                                 </button>
                             )}
@@ -747,8 +735,11 @@ export default function AdminTracking() {
                   >
                     <div className="d-flex justify-content-between align-items-start mb-1">
                       <span className="fw-bold text-primary small" style={{ fontSize: '0.8rem' }}>{batch.id}</span>
-                      <span className="text-muted small" style={{ fontSize: '0.75rem' }}>{new Date(batch.date).toLocaleDateString('th-TH')}</span>
-                    </div>
+                      <div className="d-flex flex-column">
+                        <span className="text-muted small" style={{ fontSize: '0.75rem' }}>{new Date(batch.date).toLocaleDateString('th-TH')}</span>
+                        <span className="text-primary small text-end" style={{ fontSize: '0.75rem' }}>{batch.hospitalName}</span>
+                      </div>
+                      </div>
                     <div className="d-flex justify-content-between small text-muted mb-1">
                       <span>{batch.totalItems} รายการ</span>
                       {batch.status === 'COMPLETED' 
@@ -768,7 +759,9 @@ export default function AdminTracking() {
                 <div className="preview-header border-bottom pb-3 mb-3">
                   <div>
                     <div className="d-flex align-items-center gap-2"><FileSpreadsheet className="text-primary" size={24} /><h5 className="mb-0 fw-bold">รายละเอียด {currentBatchInfo.id}</h5></div>
-                    <small className="text-muted ms-1">ส่งเมื่อ: {new Date(currentBatchInfo.date).toLocaleString('th-TH')}</small>
+                    <div className="d-flex gap-5"><small className="text-muted ms-1">ส่งเมื่อ: {new Date(currentBatchInfo.date).toLocaleString('th-TH')}</small>
+                    <small className="text-muted">โรงพยาบาล<span className="text-primary">{currentBatchInfo.hospitalName}</span></small>
+                    </div>
                   </div>
                   {selectedItemIds.length > 0 ? (
                     <div className="d-flex gap-2 animate-slide-up">
@@ -794,7 +787,7 @@ export default function AdminTracking() {
                       <tr>
                         <th style={{ width: '40px' }}><input type="checkbox" onChange={handleSelectAll} checked={selectedItemIds.length > 0 && selectedItemIds.length === currentBatchItems.filter(i => i.status === 'SENT').length} /></th>
                         <th>คนไข้</th>
-                        <th>โรงพยาบาล</th>
+                        <th>แผนก</th>
                         <th>วันนัด (P1)</th>
                         <th>สถานะ</th>
                         <th className="text-end">จัดการ</th>
@@ -804,7 +797,7 @@ export default function AdminTracking() {
                       {currentBatchItems.map((item) => (
                         <tr key={item.id} className={selectedItemIds.includes(item.id) ? 'bg-light-blue' : ''}>
                           <td>{(item.status === 'SENT' || item.status === 'REJECTED') ? (<input type="checkbox" checked={selectedItemIds.includes(item.id)} onChange={() => handleSelectItem(item.id)} />) : <CheckCircle2 size={16} className="text-muted" />}</td>
-                          <td><div className="fw-bold">{item.name}</div><div className="small text-muted">{item.userId}</div></td>
+                          <td><div className="fw-bold">{item.name} {item.lastname}</div><div className="small text-muted">{item.userId}</div></td>
                           <td>{item.hospitalName}</td>
                           <td>{new Date(item.priority1Date).toLocaleDateString('th-TH')}</td>
                           <td><StatusBadge status={item.status} /></td>
@@ -842,7 +835,7 @@ export default function AdminTracking() {
             <div className="d-flex justify-content-between align-items-start mb-4 border-bottom pb-3">
               <div>
                 <h5 className="mb-1 fw-bold">{selectedTask ? "อัปเดตผลการนัดหมาย" : `อัปเดตผลแบบกลุ่ม (${selectedItemIds.length} รายการ)`}</h5>
-                {selectedTask && <p className="mb-0 text-muted small">คนไข้: {selectedTask.name}</p>}
+                {selectedTask && <p className="mb-0 text-muted small">คนไข้: {selectedTask.name} {selectedTask.lastname}</p>}
               </div>
               <button className="btn-close-custom" onClick={() => setShowModal(false)}><X size={20} /></button>
             </div>
@@ -890,12 +883,10 @@ export default function AdminTracking() {
                     </>
                   )}
 
-                  {/* --- CASE 2: 🔥 Bulk Update (ปรับ UI ตรงนี้) --- */}
                   {!selectedTask && (
                     <>
                         <label className="small text-muted mb-2 fw-bold">เลือกรูปแบบวันที่สำหรับทุกคน</label>
                         <div className="d-flex gap-3 mb-4">
-                            {/* Option 1: P1 Card */}
                             <div 
                                 className={`date-select-card flex-grow-1 text-center p-3 ${updateForm.bulkStrategy === 'P1' ? 'active' : ''}`}
                                 onClick={() => setUpdateForm({ ...updateForm, bulkStrategy: 'P1' })}
@@ -906,7 +897,6 @@ export default function AdminTracking() {
                                 <small className="text-muted">ของทุกคน</small>
                             </div>
 
-                            {/* Option 2: P2 Card */}
                             <div 
                                 className={`date-select-card flex-grow-1 text-center p-3 ${updateForm.bulkStrategy === 'P2' ? 'active' : ''}`}
                                 onClick={() => setUpdateForm({ ...updateForm, bulkStrategy: 'P2' })}

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router"
 import hospitalMap from "../../data/hospitaldata.jsx/allhospitaldata";
 import Form from 'react-bootstrap/Form'
@@ -16,7 +16,16 @@ const Queue4 = () => {
     const { selectedHospital, selectedDepartment, selectedDoctor, priority1Date, priority2Date, departmentName, doctorName } = state || {};
     
     const hospitalData = hospitalMap[selectedHospital]?.info || null;
-    
+    const [currentUser, setCurrentUser] = useState(null)
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('currentUser'));
+        if (user) {
+            setCurrentUser(user);
+        } else {
+            alert("กรุณาเข้าสู่ระบบก่อนทำการจอง");
+            navigate('/login');
+        }
+    }, [])
     const formatDateThai = (date) => {
         if (!date) return "-";
         const d = new Date(date);
@@ -57,22 +66,25 @@ const Queue4 = () => {
     // --- LOGIC บันทึกข้อมูล ---
     const handleConfirm = () => {
         
-        // 1. ระบุประเภทเคส
-        let bookingCase = "DEPT_ONLY";
-        if (selectedDepartment === "ไม่รู้แผนก") {
-            bookingCase = "SCREENING";
-        } else if (selectedDoctor) {
-            bookingCase = "SPECIFIC_DOC";
-        }
+        // let bookingCase = "DEPT_ONLY";
+        // if (selectedDepartment === "ไม่รู้แผนก") {
+        //     bookingCase = "SCREENING";
+        // } else if (selectedDoctor) {
+        //     bookingCase = "SPECIFIC_DOC";
+        // }
 
         const now = new Date().toISOString();
 
-        // 2. สร้างใบคำขอ
         const newAppointment = {
             id: `BK-${Date.now()}`,
-            userId: "U001", 
+            userId: currentUser.userId, 
+            name: currentUser.name,
+            lastname: currentUser.lastname,
+            phone: currentUser.phone,
+            birthDate: currentUser.birthDate,
+            nationality: currentUser.nationality,
+            identificationNumber: currentUser.identificationNumber,
             
-            // ข้อมูลสถานที่
             hospitalId: hospitalData?.id || selectedHospital,
             hospitalName: selectedHospital,
             departmentId: selectedDepartment,
@@ -80,16 +92,12 @@ const Queue4 = () => {
             doctorId: selectedDoctor || null,
             doctorName: doctorName,
 
-            // ข้อมูลการจอง
-            bookingCase: bookingCase,
             priority1Date: priority1Date,
             priority2Date: priority2Date,
             
-            // ข้อมูลอาการ
             symptom: symptom,
             files: files.map(file => ({ name: file.name, size: file.size, type: file.type })), // เก็บเฉพาะ metadata ของไฟล์
 
-            // สถานะเริ่มต้น = รอส่ง
             status: "NEW", 
             
             createdAt: now, 
@@ -107,7 +115,6 @@ const Queue4 = () => {
     };
 
     const handleFinished = () => {
-        // เมื่อจองเสร็จแล้ว ให้ไปที่หน้าประวัติการจอง
         navigate("/profilebook");
     };
 
