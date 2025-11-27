@@ -5,7 +5,7 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
-import { UserAppointment } from "../data/context/appointment";
+import { UserAppointment } from "../src/data/context/appointment";
 
 export default function AdminDashboard() {
   const navigate = useNavigate()

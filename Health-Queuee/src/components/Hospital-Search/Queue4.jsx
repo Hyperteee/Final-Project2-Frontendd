@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router"
-import hospitalMap from "../../../data/hospitaldata.jsx/allhospitaldata";
+import hospitalMap from "../../data/hospitaldata.jsx/allhospitaldata";
 import Form from 'react-bootstrap/Form'
 import Button from "react-bootstrap/esm/Button";
-import { UserAppointment } from "../../../data/context/appointment";
+import { UserAppointment } from "../../data/context/appointment";
 import Modal from 'react-bootstrap/Modal'
 import "./Queue4.css"; 
 
@@ -102,6 +102,7 @@ const Queue4 = () => {
             createdAt: now, 
             updatedAt: now, 
             
+            // เตรียมไว้สำหรับผลลัพธ์
             batchId: null,
             suggestedDate: null,
             confirmedDate: null,

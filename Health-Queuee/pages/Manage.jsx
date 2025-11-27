@@ -5,7 +5,7 @@ import {
   LayoutGrid, Search as SearchIcon 
 } from "lucide-react";
 import "./Export.css"; 
-import hospitalMap from "../data/hospitaldata.jsx/allhospitaldata";
+import hospitalMap from "../src/data/hospitaldata.jsx/allhospitaldata";
 
 
 function TabButton({ id, activeTab, onClick, icon: Icon, label }) {

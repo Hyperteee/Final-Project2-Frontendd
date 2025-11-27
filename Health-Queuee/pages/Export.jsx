@@ -7,8 +7,8 @@ import {
   Mail // <--- Icon สำหรับปุ่มส่งเมล
 } from "lucide-react";
 import "./Export.css";
-import hospitalData from "../data/listhospital";
-import { UserAppointment } from "../data/context/appointment";
+import hospitalData from "../src/data/listhospital";
+import { UserAppointment } from "../src/data/context/appointment";
 import * as XLSX from "xlsx";
 
 // --- Helper Component: Highlight Text ---
@@ -453,6 +453,8 @@ export default function AdminExport() {
       });
       return;
     }
+    // เมื่อกดค้นหาใหม่ ให้ล้างรายการที่เคยติ๊กส่งเมลไว้ด้วย เพื่อความชัวร์ (หรือจะเก็บไว้ก็ได้แล้วแต่ logic)
+    // setSentEmailIds([]);
     setIsSearched(true);
   };
 
