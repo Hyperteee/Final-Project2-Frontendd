@@ -329,8 +329,8 @@ export default function ManagePatients() {
     const [selectedProvince, setSelectedProvince] = useState(''); // เก็บค่าจังหวัด (String)
     const [promotingUserId, setPromotingUserId] = useState(null);
     const [showPromoteModal, setShowPromoteModal] = useState(false);
-    
-    const [scopeType, setScopeType] = useState('all'); 
+
+    const [scopeType, setScopeType] = useState('all');
 
     useEffect(() => {
         const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
@@ -355,7 +355,7 @@ export default function ManagePatients() {
 
     const openPromoteModal = (id) => {
         setPromotingUserId(id);
-        setScopeType("all"); 
+        setScopeType("all");
         setSelectedProvince('');
         setShowPromoteModal(true);
     };
@@ -363,9 +363,9 @@ export default function ManagePatients() {
     const handleConfirmPromote = () => {
         const updatedUsers = users.map((user) => {
             if (user.userId === promotingUserId) {
-                return { 
-                    ...user, 
-                    role: 'admin', 
+                return {
+                    ...user,
+                    role: 'admin',
                     adminScope: scopeType === 'province' ? selectedProvince : 'all'
                 };
             }
@@ -380,7 +380,7 @@ export default function ManagePatients() {
         if (window.confirm("ต้องการลดขั้น Admin คนนี้กลับเป็น User หรือไม่?")) {
             const updatedUsers = users.map((user) => {
                 if (user.userId === id) {
-                    const { adminScope, ...rest } = user; 
+                    const { adminScope, ...rest } = user;
                     return { ...rest, role: 'user' };
                 }
                 return user;
@@ -410,7 +410,7 @@ export default function ManagePatients() {
 
     const renderScopeBadge = (user) => {
         if (user.role !== 'admin') return null;
-        
+
         if (user.adminScope !== 'all') {
             return <span className="badge bg-info text-dark ms-1">จ.{user.adminScope}</span>;
         }
@@ -476,9 +476,9 @@ export default function ManagePatients() {
                                                         )}
                                                     </>
                                                 )}
-                                                {user.role !== 'super_admin' && (
+                                                {isSuperAdmin &&
                                                     <button className="btn btn-sm btn-outline-danger" onClick={() => handleDelete(user.userId)}>ลบ</button>
-                                                )}
+                                                }
                                             </td>
                                         </tr>
                                     ))
@@ -497,8 +497,8 @@ export default function ManagePatients() {
                     <Form>
                         <Form.Group className="mb-3">
                             <Form.Label className="fw-bold">ขอบเขตความรับผิดชอบ</Form.Label>
-                            <Form.Select 
-                                value={selectedProvince} 
+                            <Form.Select
+                                value={selectedProvince}
                                 onChange={(e) => {
                                     setScopeType(e.target.value);
                                     setSelectedProvince('');
@@ -512,8 +512,8 @@ export default function ManagePatients() {
                         {scopeType === 'province' && (
                             <Form.Group className="mb-3">
                                 <Form.Label>เลือกจังหวัด</Form.Label>
-                                <Form.Select 
-                                    value={selectedProvince} 
+                                <Form.Select
+                                    value={selectedProvince}
                                     onChange={(e) => setSelectedProvince(e.target.value)}
                                 >
                                     <option value="">-- กรุณาเลือกจังหวัด --</option>
@@ -527,8 +527,8 @@ export default function ManagePatients() {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={() => setShowPromoteModal(false)}>ยกเลิก</Button>
-                    <Button 
-                        variant="primary" 
+                    <Button
+                        variant="primary"
                         onClick={handleConfirmPromote}
                         // ถ้าเลือก Province แต่ยังไม่เลือกจังหวัด -> ปิดปุ่ม
                         disabled={scopeType === 'province' && !selectedProvince}

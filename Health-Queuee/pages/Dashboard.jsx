@@ -17,6 +17,7 @@ export default function AdminDashboard() {
         alert("คุณไม่มีสิทธิเข้าถึงหน้านี้");
         navigate('/'); 
     }
+
   }, [])  
   const filteredUsers = users.filter(user => {
         if (activeTab === 'pending') {

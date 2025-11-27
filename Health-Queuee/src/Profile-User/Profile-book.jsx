@@ -198,7 +198,7 @@ function handleLogout(){
             <div className="card shadow-sm border-0">
               <div className="card-body p-4 p-lg-5">
                 <div className="mb-4">
-                  <label className="form-label fw-medium fs-5">{currentUser.name}</label>
+                  <label className="form-label fw-medium fs-5">นัดหมายของฉัน</label>
                 </div>
 
                 {myAppointments.length === 0 ? (
