@@ -140,6 +140,7 @@ function handleLogout(){
   const myAppointments = appointments.filter(appt => 
     currentUser && (appt.userId === currentUser.userId) 
   )
+
   return (
     <div className="bg-light min-vh-100">
       <header className="py-3 shadow-lg sticky-top" style={{ backgroundColor: "#020A1B" }}>
@@ -164,7 +165,6 @@ function handleLogout(){
         </div>
 
         <div className="row g-4">
-          {/* Sidebar */}
           <div className="col-lg-3">
             <div className="card shadow-sm border-0">
               <h1 className="fw-medium p-3 pb-0 fs-4">ข้อมูลส่วนตัว</h1>

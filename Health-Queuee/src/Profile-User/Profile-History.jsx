@@ -1,99 +1,36 @@
-import { useState } from "react";
-import { User, CreditCard, Calendar, Lock, Shield, LogOut } from "lucide-react";
+import { useState, useEffect } from "react"; // เพิ่ม useEffect
+import { User, CreditCard, Calendar, Shield, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { Card, Row, Col, Button } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap"; // ลบ Card และ Button ที่ไม่ได้ใช้
 
 export default function ProfileHistory() {
-  const [formData, setFormData] = useState({
-    phone: "เบอร์โทรศัพท์",
-    title: "นาย",
-    firstName: "ประหยัด",
-    lastName: "จันทร์โทรลา",
-    nationalId: "1100897576431",
-    birthDate: "2548-10-20",
-    gender: "ชาย",
-    email: "Prayard@gmail.com",
-  });
 
-  const [formBooking, setFormBooking] = useState({
-    Bookingtime: "นัดหมายของฉัน",
+  // ลบ formBooking และ handleSubmit ที่ไม่เกี่ยวข้องออก
 
-    date: "วันที่",
-    time: "เวลา",
-    department: "แผนก",
-    doctor: "แพทย์",
-  });
+  const navigate = useNavigate();
 
-  const [UserForm, setUserForm] = useState({
-    fullName: "นาย ประหยัด จันทร์โทรลา",
-    hospital: "โรงพยาบาลเปาโล",
-    date: "17/11/68",
-    time: "14:30",
-    doctor: "ดร. หารร่วมน้อย",
-    reason: "ตรวจสุขภาพ",
-  });
+  // 1. State สำหรับเก็บข้อมูลผู้ใช้ปัจจุบัน
+  const [currentUser, setCurrentUser] = useState(null);
+    
+  useEffect(() => {
+    // โหลดข้อมูล User ที่กำลัง Login จาก localStorage
+    const loggedInUser = JSON.parse(localStorage.getItem('currentUser'));
+    setCurrentUser(loggedInUser);
+    // ไม่จำเป็นต้องเก็บ users ทั้งหมด หรือ setUsers
+  }, []);
 
+  // 2. ดึงข้อมูลประวัติการรักษา: ถ้ามี currentUser และมี medicalHistory ให้ใช้ข้อมูลนั้น ไม่งั้นใช้ []
+  const medicalHistory = currentUser?.medicalHistory || [];
+
+  function handleLogout(){
+    localStorage.removeItem('currentUser');
+    navigate('/login')
+  }
+
+  // ฟังก์ชันป้องกันการ submit (ถ้ามี form)
   const handleSubmit = (e) => {
     e.preventDefault();
   };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    console.log(name, value);
-  };
-
-  const calculateAge = (birthdate) => {
-    if (!birthdate) return "";
-    
-    const today = new Date();
-    const birth = new Date(birthdate);
-    
-    let birthYear = birth.getFullYear();
-    const currentYear = today.getFullYear();
-
-    if (birthYear > currentYear + 100) {
-        birthYear = birthYear - 543;
-        birth.setFullYear(birthYear); 
-    }
-
-    let age = currentYear - birthYear;
-    const monthDiff = today.getMonth() - birth.getMonth();
-    const dayDiff = today.getDate() - birth.getDate();
-
-    if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
-        age--;
-    }
-
-    return age < 0 ? 0 : age; 
-};
-  function handleLogout(){
-        localStorage.removeItem('currentUser');
-        navigate('/login')
-    }
-  const historyData = [
-    {
-      headerDate: "16/11/68",
-      fullName: "นาย ประหยัด จันทร์โทรลา",
-      hospital: "โรงพยาบาลเปาโล",
-      visitDate: "16/11/68",
-      time: "14:30",
-      doctor: "ดร. หาหร่วมน้อย",
-      symptom:
-        "น้ำมูกไหล ปวดหัว ตาแห้ง ตัวร้อน กินไม่ได้ นอนหลับไม่สนิท กระดูกข้อตรึงลับ ตับพักกร",
-    },
-    {
-      headerDate: "5/10/68",
-      fullName: "นาย ประหยัด จันทร์โทรลา",
-      hospital: "โรงพยาบาลเปาโล",
-      visitDate: "5/10/68",
-      time: "17:00",
-      doctor: "ดร. หาหร่วมมาก",
-      symptom:
-        "น้ำมูกไหล ปวดหัว ตาแห้ง ตัวร้อน กินไม่ได้ นอนหลับไม่สนิท กระดูกข้อตรึงลับ ตับพักกร",
-    },
-  ];
-
-  const navigate = useNavigate();
 
   return (
     <div className="bg-light min-vh-100">
@@ -199,7 +136,8 @@ export default function ProfileHistory() {
 
                 <button
                   onClick={() => navigate("/ProfileHistory")}
-                  className="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3"
+                  // เพิ่ม class active เพื่อเน้นเมนู
+                  className="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3 active" 
                 >
                   <Calendar size={20} />
                   <span>ประวัติการรักษา</span>
@@ -214,7 +152,7 @@ export default function ProfileHistory() {
               </div>
 
               <div className="card-footer bg-white border-top p-3">
-                <button className="btn btn-outline-danger w-100 d-flex align-items-center justify-content-center gap-2" onClick={()=>handleLogout()}>
+                <button className="btn btn-outline-danger w-100 d-flex align-items-center justify-content-center gap-2" onClick={handleLogout}>
                   <LogOut size={18} />
                   ออกจากระบบ
                 </button>
@@ -222,247 +160,170 @@ export default function ProfileHistory() {
             </div>
           </div>
 
+          {/* เนื้อหาหลัก: ประวัติการรักษา */}
           <div className="col-lg-9">
             <div className="card shadow-sm border-0">
               <div className="card-body p-4 p-lg-5">
-                <form onSubmit={handleSubmit}>
-                  <div className="">
-                    <label className="form-label fw-medium text-secondary">
-                      ประวัติการรักษา
-                    </label>
-                  </div>
+                                      <label className="form-label fw-medium text-secondary">
+                        ประวัติการรักษา
+                      </label>
+                <hr />
 
-                  <div className="mb-4">
-                    <div className="mt-4">
-                      {historyData.map((item, index) => (
-                        <div key={index} className="mb-5">
-                          <div
-                            className="fw-semibold mb-1"
-                            style={{ fontSize: "14px" }}
-                          >
-                            {item.headerDate}
-                          </div>
+                {/* ส่วนแสดงผลประวัติการรักษา / ไม่มีประวัติการรักษา */}
+                {medicalHistory.length > 0 ? (
+                  // ถ้ามีประวัติการรักษา ให้วนลูปแสดงผล
+                  medicalHistory.map((history, index) => (
+                    <div key={index} className="mb-4 p-3 border rounded shadow-sm bg-white">
+                      <div className="d-flex justify-content-between align-items-start mb-3 border-bottom pb-2">
+                        <h5 className="mb-0 fw-bold text-primary">
+                          การเข้าตรวจวันที่: {history.visitDate}
+                        </h5>
+                        <span className="badge bg-success py-2">
+                          เข้าตรวจแล้ว
+                        </span>
+                      </div>
 
-                          <div className="d-flex">
-                            <Card
-                              className="shadow-sm"
-                              style={{
-                                width: "600px",
-                                borderRadius: "24px",
-                                borderWidth: "1.9px",
-                                borderColor: "#000000",
-                              }}
-                            >
-                              <Card.Body style={{ padding: "32px 40px" }}>
-                                <h4
-                                  className="fw-bold mb-1"
-                                  style={{ color: "#1f3bb3", fontSize: "25px" }}
-                                >
-                                  ประวัติการรักษา
-                                </h4>
-
-                                <div
-                                  className="mb-2"
-                                  style={{ fontSize: "16px" }}
-                                >
-                                  {item.fullName}
-                                </div>
-
-                                <div
-                                  className="mb-3"
-                                  style={{
-                                    height: "1px",
-                                    backgroundColor: "#000",
-                                    width: "100%",
-                                    marginTop: "15px",
-                                  }}
-                                />
-
-                                <div
-                                  style={{ fontSize: "14px", lineHeight: 1.7 }}
-                                >
-                                  <Row className="mb-1">
-                                    <Col xs={4} sm={3}>
-                                      <span className="fw-semibold">
-                                        Hospital:
-                                      </span>
-                                    </Col>
-                                    <Col>{item.hospital}</Col>
-                                  </Row>
-
-                                  <Row className="mb-1">
-                                    <Col xs="auto">
-                                      <span className="fw-semibold">
-                                        วันที่:
-                                      </span>
-                                    </Col>
-                                    <Col xs="auto">
-                                      <span
-                                        style={{
-                                          textDecoration: "underline",
-                                          color: "#1f3bb3",
-                                          fontWeight: 600,
-                                        }}
-                                      >
-                                        {item.visitDate}
-                                      </span>
-                                    </Col>
-                                    <Col xs="auto">
-                                      <span className="fw-semibold">เวลา:</span>
-                                    </Col>
-                                    <Col xs="auto">{item.time}</Col>
-                                  </Row>
-
-                                  <Row className="mb-1">
-                                    <Col xs={4} sm={3}>
-                                      <span className="fw-semibold">
-                                        แพทย์ที่:
-                                      </span>
-                                    </Col>
-                                    <Col>{item.doctor}</Col>
-                                  </Row>
-
-                                  <Row className="mb-1">
-                                    <Col xs={4} sm={3}>
-                                      <span className="fw-semibold">
-                                        อาการตรวจ:
-                                      </span>
-                                    </Col>
-                                    <Col>{item.symptom}</Col>
-                                  </Row>
-                                </div>
-
-                                <div className="d-flex justify-content-end mt-3">
-                                  <Button
-                                    variant="light"
-                                    style={{
-                                      borderRadius: "18px",
-                                      minWidth: "120px",
-                                      border: "1px solid #d0d0d0",
-                                    }}
-                                    onClick={() =>
-                                      console.log("ดูรายละเอียด", item)
-                                    }
-                                  >
-                                    รายละเอียด
-                                  </Button>
-                                </div>
-                              </Card.Body>
-                            </Card>
-                          </div>
-                        </div>
-                      ))}
+                      <Row className="g-3">
+                        <Col md={6}>
+                            <p className="mb-1 text-muted small">โรงพยาบาล:</p>
+                            <p className="fs-5 mb-0">{history.hospital || 'ไม่ระบุ'}</p>
+                        </Col>
+                        <Col md={6}>
+                            <p className="mb-1 text-muted small">แพทย์ผู้รักษา:</p>
+                            <p className="fs-5 mb-0">{history.doctor || 'ไม่ระบุ'}</p>
+                        </Col>
+                        <Col md={6}>
+                            <p className="mb-1 text-muted small">เวลาเข้าตรวจ:</p>
+                            <p className="fs-5 mb-0">{history.time || 'ไม่ระบุ'} น.</p>
+                        </Col>
+                        <Col xs={12}>
+                            <p className="mb-1 text-muted small">อาการ/ผลการรักษาโดยสรุป:</p>
+                            <p className="fs-6 mb-0 text-break fst-italic">{history.symptom || 'ไม่มีข้อมูลสรุปอาการ'}</p>
+                        </Col>
+                      </Row>
                     </div>
+                  ))
+                ) : (
+                  // *** แสดงผลเมื่อไม่มีประวัติการรักษา ***
+                  <div className="text-center p-5 border rounded bg-light">
+                    <Calendar size={48} className="text-secondary mb-3" />
+                    <h4 className="text-muted fw-normal">
+                      ไม่มีประวัติการรักษา
+                    </h4>
+                    <p className="text-muted">เมื่อคุณมีการเข้าตรวจแล้ว ประวัติจะปรากฏที่นี่</p>
                   </div>
-                </form>
+                )}
+                
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="container">
-        <footer class="row row-cols-5 py-5 my-5 border-top">
-          <div class="col">
+      {/* ------------------------------------------------------------- */}
+
+      <div className="container">
+        <footer className="row row-cols-5 py-5 my-5 border-top">
+          <div className="col">
             <a
               href="/"
-              class="d-flex align-items-center mb-3 link-dark text-decoration-none"
+              className="d-flex align-items-center mb-3 link-dark text-decoration-none"
             >
-              <svg class="bi me-2" width="40" height="32">
-                <use xlink:href="#bootstrap" />
+              <svg className="bi me-2" width="40" height="32">
+                <use xlinkHref="#bootstrap" />
               </svg>
             </a>
-            <p class="text-muted">&copy; 2021</p>
+            <p className="text-muted">&copy; 2021</p>
           </div>
 
-          <div class="col"></div>
+          <div className="col"></div>
 
-          <div class="col">
+          <div className="col">
             <h5>Section</h5>
-            <ul class="nav flex-column">
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
+            <ul className="nav flex-column">
+              <li className="nav-item mb-2">
+                <a href="#" className="nav-link p-0 text-muted">
                   Home
                 </a>
               </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
+              <li className="nav-item mb-2">
+                <a href="#" className="nav-link p-0 text-muted">
                   Features
                 </a>
               </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
+              <li className="nav-item mb-2">
+                <a href="#" className="nav-link p-0 text-muted">
                   Pricing
                 </a>
               </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
+              <li className="nav-item mb-2">
+                <a href="#" className="nav-link p-0 text-muted">
                   FAQs
                 </a>
               </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
+              <li className="nav-item mb-2">
+                <a href="#" className="nav-link p-0 text-muted">
                   About
                 </a>
               </li>
             </ul>
           </div>
 
-          <div class="col">
+          <div className="col">
             <h5>Section</h5>
-            <ul class="nav flex-column">
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
+            <ul className="nav flex-column">
+              <li className="nav-item mb-2">
+                <a href="#" className="nav-link p-0 text-muted">
                   Home
                 </a>
               </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
+              <li className="nav-item mb-2">
+                <a href="#" className="nav-link p-0 text-muted">
                   Features
                 </a>
               </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
+              <li className="nav-item mb-2">
+                <a href="#" className="nav-link p-0 text-muted">
                   Pricing
                 </a>
               </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
+              <li className="nav-item mb-2">
+                <a href="#" className="nav-link p-0 text-muted">
                   FAQs
                 </a>
               </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
+              <li className="nav-item mb-2">
+                <a href="#" className="nav-link p-0 text-muted">
                   About
                 </a>
               </li>
             </ul>
           </div>
 
-          <div class="col">
+          <div className="col">
             <h5>Section</h5>
-            <ul class="nav flex-column">
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
+            <ul className="nav flex-column">
+              <li className="nav-item mb-2">
+                <a href="#" className="nav-link p-0 text-muted">
                   Home
                 </a>
               </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
+              <li className="nav-item mb-2">
+                <a href="#" className="nav-link p-0 text-muted">
                   Features
                 </a>
               </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
+              <li className="nav-item mb-2">
+                <a href="#" className="nav-link p-0 text-muted">
                   Pricing
                 </a>
               </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
+              <li className="nav-item mb-2">
+                <a href="#" className="nav-link p-0 text-muted">
                   FAQs
                 </a>
               </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">
+              <li className="nav-item mb-2">
+                <a href="#" className="nav-link p-0 text-muted">
                   About
                 </a>
               </li>

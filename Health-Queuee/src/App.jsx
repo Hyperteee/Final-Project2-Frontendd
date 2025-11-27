@@ -1,8 +1,8 @@
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom"; // เพิ่ม Navigate ตรงนี้แล้ว
-
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import HealthcarePage from "./components/HealthcarePage";
 import Listsearch from "./components/Hospital-Search/listsearch";
 import Queue1 from "./components/Hospital-Search/Queue1";
+import Login2 from "./Login-Pages/login2";
 import LoginPage from "../Login-Pages/Login-user";
 import RegisterPage from "../Login-Pages/Register-User";
 import Queue2 from "./components/Hospital-Search/Queue2";
@@ -23,6 +23,9 @@ import AdminExport from "../pages/Export";
 import AdminTracking from "../pages/Tracking";
 import AdminDataManagement from "../pages/Manage";
 import AdminPatients from "../pages/ManagePatients";
+import Register2 from "./Login-Pages/register2";
+import ProfileHistory from "./Profile-User/Profile-History";
+import ProfilePrivacy from "./Profile-User/Profile-Privacy";
 
 function App() {
   return (
@@ -33,14 +36,16 @@ function App() {
             <Route path="/" element={<HealthcarePage />} />
             <Route path="hospitals" element={<Listsearch />} />
             <Route path="queue1" element={<Queue1 />} />
-            <Route path="login" element={<LoginPage />} />
-            <Route path="register" element={<RegisterPage />} />
+            <Route path="login" element={<Login2 />} />
+            <Route path="register" element={<Register2 />} />
             <Route path="queue2" element={<Queue2 />} />
             <Route path="queue3" element={<Queue3 />} />
             <Route path="queue4" element={<Queue4 />} />
             <Route path="testdata" element={<Testdata />} />
             <Route path="profile" element={<Profile />} />
             <Route path="profilebook" element={<ProfileBook />} />
+            <Route path="profileHistory" element={<ProfileHistory />} />
+            <Route path="profilePrivacy" element={<ProfilePrivacy />} />
 
             {/* Admin Routes */}
             <Route element={<Adminlayout />}>

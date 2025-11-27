@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../Login-Pages/data-login/AuthContext.jsx";
+// import { useAuth } from "../Login-Pages/data-login/AuthContext.jsx"; // <--- ลบการนำเข้า useAuth ออก
 
 export default function Login2() {
   const [email, setEmail] = useState("");
@@ -9,34 +9,54 @@ export default function Login2() {
   const [rememberMe, setRememberMe] = useState(false);
 
   const navigate = useNavigate();
-  const { login } = useAuth(); // 👈 ดึงฟังก์ชัน login จาก context
+  // const { login } = useAuth(); // <--- ลบการดึงฟังก์ชัน login ออก
 
   const handleLogin = (e) => {
     e.preventDefault();
 
-    let userRole = null;
+    // ดึงผู้ใช้ทั้งหมดจาก localStorage
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    // ค้นหาผู้ใช้จากอีเมล
+    const foundUser = users.find((u) => u.email === email);
 
-    const adminEmails = ["thee@gmail.com", "mook@gmail.com"];
+    // 1. ตรวจสอบ Super Admin (ตาม Logic ของ Login-user.jsx)
+    if (email === "admin@gmail.com" && password === "1234") {
+      const superAdminUser = {
+        fullname: "Super Admin",
+        email: "admin@gmail.com",
+        role: "super_admin",
+        adminScope: "all",
+      };
+      localStorage.setItem('currentUser', JSON.stringify(superAdminUser));
 
-    // 🔥 เช็ค role
-    if (adminEmails.includes(email) && password === "4444") {
-      userRole = "admin";
-    } else if (email === "user@gmail.com" && password === "1234") {
-      userRole = "user";
-    } else {
-      alert("เข้าสู่ระบบไม่สำเร็จ: อีเมลหรือรหัสผ่านไม่ถูกต้อง!");
+      alert("ยินดีต้อนรับ Super Admin!");
+      navigate("/admin"); // นำทางไปที่ /admin
+      return;
+    }
+    
+    // 2. ตรวจสอบผู้ใช้ทั่วไป (Admin, User, Pending)
+    if (!foundUser) {
+      alert("ข้อมูลผิด");
+      return;
+    }
+    if (foundUser.password !== password) {
+      alert("รหัสผ่านไม่ถูกต้อง");
       return;
     }
 
-
-    login({ email, role: userRole });
-
-    if (userRole === "admin") {
-      alert("เข้าสู่ระบบสำเร็จ! (Admin)");
-      navigate("/admin/dashboard");
-    } else {
+    // 3. จัดการตามบทบาท (Role) ของผู้ใช้ที่พบ
+    if (foundUser.role === "admin") {
+      alert("ยินดีต้อนรับ Admin!");
+      localStorage.setItem('currentUser', JSON.stringify(foundUser));
+      navigate("/admin"); // นำทางไปที่ /admin
+    } else if (foundUser.role === "pending") {
+      alert("กรุณารอแอดมินยืนยันบัญชีของท่านก่อน");
+    } else if (foundUser.role === "user") {
       alert("เข้าสู่ระบบสำเร็จ!");
-      navigate("/");
+      localStorage.setItem('currentUser', JSON.stringify(foundUser));
+      navigate("/"); // นำทางไปที่หน้าหลัก /
+    } else {
+      alert("ข้อมูลผิด");
     }
   };
 
@@ -63,7 +83,7 @@ export default function Login2() {
       >
         <Container fluid className="h-100 p-0">
           <Row className="g-0 h-100">
-            {/* LEFT PANEL */}
+            {/* LEFT PANEL (UI เดิม) */}
             <Col
               md={5}
               className="position-relative overflow-hidden"
@@ -145,7 +165,7 @@ export default function Login2() {
               </div>
             </Col>
 
-            {/* RIGHT PANEL */}
+            {/* RIGHT PANEL (UI เดิม) */}
             <Col
               md={7}
               className="bg-white d-flex align-items-center justify-content-center"

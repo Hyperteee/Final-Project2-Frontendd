@@ -2,29 +2,85 @@ import React, { useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
+// กำหนดสไตล์สำหรับ Form.Control เพื่อให้สอดคล้องกับ UI เดิม
+const INPUT_STYLE = {
+    borderRadius: 8,
+    border: "none",
+};
+
 export default function Register2() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
 
-  const handleRegister = (e) => {
-    e.preventDefault();
-    console.log("Register attempt:", { email, password, confirmPassword, rememberMe });
-    
-    if (password !== confirmPassword) {
-        alert("รหัสผ่านและการยืนยันรหัสผ่านไม่ตรงกัน!");
-        return;
-    }
+  // 1. State สำหรับเก็บข้อมูลฟอร์มทั้งหมด (เพิ่ม title และ gender)
+  const [formData, setFormData] = useState({
+    title: "",
+    name: "",
+    lastname: "",
+    email: "",
+    identificationNumber: "",
+    phone: "",
+    birthDate: "",
+    password: "",
+    confirmPassword: "",
+    nationality: "",
+    gender: "",
+  });
 
-    // ส่วนนี้สามารถเพิ่ม Logic ในการเรียก API สมัครสมาชิก
-    // toast.success("สมัครสมาชิกสำเร็จ!");
-    
-    alert("สมัครสมาชิกสำเร็จ! กำลังพาไปหน้า Login");
-    // navigate('/login'); // สามารถเปลี่ยนเส้นทางไปหน้า Login หลังสมัครสำเร็จ
+  const [rememberMe, setRememberMe] = useState(false);
+
+  // 2. ฟังก์ชันอัปเดตข้อมูลเมื่อมีการพิมพ์
+  const handleChange = (e) => {
+    const { id, value, type, checked } = e.target;
+    if (id === "rememberMe" && type === "checkbox") {
+      setRememberMe(checked);
+    } else {
+      setFormData((prevState) => ({
+        ...prevState,
+        [id]: value,
+      }));
+    }
   };
 
+  // 3. ฟังก์ชันเมื่อกดปุ่มสมัครสมาชิก (Logic เดิม)
+  const handleRegister = (e) => {
+    e.preventDefault();
+
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+
+    if (formData.password !== formData.confirmPassword) {
+      alert("รหัสผ่านและการยืนยันรหัสผ่านไม่ตรงกัน!");
+      return;
+    }
+
+    const foundUser = users.find((u) => u.email === formData.email);
+
+    if (foundUser) {
+      alert("มี email นี้ในระบบแล้ว");
+      return;
+    }
+
+    const newUser = {
+      userId: Date.now(),
+      title: formData.title,
+      name: formData.name,
+      lastname: formData.lastname,
+      email: formData.email,
+      phone: formData.phone,
+      identificationNumber: formData.identificationNumber,
+      birthDate: formData.birthDate,
+      password: formData.password,
+      registeredAt: new Date().toLocaleString(),
+      role: "pending",
+      nationality: formData.nationality,
+      gender: formData.gender,
+    };
+
+    const existingUsers = JSON.parse(localStorage.getItem("users")) || [];
+    localStorage.setItem("users", JSON.stringify([...existingUsers, newUser]));
+
+    alert("สมัครสมาชิกสำเร็จ! กรุณารอแอดมินอนุมัติ");
+    navigate("/login");
+  };
 
   return (
     <>
@@ -62,17 +118,18 @@ export default function Register2() {
                     style={{
                       maxWidth: "100%",
                       height: "650px",
+                      objectFit: "fit-cover",
                       filter:
                         "drop-shadow(0 10px 30px rgba(168, 85, 247, 0.2))",
+                      marginTop: "-22px",
                     }}
                   />
                 </div>
               </Col>
-              
-              {/* --- ฟอร์มถูกย้ายมาทางขวา (Col md={5}) --- */}
+
               <Col
                 md={5}
-                className="position-relative overflow-hidden"
+                className="position-relative overflow-hidden "
                 style={{
                   background:
                     "linear-gradient(135deg, #071164ff 0%, #2527afff 50%, #7d7bffff 100%)",
@@ -95,107 +152,236 @@ export default function Register2() {
                   </svg>
                 </div>
 
-                <div className="position-absolute top-0 start-0 p-4 d-flex justify-content-between align-items-center w-100">
-                  <div className="d-flex align-items-center">
-                    <span className="text-white fw-bold fs-5">
-                      Health For U
-                    </span>
-                  </div>
-                </div>
+                <div
+                  className="d-flex flex-column justify-content-start align-items-center h-100 position-relative px-5 py-5"
+                  style={{ overflowY: "hidden", marginTop: "-50px" }}
+                >
+                  <div className="w-100 pt-3 mt-4" style={{ maxWidth: 450 }}>
+                    <h1 className="text-white text-center mb-2 fw-bold">
+                      REGISTER
+                    </h1>
+                    <p className="text-white text-center mb-4 opacity-75">
+                      กรุณากรอกข้อมูลเพื่อสร้างบัญชี
+                    </p>
 
-                <div className="d-flex flex-column justify-content-center align-items-center h-100 position-relative px-5">
-                    <div className="w-100" style={{ maxWidth: 400 }}>
-                      <h1 className="text-white text-center mb-2 fw-bold">
-                        REGISTER
-                      </h1>
-                      <p className="text-white text-center mb-4 opacity-75">
-                        สร้างบัญชีผู้ใช้งานใหม่
-                      </p>
-
-                      <Form onSubmit={handleRegister}>
-                        <Form.Group className="mb-3" controlId="registerEmail">
-                          <Form.Control
-                            type="text"
-                            size="lg"
-                            placeholder="อีเมล หรือ เบอร์โทรศัพท์"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                            style={{
-                              borderRadius: 8,
-                              border: "none",
-                            }}
-                          />
-                        </Form.Group>
+                    <Form onSubmit={handleRegister}>
                         
-                        <Form.Group className="mb-3" controlId="registerPassword">
-                          <Form.Control
-                            type="password"
-                            size="lg"
-                            placeholder="รหัสผ่าน"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                            style={{
-                              borderRadius: 8,
-                              border: "none",
-                            }}
-                          />
-                        </Form.Group>
+                      <Row className="mb-3">
+                        <Col md={4}>
+                          <Form.Group controlId="title">
+                            <Form.Select
+                              size="lg"
+                              value={formData.title}
+                              onChange={handleChange}
+                              required
+                              style={INPUT_STYLE}
+                              className={
+                                !formData.title ? "text-muted" : "text-dark"
+                              }
+                            >
+                              <option value="" disabled>
+                                คำนำหน้า
+                              </option>
+                              <option value="นาง">นาง</option>
+                              <option value="นางสาว">นางสาว</option>
+                              <option value="นาย">นาย</option>
+                              <option value="Mr.">Mr.</option>
+                              <option value="Mrs.">Mrs.</option>
+                              <option value="Ms.">Ms.</option>
+                            </Form.Select>
+                          </Form.Group>
+                        </Col>
+                        <Col md={8}>
+                          <Form.Group controlId="name">
+                            <Form.Control
+                              type="text"
+                              size="lg"
+                              placeholder="ชื่อ"
+                              value={formData.name}
+                              onChange={handleChange}
+                              required
+                              style={INPUT_STYLE}
+                            />
+                          </Form.Group>
+                        </Col>
+                      </Row>
+                        
+                      {/* นามสกุล/เพศ (Row 2) */}
+                      <Row className="mb-3">
+                        <Col md={8}>
+                          <Form.Group controlId="lastname">
+                            <Form.Control
+                              type="text"
+                              size="lg"
+                              placeholder="นามสกุล"
+                              value={formData.lastname}
+                              onChange={handleChange}
+                              required
+                              style={INPUT_STYLE}
+                            />
+                          </Form.Group>
+                        </Col>
+                        <Col md={4}>
+                            <Form.Group controlId="gender">
+                                <Form.Select
+                                    size="lg"
+                                    value={formData.gender}
+                                    onChange={handleChange}
+                                    required
+                                    style={INPUT_STYLE}
+                                    className={!formData.gender ? "text-muted" : "text-dark"}
+                                >
+                                    <option value="" disabled>เพศ</option>
+                                    <option value="ชาย">ชาย</option>
+                                    <option value="หญิง">หญิง</option>
+                                    <option value="อื่นๆ">อื่นๆ</option>
+                                </Form.Select>
+                            </Form.Group>
+                        </Col>
+                      </Row>
 
-                        <Form.Group className="mb-3" controlId="confirmPassword">
-                          <Form.Control
-                            type="password"
-                            size="lg"
-                            placeholder="ยืนยันรหัสผ่าน"
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            required
-                            style={{
-                              borderRadius: 8,
-                              border: "none",
-                            }}
-                          />
-                        </Form.Group>
-
-
-                        <Form.Check
-                          className="mb-4"
-                          id="rememberMe"
-                          type="checkbox"
-                          label={
-                            <span className="text-white">Remember Me</span>
-                          }
-                          checked={rememberMe}
-                          onChange={(e) => setRememberMe(e.target.checked)}
-                        />
-
-                        <Button
-                          type="submit"
+                      {/* เลขบัตรประชาชน/เบอร์โทรศัพท์ (Row 3) */}
+                      <Row className="mb-3">
+                        <Col md={6}>
+                          <Form.Group controlId="identificationNumber">
+                            <Form.Control
+                              type="tel"
+                              size="lg"
+                              placeholder="เลขบัตรประชาชน (13 หลัก)"
+                              value={formData.identificationNumber}
+                              onChange={handleChange}
+                              required
+                              maxLength={13}
+                              style={INPUT_STYLE}
+                            />
+                          </Form.Group>
+                        </Col>
+                        <Col md={6}>
+                          <Form.Group controlId="phone">
+                            <Form.Control
+                              type="tel"
+                              size="lg"
+                              placeholder="เบอร์โทรศัพท์"
+                              value={formData.phone}
+                              onChange={handleChange}
+                              required
+                              style={INPUT_STYLE}
+                            />
+                          </Form.Group>
+                        </Col>
+                      </Row>
+                        
+                      <Form.Group className="mb-3" controlId="email">
+                        <Form.Control
+                          type="email"
                           size="lg"
-                          className="w-100 text-white fw-semibold"
-                          style={{
-                            backgroundColor: "rgba(107, 50, 241, 0.8)",
-                            borderRadius: 8,
-                            border: "none",
-                          }}
+                          placeholder="อีเมล"
+                          value={formData.email}
+                          onChange={handleChange}
+                          required
+                          style={INPUT_STYLE}
+                        />
+                      </Form.Group>
+
+                      {/* วันเกิด/สัญชาติ (Row 4) */}
+                      <Row className="mb-3">
+                        <Col md={6}>
+                          <Form.Group controlId="birthDate">
+                            <Form.Control
+                              type="date"
+                              size="lg"
+                              value={formData.birthDate}
+                              onChange={handleChange}
+                              required
+                              style={INPUT_STYLE}
+                            />
+                          </Form.Group>
+                        </Col>
+                        <Col md={6}>
+                          <Form.Group controlId="nationality">
+                            <Form.Select
+                              size="lg"
+                              value={formData.nationality}
+                              onChange={handleChange}
+                              required
+                              style={INPUT_STYLE}
+                              className={
+                                !formData.nationality ? "text-muted" : "text-dark"
+                              }
+                            >
+                              <option value="" disabled>
+                                เลือกสัญชาติ...
+                              </option>
+                              <option value="ไทย">ไทย</option>
+                              <option value="ลาว">ลาว</option>
+                              <option value="พม่า">พม่า</option>
+                              <option value="จีน">จีน</option>
+                              <option value="ญี่ปุ่น">ญี่ปุ่น</option>
+                              <option value="เกาหลีใต้">เกาหลีใต้</option>
+                              <option value="สหรัฐอเมริกา">สหรัฐอเมริกา</option>
+                              <option value="อื่นๆ">อื่นๆ</option>
+                            </Form.Select>
+                          </Form.Group>
+                        </Col>
+                      </Row>
+
+                      {/* Password / Confirm Password (Row 5) */}
+                      <Row className="mb-3">
+                        <Col md={6}>
+                          <Form.Group controlId="password">
+                            <Form.Control
+                              type="password"
+                              size="lg"
+                              placeholder="รหัสผ่าน"
+                              value={formData.password}
+                              onChange={handleChange}
+                              required
+                              style={INPUT_STYLE}
+                            />
+                          </Form.Group>
+                        </Col>
+                        <Col md={6}>
+                          <Form.Group controlId="confirmPassword">
+                            <Form.Control
+                              type="password"
+                              size="lg"
+                              placeholder="ยืนยันรหัสผ่าน"
+                              value={formData.confirmPassword}
+                              onChange={handleChange}
+                              required
+                              style={INPUT_STYLE}
+                            />
+                          </Form.Group>
+                        </Col>
+                      </Row>
+
+                      {/* Submit Button */}
+                      <Button
+                        type="submit"
+                        size="lg"
+                        className="w-100 text-white fw-semibold"
+                        style={{
+                          backgroundColor: "rgba(107, 50, 241, 0.8)",
+                          borderRadius: 8,
+                          border: "none",
+                        }}
+                      >
+                        Register
+                      </Button>
+
+                      {/* Link to Login */}
+                      <p className="text-white text-center mt-3 small">
+                        มีบัญชีอยู่แล้ว?{" "}
+                        <a
+                          onClick={() => navigate("/login")}
+                          href="#"
+                          className="text-white fw-semibold text-decoration-underline"
                         >
-                          Register
-                        </Button>
-                        
-                        <p className="text-white text-center mt-3 small">
-                          มีบัญชีอยู่แล้ว?{" "}
-                          <a
-                            onClick={() => navigate("/login")} 
-                            href="#"
-                            className="text-white fw-semibold text-decoration-underline"
-                          >
-                            เข้าสู่ระบบ
-                          </a>
-                        </p>
-                        
-                      </Form>
-                    </div>
+                          เข้าสู่ระบบ
+                        </a>
+                      </p>
+                    </Form>
+                  </div>
                 </div>
               </Col>
             </Row>

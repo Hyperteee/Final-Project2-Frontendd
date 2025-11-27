@@ -1,17 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { User, CreditCard, Calendar, Lock, Shield, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
-
   const handleSubmit = (e) => {
     e.preventDefault();
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    console.log(name, value);
-  };
+  const [users, setUsers] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
+    setUsers(storedUsers);
+    const loggedInUser = JSON.parse(localStorage.getItem("currentUser"));
+    setCurrentUser(loggedInUser);
+  }, []);
 
   const calculateAge = (birthdate) => {
     const today = new Date();
@@ -25,10 +29,15 @@ export default function Profile() {
       age--;
     }
 
+    const handleLogout = () => {
+      localStorage.removeItem("currentUser");
+      navigate("/login");
+    };
+
     return age;
   };
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <div className="bg-light min-vh-100">
@@ -116,30 +125,34 @@ export default function Profile() {
               ></div>
 
               <div className="list-group list-group-flush mt-3">
-                <button 
-                onClick={() => navigate("/Profile")}
-                className="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">
+                <button
+                  onClick={() => navigate("/Profile")}
+                  className="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3"
+                >
                   <User size={20} />
                   <span>โปรไฟล์ของคุณ</span>
                 </button>
 
-                <button 
-                onClick={() => navigate("/ProfileBook")}
-                className="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">
+                <button
+                  onClick={() => navigate("/ProfileBook")}
+                  className="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3"
+                >
                   <CreditCard size={20} />
                   <span>นัดหมาย</span>
                 </button>
 
-                <button 
-                onClick={() => navigate("/ProfileHistory")}
-                className="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">
+                <button
+                  onClick={() => navigate("/ProfileHistory")}
+                  className="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3"
+                >
                   <Calendar size={20} />
                   <span>ประวัติการรักษา</span>
                 </button>
 
-                <button 
-                onClick={() => navigate("/ProfilePrivacy")}
-                className="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">
+                <button
+                  onClick={() => navigate("/ProfilePrivacy")}
+                  className="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3"
+                >
                   <Shield size={20} />
                   <span>จัดการข้อมูลส่วนบุคคล</span>
                 </button>
@@ -155,244 +168,210 @@ export default function Profile() {
           </div>
 
           <div className="col-lg-9">
-        <form onSubmit="user-Profile">
-            <div className="card shadow-sm border-0">
-              <div className="card-body p-4 p-lg-5">
-                <form onSubmit={handleSubmit}>
-                  <div className="mb-4">
-                    <label className="form-label fw-medium text-secondary">
-                      เบอร์โทรศัพท์
-                    </label>
-                    <div className="fs-5 fw-semibold text-success">
-                      {currentUser?.phone}
-                    </div>
-                  </div>
-
-                  <div className="mb-4">
-                    <label className="form-label fw-medium text-secondary">
-                      คำนำหน้าชื่อ
-                    </label>
-                    <select
-                      name="title"
-                      value={currentUser?.title}
-                      onChange={handleInputChange}
-                      className="form-select"
-                    >
-                      <option value="นาย">นาย</option>
-                      <option value="นาง">นาง</option>
-                      <option value="นางสาว">นางสาว</option>
-                    </select>
-                  </div>
-
-                  <div className="mb-4">
-                    <label className="form-label fw-medium text-secondary">
-                      ชื่อ
-                    </label>
-                    <input
-                      type="text"
-                      name="firstName"
-                      value={currentUser?.name}
-                      onChange={handleInputChange}
-                      className="form-control"
-                      placeholder="ชื่อจริง"
-                    />
-                  </div>
-
-                  <div className="mb-4">
-                    <label className="form-label fw-medium text-secondary">
-                      นามสกุล
-                    </label>
-                    <input
-                      type="text"
-                      name="lastName"
-                      value={currentUser?.lastname}
-                      onChange={handleInputChange}
-                      className="form-control"
-                      placeholder="นามสกุล"
-                    />
-                  </div>
-
-                  <div className="mb-4">
-                    <label className="form-label fw-medium text-secondary">
-                      เลขบัตรประชาชน
-                    </label>
-                    <div className="fs-5 fw-semibold text-success">
-                      {currentUser?.identificationNumber}
-                    </div>
-                  </div>
-
-                  <div className="row mb-4">
-                    <div className="col-md-8">
+            <form onSubmit="user-Profile">
+              <div className="card shadow-sm border-0">
+                <div className="card-body p-4 p-lg-5">
+                  <form onSubmit={handleSubmit}>
+                    <div className="mb-4">
                       <label className="form-label fw-medium text-secondary">
-                        วัน/เดือน/ปีเกิด
-                      </label>
-                      <input
-                        type="date"
-                        name="birthDate"
-                        value={currentUser?.birthDate}
-                        onChange={handleInputChange}
-                        className="form-control"
-                      />
-                    </div>
-                    <div className="col-md-4">
-                      <label className="form-label fw-medium text-secondary">
-                        อายุ
+                        เบอร์โทรศัพท์
                       </label>
                       <div className="fs-5 fw-semibold text-success">
-                        {calculateAge(currentUser?.birthDate)} ปี
+                        {currentUser?.phone || "ไม่พบข้อมูล"}
                       </div>
                     </div>
-                  </div>
 
-                  <div className="mb-4">
-                    <label className="form-label fw-medium text-secondary">
-                      เพศ
-                    </label>
-                    <div className="fs-5 fw-semibold text-success">
-                      {currentUser?.gender}
+                    <div className="mb-4">
+                      <label className="form-label fw-medium text-secondary">
+                        คำนำหน้าชื่อ
+                      </label>
+                      <p className="form-control border rounded px-2 py-2 bg-light">
+                        {currentUser?.title || "ไม่พบข้อมูล"}
+                      </p>
                     </div>
-                  </div>
 
-                  <div className="mb-4">
-                    <label className="form-label fw-medium text-secondary">
-                      อีเมล
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={currentUser?.email}
-                      onChange={handleInputChange}
-                      className="form-control"
-                      placeholder="Email"
-                    />
-                  </div>
+                    <div className="mb-4">
+                      <label className="form-label fw-medium text-secondary">
+                        ชื่อ
+                      </label>
+                      <p className="form-control border rounded px-2 py-2 bg-light">
+                        {currentUser?.name || "ไม่พบข้อมูล"}
+                      </p>
+                    </div>
 
-                  <div className="d-flex justify-content-end mt-5">
-                    <button
-                      type="submit"
-                      className="btn btn-success px-5 py-2 fw-medium"
-                    >
-                      บันทึก
-                    </button>
-                  </div>
-                </form>
+                    <div className="mb-4">
+                      <label className="form-label fw-medium text-secondary">
+                        นามสกุล
+                      </label>
+                      <p className="form-control border rounded px-2 py-2 bg-light">
+                        {currentUser?.lastname || "ไม่พบข้อมูล"}
+                      </p>
+                    </div>
+
+                    <div className="mb-4">
+                      <label className="form-label fw-medium text-secondary">
+                        เลขบัตรประชาชน
+                      </label>
+                      <p className="form-control border rounded px-2 py-2 bg-light">
+                        {currentUser?.identificationNumber || "ไม่พบข้อมูล"}
+                      </p>
+                    </div>
+
+                    <div className="row mb-4">
+                      <div className="col-md-8">
+                        <label className="form-label fw-medium text-secondary">
+                          วัน/เดือน/ปีเกิด
+                        </label>
+                        <p className="form-control border rounded px-2 py-2 bg-light">
+                          {currentUser?.birthDate || "ไม่พบข้อมูล"}
+                        </p>
+                      </div>
+                      <div className="col-md-4">
+                        <label className="form-label fw-medium text-secondary">
+                          อายุ
+                        </label>
+                        <div className="fs-5 fw-semibold text-success">
+                          {calculateAge(currentUser?.birthDate)} ปี
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mb-4">
+                      <label className="form-label fw-medium text-secondary">
+                        เพศ
+                      </label>
+                      <div className="fs-5 fw-semibold text-success">
+                        {currentUser?.gender}
+                      </div>
+                    </div>
+
+                    <div className="mb-4">
+                      <label className="form-label fw-medium text-secondary">
+                        อีเมล
+                      </label>
+                      <p className="form-control border rounded px-2 py-2 bg-light">
+                        {currentUser?.email || "ไม่พบข้อมูล"}
+                      </p>
+                    </div>
+
+                    <div className="d-flex justify-content-end mt-5"></div>
+                  </form>
+                </div>
               </div>
-            </div>
-          </form>
-
+            </form>
           </div>
         </div>
       </div>
-              <div class="container">
-          <footer class="row row-cols-5 py-5 my-5 border-top">
-            <div class="col">
-              <a
-                href="/"
-                class="d-flex align-items-center mb-3 link-dark text-decoration-none"
-              >
-                <svg class="bi me-2" width="40" height="32">
-                  <use xlink:href="#bootstrap" />
-                </svg>
-              </a>
-              <p class="text-muted">&copy; 2021</p>
-            </div>
+      <div class="container">
+        <footer class="row row-cols-5 py-5 my-5 border-top">
+          <div class="col">
+            <a
+              href="/"
+              class="d-flex align-items-center mb-3 link-dark text-decoration-none"
+            >
+              <svg class="bi me-2" width="40" height="32">
+                <use xlink:href="#bootstrap" />
+              </svg>
+            </a>
+            <p class="text-muted">&copy; 2021</p>
+          </div>
 
-            <div class="col"></div>
+          <div class="col"></div>
 
-            <div class="col">
-              <h5>Section</h5>
-              <ul class="nav flex-column">
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
-                    Home
-                  </a>
-                </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
-                    Features
-                  </a>
-                </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
-                    Pricing
-                  </a>
-                </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
-                    FAQs
-                  </a>
-                </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
-                    About
-                  </a>
-                </li>
-              </ul>
-            </div>
+          <div class="col">
+            <h5>Section</h5>
+            <ul class="nav flex-column">
+              <li class="nav-item mb-2">
+                <a href="#" class="nav-link p-0 text-muted">
+                  Home
+                </a>
+              </li>
+              <li class="nav-item mb-2">
+                <a href="#" class="nav-link p-0 text-muted">
+                  Features
+                </a>
+              </li>
+              <li class="nav-item mb-2">
+                <a href="#" class="nav-link p-0 text-muted">
+                  Pricing
+                </a>
+              </li>
+              <li class="nav-item mb-2">
+                <a href="#" class="nav-link p-0 text-muted">
+                  FAQs
+                </a>
+              </li>
+              <li class="nav-item mb-2">
+                <a href="#" class="nav-link p-0 text-muted">
+                  About
+                </a>
+              </li>
+            </ul>
+          </div>
 
-            <div class="col">
-              <h5>Section</h5>
-              <ul class="nav flex-column">
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
-                    Home
-                  </a>
-                </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
-                    Features
-                  </a>
-                </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
-                    Pricing
-                  </a>
-                </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
-                    FAQs
-                  </a>
-                </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
-                    About
-                  </a>
-                </li>
-              </ul>
-            </div>
+          <div class="col">
+            <h5>Section</h5>
+            <ul class="nav flex-column">
+              <li class="nav-item mb-2">
+                <a href="#" class="nav-link p-0 text-muted">
+                  Home
+                </a>
+              </li>
+              <li class="nav-item mb-2">
+                <a href="#" class="nav-link p-0 text-muted">
+                  Features
+                </a>
+              </li>
+              <li class="nav-item mb-2">
+                <a href="#" class="nav-link p-0 text-muted">
+                  Pricing
+                </a>
+              </li>
+              <li class="nav-item mb-2">
+                <a href="#" class="nav-link p-0 text-muted">
+                  FAQs
+                </a>
+              </li>
+              <li class="nav-item mb-2">
+                <a href="#" class="nav-link p-0 text-muted">
+                  About
+                </a>
+              </li>
+            </ul>
+          </div>
 
-            <div class="col">
-              <h5>Section</h5>
-              <ul class="nav flex-column">
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
-                    Home
-                  </a>
-                </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
-                    Features
-                  </a>
-                </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
-                    Pricing
-                  </a>
-                </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
-                    FAQs
-                  </a>
-                </li>
-                <li class="nav-item mb-2">
-                  <a href="#" class="nav-link p-0 text-muted">
-                    About
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </footer>
-        </div>
+          <div class="col">
+            <h5>Section</h5>
+            <ul class="nav flex-column">
+              <li class="nav-item mb-2">
+                <a href="#" class="nav-link p-0 text-muted">
+                  Home
+                </a>
+              </li>
+              <li class="nav-item mb-2">
+                <a href="#" class="nav-link p-0 text-muted">
+                  Features
+                </a>
+              </li>
+              <li class="nav-item mb-2">
+                <a href="#" class="nav-link p-0 text-muted">
+                  Pricing
+                </a>
+              </li>
+              <li class="nav-item mb-2">
+                <a href="#" class="nav-link p-0 text-muted">
+                  FAQs
+                </a>
+              </li>
+              <li class="nav-item mb-2">
+                <a href="#" class="nav-link p-0 text-muted">
+                  About
+                </a>
+              </li>
+            </ul>
+          </div>
+        </footer>
+      </div>
     </div>
   );
 }
