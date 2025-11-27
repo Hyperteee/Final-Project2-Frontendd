@@ -9,6 +9,7 @@ export default function RegisterPage() {
 
   // 1. State สำหรับเก็บข้อมูลฟอร์ม
   const [formData, setFormData] = useState({
+    title: '',
     name: '',
     lastname : '',
     userID: '',
@@ -19,7 +20,8 @@ export default function RegisterPage() {
     password: '',
     confirmPassword: '',
     role: '',
-    nationality: ''
+    nationality: '',
+    gender: '',
   });
 
   // 2. ฟังก์ชันอัปเดตข้อมูลเมื่อมีการพิมพ์

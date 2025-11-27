@@ -164,7 +164,7 @@ export default function Profile() {
                       เบอร์โทรศัพท์
                     </label>
                     <div className="fs-5 fw-semibold text-success">
-                      {formData.phone}
+                      {currentUser?.phone}
                     </div>
                   </div>
 
@@ -174,7 +174,7 @@ export default function Profile() {
                     </label>
                     <select
                       name="title"
-                      value={formData.title}
+                      value={currentUser?.title}
                       onChange={handleInputChange}
                       className="form-select"
                     >
@@ -205,7 +205,7 @@ export default function Profile() {
                     <input
                       type="text"
                       name="lastName"
-                      value={currentUser?.name}
+                      value={currentUser?.lastname}
                       onChange={handleInputChange}
                       className="form-control"
                       placeholder="นามสกุล"
@@ -217,7 +217,7 @@ export default function Profile() {
                       เลขบัตรประชาชน
                     </label>
                     <div className="fs-5 fw-semibold text-success">
-                      {formData.nationalId}
+                      {currentUser?.identificationNumber}
                     </div>
                   </div>
 
@@ -229,7 +229,7 @@ export default function Profile() {
                       <input
                         type="date"
                         name="birthDate"
-                        value={formData.birthDate}
+                        value={currentUser?.birthDate}
                         onChange={handleInputChange}
                         className="form-control"
                       />
@@ -239,7 +239,7 @@ export default function Profile() {
                         อายุ
                       </label>
                       <div className="fs-5 fw-semibold text-success">
-                        {calculateAge(formData.birthDate)} ปี
+                        {calculateAge(currentUser?.birthDate)} ปี
                       </div>
                     </div>
                   </div>
@@ -249,7 +249,7 @@ export default function Profile() {
                       เพศ
                     </label>
                     <div className="fs-5 fw-semibold text-success">
-                      {formData.gender}
+                      {currentUser?.gender}
                     </div>
                   </div>
 
@@ -260,10 +260,10 @@ export default function Profile() {
                     <input
                       type="email"
                       name="email"
-                      value={formData.email}
+                      value={currentUser?.email}
                       onChange={handleInputChange}
                       className="form-control"
-                      placeholder="theepakorn3th@gmail.com"
+                      placeholder="Email"
                     />
                   </div>
 
