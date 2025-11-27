@@ -3,16 +3,6 @@ import { User, CreditCard, Calendar, Lock, Shield, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
-  const [formData, setFormData] = useState({
-    phone: "เบอร์โทรศัพท์",
-    title: "นาย",
-    firstName: "ประหยัด",
-    lastName: "จันทร์โทรลา",
-    nationalId: "1100897576431",
-    birthDate: "2548-10-20",
-    gender: "ชาย",
-    email: "Prayard@gmail.com",
-  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -201,7 +191,7 @@ export default function Profile() {
                     <input
                       type="text"
                       name="firstName"
-                      value={formData.firstName}
+                      value={currentUser?.name}
                       onChange={handleInputChange}
                       className="form-control"
                       placeholder="ชื่อจริง"
@@ -215,7 +205,7 @@ export default function Profile() {
                     <input
                       type="text"
                       name="lastName"
-                      value={formData.lastName}
+                      value={currentUser?.name}
                       onChange={handleInputChange}
                       className="form-control"
                       placeholder="นามสกุล"
