@@ -25,63 +25,62 @@ import ProfileBook from "./Profile-User/Profile-book";
 import Login2 from "./Login-Pages/Login2";
 import RegisterPage from "./Login-Pages/Register-User";
 import Register2 from "./Login-Pages/register2.jsx";
-// import Postpone from "./components/Hospital-Search/postpone";
 
-import Adminlayout from "../Layout/Adminlayout"
+import { AuthProvider } from "./Login-Pages/data-login/AuthContext.jsx";
+import ProtectedRoute from "./Login-Pages/data-login/ProtectedRoute.jsx";
+import Adminlayout from "../Layout/Adminlayout";
 import AdminDashboard from "../pages/Dashboard";
 import AdminExport from "../pages/Export";
 import AdminTracking from "../pages/Tracking";
 import AdminDataManagement from "../pages/Manage";
 function App() {
   return (
-    <HospitalScheduleProvider>
-      <UserAppointmentProvider>
-      <BrowserRouter basename="/Final-Project2-Frontendd/">
-        <Routes>
-          <Route path="/" element={<HealthcarePage />} />
-          <Route path="hospitals" element={<Listsearch />} />
-          <Route path="queue1" element={<Queue1 />} />
-          <Route path="Register" element={<Register2 />} />
-          <Route path="login" element={<Login2 />} />
-          <Route path="register" element={<RegisterPage />} />
-          <Route path="queue2" element={<Queue2 />} />
-          <Route path="queue3" element={<Queue3 />} />
-          <Route path="queue4" element={<Queue4 />} />
-          <Route path="doctors" element={<DoctorList />} />
-          <Route path="testdata" element={<Testdata />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="profilebook" element={<ProfileBook />} />
-        </Routes>
-              <Route element={<Adminlayout />}>
-              <Route path="/admin/export" element={<AdminExport />} />
-              <Route path="/admin/dashboard" element={<AdminDashboard/>} />
-              <Route path="/admin/tracking" element={<AdminTracking/>} />
-              <Route path="/admin" element={<AdminDashboard/>} />
-              <Route path="/admin/resources" element={<AdminDataManagement />} />
-            </Route>
-      </BrowserRouter>
-      </UserAppointmentProvider>
+    <AuthProvider>
+      <HospitalScheduleProvider>
+        <UserAppointmentProvider>
+          <BrowserRouter basename="/Final-Project2-Frontendd/">
+            <Routes>
+              {/* ===== Public Routes ===== */}
+              <Route path="/login" element={<Login2 />} />
+              <Route path="/register" element={<Register2 />} />
+              <Route path="/" element={<HealthcarePage />} />
 
-      <AuthProvider> {/* ห่อหุ้ม App ด้วย AuthProvider */}
-        <Routes>
-          {/* เส้นทางสาธารณะ */}
-          <Route path="/login" element={<Login2 />} />
-          <Route path="/register" element={<Register2 />} />
-          
-          {/* Protected Routes: ต้องล็อกอินเท่านั้น */}
-          <Route element={<ProtectedRoute />}>
-              <Route path="/" element={<HealthcarePage />} /> {/* หน้าหลัก/User */}
-          </Route>
+              {/* ===== User Protected Routes ===== */}
+              <Route element={<ProtectedRoute />}>
+              <Route path="hospitals" element={<Listsearch />} />
+              <Route path="queue1" element={<Queue1 />} />
+              <Route path="queue2" element={<Queue2 />} />
+              <Route path="queue3" element={<Queue3 />} />
+              <Route path="queue4" element={<Queue4 />} />
+                {/* หน้า User หลัก */}
 
-          {/* Admin Protected Route: ต้องเป็น Admin เท่านั้น */}
-          <Route element={<ProtectedRoute requiredRoles={['admin']} />}>
-            <Route path="/admin-dashboard" element={<AdminDashboard />} /> 
-          </Route>
+                <Route path="doctors" element={<DoctorList />} />
+                <Route path="testdata" element={<Testdata />} />
+                <Route path="profile" element={<Profile />} />
+                <Route path="profilebook" element={<ProfileBook />} />
+              </Route>
 
-          <Route path="*" element={<h1>404 Not Found</h1>} />
-        </Routes>
-      </AuthProvider>
-    </HospitalScheduleProvider>
+              {/* ===== Admin Protected Routes (ต้องเป็น admin) ===== */}
+              <Route element={<ProtectedRoute requiredRoles={["admin"]} />}>
+                <Route element={<Adminlayout />}>
+                  <Route path="/admin" element={<AdminDashboard />} />
+                  <Route path="/admin/dashboard" element={<AdminDashboard />} />
+                  <Route path="/admin/tracking" element={<AdminTracking />} />
+                  <Route
+                    path="/admin/resources"
+                    element={<AdminDataManagement />}
+                  />
+                  <Route path="/admin/export" element={<AdminExport />} />
+                </Route>
+              </Route>
+
+              {/* ===== 404 ===== */}
+              <Route path="*" element={<h1>404 Not Found</h1>} />
+            </Routes>
+          </BrowserRouter>
+        </UserAppointmentProvider>
+      </HospitalScheduleProvider>
+    </AuthProvider>
   );
 }
 

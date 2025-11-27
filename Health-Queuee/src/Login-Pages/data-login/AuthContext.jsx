@@ -1,33 +1,20 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useState, useContext } from "react"; // 👈 เพิ่มบรรทัดนี้
 
-const AuthContext = createContext(null);
+const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null); 
+export function AuthProvider({ children }) {
+  const [user, setUser] = useState(null);
 
-  const login = (email, password) => {
-    if (email === "admin@test.com" && password === "1234") {
-      setUser({ role: 'admin', email });
-      return 'admin';
-    } else if (email === "user@test.com" && password === "1234") {
-      setUser({ role: 'user', email });
-      return 'user';
-    }
-    setUser(null);
-    throw new Error("Invalid credentials");
-  };
-
-  const logout = () => {
-    setUser(null);
-  };
+  const login = (userData) => setUser(userData);
+  const logout = () => setUser(null);
 
   return (
     <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
-export const useAuth = () => {
+export function useAuth() {
   return useContext(AuthContext);
-};
+}
