@@ -13,10 +13,6 @@ import { UserAppointment } from "../src/data/context/appointment";
 import "./Export.css";
 import "./Tracking.css";
 
-// ==========================================
-// 1. HELPER FUNCTIONS
-// ==========================================
-
 function getLocalYMD(dateString) {
   if (!dateString) return null;
   const d = new Date(dateString);
@@ -34,10 +30,6 @@ function formatDateCard(dateString) {
     date: d.toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: '2-digit' })
   };
 }
-
-// ==========================================
-// 2. SUB-COMPONENTS
-// ==========================================
 
 function StatusBadge({ status, hasSuggestion }) {
   const styles = {
@@ -891,12 +883,10 @@ export default function AdminTracking() {
                     </>
                   )}
 
-                  {/* --- CASE 2: 🔥 Bulk Update (ปรับ UI ตรงนี้) --- */}
                   {!selectedTask && (
                     <>
                         <label className="small text-muted mb-2 fw-bold">เลือกรูปแบบวันที่สำหรับทุกคน</label>
                         <div className="d-flex gap-3 mb-4">
-                            {/* Option 1: P1 Card */}
                             <div 
                                 className={`date-select-card flex-grow-1 text-center p-3 ${updateForm.bulkStrategy === 'P1' ? 'active' : ''}`}
                                 onClick={() => setUpdateForm({ ...updateForm, bulkStrategy: 'P1' })}
@@ -907,7 +897,6 @@ export default function AdminTracking() {
                                 <small className="text-muted">ของทุกคน</small>
                             </div>
 
-                            {/* Option 2: P2 Card */}
                             <div 
                                 className={`date-select-card flex-grow-1 text-center p-3 ${updateForm.bulkStrategy === 'P2' ? 'active' : ''}`}
                                 onClick={() => setUpdateForm({ ...updateForm, bulkStrategy: 'P2' })}

@@ -9,12 +9,24 @@ export default function ProfileBook() {
   const { appointments, cancelAppointment, updateAppointmentStatus } = useContext(UserAppointment);
   const navigate = useNavigate();
 
-  // --- Modal States ---
+  ///////////////////// หาว่าใครคือคนใช้ตอนนี้
+  const [users, setUsers] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null)
+  /////////////////////////////////
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [showPostponeModal, setShowPostponeModal] = useState(false);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
+  ///////////////////// หาว่าใครคือคนใช้ตอนนี้
+  useEffect(() => {
+          const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
+          setUsers(storedUsers);
+          const loggedInUser = JSON.parse(localStorage.getItem('currentUser'));
+          setCurrentUser(loggedInUser);
+      }, []);
+
+  
   // --- Helper Functions ---
   function formatThaiDate(dateString) {
     if (!dateString) return "-";
@@ -56,8 +68,6 @@ function handleLogout(){
         navigate('/login')
     }
   const isInactive = (status) => {
-    // เพิ่ม REJECTED เข้าไปในกลุ่ม inactive เพื่อให้การ์ดเป็นสีเทา (ถ้าต้องการ)
-    // หรือถ้าอยากให้ REJECTED ยังเด่นอยู่ ก็ไม่ต้องใส่ในนี้
     return ['CANCELLED', 'FAILED', 'NO_SHOW'].includes(status);
   };
 
@@ -127,7 +137,9 @@ function handleLogout(){
       return () => clearTimeout(timer);
     }
   }, [showSuccessModal]);
-
+  const myAppointments = appointments.filter(appt => 
+    currentUser && (appt.userId === currentUser.userId) 
+  )
   return (
     <div className="bg-light min-vh-100">
       <header className="py-3 shadow-lg sticky-top" style={{ backgroundColor: "#020A1B" }}>
@@ -186,10 +198,10 @@ function handleLogout(){
             <div className="card shadow-sm border-0">
               <div className="card-body p-4 p-lg-5">
                 <div className="mb-4">
-                  <label className="form-label fw-medium fs-5">นัดหมายของฉัน</label>
+                  <label className="form-label fw-medium fs-5">{currentUser.name}</label>
                 </div>
 
-                {appointments.length === 0 ? (
+                {myAppointments.length === 0 ? (
                   <div className="text-center py-5 text-muted">
                     <Calendar size={48} className="mb-3 opacity-25" />
                     <p>คุณยังไม่มีรายการนัดหมาย</p>
@@ -197,7 +209,7 @@ function handleLogout(){
                   </div>
                 ) : (
                   <div className="d-flex flex-column gap-3">
-                    {appointments
+                    {myAppointments
                       .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
                       .map((appt, index) => (
                         <div

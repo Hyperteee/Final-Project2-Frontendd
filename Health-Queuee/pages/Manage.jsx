@@ -276,7 +276,7 @@ export default function AdminDataManagement() {
     return (
       <div className="export-container">
         <div className="export-header mb-5">
-          <h2>🏥 จัดการข้อมูลโรงพยาบาล (Master Data)</h2>
+          <h2>จัดการข้อมูลโรงพยาบาล (Master Data)</h2>
           <p className="text-muted">เลือกโรงพยาบาลเพื่อแก้ไขรายละเอียด, แผนก, หรือรายชื่อแพทย์</p>
         </div>
         

@@ -24,35 +24,36 @@ export default function LoginPage() {
     e.preventDefault();
     const users = JSON.parse(localStorage.getItem('users')) || [];
     const foundUser = users.find((u) => u.email === inputs.email);
-    
+
     if (inputs.email === "admin@gmail.com" && inputs.password === "1234") {
       const superAdminUser = {
         fullname: "Super Admin",
         email: "admin@gmail.com",
-        role: "super_admin"
+        role: "super_admin",
+        adminScope: "all"
       };
       localStorage.setItem('currentUser', JSON.stringify(superAdminUser));
-      
+
       alert("ยินดีต้อนรับ Super Admin!");
       navigate("/admin");
       return;
     }
-    if (!foundUser){
+    if (!foundUser) {
       alert("ข้อมูลผิด")
       return
     }
     if (foundUser.password !== inputs.password) {
-        alert("รหัสผ่านไม่ถูกต้อง");
-        return;
+      alert("รหัสผ่านไม่ถูกต้อง");
+      return;
     }
-    
+
     if (foundUser.role === "admin") {
       alert("ยินดีต้อนรับ Admin!");
       localStorage.setItem('currentUser', JSON.stringify(foundUser))
       navigate("/admin");
-    }else if(foundUser.role === "pending"){
+    } else if (foundUser.role === "pending") {
       alert("กรุณารอแอดมินยืนยันบัญชีของท่านก่อน")
-    } else if(foundUser.role === "user"){
+    } else if (foundUser.role === "user") {
       alert("เข้าสู่ระบบสำเร็จ!");
       navigate("/");
       localStorage.setItem('currentUser', JSON.stringify(foundUser))
@@ -74,7 +75,7 @@ export default function LoginPage() {
           }}
         >
           <div>
-            
+
           </div>
         </div>
 
