@@ -453,8 +453,6 @@ export default function AdminExport() {
       });
       return;
     }
-    // เมื่อกดค้นหาใหม่ ให้ล้างรายการที่เคยติ๊กส่งเมลไว้ด้วย เพื่อความชัวร์ (หรือจะเก็บไว้ก็ได้แล้วแต่ logic)
-    // setSentEmailIds([]);
     setIsSearched(true);
   };
 
@@ -710,7 +708,7 @@ export default function AdminExport() {
                     <tr key={appt.id}>
                       <td>{index + 1}</td>
                       <td>
-                        <div className="fw-bold">{appt.name}</div>
+                        <div className="fw-bold">{appt.name} {appt.lastname}</div>
                       </td>
                       <td>{appt.departmentName || "-"}</td>
                       <td>{appt.doctorName || "-"}</td>

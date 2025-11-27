@@ -9,13 +9,17 @@ export default function RegisterPage() {
 
   // 1. State สำหรับเก็บข้อมูลฟอร์ม
   const [formData, setFormData] = useState({
-    fullname: '',
+    name: '',
+    lastname : '',
+    userID: '',
     email: '',
     identificationNumber: '',
     phone: '',
     birthDate: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    role: '',
+    nationality: ''
   });
 
   // 2. ฟังก์ชันอัปเดตข้อมูลเมื่อมีการพิมพ์
@@ -30,30 +34,37 @@ export default function RegisterPage() {
   // 3. ฟังก์ชันเมื่อกดปุ่มสมัครสมาชิก
   const handleSubmit = (e) => {
     e.preventDefault();
+    const users = JSON.parse(localStorage.getItem('users')) || [];
 
-    // ตรวจสอบรหัสผ่าน
+
     if (formData.password !== formData.confirmPassword) {
       alert("รหัสผ่านไม่ตรงกัน!");
       return;
     }
 
-    // สร้าง Object ข้อมูลผู้ใช้ใหม่
+    const foundUser = users.find((u) => u.email === formData.email);
+
+    if (foundUser) {
+      alert("มี email นี้ในระบบแล้ว");
+      return;
+    }
+
     const newUser = {
-      id: Date.now(), // สร้าง ID แบบสุ่มจากเวลา
-      fullname: formData.fullname,
+      userId: Date.now(),
+      name: formData.name,
+      lastname: formData.lastname,
       email: formData.email,
       phone: formData.phone,
       identificationNumber: formData.identificationNumber,
       birthDate: formData.birthDate,
       password: formData.password,
-      status: 'pending', // *** สถานะเริ่มต้นคือ "รออนุมัติ"
-      registeredAt: new Date().toLocaleString()
+      registeredAt: new Date().toLocaleString(),
+      role : 'pending',
+      nationality: formData.nationality
     };
 
-    // ดึงข้อมูลเก่าจาก LocalStorage มาก่อน
     const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
 
-    // บันทึกข้อมูลใหม่ลงไปต่อท้าย
     localStorage.setItem('users', JSON.stringify([...existingUsers, newUser]));
 
     alert("สมัครสมาชิกสำเร็จ! กรุณารอแอดมินอนุมัติ");
@@ -85,13 +96,25 @@ export default function RegisterPage() {
 
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
-                <label htmlFor="fullname" className="form-label fw-semibold">ชื่อ-นามสกุล</label>
+                <label htmlFor="name" className="form-label fw-semibold">ชื่อ</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="fullname"
-                  placeholder="ชื่อ-นามสกุล"
-                  value={formData.fullname}
+                  id="name"
+                  placeholder="ชื่อ"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="lastname" className="form-label fw-semibold">นามสกุล</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="lastname"
+                  placeholder="ชื่อ"
+                  value={formData.lastname}
                   onChange={handleChange}
                   required
                 />
@@ -147,7 +170,30 @@ export default function RegisterPage() {
                   required
                 />
               </div>
-
+              <div className="col-md-6 mb-3">
+                  <label htmlFor="nationality" className="form-label fw-semibold">สัญชาติ</label>
+                  <select
+                    className="form-select"
+                    id="nationality"
+                    value={formData.nationality}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="" disabled>เลือกสัญชาติ...</option>
+                    <option value="ไทย">ไทย</option>
+                    <option value="ลาว">ลาว</option>
+                    <option value="พม่า">พม่า</option>
+                    <option value="จีน">จีน</option>
+                    <option value="ญี่ปุ่น">ญี่ปุ่น</option>
+                    <option value="เกาหลีใต้">เกาหลีใต้</option>
+                    <option value="สหรัฐอเมริกา">สหรัฐอเมริกา</option>
+                    <option value="สหราชอาณาจักร">สหราชอาณาจักร</option>
+                    <option value="ออสเตรเลีย">ออสเตรเลีย</option>
+                    <option value="อื่นๆ">อื่นๆ</option>
+                  </select>
+                </div>
+              
+            
               <div className="mb-3">
                 <label htmlFor="password" className="form-label fw-semibold">Password</label>
                 <input
