@@ -6,7 +6,8 @@ import {
   Search,        // สำหรับ Tracking
   Users,         // สำหรับจัดการ User
   Stethoscope,   // สำหรับจัดการหมอ
-  LogOut 
+  LogOut,
+  ArrowLeft
 } from 'lucide-react';
 import './AdminNavbar.css';
 
@@ -69,13 +70,24 @@ const AdminNavbar = () => {
                     <span>ข้อมูลแพทย์/แผนก</span>
                 </Link>
             </div>
-
+            
             <div className="sidebar-footer">
-                <button className="logout-btn" onClick={()=>handleLogout()}>
-                    <LogOut size={18} />
-                    <span>ออกจากระบบ</span>
-                </button>
-            </div>
+            <div className="sidebar-divider mb-3"></div> 
+
+            <button 
+                className="back-btn" 
+                onClick={() => navigate("/")}
+                style={{ marginBottom: '10px' }} // เว้นระยะห่างจาก Logout
+            >
+                <ArrowLeft size={18} />
+                <span>กลับสู่หน้าหลัก</span>
+            </button>
+
+            <button className="logout-btn text-danger" onClick={() => handleLogout()}>
+                <LogOut size={18} />
+                <span>ออกจากระบบ</span>
+            </button>
+        </div>
 
         </div>
     );
