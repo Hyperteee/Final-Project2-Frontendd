@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import Filter from "./Filter";
-import "./package.css";
+import Filter from "../components/Filter";
+import "../styles/package.css";
+import { Link } from "react-router-dom";
+
 
 export default function PackagePage() {
   const [selectedFilters, setSelectedFilters] = useState([]);
@@ -9,7 +11,7 @@ export default function PackagePage() {
   const packages = [
     {
       id: 1,
-      image: "/โปรจจจ.png",
+      image: "package1.jpg",
       title: "ชุดตรวจสุขภาพ Essence Check-up ชาย-หญิง อายุ 15-30 ปี",
       detail: "ราคา 11,980 บาท",
       tags: ["ชุดตรวจสุขภาพหลัก"],
@@ -71,6 +73,9 @@ export default function PackagePage() {
       detail: "ราคา 11,340 บาท",
       tags: ["สุขภาพหัวใจ"],
     },
+
+
+
     {
       id: 11,
       title: "ชุดตรวจสุขภาพสมอง Stop Stroke",
@@ -299,6 +304,8 @@ export default function PackagePage() {
       tags: ["รายการตรวจพิเศษ"],
     },
   ];
+  // ⭐ เก็บข้อมูลไว้ให้หน้าอื่นดึงไปใช้
+   localStorage.setItem("packages", JSON.stringify(packages));
 
 // ฟิลเตอร์ตามหมวดหมู่ + ค้นหา
 const filteredPackages = packages.filter((item) => {
@@ -330,7 +337,7 @@ const packagesToShow =
         <h2 className="banner-title">แพ็กเกจและโปรโมชั่น</h2>
 
         <div className="banner-box">
-          <img src="/โปรจจจ.jpg" className="banner-image" alt="banner" />
+          <img src="package1.jpg" className="banner-image" alt="banner" />
           <div className="banner-info">ชื่อแพ็กเกจ รายละเอียดต่างๆ</div>
         </div>
       </section>
@@ -355,20 +362,32 @@ const packagesToShow =
         />
       </section>
 
-      {/* Results */}
-      <section className="package-list">
-        {packagesToShow.map((pkg) => (
-          <div className="package-card" key={pkg.id}>
-            <img src={pkg.image} className="img-box" alt={pkg.title} />
-            <div className="pkg-info">
-              <h4>{pkg.title}</h4>
-              <p>{pkg.detail}</p>
-            </div>
-            <button className="buy-btn">ซื้อเลย</button>
-          </div>
-        ))}
-      </section>
+   {/* Results */}
+<section className="package-list">
+  {packagesToShow.map((pkg) => (
+    <div className="package-card" key={pkg.id}>
 
+      {/* รูปแพ็กเกจ */}
+      <img src={pkg.image} className="img-box" alt={pkg.title} />
+
+      {/* ข้อมูลแพ็กเกจ */}
+      <div className="pkg-info">
+        <h4>{pkg.title}</h4>
+        <p>{pkg.detail}</p>
+      </div>
+
+      {/* ปุ่มซื้อเลย */}
+      <Link to={`/package/${pkg.id}`} className="buy-btn">
+        ซื้อเลย
+      </Link>
+
+    </div>
+  ))}
+</section>
+
+      {/* Back Button */}
+      <div className="footer">
+      </div>
     </div>
   );
 }

@@ -1,0 +1,96 @@
+/* พื้นหลัง */
+.detail-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(#08224b, #00101f);
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+/* กรอบสีขาว */
+.detail-card {
+  width: 100%;
+  max-width: 850px;
+  background: #fff;
+  border-radius: 20px;
+  padding: 35px 40px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+/* รูปอยู่บนสุด */
+.detail-img {
+  width: 260px;
+  height: auto;
+  display: block;
+  margin: 0 auto 20px;
+  border-radius: 10px;
+}
+
+/* ชื่อแพ็กเกจ */
+.detail-title {
+  font-size: 26px;
+  font-weight: 800;
+  color: #003166;
+}
+
+/* ราคา */
+.detail-price {
+  margin-top: 10px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #d40000;
+}
+
+/* ปุ่มติดต่อ */
+.detail-contact {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.line-btn,
+.call-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.line-btn {
+  background: #06c755;
+}
+
+.call-btn {
+  background: #0d47a1;
+}
+
+/* หัวข้อข้อมูลแพ็กเกจ */
+.detail-subtitle {
+  margin-top: 25px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #003166;
+}
+
+/* รายละเอียด */
+.detail-description {
+  margin-top: 10px;
+  font-size: 15px;
+  color: #444;
+  line-height: 1.6;
+}
+
+/* ปุ่มกลับ */
+.back-btn {
+  display: inline-block;
+  margin-top: 30px;
+  font-size: 15px;
+  color: #003166;
+  text-decoration: none;
+}
+แก้เอากดซื้อแล้วจะไปอีกหน้า
+ดีไซน์อีกนิดหน่อย
