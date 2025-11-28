@@ -7,26 +7,28 @@ import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 import { UserAppointment } from "../src/data/context/appointment";
 
-import { useTranslation } from "react-i18next";
 
 export default function AdminDashboard() {
   const navigate = useNavigate()
   const { appointments, batches } = useContext(UserAppointment);
+
   const [users, setUsers] = useState([])
+
   useEffect(() => {
+    
+    const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
+    setUsers(storedUsers);
+
     const loggedInUser = JSON.parse(localStorage.getItem('currentUser'));
     if (!loggedInUser || (loggedInUser.role !== "admin" && loggedInUser.role !== "super_admin")) {
         alert("คุณไม่มีสิทธิเข้าถึงหน้านี้");
         navigate('/'); 
     }
   }, [])  
-  const filteredUsers = users.filter(user => {
-        if (activeTab === 'pending') {
-            return user.role === 'pending';
-        } else {
-            return user.role === 'user' || user.role === 'admin'
-        }
-    });
+
+  const filteredUsers = users.filter(user => user.role == 'pending')
+  console.log(filteredUsers)
+
   const stats = useMemo(() => {
     const now = new Date();
     const year = now.getFullYear();
@@ -44,7 +46,7 @@ export default function AdminDashboard() {
           return isConfirmed && apptDate === todayStr;
       }).length
     };
-  }, [appointments, batches]);
+  }, [appointments, batches, filteredUsers]);
 
   const formatDateTh = (dateObj) => {
     if (!dateObj) return "-";
@@ -57,7 +59,7 @@ export default function AdminDashboard() {
     return `${day}/${month}/${year}`;
   };
 
-  const recentBatches = batches.slice(0, 5);
+  const recentBatches = batches.slice(0, 10);
 
   const notifications = [
     { id: 1, title: "⚠️ งานล่าช้า: Batch #005", desc: "รพ. จุฬาฯ ยังไม่ตอบกลับมาเกิน 24 ชม. แล้ว กรุณาโทรติดตาม", type: "red", time: "10 นาทีที่แล้ว" },
@@ -66,7 +68,6 @@ export default function AdminDashboard() {
     { id: 4, title: "📢 ประกาศจากระบบ", desc: "พรุ่งนี้ระบบจะปิดปรับปรุงช่วง 02:00 - 04:00 น.", type: "blue", time: "เมื่อวาน" },
   ];
 
-  // ฟังก์ชันลิงก์ไปหน้า Tracking พร้อมกรองวันนี้
   const goToTodayList = () => {
     navigate('/admin/tracking', { 
       state: { filterMode: 'TODAY' } 

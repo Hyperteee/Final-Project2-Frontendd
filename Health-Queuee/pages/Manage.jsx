@@ -183,7 +183,6 @@ export default function AdminDataManagement() {
   // Modal Control
   const [modalConfig, setModalConfig] = useState({ isOpen: false, mode: 'ADD', type: 'DEPT', data: null });
 
-  // --- Data Loading Logic ---
   useEffect(() => {
     const loadedHospitals = [];
     const loadedDepts = [];
