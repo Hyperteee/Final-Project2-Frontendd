@@ -27,7 +27,12 @@ const resources = {
             book_now: "Book Now",
             footer_contact: "Contact",
             footer_products: "Products",
-            footer_company: "Company"
+            footer_company: "Company",
+            nav_services: "Services",
+            nav_doctors: "Doctors",
+            nav_packages: "Packages",
+            nav_contact: "Contact",
+            btn_login: "Login"
         }
     },
     th: {
@@ -55,7 +60,12 @@ const resources = {
             book_now: "จองเลย",
             footer_contact: "ติดต่อเรา",
             footer_products: "ผลิตภัณฑ์",
-            footer_company: "บริษัท"
+            footer_company: "บริษัท",
+            nav_services: "บริการ",
+            nav_doctors: "แพทย์",
+            nav_packages: "แพ็กเกจ",
+            nav_contact: "ติดต่อ",
+            btn_login: "เข้าสู่ระบบ"
         }
     }
 };
@@ -64,7 +74,7 @@ i18n
     .use(initReactI18next)
     .init({
         resources,
-        lng: "en", // ภาษาเริ่มต้น
+        lng: "en", 
         interpolation: {
             escapeValue: false
         }
