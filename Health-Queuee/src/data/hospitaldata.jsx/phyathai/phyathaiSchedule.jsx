@@ -1,3 +1,3 @@
-import { phyathaiSchedule } from "./phyathai";
+const phyathaiSchedule = [];
 
 export default phyathaiSchedule;

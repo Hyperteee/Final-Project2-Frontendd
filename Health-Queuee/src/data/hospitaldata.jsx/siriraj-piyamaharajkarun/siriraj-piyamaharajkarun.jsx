@@ -1,7 +1,6 @@
 ﻿import dataIcon from "../../../../images/icon-department/icon-department";
-import { createHospitalData } from "../utils/createHospitalData";
 
-const sirirajDefinition = {
+const sirirajPiyamaharajkarun = {
     id: "BKK006",
     name: "โรงพยาบาลศิริราช ปิยมหาราชการุณย์",
     state: "กรุงเทพมหานคร",
@@ -13,99 +12,75 @@ const sirirajDefinition = {
     district: "เขตบางกอกน้อย",
     departments: [
       {
+        id: "BKK006-D01",
         name: "ศูนย์อายุรกรรมชั้นสูง",
         logo: dataIcon.ayurkum,
         doctors: [
           {
+            id: "BKK006-D01-DR01",
             name: "นพ. ณัฐพงศ์ รัตนพานิช",
             specialization: "อายุรกรรมต่อมไร้ท่อ",
-            schedule: [
-              { day: "จันทร์", time: "08:30 - 10:30", isBooked: false },
-              { day: "พฤหัสบดี", time: "13:30 - 15:30", isBooked: false },
-            ],
           },
           {
+            id: "BKK006-D01-DR02",
             name: "พญ. ภัทรานิษฐ์ พนาสี",
             specialization: "อายุรกรรมโรคไต",
-            schedule: [
-              { day: "อังคาร", time: "14:00 - 16:00", isBooked: false },
-              { day: "ศุกร์", time: "09:00 - 11:00", isBooked: false },
-            ],
           },
         ],
       },
       {
+        id: "BKK006-D02",
         name: "ศูนย์ศัลยกรรมระบบประสาท",
         logo: dataIcon.pyscho,
         doctors: [
           {
+            id: "BKK006-D02-DR01",
             name: "นพ. บดินทร์ ธรรมโชติ",
             specialization: "ประสาทศัลยแพทย์",
-            schedule: [
-              { day: "พุธ", time: "13:00 - 15:00", isBooked: false },
-              { day: "เสาร์", time: "09:00 - 11:00", isBooked: false },
-            ],
           },
           {
+            id: "BKK006-D02-DR02",
             name: "พญ. เพียงใจ เลิศวิทยา",
             specialization: "ประสาทวิทยา",
-            schedule: [
-              { day: "อังคาร", time: "08:30 - 10:30", isBooked: false },
-              { day: "ศุกร์", time: "14:00 - 16:00", isBooked: false },
-            ],
           },
         ],
       },
       {
+        id: "BKK006-D03",
         name: "ศูนย์หัวใจศิริราช",
         logo: dataIcon.heart,
         doctors: [
           {
+            id: "BKK006-D03-DR01",
             name: "นพ. วุฒิชัย พีรวัชร์",
             specialization: "อายุรแพทย์หัวใจและหลอดเลือด",
-            schedule: [
-              { day: "จันทร์", time: "13:00 - 15:00", isBooked: false },
-              { day: "พฤหัสบดี", time: "09:00 - 11:00", isBooked: false },
-            ],
           },
           {
+            id: "BKK006-D03-DR02",
             name: "นพ. ธิติ ปัญญากร",
             specialization: "ศัลยแพทย์หัวใจ",
-            schedule: [
-              { day: "พุธ", time: "08:30 - 10:30", isBooked: false },
-              { day: "ศุกร์", time: "13:00 - 15:00", isBooked: false },
-            ],
           },
         ],
       },
       {
+        id: "BKK006-D04",
         name: "ศูนย์มะเร็งบูรณาการ",
         logo: dataIcon.surgery,
         doctors: [
           {
+            id: "BKK006-D04-DR01",
             name: "พญ. จิตลดา สุขสมบูรณ์",
             specialization: "ศัลยแพทย์มะเร็ง",
-            schedule: [
-              { day: "อังคาร", time: "09:00 - 11:00", isBooked: false },
-              { day: "พฤหัสบดี", time: "14:00 - 16:00", isBooked: false },
-            ],
           },
           {
+            id: "BKK006-D04-DR02",
             name: "นพ. ธเนศ รัตนสถิตย์",
             specialization: "อายุรแพทย์มะเร็ง",
-            schedule: [
-              { day: "จันทร์", time: "10:00 - 12:00", isBooked: false },
-              { day: "ศุกร์", time: "15:00 - 17:00", isBooked: false },
-            ],
           },
         ],
       },
     ],
   };
-
-const { info: sirirajPiyamaharajkarun, schedule: sirirajSchedule } = createHospitalData(sirirajDefinition);
-
-export { sirirajSchedule };
 
 export default sirirajPiyamaharajkarun;
 

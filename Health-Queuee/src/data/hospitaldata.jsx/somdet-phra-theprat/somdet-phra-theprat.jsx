@@ -1,7 +1,6 @@
 ﻿import dataIcon from "../../../../images/icon-department/icon-department";
-import { createHospitalData } from "../utils/createHospitalData";
 
-const somdetDefinition = {
+const somdetPhraTtheprat = {
     id: "BKK011",
     name: "โรงพยาบาลศูนย์การแพทย์สมเด็จพระเทพรัตน์",
     state: "กรุงเทพมหานคร",
@@ -13,99 +12,75 @@ const somdetDefinition = {
     district: "เขตราชเทวี",
     departments: [
       {
+        id: "BKK011-D01",
         name: "ศูนย์เวชศาสตร์แม่และเด็ก",
         logo: dataIcon.woman,
         doctors: [
           {
+            id: "BKK011-D01-DR01",
             name: "พญ. เมทินี กรณิศ",
             specialization: "เวชศาสตร์มารดาและทารกในครรภ์",
-            schedule: [
-              { day: "จันทร์", time: "13:00 - 15:00", isBooked: false },
-              { day: "พฤหัสบดี", time: "09:00 - 11:00", isBooked: false },
-            ],
           },
           {
+            id: "BKK011-D01-DR02",
             name: "นพ. ธนะศักดิ์ พิพัฒน์",
             specialization: "สูตินรีแพทย์เฉพาะทาง",
-            schedule: [
-              { day: "อังคาร", time: "10:00 - 12:00", isBooked: false },
-              { day: "ศุกร์", time: "14:00 - 16:00", isBooked: false },
-            ],
           },
         ],
       },
       {
+        id: "BKK011-D02",
         name: "ศูนย์หัวใจขั้นสูง",
         logo: dataIcon.heart,
         doctors: [
           {
+            id: "BKK011-D02-DR01",
             name: "นพ. สรัลภพ สุทธิรักษ์",
             specialization: "อายุรแพทย์หัวใจผู้ใหญ่",
-            schedule: [
-              { day: "พุธ", time: "09:00 - 11:00", isBooked: false },
-              { day: "เสาร์", time: "10:00 - 12:00", isBooked: false },
-            ],
           },
           {
+            id: "BKK011-D02-DR02",
             name: "พญ. กมลวรรณ ศรีเมือง",
             specialization: "ศัลยแพทย์หัวใจ",
-            schedule: [
-              { day: "จันทร์", time: "14:00 - 16:00", isBooked: false },
-              { day: "พฤหัสบดี", time: "08:00 - 10:00", isBooked: false },
-            ],
           },
         ],
       },
       {
+        id: "BKK011-D03",
         name: "ศูนย์วิศวกรรมชีวการแพทย์",
         logo: dataIcon.surgery,
         doctors: [
           {
+            id: "BKK011-D03-DR01",
             name: "นพ. ณรงค์เดช วิริยะพงศ์",
             specialization: "ศัลยกรรมหุ่นยนต์",
-            schedule: [
-              { day: "อังคาร", time: "09:00 - 11:00", isBooked: false },
-              { day: "ศุกร์", time: "13:00 - 15:00", isBooked: false },
-            ],
           },
           {
+            id: "BKK011-D03-DR02",
             name: "พญ. ชญาดา ดำรงเดช",
             specialization: "เวชศาสตร์ฟื้นฟูขั้นสูง",
-            schedule: [
-              { day: "จันทร์", time: "08:30 - 10:30", isBooked: false },
-              { day: "พฤหัสบดี", time: "14:00 - 16:00", isBooked: false },
-            ],
           },
         ],
       },
       {
+        id: "BKK011-D04",
         name: "ศูนย์ประสาทวิทยาและสมอง",
         logo: dataIcon.pyscho,
         doctors: [
           {
+            id: "BKK011-D04-DR01",
             name: "นพ. ภาณุวัชร์ วัฒนวณิช",
             specialization: "ประสาทวิทยา",
-            schedule: [
-              { day: "พุธ", time: "13:00 - 15:00", isBooked: false },
-              { day: "เสาร์", time: "09:00 - 11:00", isBooked: false },
-            ],
           },
           {
+            id: "BKK011-D04-DR02",
             name: "พญ. อัจฉรา ศุภจิตรา",
             specialization: "ประสาทศัลยแพทย์",
-            schedule: [
-              { day: "จันทร์", time: "09:00 - 11:00", isBooked: false },
-              { day: "ศุกร์", time: "14:00 - 16:00", isBooked: false },
-            ],
           },
         ],
       },
     ],
   };
 
-const { info: somdetPhraThepratHospital, schedule: somdetSchedule } = createHospitalData(somdetDefinition);
-
-export { somdetSchedule };
-
-export default somdetPhraThepratHospital;
+export default somdetPhraTtheprat;
 

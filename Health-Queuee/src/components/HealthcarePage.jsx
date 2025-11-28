@@ -408,7 +408,7 @@ export default function HealthcarePage() {
                         <p className="text-primary small fw-medium mb-3">
                           {doctor.specialization}
                         </p>
-                        <button className="btn btn-primary w-100 rounded-3">
+                        <button onClick={() => navigate("/doctors")} className="btn btn-primary w-100 rounded-3">
                           นัดหมาย
                         </button>
                       </div>

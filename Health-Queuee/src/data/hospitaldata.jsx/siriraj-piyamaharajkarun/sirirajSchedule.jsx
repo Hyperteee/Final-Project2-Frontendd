@@ -1,3 +1,3 @@
-import { sirirajSchedule } from "./siriraj-piyamaharajkarun";
+const sirirajSchedule = [];
 
 export default sirirajSchedule;

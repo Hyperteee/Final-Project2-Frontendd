@@ -1,7 +1,9 @@
 ﻿import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getAllDoctors } from "../utils/doctorUtils";
 import "./DoctorList.css";
 import resolveAssetPath from "../utils/assetPath.js";
+import hospitalMap from "../data/hospitaldata.jsx/allhospitaldata";
 
 const PAGE_SIZE = 8;
 const ALL_DEPARTMENTS = "All departments";
@@ -40,6 +42,7 @@ const getDoctorAvatarPath = (name = "") => {
 };
 
 export default function DoctorList() {
+  const navigate = useNavigate();
   const doctorPool = useMemo(() => getAllDoctors(), []);
 
   const departmentOptions = useMemo(() => {
@@ -207,7 +210,18 @@ export default function DoctorList() {
                           <p className="small mb-3 doctor-card__hospital">{doctor.hospital}</p>
                           {doctor.specialization && <p className="small text-secondary mb-3">{doctor.specialization}</p>}
                           <div className="d-grid gap-2 w-100 mt-auto doctor-card__actions">
-                            <button className="btn btn-primary rounded-pill py-2">Book</button>
+                            <button
+                              onClick={() => {
+                                // find department id from hospitalMap using hospital name + department name
+                                const hospitalEntry = Object.values(hospitalMap).find(h => h.info?.name === doctor.hospital);
+                                const deptObj = hospitalEntry?.info?.departments?.find(d => d.name === doctor.dept);
+                                const deptId = deptObj?.id ?? doctor.dept;
+                                navigate("/queue3", { state: { selectedHospital: doctor.hospital, selectedDepartment: deptId, selectedDoctor: doctor.id } });
+                              }}
+                              className="btn btn-primary rounded-pill py-2"
+                            >
+                              Book
+                            </button>
                             <button className="btn btn-outline-secondary rounded-pill py-2" onClick={() => handleOpenProfile(doctor)}>
                               View profile
                             </button>
@@ -305,7 +319,17 @@ export default function DoctorList() {
               )}
             </div>
             <div className="doctor-profile-modal__actions">
-              <button className="btn btn-primary rounded-pill px-4">Book appointment</button>
+              <button
+                onClick={() => {
+                  const hospitalEntry = Object.values(hospitalMap).find(h => h.info?.name === selectedDoctor.hospital);
+                  const deptObj = hospitalEntry?.info?.departments?.find(d => d.name === selectedDoctor.dept);
+                  const deptId = deptObj?.id ?? selectedDoctor.dept;
+                  navigate("/queue3", { state: { selectedHospital: selectedDoctor.hospital, selectedDepartment: deptId, selectedDoctor: selectedDoctor.id } });
+                }}
+                className="btn btn-primary rounded-pill px-4"
+              >
+                Book appointment
+              </button>
               <button className="btn btn-outline-secondary rounded-pill px-4" onClick={handleCloseProfile}>
                 Close
               </button>

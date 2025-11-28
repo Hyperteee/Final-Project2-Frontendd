@@ -1,7 +1,6 @@
 ﻿import dataIcon from "../../../../images/icon-department/icon-department";
-import { createHospitalData } from "../utils/createHospitalData";
 
-const ramathibodiDefinition = {
+const ramathibodi = {
     id: "BKK009",
     name: "โรงพยาบาลรามาธิบดี",
     state: "กรุงเทพมหานคร",
@@ -13,99 +12,75 @@ const ramathibodiDefinition = {
     district: "เขตราชเทวี",
     departments: [
       {
+        id: "BKK009-D01",
         name: "ศูนย์อายุรกรรมเฉพาะทาง",
         logo: dataIcon.ayurkum,
         doctors: [
           {
+            id: "BKK009-D01-DR01",
             name: "นพ. อภิรักษ์ เจนกิจ",
             specialization: "อายุรแพทย์โรคเลือด",
-            schedule: [
-              { day: "จันทร์", time: "08:00 - 10:00", isBooked: false },
-              { day: "พุธ", time: "13:00 - 15:00", isBooked: false },
-            ],
           },
           {
+            id: "BKK009-D01-DR02",
             name: "พญ. กุลชา ชัยเดชา",
             specialization: "อายุรแพทย์ไต",
-            schedule: [
-              { day: "อังคาร", time: "09:00 - 11:00", isBooked: false },
-              { day: "ศุกร์", time: "14:00 - 16:00", isBooked: false },
-            ],
           },
         ],
       },
       {
+        id: "BKK009-D02",
         name: "ศูนย์ปลูกถ่ายและศัลยกรรมขั้นสูง",
         logo: dataIcon.surgery,
         doctors: [
           {
+            id: "BKK009-D02-DR01",
             name: "นพ. พงศ์ภัทร พันธุมะ",
             specialization: "ศัลยแพทย์ปลูกถ่ายตับ",
-            schedule: [
-              { day: "พุธ", time: "10:00 - 12:00", isBooked: false },
-              { day: "เสาร์", time: "09:00 - 11:00", isBooked: false },
-            ],
           },
           {
+            id: "BKK009-D02-DR02",
             name: "นพ. สถาพร ชัยบุญ",
             specialization: "ศัลยกรรมทรวงอก",
-            schedule: [
-              { day: "จันทร์", time: "13:00 - 15:00", isBooked: false },
-              { day: "พฤหัสบดี", time: "08:30 - 10:30", isBooked: false },
-            ],
           },
         ],
       },
       {
+        id: "BKK009-D03",
         name: "ศูนย์มะเร็งรามาธิบดี",
         logo: dataIcon.pyscho,
         doctors: [
           {
+            id: "BKK009-D03-DR01",
             name: "พญ. ภูษณิศา กิตติรุจาวงศ์",
             specialization: "อายุรแพทย์มะเร็ง",
-            schedule: [
-              { day: "อังคาร", time: "13:00 - 15:00", isBooked: false },
-              { day: "ศุกร์", time: "09:00 - 11:00", isBooked: false },
-            ],
           },
           {
+            id: "BKK009-D03-DR02",
             name: "นพ. จิรายุส เฉลิมศิลป์",
             specialization: "รังสีรักษา",
-            schedule: [
-              { day: "จันทร์", time: "10:00 - 12:00", isBooked: false },
-              { day: "พฤหัสบดี", time: "14:00 - 16:00", isBooked: false },
-            ],
           },
         ],
       },
       {
+        id: "BKK009-D04",
         name: "ศูนย์กุมารเวชรามาธิบดี",
         logo: dataIcon.child,
         doctors: [
           {
+            id: "BKK009-D04-DR01",
             name: "นพ. ปฏิภาณ สวัสดิพร",
             specialization: "กุมารแพทย์โรคหัวใจ",
-            schedule: [
-              { day: "พุธ", time: "09:00 - 11:00", isBooked: false },
-              { day: "เสาร์", time: "10:00 - 12:00", isBooked: false },
-            ],
           },
           {
+            id: "BKK009-D04-DR02",
             name: "พญ. ปวีณา ชลธี",
             specialization: "กุมารแพทย์มะเร็ง",
-            schedule: [
-              { day: "อังคาร", time: "10:00 - 12:00", isBooked: false },
-              { day: "ศุกร์", time: "13:00 - 15:00", isBooked: false },
-            ],
           },
         ],
       },
     ],
   };
 
-const { info: ramathibodiHospital, schedule: ramathibodiSchedule } = createHospitalData(ramathibodiDefinition);
-
-export { ramathibodiSchedule };
-
-export default ramathibodiHospital;
+export default ramathibodi;
 

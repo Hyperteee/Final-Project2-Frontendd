@@ -84,7 +84,7 @@ export default function NavigationBar() {
             {t("nav_appointment")}
           </a>
           <a
-            onClick={() => navigate("/doctorlist")}
+            onClick={() => navigate("/doctors")}
             className="text-light text-decoration-none opacity-75 hover-opacity-100"
           >
             {t("nav_doctors")}

@@ -1155,10 +1155,8 @@ export default function AdminExport() {
   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
   const [sentEmailIds, setSentEmailIds] = useState([]);
   
-  // --- [FIX] Determine Admin Scope ---
   const adminScope = currentUser?.adminScope || 'all';
 
-  // --- [FIX] Auto-set Province if scoped ---
   useEffect(() => {
     if (adminScope && adminScope !== 'all') {
       setSelectedProvince(adminScope);
@@ -1191,7 +1189,6 @@ export default function AdminExport() {
       provinceCounts[h.province] += h.bookingCount;
     });
 
-    // --- [FIX] Filter provinces based on adminScope ---
     const keys = Object.keys(provinceCounts).filter(p => adminScope === 'all' || p === adminScope);
 
     return keys.map(p => ({
@@ -1353,9 +1350,8 @@ export default function AdminExport() {
     if (wasSuccess) {
       setIsSearched(false);
       setSelectedHospital("");
-      setSentEmailIds([]); // ล้าง session การส่งเมลหลังจบงาน
+      setSentEmailIds([]);
       
-      // --- [FIX] Reset Province Logic ---
       if (adminScope !== 'all') {
          setSelectedProvince(adminScope); // ถ้าเป็น admin จังหวัด ให้ reset กลับไปเป็นจังหวัดตัวเอง
       } else {
@@ -1420,7 +1416,6 @@ export default function AdminExport() {
         <div className="d-flex gap-3 mb-3">
           <div className="flex-fill">
             <label className="text-muted small mb-1">จังหวัด</label>
-            {/* --- [FIX] Disable interaction if scope is specific --- */}
             <div style={adminScope !== 'all' ? { pointerEvents: 'none', opacity: 0.8 } : {}}>
               <SearchableSelect
                 options={provinces}

@@ -1,3 +1,3 @@
-import { vejthaniSchedule } from "./vejthani";
+const vejthaniSchedule = [];
 
 export default vejthaniSchedule;
