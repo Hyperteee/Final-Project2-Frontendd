@@ -11,6 +11,7 @@ import Queue4 from "./components/Hospital-Search/Queue4";
 import Testdata from "./components/Hospital-Search/testdata";
 import Profile from "../src/Profile-User/Profile";
 import ProfileBook from "../src/Profile-User/Profile-book";
+import ChatBot from "../src/components/ChatBot/ChatBot"
 
 // Context
 import { HospitalScheduleProvider } from "./data/context/allSchedule";
@@ -33,7 +34,7 @@ function App() {
       <UserAppointmentProvider>
         <BrowserRouter basename="/Final-Project2-Frontendd/">
           <Routes>
-            <Route path="/" element={<HealthcarePage />} />
+            <Route path="healthcarepage" element={<HealthcarePage />} />
             <Route path="hospitals" element={<Listsearch />} />
             <Route path="queue1" element={<Queue1 />} />
             <Route path="login" element={<Login2 />} />
@@ -46,6 +47,7 @@ function App() {
             <Route path="profilebook" element={<ProfileBook />} />
             <Route path="profileHistory" element={<ProfileHistory />} />
             <Route path="profilePrivacy" element={<ProfilePrivacy />} />
+            <Route path="/" element={<ChatBot/> } />
 
             {/* Admin Routes */}
             <Route element={<Adminlayout />}>
