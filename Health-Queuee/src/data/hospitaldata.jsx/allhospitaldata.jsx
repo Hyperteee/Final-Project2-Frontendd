@@ -1,152 +1,87 @@
+// Hospital imports only (no schedules)
 import chulalongkorn from "./chula/chula";
-import chulaSchedule from "./chula/chulaSchedule";
-import synphaet_ramintra from "./synphaet/synphaet";
-import synphaetSchedule from "./synphaet/synphaetSchedule";
-import phyathai from "./phyathai/phyathai";
-import phyathaiSchedule from "./phyathai/phyathaiSchedule";
-import bumrungrad from "./bumrungrad/bumrungrad";
-import bumrungradSchedule from "./bumrungrad/bumrungradSchedule";
-import samitivejSukhumvit from "./samitivej-sukhumvit/samitivej-sukhumvit";
-import samitivejSchedule from "./samitivej-sukhumvit/samitivejSchedule";
-import sirirajPiyamaharajkarun from "./siriraj-piyamaharajkarun/siriraj-piyamaharajkarun";
-import sirirajSchedule from "./siriraj-piyamaharajkarun/sirirajSchedule";
-import bangkokHospital from "./bangkok-hospital/bangkok-hospital";
-import bangkokHospitalSchedule from "./bangkok-hospital/bangkokHospitalSchedule";
-import praram9Hospital from "./praram9/praram9";
-import praram9Schedule from "./praram9/praram9Schedule";
-import ramathibodiHospital from "./ramathibodi/ramathibodi";
-import ramathibodiSchedule from "./ramathibodi/ramathibodiSchedule";
-import vejthaniHospital from "./vejthani/vejthani";
-import vejthaniSchedule from "./vejthani/vejthaniSchedule";
-import somdetPhraThepratHospital from "./somdet-phra-theprat/somdet-phra-theprat";
-import somdetSchedule from "./somdet-phra-theprat/somdetSchedule";
-
 import synphaet from "./synphaet/synphaet";
-import synphaetSchedule from "./synphaet/synphaetSchedule";
-import chiangmaiRam from "./chiangmai-ram/chiangmai-ram";
-import chiangmaiRamSchedule from "./chiangmai-ram/chiangmai-ramSchedule";
-
-// 4. ศิริราช
-import siriraj from "./siriraj/siriraj";
-import sirirajSchedule from "./siriraj/sirirajSchedule";
-
-// 5. กรุงเทพ
-import bangkokHospital from "./bangkok-hospital/bangkok";
-import bangkokSchedule from "./bangkok-hospital/bangkokSchedule";
-
-// 6. มหาราชนครเชียงใหม่
-import maharajChiangMai from "./mahanakornChiangmai/mahanakornChiangmai";
-import maharajChiangMaiSchedule from "./mahanakornChiangmai/mahanakornChiangmaiSchedule";
-
-// 7. ราชวิถี
-import rajavithiSchedule from "./rachavithi/rachavitiSchedule";
-import rajavithi from "./rachavithi/rachaviti";
-
-// 8. บำรุงราษฎร์
+import phyathai from "./phyathai/phyathai";
 import bumrungrad from "./bumrungrad/bumrungrad";
-import bumrungradSchedule from "./bumrungrad/bumrungradSchedule";
-
-// 9. ขอนแก่นราม
+import samitivej from "./samitivej-sukhumvit/samitivej-sukhumvit";
+import siriraj from "./siriraj-piyamaharajkarun/siriraj-piyamaharajkarun";
+import bangkokHospital from "./bangkok-hospital/bangkok-hospital";
+import praram9Hospital from "./praram9/praram9";
+import ramathibodiHospital from "./ramathibodi/ramathibodi";
+import vejthaniHospital from "./vejthani/vejthani";
+import somdetPhraThepratHospital from "./somdet-phra-theprat/somdet-phra-theprat";
+import chiangmaiRam from "./chiangmai-ram/chiangmai-ram";
+import maharajChiangMai from "./mahanakornChiangmai/mahanakornChiangmai";
 import khonkaenRam from "./khonkanram/khonkanRam";
-import khonkaenRamSchedule from "./khonkanram/khonkanRamSchedule";
-
-// 10. สงขลานครินทร์
 import songklanagarind from "./songkla/songkla";
-import songklanagarindSchedule from "./songkla/songklaSchedule";
-
-// 11. วิภาวดี
-
 import vibhavadi from "./viphawadi/viphawadi";
-import vibhavadiSchedule from "./viphawadi/viphawadiSchedule";
-
-// 12. สมิติเวช สุขุมวิท
-import samitivej from "./samitivej-sukhumvit/samitivej";
-import samitivejSchedule from "./samitivej-sukhumvit/samitivetSchedule";
-
-// 13. พระมงกุฎเกล้า
 import phramongkut from "./phramonkut/phramonkut";
-import phramongkutSchedule from "./phramonkut/phramonkutSchedule";
-
-// 14. หาดใหญ่
 import hatyai from "./hadyai/hadyai";
-import hatyaiSchedule from "./hadyai/hadyaiSchedule";
-
-// 15. เปาโล สมุทรปราการ
 import paoloSamutPrakan from "./paolo/paolo";
-import paoloSamutPrakanSchedule from "./paolo/paolo";
-
-// 16. ศรีนครินทร์
 import srinagarind from "./srinakarin/srinakarin";
-import srinagarindSchedule from "./srinakarin/srinakarinSchedule";
 
 
 const hospitalMap = {
   "จุฬาลงกรณ์": {
-    info: chulalongkorn,
-    schedule: chulaSchedule
+    info: chulalongkorn
   },
   "สินแพทย์": {
-    info: synphaet,
-    schedule: synphaetSchedule
+    info: synphaet
   },
   "เชียงใหม่ราม": {
-    info: chiangmaiRam,
-    schedule: chiangmaiRamSchedule
+    info: chiangmaiRam
   },
   "ศิริราช": {
-    info: siriraj,
-    schedule: sirirajSchedule
+    info: siriraj
   },
   "กรุงเทพ": {
-    info: bangkokHospital,
-    schedule: bangkokSchedule
+    info: bangkokHospital
   },
   "มหาราชนครเชียงใหม่": {
-    info: maharajChiangMai,
-    schedule: maharajChiangMaiSchedule
-  },
-  "ราชวิถี": {
-    info: rajavithi,
-    schedule: rajavithiSchedule
+    info: maharajChiangMai
   },
   "บำรุงราษฎร์": {
-    info: bumrungrad,
-    schedule: bumrungradSchedule
+    info: bumrungrad
   },
   "ขอนแก่นราม": {
-    info: khonkaenRam,
-    schedule: khonkaenRamSchedule
+    info: khonkaenRam
   },
   "สงขลานครินทร์": {
-    info: songklanagarind,
-    schedule: songklanagarindSchedule
+    info: songklanagarind
   },
   "วิภาวดี": {
-    info: vibhavadi,
-    schedule: vibhavadiSchedule
+    info: vibhavadi
   },
   "สมิติเวช สุขุมวิท": {
-    info: samitivej,
-    schedule: samitivejSchedule
+    info: samitivej
   },
   "พระมงกุฎเกล้า": {
-    info: phramongkut,
-    schedule: phramongkutSchedule
+    info: phramongkut
   },
   "หาดใหญ่": {
-    info: hatyai,
-    schedule: hatyaiSchedule
+    info: hatyai
   },
   "เปาโล สมุทรปราการ": {
-    info: paoloSamutPrakan,
-    schedule: paoloSamutPrakanSchedule
+    info: paoloSamutPrakan
   },
   "ศรีนครินทร์": {
-    info: srinagarind,
-    schedule: srinagarindSchedule
+    info: srinagarind
+  },
+  "พยาธิไทย": {
+    info: phyathai
+  },
+  "ระยับ 9": {
+    info: praram9Hospital
+  },
+  "ราชวิถี": {
+    info: ramathibodiHospital
+  },
+  "เวชธานี": {
+    info: vejthaniHospital
+  },
+  "สมเด็จพระเทพรัตน์": {
+    info: somdetPhraThepratHospital
   }
-
-  
 };
 
 export default hospitalMap;

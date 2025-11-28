@@ -1,4 +1,5 @@
 ﻿import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getAllDoctors } from "../utils/doctorUtils";
 import "./DoctorList.css";
 import resolveAssetPath from "../utils/assetPath.js";
@@ -40,6 +41,7 @@ const getDoctorAvatarPath = (name = "") => {
 };
 
 export default function DoctorList() {
+  const navigate = useNavigate();
   const doctorPool = useMemo(() => getAllDoctors(), []);
 
   const departmentOptions = useMemo(() => {
@@ -207,7 +209,7 @@ export default function DoctorList() {
                           <p className="small mb-3 doctor-card__hospital">{doctor.hospital}</p>
                           {doctor.specialization && <p className="small text-secondary mb-3">{doctor.specialization}</p>}
                           <div className="d-grid gap-2 w-100 mt-auto doctor-card__actions">
-                            <button className="btn btn-primary rounded-pill py-2">Book</button>
+                            <button onClick={() => navigate("/queue3")} className="btn btn-primary rounded-pill py-2">Book</button>
                             <button className="btn btn-outline-secondary rounded-pill py-2" onClick={() => handleOpenProfile(doctor)}>
                               View profile
                             </button>
@@ -305,7 +307,7 @@ export default function DoctorList() {
               )}
             </div>
             <div className="doctor-profile-modal__actions">
-              <button className="btn btn-primary rounded-pill px-4">Book appointment</button>
+              <button onClick={() => navigate("/queue3")} className="btn btn-primary rounded-pill px-4">Book appointment</button>
               <button className="btn btn-outline-secondary rounded-pill px-4" onClick={handleCloseProfile}>
                 Close
               </button>

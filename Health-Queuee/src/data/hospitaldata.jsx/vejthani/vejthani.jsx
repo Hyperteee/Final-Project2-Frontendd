@@ -1,7 +1,6 @@
 ﻿import dataIcon from "../../../../images/icon-department/icon-department";
-import { createHospitalData } from "../utils/createHospitalData";
 
-const vejthaniDefinition = {
+const vejthani = {
     id: "BKK010",
     name: "โรงพยาบาลเวชธานี",
     state: "กรุงเทพมหานคร",
@@ -13,99 +12,75 @@ const vejthaniDefinition = {
     district: "เขตบางกะปิ",
     departments: [
       {
+        id: "BKK010-D01",
         name: "ศูนย์กระดูกสันหลังและข้อ",
         logo: dataIcon.surgery,
         doctors: [
           {
+            id: "BKK010-D01-DR01",
             name: "นพ. ภูชิต คำภู",
             specialization: "ศัลยกรรมกระดูกสันหลัง",
-            schedule: [
-              { day: "จันทร์", time: "09:00 - 11:00", isBooked: false },
-              { day: "พุธ", time: "13:00 - 15:00", isBooked: false },
-            ],
           },
           {
+            id: "BKK010-D01-DR02",
             name: "นพ. นิติพงศ์ สถิตธนภพ",
             specialization: "เวชศาสตร์ฟื้นฟู",
-            schedule: [
-              { day: "อังคาร", time: "10:00 - 12:00", isBooked: false },
-              { day: "ศุกร์", time: "14:00 - 16:00", isBooked: false },
-            ],
           },
         ],
       },
       {
+        id: "BKK010-D02",
         name: "ศูนย์หัวใจเวชธานี",
         logo: dataIcon.heart,
         doctors: [
           {
+            id: "BKK010-D02-DR01",
             name: "นพ. ศุภฤกษ์ เกษมนุกูล",
             specialization: "อายุรแพทย์หัวใจ",
-            schedule: [
-              { day: "พุธ", time: "09:00 - 11:00", isBooked: false },
-              { day: "เสาร์", time: "10:00 - 12:00", isBooked: false },
-            ],
           },
           {
+            id: "BKK010-D02-DR02",
             name: "นพ. ปกรณ์ แสงพุ่ม",
             specialization: "ศัลยแพทย์หลอดเลือด",
-            schedule: [
-              { day: "จันทร์", time: "14:00 - 16:00", isBooked: false },
-              { day: "พฤหัสบดี", time: "09:00 - 11:00", isBooked: false },
-            ],
           },
         ],
       },
       {
+        id: "BKK010-D03",
         name: "ศูนย์ผิวหนังและความงาม",
         logo: dataIcon.ayurkum,
         doctors: [
           {
+            id: "BKK010-D03-DR01",
             name: "พญ. วนิดา กิตติกร",
             specialization: "ผิวหนังเลเซอร์",
-            schedule: [
-              { day: "อังคาร", time: "13:00 - 15:00", isBooked: false },
-              { day: "ศุกร์", time: "09:00 - 11:00", isBooked: false },
-            ],
           },
           {
+            id: "BKK010-D03-DR02",
             name: "พญ. อลิสา สุวรรณมาศ",
             specialization: "เวชศาสตร์ชะลอวัย",
-            schedule: [
-              { day: "จันทร์", time: "10:00 - 12:00", isBooked: false },
-              { day: "พฤหัสบดี", time: "14:00 - 16:00", isBooked: false },
-            ],
           },
         ],
       },
       {
+        id: "BKK010-D04",
         name: "ศูนย์กุมารเวช",
         logo: dataIcon.child,
         doctors: [
           {
+            id: "BKK010-D04-DR01",
             name: "นพ. เกรียงไกร ภาวนาสุข",
             specialization: "กุมารแพทย์โรคเลือด",
-            schedule: [
-              { day: "พุธ", time: "13:00 - 15:00", isBooked: false },
-              { day: "เสาร์", time: "09:00 - 11:00", isBooked: false },
-            ],
           },
           {
+            id: "BKK010-D04-DR02",
             name: "พญ. สุทธิมา เลิศประภา",
             specialization: "กุมารแพทย์พัฒนาการ",
-            schedule: [
-              { day: "จันทร์", time: "09:00 - 11:00", isBooked: false },
-              { day: "ศุกร์", time: "14:00 - 16:00", isBooked: false },
-            ],
           },
         ],
       },
     ],
   };
 
-const { info: vejthaniHospital, schedule: vejthaniSchedule } = createHospitalData(vejthaniDefinition);
-
-export { vejthaniSchedule };
-
-export default vejthaniHospital;
+export default vejthani;
 

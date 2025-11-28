@@ -1,111 +1,67 @@
 ﻿import dataIcon from "../../../../images/icon-department/icon-department";
-import { createHospitalData } from "../utils/createHospitalData";
 
-const bangkokHospitalDefinition = {
-    id: "BKK007",
-    name: "โรงพยาบาลกรุงเทพ",
-    state: "กรุงเทพมหานคร",
-    type: "เครือโรงพยาบาลเอกชน",
-    logo: "images/logohospital/bangkok.png",
-    stars: 4.7,
-    reviews: 1505,
-    location: { lat: 13.7475, lng: 100.5851 },
-    district: "เขตห้วยขวาง",
-    departments: [
-      {
-        name: "ศูนย์อุบัติเหตุและฉุกเฉิน",
-        logo: dataIcon.surgery,
-        doctors: [
-          {
-            name: "นพ. วศิน ภักดีรัฐ",
-            specialization: "ศัลยแพทย์อุบัติเหตุ",
-            schedule: [
-              { day: "จันทร์", time: "08:00 - 10:00", isBooked: false },
-              { day: "พฤหัสบดี", time: "14:00 - 16:00", isBooked: false },
-            ],
-          },
-          {
-            name: "พญ. ธัญญาภรณ์ เทียมทรัพย์",
-            specialization: "เวชศาสตร์ฉุกเฉิน",
-            schedule: [
-              { day: "อังคาร", time: "09:00 - 11:00", isBooked: false },
-              { day: "ศุกร์", time: "13:00 - 15:00", isBooked: false },
-            ],
-          },
-        ],
-      },
-      {
-        name: "ศูนย์หัวใจกรุงเทพ",
-        logo: dataIcon.heart,
-        doctors: [
-          {
-            name: "นพ. พงศ์พันธุ์ อรุณรัตน์",
-            specialization: "อายุรแพทย์หัวใจ-ตจ",
-            schedule: [
-              { day: "พุธ", time: "09:00 - 11:00", isBooked: false },
-              { day: "เสาร์", time: "10:00 - 12:00", isBooked: false },
-            ],
-          },
-          {
-            name: "นพ. สิทธิพงศ์ ลีลาศ",
-            specialization: "ศัลยแพทย์หัวใจและทรวงอก",
-            schedule: [
-              { day: "อังคาร", time: "14:00 - 16:00", isBooked: false },
-              { day: "ศุกร์", time: "09:30 - 11:30", isBooked: false },
-            ],
-          },
-        ],
-      },
-      {
-        name: "ศูนย์กระดูกสันหลัง",
-        logo: dataIcon.pyscho,
-        doctors: [
-          {
-            name: "นพ. ธนวัฒน์ นครินทร์",
-            specialization: "ศัลยแพทย์กระดูกสันหลัง",
-            schedule: [
-              { day: "จันทร์", time: "13:00 - 15:00", isBooked: false },
-              { day: "พฤหัสบดี", time: "08:00 - 10:00", isBooked: false },
-            ],
-          },
-          {
-            name: "พญ. ลภัสรดา ธีรเดชา",
-            specialization: "แพทย์เวชศาสตร์ฟื้นฟูกระดูกสันหลัง",
-            schedule: [
-              { day: "พุธ", time: "14:00 - 16:00", isBooked: false },
-              { day: "เสาร์", time: "09:00 - 11:00", isBooked: false },
-            ],
-          },
-        ],
-      },
-      {
-        name: "ศูนย์กุมารเวชกรรม",
-        logo: dataIcon.child,
-        doctors: [
-          {
-            name: "นพ. ปัณณวัฒน์ สถิรานนท์",
-            specialization: "กุมารแพทย์ทั่วไป",
-            schedule: [
-              { day: "อังคาร", time: "09:00 - 11:00", isBooked: false },
-              { day: "ศุกร์", time: "14:00 - 16:00", isBooked: false },
-            ],
-          },
-          {
-            name: "พญ. นิชาภา โล่ห์ทอง",
-            specialization: "กุมารแพทย์โรคติดเชื้อ",
-            schedule: [
-              { day: "จันทร์", time: "10:00 - 12:00", isBooked: false },
-              { day: "พฤหัสบดี", time: "13:00 - 15:00", isBooked: false },
-            ],
-          },
-        ],
-      },
-    ],
-  };
+const bangkokHospital = {
+  id: "BKK007",
+  name: "โรงพยาบาลกรุงเทพ",
+  state: "กรุงเทพมหานคร",
+  type: "เครือโรงพยาบาลเอกชน",
+  logo: "images/logohospital/bangkok.png",
+  stars: 4.7,
+  reviews: 1505,
+  location: { lat: 13.7475, lng: 100.5851 },
+  district: "เขตห้วยขวาง",
 
-const { info: bangkokHospital, schedule: bangkokHospitalSchedule } = createHospitalData(bangkokHospitalDefinition);
+  departments: [
+    ///////////////////// ไม่รู้แผนก
+    {
+      id: "BKK007-D00",
+      name: "ไม่รู้แผนก"
+    },
+    // -------------------- ศูนย์อุบัติเหตุและฉุกเฉิน --------------------
+    {
+      id: "BKK007-D01",
+      name: "ศูนย์อุบัติเหตุและฉุกเฉิน",
+      logo: dataIcon.surgery,
+      doctors: [
+        { id: "BKK007-D01-DR01", name: "นพ. วศิน ภักดีรัฐ", specialization: "ศัลยแพทย์อุบัติเหตุ" },
+        { id: "BKK007-D01-DR02", name: "พญ. ธัญญาภรณ์ เทียมทรัพย์", specialization: "เวชศาสตร์ฉุกเฉิน" },
+      ],
+    },
 
-export { bangkokHospitalSchedule };
+    // -------------------- ศูนย์หัวใจกรุงเทพ --------------------
+    {
+      id: "BKK007-D02",
+      name: "ศูนย์หัวใจกรุงเทพ",
+      logo: dataIcon.heart,
+      doctors: [
+        { id: "BKK007-D02-DR01", name: "นพ. พงศ์พันธุ์ อรุณรัตน์", specialization: "อายุรแพทย์หัวใจ-ตจ" },
+        { id: "BKK007-D02-DR02", name: "นพ. สิทธิพงศ์ ลีลาศ", specialization: "ศัลยแพทย์หัวใจและทรวงอก" },
+      ],
+    },
+
+    // -------------------- ศูนย์กระดูกสันหลัง --------------------
+    {
+      id: "BKK007-D03",
+      name: "ศูนย์กระดูกสันหลัง",
+      logo: dataIcon.pyscho,
+      doctors: [
+        { id: "BKK007-D03-DR01", name: "นพ. ธนวัฒน์ นครินทร์", specialization: "ศัลยแพทย์กระดูกสันหลัง" },
+        { id: "BKK007-D03-DR02", name: "พญ. ลภัสรดา ธีรเดชา", specialization: "แพทย์เวชศาสตร์ฟื้นฟูกระดูกสันหลัง" },
+      ],
+    },
+
+    // -------------------- ศูนย์กุมารเวชกรรม --------------------
+    {
+      id: "BKK007-D04",
+      name: "ศูนย์กุมารเวชกรรม",
+      logo: dataIcon.child,
+      doctors: [
+        { id: "BKK007-D04-DR01", name: "นพ. ปัณณวัฒน์ สถิรานนท์", specialization: "กุมารแพทย์ทั่วไป" },
+        { id: "BKK007-D04-DR02", name: "พญ. นิชาภา โล่ห์ทอง", specialization: "กุมารแพทย์โรคติดเชื้อ" },
+      ],
+    },
+  ],
+};
 
 export default bangkokHospital;
 

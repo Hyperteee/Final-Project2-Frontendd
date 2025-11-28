@@ -50,7 +50,7 @@ function App() {
             <Route path="profilebook" element={<ProfileBook />} />
             <Route path="profileHistory" element={<ProfileHistory />} />
             <Route path="profilePrivacy" element={<ProfilePrivacy />} />
-            <Route path="DoctorList" element={<DoctorList />} />
+            <Route path="doctors" element={<DoctorList />} />
             <Route path="chatbot" element={<ChatBot/> } />
             <Route path="package" element={<PackagePage/> } />
           </Route>
