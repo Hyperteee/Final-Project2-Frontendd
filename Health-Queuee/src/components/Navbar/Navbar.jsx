@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import Dropdown from "react-bootstrap/Dropdown";
 import { User, LogOut, Shield } from "lucide-react";
+import { useTranslation } from 'react-i18next';
 
  function handleLogout() {
     localStorage.removeItem("currentUser");
@@ -31,6 +32,13 @@ import { User, LogOut, Shield } from "lucide-react";
       ? currentUser.fullname || currentUser.name || currentUser.email
       : null;
       
+        const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
+
+    const { t, i18n } = useTranslation();
+
+  const navigate = useNavigate();
   return (
         <header
           className="py-3 shadow-lg sticky-top"
@@ -82,6 +90,24 @@ import { User, LogOut, Shield } from "lucide-react";
                 ติดต่อ
               </a>
             </nav>
+
+            <div className="d-flex align-items-center gap-2 " style={{marginLeft: "35rem"}}>
+              <button
+                onClick={() => changeLanguage('th')}
+                className={`btn btn-sm ${i18n.language === 'th' ? 'btn-light' : 'btn-outline-light'} rounded-pill px-3`}
+                style={{ fontSize: '0.8rem' }}
+              >
+                TH
+              </button>
+              <button
+                onClick={() => changeLanguage('en')}
+                className={`btn btn-sm ${i18n.language === 'en' ? 'btn-light' : 'btn-outline-light'} rounded-pill px-3`}
+                style={{ fontSize: '0.8rem' }}
+              >
+                EN
+              </button>
+            </div>
+
 
             {currentUser ? (
               <Dropdown align="end">
