@@ -143,21 +143,6 @@ function handleLogout(){
 
   return (
     <div className="bg-light min-vh-100">
-      <header className="py-3 shadow-lg sticky-top" style={{ backgroundColor: "#020A1B" }}>
-        <div className="container d-flex align-items-center justify-content-between">
-          <div className="d-flex align-items-center gap-3">
-            <div className="d-flex align-items-center justify-content-center bg-primary rounded-3" style={{ width: "50px", height: "50px" }}>
-              <span className="text-white fw-bold fs-4">H</span>
-            </div>
-            <div>
-              <h1 className="text-white fw-bold fs-5 mb-0">HFU</h1>
-              <p className="text-light small mb-0 opacity-75">Health Queue</p>
-            </div>
-          </div>
-          <button className="btn btn-primary px-4 py-2 fw-semibold" onClick={() => navigate("/login")}>ออกจากระบบ</button>
-        </div>
-      </header>
-
       <div className="container py-4">
         <h1 className="text-center mb-4 fw-semibold text-black">ข้อมูลของคุณ</h1>
         <div className="d-flex justify-content-center mb-4">
@@ -193,7 +178,6 @@ function handleLogout(){
             </div>
           </div>
 
-          {/* Main Content */}
           <div className="col-lg-9">
             <div className="card shadow-sm border-0">
               <div className="card-body p-4 p-lg-5">
@@ -430,6 +414,118 @@ function handleLogout(){
         </Modal.Body>
       </Modal>
 
+            <div style={{ width: "100%", overflow: "hidden", lineHeight: 0 }}>
+        <img
+          src={"./images/wave-navy.png"}
+          alt="footer wave"
+          style={{
+            width: "100%",
+            height: "120px",
+            display: "block",
+            marginBottom: "-5px",
+            marginTop: "-5px",
+            
+          }}
+        />
+      </div>
+      
+      <footer
+        id="contact"
+        className="custom-footer py-5"
+        style={{ backgroundColor: "rgb(2, 10, 27)" }}
+      >
+        <div className="row mb-5 ms-5 me-5">
+
+          <div className="col-12 col-lg-4 mb-4 mb-lg-0">
+            <div className="d-flex align-items-center mb-4">
+              <span className="h3 fw-bold text-white mb-0">HFU</span>
+            </div>
+            <p className="text-light small opacity-75 mb-4">
+              Health Queue Management System
+            </p>
+
+            <h5 className="fw-bold fs-5 mb-3">Contact</h5>
+            <ul className="list-unstyled small contact-list">
+              <li className="d-flex align-items-start mb-2">
+                <i className="bi bi-geo-alt-fill"></i>
+                <p className="mb-0">
+                  123 Bangkhen, Sripatum, Bangkok, Thailand 10110
+                </p>
+              </li>
+              <li className="d-flex align-items-center mb-2">
+                <i className="bi bi-telephone-fill"></i>
+                <a href="tel:+6621234567">(66) 9 999 9999</a>
+              </li>
+              <li className="d-flex align-items-center">
+                <i className="bi bi-envelope-fill"></i>
+                <a href="mailto:support@hfu.co">support@hfu.co.th</a>
+              </li>
+            </ul>
+          </div>
+
+          <div className="col-6 col-md-4 col-lg-2">
+            <h4 className="fw-bold fs-5 mb-4">Products</h4>
+            <ul className="list-unstyled space-y-3">
+              <li>
+                <a href="#">Queue Management</a>
+              </li>
+              <li>
+                <a href="#">Appointment System</a>
+              </li>
+              <li>
+                <a href="#">Analytics Dashboard</a>
+              </li>
+              <li>
+                <a href="#">Mobile App</a>
+              </li>
+            </ul>
+          </div>
+
+          <div className="col-6 col-md-4 col-lg-2">
+            <h4 className="fw-bold fs-5 mb-4">Company</h4>
+            <ul className="list-unstyled space-y-3">
+              <li>
+                <a href="#">About Us</a>
+              </li>
+              <li>
+                <a href="#">
+                  Careers
+                </a>
+              </li>
+              <li>
+                <a href="#">Blog & News</a>
+              </li>
+              <li>
+                <a href="#">Our Vision</a>
+              </li>
+            </ul>
+          </div>
+
+          <div className="col-12 col-md-4 col-lg-4 mt-4 mt-md-0">
+            <h4 className="fw-bold fs-5 mb-4">Support & Legal</h4>
+            <ul className="list-unstyled space-y-3">
+              <li>
+                <a href="#">Help Center (FAQ)</a>
+              </li>
+              <li>
+                <a href="#">API Documentation</a>
+              </li>
+              <li>
+                <a href="#">Terms of Service</a>
+              </li>
+              <li>
+                <a href="#">Privacy Policy</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="border-top border-secondary-subtle pt-4 mt-4 d-flex flex-column flex-md-row justify-content-between align-items-center">
+          <p className="text-light opacity-50 small mb-3 mb-md-0">
+            &copy; 2025 HFU Healthcare Technologies. All rights reserved.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }
