@@ -43,20 +43,33 @@ export default function ProfileHistory() {
   };
 
   const calculateAge = (birthdate) => {
+    if (!birthdate) return "";
+    
     const today = new Date();
     const birth = new Date(birthdate);
+    
+    let birthYear = birth.getFullYear();
+    const currentYear = today.getFullYear();
 
-    let age = today.getFullYear() - birth.getFullYear();
+    if (birthYear > currentYear + 100) {
+        birthYear = birthYear - 543;
+        birth.setFullYear(birthYear); 
+    }
+
+    let age = currentYear - birthYear;
     const monthDiff = today.getMonth() - birth.getMonth();
     const dayDiff = today.getDate() - birth.getDate();
 
     if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
-      age--;
+        age--;
     }
 
-    return age;
-  };
-
+    return age < 0 ? 0 : age; 
+};
+  function handleLogout(){
+        localStorage.removeItem('currentUser');
+        navigate('/login')
+    }
   const historyData = [
     {
       headerDate: "16/11/68",
@@ -201,7 +214,7 @@ export default function ProfileHistory() {
               </div>
 
               <div className="card-footer bg-white border-top p-3">
-                <button className="btn btn-outline-danger w-100 d-flex align-items-center justify-content-center gap-2">
+                <button className="btn btn-outline-danger w-100 d-flex align-items-center justify-content-center gap-2" onClick={()=>handleLogout()}>
                   <LogOut size={18} />
                   ออกจากระบบ
                 </button>

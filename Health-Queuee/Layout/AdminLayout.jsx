@@ -1,5 +1,4 @@
 import { Outlet } from "react-router";
-import AdminHeader from "../src/AdminHeader";
 import AdminNavbar from "../src//AdminNavbar";
 
 const Adminlayout = () => {

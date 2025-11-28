@@ -12,11 +12,7 @@
 // import { UserAppointment } from "../src/data/context/appointment";
 // import "./Export.css";
 // import "./Tracking.css";
-
-// // ==========================================
-// // 1. HELPER FUNCTIONS
-// // ==========================================
-
+// import hospitalData from "../src/data/listhospital";
 // function getLocalYMD(dateString) {
 //   if (!dateString) return null;
 //   const d = new Date(dateString);
@@ -35,10 +31,6 @@
 //   };
 // }
 
-// // ==========================================
-// // 2. SUB-COMPONENTS
-// // ==========================================
-
 // function StatusBadge({ status, hasSuggestion }) {
 //   const styles = {
 //     SENT: { bg: "#fff3cd", color: "#856404", label: "รอผลตอบกลับ", icon: Clock },
@@ -48,13 +40,12 @@
 //     USER_CANCELLED: { bg: "#dc3545", color: "#ffffff", label: "ผู้ใช้ขอยกเลิก", icon: AlertTriangle },
 //   };
 
-//   // 🔥 ปรับ Badge กรณีเสนอนัดใหม่ ให้ดูต่างจากปฏิเสธปกติ
 //   if (status === 'REJECTED' && hasSuggestion) {
-//       return (
-//         <span className="badge rounded-pill d-inline-flex align-items-center gap-1 border border-warning" style={{ backgroundColor: "#fff3cd", color: "#856404", padding: "6px 12px", fontWeight: 500 }}>
-//           <Clock size={14} /> รอผู้ใช้ยืนยัน (นัดใหม่)
-//         </span>
-//       );
+//     return (
+//       <span className="badge rounded-pill d-inline-flex align-items-center gap-1 border border-warning" style={{ backgroundColor: "#fff3cd", color: "#856404", padding: "6px 12px", fontWeight: 500 }}>
+//         <Clock size={14} /> รอผู้ใช้ยืนยัน (นัดใหม่)
+//       </span>
+//     );
 //   }
 
 //   const s = styles[status] || styles.SENT;
@@ -97,7 +88,7 @@
 //   );
 // }
 
-// function CustomDatePicker({ value, onChange, placeholder = "เลือกวันที่..." }) {
+// function CustomDatePicker({ value, onChange, placeholder = "เลือกวันที่...", disablePast = false }) {
 //   const [isOpen, setIsOpen] = useState(false);
 //   const [currentDate, setCurrentDate] = useState(value ? new Date(value) : new Date());
 //   const containerRef = useRef(null);
@@ -177,22 +168,36 @@
 //           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '2px' }}>
 //             {days.map((day, index) => {
 //               if (!day) return <div key={index}></div>;
+
+//               const checkDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+//               checkDate.setHours(0, 0, 0, 0);
+//               const today = new Date();
+//               today.setHours(0, 0, 0, 0);
+
+//               const isPast = disablePast && checkDate < today;
+//               // -----------------------------------------------------
+
 //               const isSelected = value && new Date(value).getDate() === day && new Date(value).getMonth() === currentDate.getMonth() && new Date(value).getFullYear() === currentDate.getFullYear();
 //               const isToday = new Date().getDate() === day && new Date().getMonth() === currentDate.getMonth() && new Date().getFullYear() === currentDate.getFullYear();
 
 //               return (
 //                 <div
 //                   key={index}
-//                   onClick={(e) => { e.stopPropagation(); handleDateClick(day); }}
+//                   onClick={(e) => {
+//                     e.stopPropagation();
+//                     if (!isPast) handleDateClick(day);
+//                   }}
 //                   style={{
-//                     height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', cursor: 'pointer', fontSize: '0.8rem',
+//                     height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%',
+//                     fontSize: '0.8rem',
+//                     cursor: isPast ? 'default' : 'pointer',
 //                     backgroundColor: isSelected ? '#0d6efd' : 'transparent',
-//                     color: isSelected ? 'white' : (isToday ? '#0d6efd' : '#333'),
+//                     color: isSelected ? 'white' : (isPast ? '#ccc' : (isToday ? '#0d6efd' : '#333')),
 //                     fontWeight: (isSelected || isToday) ? 'bold' : 'normal',
 //                     border: isToday && !isSelected ? '1px solid #0d6efd' : '1px solid transparent',
 //                   }}
-//                   onMouseEnter={(e) => { if (!isSelected) { e.currentTarget.style.backgroundColor = '#f0f8ff'; } }}
-//                   onMouseLeave={(e) => { if (!isSelected) { e.currentTarget.style.backgroundColor = 'transparent'; } }}
+//                   onMouseEnter={(e) => { if (!isSelected && !isPast) { e.currentTarget.style.backgroundColor = '#f0f8ff'; } }}
+//                   onMouseLeave={(e) => { if (!isSelected && !isPast) { e.currentTarget.style.backgroundColor = 'transparent'; } }}
 //                 >
 //                   {day}
 //                 </div>
@@ -205,9 +210,6 @@
 //   );
 // }
 
-// // ==========================================
-// // 3. MAIN COMPONENT
-// // ==========================================
 
 // export default function AdminTracking() {
 //   const { appointments, batches, updateAppointmentStatus } = useContext(UserAppointment);
@@ -216,17 +218,28 @@
 //   const [activeTab, setActiveTab] = useState("ACTION");
 //   const [showFilters, setShowFilters] = useState(false);
 //   const [showModal, setShowModal] = useState(false);
-
+//   const [selectedProvince, setSelectedProvince] = useState("");
 //   const [searchTerm, setSearchTerm] = useState("");
-//   const [filterSentDate, setFilterSentDate] = useState("");      
-//   const [filterBookingDate, setFilterBookingDate] = useState(""); 
+//   const [filterSentDate, setFilterSentDate] = useState("");
+//   const [filterBookingDate, setFilterBookingDate] = useState("");
 //   const [filterHospital, setFilterHospital] = useState("ALL");
 //   const [filterUrgentOnly, setFilterUrgentOnly] = useState(false);
 
 //   const [selectedTask, setSelectedTask] = useState(null);
 //   const [selectedBatchId, setSelectedBatchId] = useState(null);
 //   const [selectedItemIds, setSelectedItemIds] = useState([]);
-  
+
+
+//   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+//   const adminScope = currentUser?.adminScope || 'all';
+
+//   useEffect(() => {
+//     if (adminScope && adminScope !== 'all') {
+//       setSelectedProvince(adminScope);
+//     }
+//   }, [adminScope]);
+//   console.log(selectedProvince)
+
 //   const [updateForm, setUpdateForm] = useState({
 //     status: "CONFIRMED",
 //     confirmedDate: "",
@@ -235,7 +248,11 @@
 //     newProposedDate: "",
 //     bulkStrategy: "P1"
 //   });
-
+//   function getHospitalState(hospitalName) {
+//     if (!hospitalName) return "";
+//     const found = hospitalData.find(h => hospitalName.includes(h.name));
+//     return found ? found.state : "";
+//   }
 //   useEffect(() => {
 //     if (location.state?.filterMode === 'TODAY') {
 //       setActiveTab("HISTORY");
@@ -262,33 +279,29 @@
 //     };
 //   }, [trackingData]);
 
-//   // --- 🔥 Logic การกรอง ---
+//   // --- Logic การกรอง ---
 //   const filteredList = useMemo(() => {
 //     if (activeTab === 'BATCH') return [];
-    
+
 //     return trackingData.filter(item => {
-//       // 1. Filter by Tab (Status)
 //       let showInTab = false;
 
 //       if (activeTab === "ACTION") {
-//         // ACTION Tab: แสดง SENT, USER_CANCELLED และ REJECTED (ที่มีข้อเสนอวันใหม่)
 //         if (item.status === 'SENT' || item.status === 'USER_CANCELLED') {
-//             showInTab = true;
+//           showInTab = true;
 //         } else if (item.status === 'REJECTED' && item.suggestedDate) {
-//             showInTab = true; // มีวันใหม่ ต้องรอลุ้น (แต่จะให้กดแก้ไม่ได้)
+//           showInTab = true;
 //         }
 //       } else if (activeTab === "HISTORY") {
-//         // HISTORY Tab: แสดง CONFIRMED, CANCELLED และ REJECTED (ที่จบแล้ว)
 //         if (item.status === 'CONFIRMED' || item.status === 'CANCELLED') {
-//             showInTab = true;
+//           showInTab = true;
 //         } else if (item.status === 'REJECTED' && !item.suggestedDate) {
-//             showInTab = true; // ปฏิเสธถาวร = จบงาน
+//           showInTab = true;
 //         }
 //       }
 
 //       if (!showInTab) return false;
 
-//       // 2. Other Filters
 //       if (filterSentDate) {
 //         const createdStr = getLocalYMD(item.createdAt);
 //         if (createdStr !== filterSentDate) return false;
@@ -358,11 +371,11 @@
 
 //     setUpdateForm({
 //       status: "CONFIRMED",
-//       confirmedDate: defaultDate, 
+//       confirmedDate: defaultDate,
 //       confirmedTime: "09:00",
 //       note: "",
 //       newProposedDate: "",
-//       bulkStrategy: "P1" 
+//       bulkStrategy: "P1"
 //     });
 //     setShowModal(true);
 //   }
@@ -377,8 +390,8 @@
 
 //     if (selectedTask) {
 //       const payload = {
-//           ...basePayload,
-//           confirmedDate: updateForm.status === 'CONFIRMED' ? updateForm.confirmedDate : null
+//         ...basePayload,
+//         confirmedDate: updateForm.status === 'CONFIRMED' ? updateForm.confirmedDate : null
 //       };
 //       updateAppointmentStatus(selectedTask.id, updateForm.status, payload);
 //       setSelectedTask(null);
@@ -388,11 +401,11 @@
 //         const originalItem = appointments.find(a => a.id === id);
 //         let targetDate = null;
 //         if (updateForm.status === 'CONFIRMED') {
-//             if (updateForm.bulkStrategy === 'P2') {
-//                 targetDate = originalItem?.priority2Date || null;
-//             } else {
-//                 targetDate = originalItem?.priority1Date;
-//             }
+//           if (updateForm.bulkStrategy === 'P2') {
+//             targetDate = originalItem?.priority2Date || null;
+//           } else {
+//             targetDate = originalItem?.priority1Date;
+//           }
 //         }
 //         updateAppointmentStatus(id, updateForm.status, {
 //           ...basePayload,
@@ -432,10 +445,12 @@
 
 //     const excelData = itemsInBatch.map((appt, index) => ({
 //       "ลำดับ": index + 1,
-//       "ชื่อ-นามสกุล": appt.name,
+//       "ชื่อ": appt.name,
+//       "นามสกุล": appt.lastname,
 //       "วันเกิด": appt.birthDate || "",
 //       "อายุ": appt.age || "",
-//       "บัตรประชาชน": appt.idCard || "",
+//       "บัตรประชาชน/พาสปอร์ต": appt.identificationNumber || "",
+//       "สัญชาติ": currentUser.nationality || "",
 //       "อาการ": appt.symptom || "-",
 //       "ไฟล์แนบ": (appt.files || []).map(f => f.name).join(", "),
 //       "วันจองนัดหลัก": appt.priority1Date ? new Date(appt.priority1Date).toLocaleDateString('th-TH') : "",
@@ -468,9 +483,9 @@
 //   }
 
 //   function handleMarkAsNotified(item) {
-//     if(window.confirm(`ยืนยันว่าแจ้งโรงพยาบาล ${item.hospitalName} เรียบร้อยแล้ว?`)) {
-//       updateAppointmentStatus(item.id, 'CANCELLED', { 
-//         note: `แอดมินแจ้งยกเลิก รพ. แล้วเมื่อ ${new Date().toLocaleString('th-TH')}` 
+//     if (window.confirm(`ยืนยันว่าแจ้งโรงพยาบาล ${item.hospitalName} เรียบร้อยแล้ว?`)) {
+//       updateAppointmentStatus(item.id, 'CANCELLED', {
+//         note: `แอดมินแจ้งยกเลิก รพ. แล้วเมื่อ ${new Date().toLocaleString('th-TH')}`
 //       });
 //     }
 //   }
@@ -478,7 +493,7 @@
 //   return (
 //     <div className="export-container">
 //       <div className="export-header">
-//         <h2>🔎 ติดตามผลการนัด (Tracking)</h2>
+//         <h2>ติดตามผลการนัด (Tracking)</h2>
 //         <p>ตรวจสอบสถานะและอัปเดตผลตอบกลับจากโรงพยาบาล</p>
 //       </div>
 
@@ -519,20 +534,20 @@
 //       </div>
 
 //       <div className="d-flex gap-4 mb-3 border-bottom px-2">
-//         <button 
-//           className={`btn pb-2 rounded-0 ${activeTab === 'ACTION' ? 'border-bottom border-primary border-3 text-primary fw-bold' : 'text-muted'}`} 
+//         <button
+//           className={`btn pb-2 rounded-0 ${activeTab === 'ACTION' ? 'border-bottom border-primary border-3 text-primary fw-bold' : 'text-muted'}`}
 //           onClick={() => setActiveTab('ACTION')}
 //         >
 //           ต้องจัดการ {(stats.pending + stats.issues) > 0 && <span className="badge bg-danger ms-2 rounded-pill">{stats.pending + stats.issues}</span>}
 //         </button>
-//         <button 
-//           className={`btn pb-2 rounded-0 ${activeTab === 'HISTORY' ? 'border-bottom border-primary border-3 text-primary fw-bold' : 'text-muted'}`} 
+//         <button
+//           className={`btn pb-2 rounded-0 ${activeTab === 'HISTORY' ? 'border-bottom border-primary border-3 text-primary fw-bold' : 'text-muted'}`}
 //           onClick={() => setActiveTab('HISTORY')}
 //         >
 //           ประวัติรายคน (History)
 //         </button>
-//         <button 
-//           className={`btn pb-2 rounded-0 ${activeTab === 'BATCH' ? 'border-bottom border-primary border-3 text-primary fw-bold' : 'text-muted'}`} 
+//         <button
+//           className={`btn pb-2 rounded-0 ${activeTab === 'BATCH' ? 'border-bottom border-primary border-3 text-primary fw-bold' : 'text-muted'}`}
 //           onClick={() => setActiveTab('BATCH')}
 //         >
 //           ประวัติราย Batch
@@ -543,15 +558,15 @@
 //         <>
 //           <div className="filter-card py-3 mb-3">
 //             <div className="d-flex gap-3 align-items-center">
-              
+
 //               <div className="position-relative flex-grow-1">
 //                 <Search size={18} className="text-muted position-absolute top-50 start-0 translate-middle-y ms-3" />
-//                 <input 
-//                   type="text" 
-//                   className="form-control ps-5" 
-//                   placeholder="ค้นหาชื่อคนไข้, โรงพยาบาล, ชื่อแพทย์..." 
-//                   value={searchTerm} 
-//                   onChange={e => setSearchTerm(e.target.value)} 
+//                 <input
+//                   type="text"
+//                   className="form-control ps-5"
+//                   placeholder="ค้นหาชื่อคนไข้, โรงพยาบาล, ชื่อแพทย์..."
+//                   value={searchTerm}
+//                   onChange={e => setSearchTerm(e.target.value)}
 //                 />
 //               </div>
 
@@ -560,6 +575,7 @@
 //                   value={filterSentDate}
 //                   onChange={setFilterSentDate}
 //                   placeholder="วันที่ส่งเรื่อง"
+//                   disablePast={false} // ไม่ล็อควันกรอง
 //                 />
 //                 {filterSentDate && (
 //                   <button className="btn-close position-absolute top-50 end-0 translate-middle-y me-4 small" style={{ fontSize: '0.7rem' }} onClick={() => setFilterSentDate("")} />
@@ -567,10 +583,11 @@
 //               </div>
 
 //               <div className="position-relative" style={{ width: '180px' }}>
-//                   <CustomDatePicker
+//                 <CustomDatePicker
 //                   value={filterBookingDate}
 //                   onChange={setFilterBookingDate}
 //                   placeholder="วันที่ขอนัด"
+//                   disablePast={false} // ไม่ล็อควันกรอง
 //                 />
 //                 {filterBookingDate && (
 //                   <button className="btn-close position-absolute top-50 end-0 translate-middle-y me-4 small" style={{ fontSize: '0.7rem' }} onClick={() => setFilterBookingDate("")} />
@@ -588,7 +605,7 @@
 //                   <h6 className="fw-bold text-dark m-0 d-flex align-items-center gap-2">
 //                     <Filter size={16} className="text-primary" /> ตัวกรองแบบละเอียด
 //                   </h6>
-//                   <button 
+//                   <button
 //                     className="btn btn-link text-muted btn-sm text-decoration-none d-flex align-items-center gap-1"
 //                     onClick={() => { setFilterHospital("ALL"); setFilterUrgentOnly(false); setFilterSentDate(""); setFilterBookingDate(""); setSearchTerm(""); }}
 //                   >
@@ -606,9 +623,9 @@
 //                   </div>
 //                   <div className="col-md-6">
 //                     <label className="form-label small text-muted fw-bold">ความเร่งด่วน</label>
-//                     <div 
+//                     <div
 //                       className={`d-flex align-items-center p-2 px-3 rounded border cursor-pointer transition-all ${filterUrgentOnly ? 'border-danger bg-danger-subtle' : 'border-secondary-subtle bg-light'}`}
-//                       onClick={() => setFilterUrgentOnly(!filterUrgentOnly)} 
+//                       onClick={() => setFilterUrgentOnly(!filterUrgentOnly)}
 //                       style={{ cursor: 'pointer', transition: 'all 0.2s' }}
 //                     >
 //                       <div className={`rounded-circle p-2 me-3 d-flex align-items-center justify-content-center ${filterUrgentOnly ? 'bg-danger text-white' : 'bg-secondary text-white'}`} style={{ width: '36px', height: '36px' }}>
@@ -647,7 +664,7 @@
 //                   ) : filteredList.map((item) => (
 //                     <tr key={item.id} className={item.status === 'USER_CANCELLED' ? 'table-danger' : ''}>
 //                       <td><span className="font-monospace text-muted small">{item.batchId || "-"}</span></td>
-//                       <td><div className="fw-bold">{item.name}</div><div className="small text-muted">{item.userId || "No ID"}</div></td>
+//                       <td><div className="fw-bold">{item.name} {item.lastname}</div><div className="small text-muted">{item.userId || "No ID"}</div></td>
 //                       <td><div>{item.hospitalName}</div><div className="small text-primary">{item.doctorName || "-"}</div></td>
 //                       <td>
 //                         <div className="d-flex flex-column">
@@ -661,53 +678,42 @@
 //                         </div>
 //                       </td>
 //                       <td>
-//                         {item.status === 'USER_CANCELLED' ? (
-//                             <span className="badge bg-danger text-white border border-white shadow-sm">
-//                                 <AlertTriangle size={12} className="me-1"/> ผู้ใช้ขอยกเลิก
-//                             </span>
-//                         ) : (
-//                             <StatusBadge status={item.status} hasSuggestion={!!item.suggestedDate} />
-//                         )}
+//                         <StatusBadge status={item.status} hasSuggestion={!!item.suggestedDate} />
 //                       </td>
-                      
-//                       {/* --- 🔥 Column จัดการ (แก้ไข Logic ตรงนี้) --- */}
+
 //                       <td className="text-end">
 //                         {activeTab === 'ACTION' && (
 //                           <>
-//                             {/* Case 1: ผู้ใช้ยกเลิก -> ให้แอดมินกดแจ้ง รพ. */}
 //                             {item.status === 'USER_CANCELLED' ? (
-//                                 <div className="d-flex gap-2 justify-content-end">
-//                                     <button 
-//                                         className="btn btn-light btn-sm border text-muted"
-//                                         onClick={() => handleCopyCancelMessage(item)}
-//                                         title="คัดลอกข้อความเพื่อแจ้ง รพ."
-//                                     >
-//                                         <Copy size={14} className="me-1"/> Copy ข้อความ
-//                                     </button>
-//                                     <button 
-//                                         className="btn btn-danger btn-sm shadow-sm d-flex align-items-center gap-1"
-//                                         onClick={() => handleMarkAsNotified(item)}
-//                                     >
-//                                         <CheckCircle2 size={14} /> แจ้ง รพ. แล้ว
-//                                     </button>
-//                                 </div>
-                            
-//                             /* Case 2: เสนอวันใหม่ (Counter-Offer) -> ล็อคปุ่ม รอผู้ใช้ตอบ */
-//                             ) : item.status === 'REJECTED' && item.suggestedDate ? (
-//                                 <button className="btn btn-warning btn-sm rounded-pill px-3 text-dark fw-bold border-0" disabled style={{ opacity: 0.9, cursor: 'default' }}>
-//                                     <Clock size={14} className="me-1"/> รอผู้ใช้ยืนยัน
+//                               <div className="d-flex gap-2 justify-content-end">
+//                                 <button
+//                                   className="btn btn-light btn-sm border text-muted"
+//                                   onClick={() => handleCopyCancelMessage(item)}
+//                                   title="คัดลอกข้อความเพื่อแจ้ง รพ."
+//                                 >
+//                                   <Copy size={14} className="me-1" /> Copy ข้อความ
 //                                 </button>
+//                                 <button
+//                                   className="btn btn-danger btn-sm shadow-sm d-flex align-items-center gap-1"
+//                                   onClick={() => handleMarkAsNotified(item)}
+//                                 >
+//                                   <CheckCircle2 size={14} /> แจ้ง รพ. แล้ว
+//                                 </button>
+//                               </div>
 
-//                             /* Case 3: ปกติ (SENT) -> กดอัปเดตได้ */
+//                             ) : item.status === 'REJECTED' && item.suggestedDate ? (
+//                               <button className="btn btn-warning btn-sm rounded-pill px-3 text-dark fw-bold border-0" disabled style={{ opacity: 0.9, cursor: 'default' }}>
+//                                 <Clock size={14} className="me-1" /> รอผู้ใช้ยืนยัน
+//                               </button>
+
 //                             ) : (
-//                                 <button className="btn btn-primary btn-sm rounded-pill px-3" onClick={() => handleOpenUpdate(item)}>
-//                                     อัปเดตผล
-//                                 </button>
+//                               <button className="btn btn-primary btn-sm rounded-pill px-3 text-nowrap" onClick={() => handleOpenUpdate(item)}>
+//                                 อัปเดตผล
+//                               </button>
 //                             )}
 //                           </>
 //                         )}
-                        
-//                         {/* History Tab: ดูรายละเอียดได้อย่างเดียว */}
+
 //                         {activeTab === 'HISTORY' && (
 //                           <button className="btn btn-outline-secondary btn-sm rounded-pill px-3" disabled>ดูรายละเอียด</button>
 //                         )}
@@ -735,20 +741,23 @@
 //               {filteredBatches.length === 0 ? (<div className="text-center p-4 text-muted small">ไม่พบประวัติ</div>) : filteredBatches.map(batch => {
 //                 const batchItems = appointments.filter(a => a.batchId === batch.id);
 //                 return (
-//                   <div 
-//                     key={batch.id} 
-//                     className={`p-3 border-bottom batch-item ${selectedBatchId === batch.id ? 'bg-blue-light border-start-primary' : ''}`} 
-//                     onClick={() => setSelectedBatchId(batch.id)} 
+//                   <div
+//                     key={batch.id}
+//                     className={`p-3 border-bottom batch-item ${selectedBatchId === batch.id ? 'bg-blue-light border-start-primary' : ''}`}
+//                     onClick={() => setSelectedBatchId(batch.id)}
 //                     style={{ cursor: 'pointer', borderLeft: selectedBatchId === batch.id ? '4px solid #0d6efd' : '4px solid transparent' }}
 //                   >
 //                     <div className="d-flex justify-content-between align-items-start mb-1">
 //                       <span className="fw-bold text-primary small" style={{ fontSize: '0.8rem' }}>{batch.id}</span>
-//                       <span className="text-muted small" style={{ fontSize: '0.75rem' }}>{new Date(batch.date).toLocaleDateString('th-TH')}</span>
+//                       <div className="d-flex flex-column">
+//                         <span className="text-muted small" style={{ fontSize: '0.75rem' }}>{new Date(batch.date).toLocaleDateString('th-TH')}</span>
+//                         <span className="text-primary small text-end" style={{ fontSize: '0.75rem' }}>{batch.hospitalName}</span>
+//                       </div>
 //                     </div>
 //                     <div className="d-flex justify-content-between small text-muted mb-1">
 //                       <span>{batch.totalItems} รายการ</span>
-//                       {batch.status === 'COMPLETED' 
-//                         ? (<span className="text-success d-flex align-items-center gap-1"><CheckCircle2 size={12} /> เสร็จสิ้น</span>) 
+//                       {batch.status === 'COMPLETED'
+//                         ? (<span className="text-success d-flex align-items-center gap-1"><CheckCircle2 size={12} /> เสร็จสิ้น</span>)
 //                         : (<span className="text-warning d-flex align-items-center gap-1"><Clock size={12} /> รอผล</span>)}
 //                     </div>
 //                     <BatchProgress items={batchItems} />
@@ -764,7 +773,9 @@
 //                 <div className="preview-header border-bottom pb-3 mb-3">
 //                   <div>
 //                     <div className="d-flex align-items-center gap-2"><FileSpreadsheet className="text-primary" size={24} /><h5 className="mb-0 fw-bold">รายละเอียด {currentBatchInfo.id}</h5></div>
-//                     <small className="text-muted ms-1">ส่งเมื่อ: {new Date(currentBatchInfo.date).toLocaleString('th-TH')}</small>
+//                     <div className="d-flex gap-5"><small className="text-muted ms-1">ส่งเมื่อ: {new Date(currentBatchInfo.date).toLocaleString('th-TH')}</small>
+//                       <small className="text-muted">โรงพยาบาล<span className="text-primary">{currentBatchInfo.hospitalName}</span></small>
+//                     </div>
 //                   </div>
 //                   {selectedItemIds.length > 0 ? (
 //                     <div className="d-flex gap-2 animate-slide-up">
@@ -790,7 +801,7 @@
 //                       <tr>
 //                         <th style={{ width: '40px' }}><input type="checkbox" onChange={handleSelectAll} checked={selectedItemIds.length > 0 && selectedItemIds.length === currentBatchItems.filter(i => i.status === 'SENT').length} /></th>
 //                         <th>คนไข้</th>
-//                         <th>โรงพยาบาล</th>
+//                         <th>แผนก</th>
 //                         <th>วันนัด (P1)</th>
 //                         <th>สถานะ</th>
 //                         <th className="text-end">จัดการ</th>
@@ -800,11 +811,22 @@
 //                       {currentBatchItems.map((item) => (
 //                         <tr key={item.id} className={selectedItemIds.includes(item.id) ? 'bg-light-blue' : ''}>
 //                           <td>{(item.status === 'SENT' || item.status === 'REJECTED') ? (<input type="checkbox" checked={selectedItemIds.includes(item.id)} onChange={() => handleSelectItem(item.id)} />) : <CheckCircle2 size={16} className="text-muted" />}</td>
-//                           <td><div className="fw-bold">{item.name}</div><div className="small text-muted">{item.userId}</div></td>
+//                           <td><div className="fw-bold">{item.name} {item.lastname}</div><div className="small text-muted">{item.userId}</div></td>
 //                           <td>{item.hospitalName}</td>
 //                           <td>{new Date(item.priority1Date).toLocaleDateString('th-TH')}</td>
 //                           <td><StatusBadge status={item.status} /></td>
-//                           <td className="text-end">{(item.status === 'SENT' || item.status === 'REJECTED') && (<button className="btn btn-outline-primary btn-sm rounded-pill px-2 py-1" style={{ fontSize: '0.8rem' }} onClick={() => handleOpenUpdate(item)}>อัปเดต</button>)}</td>
+
+//                           <td className="text-end">
+//                             {item.status === 'SENT' && (
+//                               <button className="btn btn-outline-primary btn-sm rounded-pill px-2 py-1" style={{ fontSize: '0.8rem' }} onClick={() => handleOpenUpdate(item)}>อัปเดต</button>
+//                             )}
+//                             {item.status === 'USER_CANCELLED' && (
+//                               <button className="btn btn-outline-danger btn-sm rounded-pill px-2 py-1" style={{ fontSize: '0.8rem' }} onClick={() => handleMarkAsNotified(item)}>แจ้ง รพ.</button>
+//                             )}
+//                             {item.status === 'REJECTED' && item.suggestedDate && (
+//                               <span className="badge bg-warning text-dark border-warning" style={{ fontSize: '0.7rem' }}>รอผู้ใช้</span>
+//                             )}
+//                           </td>
 //                         </tr>
 //                       ))}
 //                     </tbody>
@@ -827,7 +849,7 @@
 //             <div className="d-flex justify-content-between align-items-start mb-4 border-bottom pb-3">
 //               <div>
 //                 <h5 className="mb-1 fw-bold">{selectedTask ? "อัปเดตผลการนัดหมาย" : `อัปเดตผลแบบกลุ่ม (${selectedItemIds.length} รายการ)`}</h5>
-//                 {selectedTask && <p className="mb-0 text-muted small">คนไข้: {selectedTask.name}</p>}
+//                 {selectedTask && <p className="mb-0 text-muted small">คนไข้: {selectedTask.name} {selectedTask.lastname}</p>}
 //               </div>
 //               <button className="btn-close-custom" onClick={() => setShowModal(false)}><X size={20} /></button>
 //             </div>
@@ -842,66 +864,63 @@
 
 //               {updateForm.status === 'CONFIRMED' ? (
 //                 <div className="animate-slide-up">
-                  
+
 //                   {/* --- CASE 1: Single Task --- */}
 //                   {selectedTask && (
 //                     <>
-//                         <label className="small text-muted mb-2 fw-bold">เลือกวันที่ต้องการยืนยัน</label>
-//                         <div className="d-flex gap-3 mb-4">
-//                           {/* Card P1 (หลัก) */}
-//                           <div 
-//                             className={`date-select-card flex-grow-1 ${updateForm.confirmedDate === getLocalYMD(selectedTask.priority1Date) ? 'active' : ''}`} 
-//                             onClick={() => setUpdateForm({ ...updateForm, confirmedDate: getLocalYMD(selectedTask.priority1Date) })}
-//                           >
-//                              <div className="badge bg-primary mb-1">ตัวเลือกที่ 1 (หลัก)</div>
-//                              <h5 className="mb-0 fw-bold text-dark">{formatDateCard(selectedTask.priority1Date).date}</h5>
-//                           </div>
-                          
-//                           {/* Card P2 (รอง) */}
-//                           {selectedTask.priority2Date ? (
-//                             <div 
-//                               className={`date-select-card flex-grow-1 ${updateForm.confirmedDate === getLocalYMD(selectedTask.priority2Date) ? 'active' : ''}`} 
-//                               onClick={() => setUpdateForm({ ...updateForm, confirmedDate: getLocalYMD(selectedTask.priority2Date) })}
-//                             >
-//                               <div className="badge bg-secondary mb-1">ตัวเลือกที่ 2 (รอง)</div>
-//                               <h5 className="mb-0 fw-bold text-dark">{formatDateCard(selectedTask.priority2Date).date}</h5>
-//                             </div>
-//                           ) : (
-//                             <div className="date-select-card flex-grow-1 disabled bg-light text-muted border-dashed d-flex align-items-center justify-content-center">
-//                                 <small>ไม่มีวันนัดสำรอง</small>
-//                             </div>
-//                           )}
+//                       <label className="small text-muted mb-2 fw-bold">เลือกวันที่ต้องการยืนยัน</label>
+//                       <div className="d-flex gap-3 mb-4">
+//                         {/* Card P1 (หลัก) */}
+//                         <div
+//                           className={`date-select-card flex-grow-1 ${updateForm.confirmedDate === getLocalYMD(selectedTask.priority1Date) ? 'active' : ''}`}
+//                           onClick={() => setUpdateForm({ ...updateForm, confirmedDate: getLocalYMD(selectedTask.priority1Date) })}
+//                         >
+//                           <div className="badge bg-primary mb-1">ตัวเลือกที่ 1 (หลัก)</div>
+//                           <h5 className="mb-0 fw-bold text-dark">{formatDateCard(selectedTask.priority1Date).date}</h5>
 //                         </div>
+
+//                         {/* Card P2 (รอง) */}
+//                         {selectedTask.priority2Date ? (
+//                           <div
+//                             className={`date-select-card flex-grow-1 ${updateForm.confirmedDate === getLocalYMD(selectedTask.priority2Date) ? 'active' : ''}`}
+//                             onClick={() => setUpdateForm({ ...updateForm, confirmedDate: getLocalYMD(selectedTask.priority2Date) })}
+//                           >
+//                             <div className="badge bg-secondary mb-1">ตัวเลือกที่ 2 (รอง)</div>
+//                             <h5 className="mb-0 fw-bold text-dark">{formatDateCard(selectedTask.priority2Date).date}</h5>
+//                           </div>
+//                         ) : (
+//                           <div className="date-select-card flex-grow-1 disabled bg-light text-muted border-dashed d-flex align-items-center justify-content-center">
+//                             <small>ไม่มีวันนัดสำรอง</small>
+//                           </div>
+//                         )}
+//                       </div>
 //                     </>
 //                   )}
 
-//                   {/* --- CASE 2: 🔥 Bulk Update (ปรับ UI ตรงนี้) --- */}
 //                   {!selectedTask && (
 //                     <>
-//                         <label className="small text-muted mb-2 fw-bold">เลือกรูปแบบวันที่สำหรับทุกคน</label>
-//                         <div className="d-flex gap-3 mb-4">
-//                             {/* Option 1: P1 Card */}
-//                             <div 
-//                                 className={`date-select-card flex-grow-1 text-center p-3 ${updateForm.bulkStrategy === 'P1' ? 'active' : ''}`}
-//                                 onClick={() => setUpdateForm({ ...updateForm, bulkStrategy: 'P1' })}
-//                                 style={{ cursor: 'pointer' }}
-//                             >
-//                                 <div className="badge bg-primary mb-2">ตัวเลือกที่ 1 (หลัก)</div>
-//                                 <h5 className="mb-0 fw-bold text-dark">ใช้วันนัดหลัก</h5>
-//                                 <small className="text-muted">ของทุกคน</small>
-//                             </div>
-
-//                             {/* Option 2: P2 Card */}
-//                             <div 
-//                                 className={`date-select-card flex-grow-1 text-center p-3 ${updateForm.bulkStrategy === 'P2' ? 'active' : ''}`}
-//                                 onClick={() => setUpdateForm({ ...updateForm, bulkStrategy: 'P2' })}
-//                                 style={{ cursor: 'pointer' }}
-//                             >
-//                                 <div className="badge bg-secondary mb-2">ตัวเลือกที่ 2 (รอง)</div>
-//                                 <h5 className="mb-0 fw-bold text-dark">ใช้วันนัดรอง</h5>
-//                                 <small className="text-muted">ของทุกคน (ถ้ามี)</small>
-//                             </div>
+//                       <label className="small text-muted mb-2 fw-bold">เลือกรูปแบบวันที่สำหรับทุกคน</label>
+//                       <div className="d-flex gap-3 mb-4">
+//                         <div
+//                           className={`date-select-card flex-grow-1 text-center p-3 ${updateForm.bulkStrategy === 'P1' ? 'active' : ''}`}
+//                           onClick={() => setUpdateForm({ ...updateForm, bulkStrategy: 'P1' })}
+//                           style={{ cursor: 'pointer' }}
+//                         >
+//                           <div className="badge bg-primary mb-2">ตัวเลือกที่ 1 (หลัก)</div>
+//                           <h5 className="mb-0 fw-bold text-dark">ใช้วันนัดหลัก</h5>
+//                           <small className="text-muted">ของทุกคน</small>
 //                         </div>
+
+//                         <div
+//                           className={`date-select-card flex-grow-1 text-center p-3 ${updateForm.bulkStrategy === 'P2' ? 'active' : ''}`}
+//                           onClick={() => setUpdateForm({ ...updateForm, bulkStrategy: 'P2' })}
+//                           style={{ cursor: 'pointer' }}
+//                         >
+//                           <div className="badge bg-secondary mb-2">ตัวเลือกที่ 2 (รอง)</div>
+//                           <h5 className="mb-0 fw-bold text-dark">ใช้วันนัดรอง</h5>
+//                           <small className="text-muted">ของทุกคน (ถ้ามี)</small>
+//                         </div>
+//                       </div>
 //                     </>
 //                   )}
 
@@ -929,20 +948,21 @@
 //                   </div>
 //                   <div className="mb-3">
 //                     <label className="small text-muted mb-1 fw-bold">เสนอวันนัดใหม่ (ถ้ามี)</label>
-//                     <CustomDatePicker 
-//                         value={updateForm.newProposedDate} 
-//                         onChange={(date) => setUpdateForm({ ...updateForm, newProposedDate: date })} 
-//                         placeholder="เสนอวันใหม่..."
+//                     <CustomDatePicker
+//                       value={updateForm.newProposedDate}
+//                       onChange={(date) => setUpdateForm({ ...updateForm, newProposedDate: date })}
+//                       placeholder="เสนอวันใหม่..."
+//                       disablePast={true}
 //                     />
 //                   </div>
 //                   <div className="col-12">
 //                     <label className="small text-muted mb-1">รายละเอียดเพิ่มเติม</label>
-//                     <textarea 
-//                       className="form-control" 
-//                       rows="2" 
-//                       placeholder="เช่น แนะนำให้จองใหม่เดือนหน้า..." 
-//                       value={updateForm.note} 
-//                       onChange={e => setUpdateForm({ ...updateForm, note: e.target.value })} 
+//                     <textarea
+//                       className="form-control"
+//                       rows="2"
+//                       placeholder="เช่น แนะนำให้จองใหม่เดือนหน้า..."
+//                       value={updateForm.note}
+//                       onChange={e => setUpdateForm({ ...updateForm, note: e.target.value })}
 //                     />
 //                   </div>
 //                 </div>
@@ -958,6 +978,7 @@
 //     </div>
 //   );
 // }
+
 import React, { useState, useMemo, useContext, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import {
@@ -968,14 +989,10 @@ import {
 } from "lucide-react";
 import * as XLSX from "xlsx";
 
-import { UserAppointment } from "../data/context/appointment";
+import { UserAppointment } from "../src/data/context/appointment";
 import "./Export.css";
 import "./Tracking.css";
-
-// ==========================================
-// 1. HELPER FUNCTIONS
-// ==========================================
-
+import hospitalData from "../src/data/listhospital";
 function getLocalYMD(dateString) {
   if (!dateString) return null;
   const d = new Date(dateString);
@@ -994,10 +1011,6 @@ function formatDateCard(dateString) {
   };
 }
 
-// ==========================================
-// 2. SUB-COMPONENTS
-// ==========================================
-
 function StatusBadge({ status, hasSuggestion }) {
   const styles = {
     SENT: { bg: "#fff3cd", color: "#856404", label: "รอผลตอบกลับ", icon: Clock },
@@ -1008,11 +1021,11 @@ function StatusBadge({ status, hasSuggestion }) {
   };
 
   if (status === 'REJECTED' && hasSuggestion) {
-      return (
-        <span className="badge rounded-pill d-inline-flex align-items-center gap-1 border border-warning" style={{ backgroundColor: "#fff3cd", color: "#856404", padding: "6px 12px", fontWeight: 500 }}>
-          <Clock size={14} /> รอผู้ใช้ยืนยัน (นัดใหม่)
-        </span>
-      );
+    return (
+      <span className="badge rounded-pill d-inline-flex align-items-center gap-1 border border-warning" style={{ backgroundColor: "#fff3cd", color: "#856404", padding: "6px 12px", fontWeight: 500 }}>
+        <Clock size={14} /> รอผู้ใช้ยืนยัน (นัดใหม่)
+      </span>
+    );
   }
 
   const s = styles[status] || styles.SENT;
@@ -1055,7 +1068,6 @@ function BatchProgress({ items }) {
   );
 }
 
-// --- 🔥 CUSTOM DATE PICKER (UPDATED: รับ prop disablePast) ---
 function CustomDatePicker({ value, onChange, placeholder = "เลือกวันที่...", disablePast = false }) {
   const [isOpen, setIsOpen] = useState(false);
   const [currentDate, setCurrentDate] = useState(value ? new Date(value) : new Date());
@@ -1151,12 +1163,12 @@ function CustomDatePicker({ value, onChange, placeholder = "เลือกว�
               return (
                 <div
                   key={index}
-                  onClick={(e) => { 
-                    e.stopPropagation(); 
-                    if (!isPast) handleDateClick(day); 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (!isPast) handleDateClick(day);
                   }}
                   style={{
-                    height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', 
+                    height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%',
                     fontSize: '0.8rem',
                     cursor: isPast ? 'default' : 'pointer',
                     backgroundColor: isSelected ? '#0d6efd' : 'transparent',
@@ -1186,17 +1198,28 @@ export default function AdminTracking() {
   const [activeTab, setActiveTab] = useState("ACTION");
   const [showFilters, setShowFilters] = useState(false);
   const [showModal, setShowModal] = useState(false);
-
+  const [selectedProvince, setSelectedProvince] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterSentDate, setFilterSentDate] = useState("");      
-  const [filterBookingDate, setFilterBookingDate] = useState(""); 
+  const [filterSentDate, setFilterSentDate] = useState("");
+  const [filterBookingDate, setFilterBookingDate] = useState("");
   const [filterHospital, setFilterHospital] = useState("ALL");
   const [filterUrgentOnly, setFilterUrgentOnly] = useState(false);
 
   const [selectedTask, setSelectedTask] = useState(null);
   const [selectedBatchId, setSelectedBatchId] = useState(null);
   const [selectedItemIds, setSelectedItemIds] = useState([]);
-  
+
+
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  const adminScope = currentUser?.adminScope || 'all';
+
+  useEffect(() => {
+    if (adminScope && adminScope !== 'all') {
+      setSelectedProvince(adminScope);
+    }
+  }, [adminScope]);
+  console.log(selectedProvince)
+
   const [updateForm, setUpdateForm] = useState({
     status: "CONFIRMED",
     confirmedDate: "",
@@ -1205,7 +1228,11 @@ export default function AdminTracking() {
     newProposedDate: "",
     bulkStrategy: "P1"
   });
-
+  function getHospitalState(hospitalName) {
+    if (!hospitalName) return "";
+    const found = hospitalData.find(h => hospitalName.includes(h.name));
+    return found ? found.state : "";
+  }
   useEffect(() => {
     if (location.state?.filterMode === 'TODAY') {
       setActiveTab("HISTORY");
@@ -1215,9 +1242,28 @@ export default function AdminTracking() {
     }
   }, [location]);
 
+  const scopedAppointments = useMemo(() => {
+    if (adminScope === 'all') return appointments;
+
+    return appointments.filter(appt => {
+      const state = getHospitalState(appt.hospitalName); // หาจังหวัดของโรงพยาบาลนี้
+      return state === adminScope; // เทียบกับ scope ของ admin
+    });
+  }, [appointments, adminScope]);
+
+  const scopedBatches = useMemo(() => {
+    if (adminScope === 'all') return batches;
+
+    return batches.filter(batch => {
+      const state = getHospitalState(batch.hospitalName);
+      return state === adminScope;
+    });
+  }, [batches, adminScope]);
+
   const trackingData = useMemo(() => {
-    return appointments.filter(a => a.status !== "NEW");
-  }, [appointments]);
+    return scopedAppointments.filter(a => a.status !== "NEW");
+  }, [scopedAppointments]);
+
 
   const hospitalOptions = useMemo(() => {
     const hospitals = trackingData.map(item => item.hospitalName).filter(Boolean);
@@ -1235,21 +1281,21 @@ export default function AdminTracking() {
   // --- Logic การกรอง ---
   const filteredList = useMemo(() => {
     if (activeTab === 'BATCH') return [];
-    
+
     return trackingData.filter(item => {
       let showInTab = false;
 
       if (activeTab === "ACTION") {
         if (item.status === 'SENT' || item.status === 'USER_CANCELLED') {
-            showInTab = true;
+          showInTab = true;
         } else if (item.status === 'REJECTED' && item.suggestedDate) {
-            showInTab = true;
+          showInTab = true;
         }
       } else if (activeTab === "HISTORY") {
         if (item.status === 'CONFIRMED' || item.status === 'CANCELLED') {
-            showInTab = true;
+          showInTab = true;
         } else if (item.status === 'REJECTED' && !item.suggestedDate) {
-            showInTab = true;
+          showInTab = true;
         }
       }
 
@@ -1281,22 +1327,26 @@ export default function AdminTracking() {
     });
   }, [trackingData, searchTerm, activeTab, filterSentDate, filterBookingDate, filterHospital, filterUrgentOnly]);
 
+  // const filteredBatches = useMemo(() => {
+  //   if (activeTab !== 'BATCH') return [];
+  //   return batches.filter(b => b.id.toLowerCase().includes(searchTerm.toLowerCase()));
+  // }, [batches, searchTerm, activeTab]);
   const filteredBatches = useMemo(() => {
     if (activeTab !== 'BATCH') return [];
-    return batches.filter(b => b.id.toLowerCase().includes(searchTerm.toLowerCase()));
-  }, [batches, searchTerm, activeTab]);
-
+    return scopedBatches.filter(b => b.id.toLowerCase().includes(searchTerm.toLowerCase()));
+  }, [scopedBatches, searchTerm, activeTab])
   useEffect(() => {
-    if (activeTab === 'BATCH' && !selectedBatchId && batches.length > 0) {
-      setSelectedBatchId(batches[0].id);
+    if (activeTab === 'BATCH' && !selectedBatchId && scopedBatches.length > 0) {
+      setSelectedBatchId(scopedBatches[0].id);
     }
-  }, [activeTab, batches, selectedBatchId]);
+  }, [activeTab, scopedBatches, selectedBatchId]);
 
-  const currentBatchInfo = batches.find(b => b.id === selectedBatchId);
+  const currentBatchInfo = scopedBatches.find(b => b.id === selectedBatchId);
+  
   const currentBatchItems = useMemo(() => {
     if (!selectedBatchId) return [];
-    return appointments.filter(a => a.batchId === selectedBatchId);
-  }, [appointments, selectedBatchId]);
+    return scopedAppointments.filter(a => a.batchId === selectedBatchId);
+  }, [scopedAppointments, selectedBatchId]);
 
 
   // --- Handlers ---
@@ -1324,11 +1374,11 @@ export default function AdminTracking() {
 
     setUpdateForm({
       status: "CONFIRMED",
-      confirmedDate: defaultDate, 
+      confirmedDate: defaultDate,
       confirmedTime: "09:00",
       note: "",
       newProposedDate: "",
-      bulkStrategy: "P1" 
+      bulkStrategy: "P1"
     });
     setShowModal(true);
   }
@@ -1343,8 +1393,8 @@ export default function AdminTracking() {
 
     if (selectedTask) {
       const payload = {
-          ...basePayload,
-          confirmedDate: updateForm.status === 'CONFIRMED' ? updateForm.confirmedDate : null
+        ...basePayload,
+        confirmedDate: updateForm.status === 'CONFIRMED' ? updateForm.confirmedDate : null
       };
       updateAppointmentStatus(selectedTask.id, updateForm.status, payload);
       setSelectedTask(null);
@@ -1354,11 +1404,11 @@ export default function AdminTracking() {
         const originalItem = appointments.find(a => a.id === id);
         let targetDate = null;
         if (updateForm.status === 'CONFIRMED') {
-            if (updateForm.bulkStrategy === 'P2') {
-                targetDate = originalItem?.priority2Date || null;
-            } else {
-                targetDate = originalItem?.priority1Date;
-            }
+          if (updateForm.bulkStrategy === 'P2') {
+            targetDate = originalItem?.priority2Date || null;
+          } else {
+            targetDate = originalItem?.priority1Date;
+          }
         }
         updateAppointmentStatus(id, updateForm.status, {
           ...basePayload,
@@ -1398,10 +1448,12 @@ export default function AdminTracking() {
 
     const excelData = itemsInBatch.map((appt, index) => ({
       "ลำดับ": index + 1,
-      "ชื่อ-นามสกุล": appt.name,
+      "ชื่อ": appt.name,
+      "นามสกุล": appt.lastname,
       "วันเกิด": appt.birthDate || "",
       "อายุ": appt.age || "",
-      "บัตรประชาชน": appt.idCard || "",
+      "บัตรประชาชน/พาสปอร์ต": appt.identificationNumber || "",
+      "สัญชาติ": currentUser.nationality || "",
       "อาการ": appt.symptom || "-",
       "ไฟล์แนบ": (appt.files || []).map(f => f.name).join(", "),
       "วันจองนัดหลัก": appt.priority1Date ? new Date(appt.priority1Date).toLocaleDateString('th-TH') : "",
@@ -1434,9 +1486,9 @@ export default function AdminTracking() {
   }
 
   function handleMarkAsNotified(item) {
-    if(window.confirm(`ยืนยันว่าแจ้งโรงพยาบาล ${item.hospitalName} เรียบร้อยแล้ว?`)) {
-      updateAppointmentStatus(item.id, 'CANCELLED', { 
-        note: `แอดมินแจ้งยกเลิก รพ. แล้วเมื่อ ${new Date().toLocaleString('th-TH')}` 
+    if (window.confirm(`ยืนยันว่าแจ้งโรงพยาบาล ${item.hospitalName} เรียบร้อยแล้ว?`)) {
+      updateAppointmentStatus(item.id, 'CANCELLED', {
+        note: `แอดมินแจ้งยกเลิก รพ. แล้วเมื่อ ${new Date().toLocaleString('th-TH')}`
       });
     }
   }
@@ -1444,7 +1496,7 @@ export default function AdminTracking() {
   return (
     <div className="export-container">
       <div className="export-header">
-        <h2>🔎 ติดตามผลการนัด (Tracking)</h2>
+        <h2>ติดตามผลการนัด (Tracking)</h2>
         <p>ตรวจสอบสถานะและอัปเดตผลตอบกลับจากโรงพยาบาล</p>
       </div>
 
@@ -1485,20 +1537,20 @@ export default function AdminTracking() {
       </div>
 
       <div className="d-flex gap-4 mb-3 border-bottom px-2">
-        <button 
-          className={`btn pb-2 rounded-0 ${activeTab === 'ACTION' ? 'border-bottom border-primary border-3 text-primary fw-bold' : 'text-muted'}`} 
+        <button
+          className={`btn pb-2 rounded-0 ${activeTab === 'ACTION' ? 'border-bottom border-primary border-3 text-primary fw-bold' : 'text-muted'}`}
           onClick={() => setActiveTab('ACTION')}
         >
           ต้องจัดการ {(stats.pending + stats.issues) > 0 && <span className="badge bg-danger ms-2 rounded-pill">{stats.pending + stats.issues}</span>}
         </button>
-        <button 
-          className={`btn pb-2 rounded-0 ${activeTab === 'HISTORY' ? 'border-bottom border-primary border-3 text-primary fw-bold' : 'text-muted'}`} 
+        <button
+          className={`btn pb-2 rounded-0 ${activeTab === 'HISTORY' ? 'border-bottom border-primary border-3 text-primary fw-bold' : 'text-muted'}`}
           onClick={() => setActiveTab('HISTORY')}
         >
           ประวัติรายคน (History)
         </button>
-        <button 
-          className={`btn pb-2 rounded-0 ${activeTab === 'BATCH' ? 'border-bottom border-primary border-3 text-primary fw-bold' : 'text-muted'}`} 
+        <button
+          className={`btn pb-2 rounded-0 ${activeTab === 'BATCH' ? 'border-bottom border-primary border-3 text-primary fw-bold' : 'text-muted'}`}
           onClick={() => setActiveTab('BATCH')}
         >
           ประวัติราย Batch
@@ -1509,15 +1561,15 @@ export default function AdminTracking() {
         <>
           <div className="filter-card py-3 mb-3">
             <div className="d-flex gap-3 align-items-center">
-              
+
               <div className="position-relative flex-grow-1">
                 <Search size={18} className="text-muted position-absolute top-50 start-0 translate-middle-y ms-3" />
-                <input 
-                  type="text" 
-                  className="form-control ps-5" 
-                  placeholder="ค้นหาชื่อคนไข้, โรงพยาบาล, ชื่อแพทย์..." 
-                  value={searchTerm} 
-                  onChange={e => setSearchTerm(e.target.value)} 
+                <input
+                  type="text"
+                  className="form-control ps-5"
+                  placeholder="ค้นหาชื่อคนไข้, โรงพยาบาล, ชื่อแพทย์..."
+                  value={searchTerm}
+                  onChange={e => setSearchTerm(e.target.value)}
                 />
               </div>
 
@@ -1534,7 +1586,7 @@ export default function AdminTracking() {
               </div>
 
               <div className="position-relative" style={{ width: '180px' }}>
-                  <CustomDatePicker
+                <CustomDatePicker
                   value={filterBookingDate}
                   onChange={setFilterBookingDate}
                   placeholder="วันที่ขอนัด"
@@ -1556,7 +1608,7 @@ export default function AdminTracking() {
                   <h6 className="fw-bold text-dark m-0 d-flex align-items-center gap-2">
                     <Filter size={16} className="text-primary" /> ตัวกรองแบบละเอียด
                   </h6>
-                  <button 
+                  <button
                     className="btn btn-link text-muted btn-sm text-decoration-none d-flex align-items-center gap-1"
                     onClick={() => { setFilterHospital("ALL"); setFilterUrgentOnly(false); setFilterSentDate(""); setFilterBookingDate(""); setSearchTerm(""); }}
                   >
@@ -1574,9 +1626,9 @@ export default function AdminTracking() {
                   </div>
                   <div className="col-md-6">
                     <label className="form-label small text-muted fw-bold">ความเร่งด่วน</label>
-                    <div 
+                    <div
                       className={`d-flex align-items-center p-2 px-3 rounded border cursor-pointer transition-all ${filterUrgentOnly ? 'border-danger bg-danger-subtle' : 'border-secondary-subtle bg-light'}`}
-                      onClick={() => setFilterUrgentOnly(!filterUrgentOnly)} 
+                      onClick={() => setFilterUrgentOnly(!filterUrgentOnly)}
                       style={{ cursor: 'pointer', transition: 'all 0.2s' }}
                     >
                       <div className={`rounded-circle p-2 me-3 d-flex align-items-center justify-content-center ${filterUrgentOnly ? 'bg-danger text-white' : 'bg-secondary text-white'}`} style={{ width: '36px', height: '36px' }}>
@@ -1615,7 +1667,7 @@ export default function AdminTracking() {
                   ) : filteredList.map((item) => (
                     <tr key={item.id} className={item.status === 'USER_CANCELLED' ? 'table-danger' : ''}>
                       <td><span className="font-monospace text-muted small">{item.batchId || "-"}</span></td>
-                      <td><div className="fw-bold">{item.name}</div><div className="small text-muted">{item.userId || "No ID"}</div></td>
+                      <td><div className="fw-bold">{item.name} {item.lastname}</div><div className="small text-muted">{item.userId || "No ID"}</div></td>
                       <td><div>{item.hospitalName}</div><div className="small text-primary">{item.doctorName || "-"}</div></td>
                       <td>
                         <div className="d-flex flex-column">
@@ -1629,48 +1681,42 @@ export default function AdminTracking() {
                         </div>
                       </td>
                       <td>
-                        {item.status === 'USER_CANCELLED' ? (
-                            <span className="badge bg-danger text-white border border-white shadow-sm">
-                                <AlertTriangle size={12} className="me-1"/> ผู้ใช้ขอยกเลิก
-                            </span>
-                        ) : (
-                            <StatusBadge status={item.status} hasSuggestion={!!item.suggestedDate} />
-                        )}
+                        <StatusBadge status={item.status} hasSuggestion={!!item.suggestedDate} />
                       </td>
-                      
+
                       <td className="text-end">
                         {activeTab === 'ACTION' && (
                           <>
                             {item.status === 'USER_CANCELLED' ? (
-                                <div className="d-flex gap-2 justify-content-end">
-                                    <button 
-                                        className="btn btn-light btn-sm border text-muted"
-                                        onClick={() => handleCopyCancelMessage(item)}
-                                        title="คัดลอกข้อความเพื่อแจ้ง รพ."
-                                    >
-                                        <Copy size={14} className="me-1"/> Copy ข้อความ
-                                    </button>
-                                    <button 
-                                        className="btn btn-danger btn-sm shadow-sm d-flex align-items-center gap-1"
-                                        onClick={() => handleMarkAsNotified(item)}
-                                    >
-                                        <CheckCircle2 size={14} /> แจ้ง รพ. แล้ว
-                                    </button>
-                                </div>
-                            
-                            ) : item.status === 'REJECTED' && item.suggestedDate ? (
-                                <button className="btn btn-warning btn-sm rounded-pill px-3 text-dark fw-bold border-0" disabled style={{ opacity: 0.9, cursor: 'default' }}>
-                                    <Clock size={14} className="me-1"/> รอผู้ใช้ยืนยัน
+                              <div className="d-flex gap-2 justify-content-end">
+                                <button
+                                  className="btn btn-light btn-sm border text-muted"
+                                  onClick={() => handleCopyCancelMessage(item)}
+                                  title="คัดลอกข้อความเพื่อแจ้ง รพ."
+                                >
+                                  <Copy size={14} className="me-1" /> Copy ข้อความ
                                 </button>
+                                <button
+                                  className="btn btn-danger btn-sm shadow-sm d-flex align-items-center gap-1"
+                                  onClick={() => handleMarkAsNotified(item)}
+                                >
+                                  <CheckCircle2 size={14} /> แจ้ง รพ. แล้ว
+                                </button>
+                              </div>
+
+                            ) : item.status === 'REJECTED' && item.suggestedDate ? (
+                              <button className="btn btn-warning btn-sm rounded-pill px-3 text-dark fw-bold border-0" disabled style={{ opacity: 0.9, cursor: 'default' }}>
+                                <Clock size={14} className="me-1" /> รอผู้ใช้ยืนยัน
+                              </button>
 
                             ) : (
-                                <button className="btn btn-primary btn-sm rounded-pill px-3" onClick={() => handleOpenUpdate(item)}>
-                                    อัปเดตผล
-                                </button>
+                              <button className="btn btn-primary btn-sm rounded-pill px-3 text-nowrap" onClick={() => handleOpenUpdate(item)}>
+                                อัปเดตผล
+                              </button>
                             )}
                           </>
                         )}
-                        
+
                         {activeTab === 'HISTORY' && (
                           <button className="btn btn-outline-secondary btn-sm rounded-pill px-3" disabled>ดูรายละเอียด</button>
                         )}
@@ -1698,20 +1744,23 @@ export default function AdminTracking() {
               {filteredBatches.length === 0 ? (<div className="text-center p-4 text-muted small">ไม่พบประวัติ</div>) : filteredBatches.map(batch => {
                 const batchItems = appointments.filter(a => a.batchId === batch.id);
                 return (
-                  <div 
-                    key={batch.id} 
-                    className={`p-3 border-bottom batch-item ${selectedBatchId === batch.id ? 'bg-blue-light border-start-primary' : ''}`} 
-                    onClick={() => setSelectedBatchId(batch.id)} 
+                  <div
+                    key={batch.id}
+                    className={`p-3 border-bottom batch-item ${selectedBatchId === batch.id ? 'bg-blue-light border-start-primary' : ''}`}
+                    onClick={() => setSelectedBatchId(batch.id)}
                     style={{ cursor: 'pointer', borderLeft: selectedBatchId === batch.id ? '4px solid #0d6efd' : '4px solid transparent' }}
                   >
                     <div className="d-flex justify-content-between align-items-start mb-1">
                       <span className="fw-bold text-primary small" style={{ fontSize: '0.8rem' }}>{batch.id}</span>
-                      <span className="text-muted small" style={{ fontSize: '0.75rem' }}>{new Date(batch.date).toLocaleDateString('th-TH')}</span>
+                      <div className="d-flex flex-column">
+                        <span className="text-muted small" style={{ fontSize: '0.75rem' }}>{new Date(batch.date).toLocaleDateString('th-TH')}</span>
+                        <span className="text-primary small text-end" style={{ fontSize: '0.75rem' }}>{batch.hospitalName}</span>
+                      </div>
                     </div>
                     <div className="d-flex justify-content-between small text-muted mb-1">
                       <span>{batch.totalItems} รายการ</span>
-                      {batch.status === 'COMPLETED' 
-                        ? (<span className="text-success d-flex align-items-center gap-1"><CheckCircle2 size={12} /> เสร็จสิ้น</span>) 
+                      {batch.status === 'COMPLETED'
+                        ? (<span className="text-success d-flex align-items-center gap-1"><CheckCircle2 size={12} /> เสร็จสิ้น</span>)
                         : (<span className="text-warning d-flex align-items-center gap-1"><Clock size={12} /> รอผล</span>)}
                     </div>
                     <BatchProgress items={batchItems} />
@@ -1727,7 +1776,9 @@ export default function AdminTracking() {
                 <div className="preview-header border-bottom pb-3 mb-3">
                   <div>
                     <div className="d-flex align-items-center gap-2"><FileSpreadsheet className="text-primary" size={24} /><h5 className="mb-0 fw-bold">รายละเอียด {currentBatchInfo.id}</h5></div>
-                    <small className="text-muted ms-1">ส่งเมื่อ: {new Date(currentBatchInfo.date).toLocaleString('th-TH')}</small>
+                    <div className="d-flex gap-5"><small className="text-muted ms-1">ส่งเมื่อ: {new Date(currentBatchInfo.date).toLocaleString('th-TH')}</small>
+                      <small className="text-muted">โรงพยาบาล<span className="text-primary">{currentBatchInfo.hospitalName}</span></small>
+                    </div>
                   </div>
                   {selectedItemIds.length > 0 ? (
                     <div className="d-flex gap-2 animate-slide-up">
@@ -1753,7 +1804,7 @@ export default function AdminTracking() {
                       <tr>
                         <th style={{ width: '40px' }}><input type="checkbox" onChange={handleSelectAll} checked={selectedItemIds.length > 0 && selectedItemIds.length === currentBatchItems.filter(i => i.status === 'SENT').length} /></th>
                         <th>คนไข้</th>
-                        <th>โรงพยาบาล</th>
+                        <th>แผนก</th>
                         <th>วันนัด (P1)</th>
                         <th>สถานะ</th>
                         <th className="text-end">จัดการ</th>
@@ -1763,20 +1814,20 @@ export default function AdminTracking() {
                       {currentBatchItems.map((item) => (
                         <tr key={item.id} className={selectedItemIds.includes(item.id) ? 'bg-light-blue' : ''}>
                           <td>{(item.status === 'SENT' || item.status === 'REJECTED') ? (<input type="checkbox" checked={selectedItemIds.includes(item.id)} onChange={() => handleSelectItem(item.id)} />) : <CheckCircle2 size={16} className="text-muted" />}</td>
-                          <td><div className="fw-bold">{item.name}</div><div className="small text-muted">{item.userId}</div></td>
+                          <td><div className="fw-bold">{item.name} {item.lastname}</div><div className="small text-muted">{item.userId}</div></td>
                           <td>{item.hospitalName}</td>
                           <td>{new Date(item.priority1Date).toLocaleDateString('th-TH')}</td>
                           <td><StatusBadge status={item.status} /></td>
-                          
+
                           <td className="text-end">
                             {item.status === 'SENT' && (
-                                <button className="btn btn-outline-primary btn-sm rounded-pill px-2 py-1" style={{ fontSize: '0.8rem' }} onClick={() => handleOpenUpdate(item)}>อัปเดต</button>
+                              <button className="btn btn-outline-primary btn-sm rounded-pill px-2 py-1" style={{ fontSize: '0.8rem' }} onClick={() => handleOpenUpdate(item)}>อัปเดต</button>
                             )}
                             {item.status === 'USER_CANCELLED' && (
-                                <button className="btn btn-outline-danger btn-sm rounded-pill px-2 py-1" style={{ fontSize: '0.8rem' }} onClick={() => handleMarkAsNotified(item)}>แจ้ง รพ.</button>
+                              <button className="btn btn-outline-danger btn-sm rounded-pill px-2 py-1" style={{ fontSize: '0.8rem' }} onClick={() => handleMarkAsNotified(item)}>แจ้ง รพ.</button>
                             )}
                             {item.status === 'REJECTED' && item.suggestedDate && (
-                                <span className="badge bg-warning text-dark border-warning" style={{fontSize: '0.7rem'}}>รอผู้ใช้</span>
+                              <span className="badge bg-warning text-dark border-warning" style={{ fontSize: '0.7rem' }}>รอผู้ใช้</span>
                             )}
                           </td>
                         </tr>
@@ -1801,7 +1852,7 @@ export default function AdminTracking() {
             <div className="d-flex justify-content-between align-items-start mb-4 border-bottom pb-3">
               <div>
                 <h5 className="mb-1 fw-bold">{selectedTask ? "อัปเดตผลการนัดหมาย" : `อัปเดตผลแบบกลุ่ม (${selectedItemIds.length} รายการ)`}</h5>
-                {selectedTask && <p className="mb-0 text-muted small">คนไข้: {selectedTask.name}</p>}
+                {selectedTask && <p className="mb-0 text-muted small">คนไข้: {selectedTask.name} {selectedTask.lastname}</p>}
               </div>
               <button className="btn-close-custom" onClick={() => setShowModal(false)}><X size={20} /></button>
             </div>
@@ -1816,66 +1867,63 @@ export default function AdminTracking() {
 
               {updateForm.status === 'CONFIRMED' ? (
                 <div className="animate-slide-up">
-                  
+
                   {/* --- CASE 1: Single Task --- */}
                   {selectedTask && (
                     <>
-                        <label className="small text-muted mb-2 fw-bold">เลือกวันที่ต้องการยืนยัน</label>
-                        <div className="d-flex gap-3 mb-4">
-                          {/* Card P1 (หลัก) */}
-                          <div 
-                            className={`date-select-card flex-grow-1 ${updateForm.confirmedDate === getLocalYMD(selectedTask.priority1Date) ? 'active' : ''}`} 
-                            onClick={() => setUpdateForm({ ...updateForm, confirmedDate: getLocalYMD(selectedTask.priority1Date) })}
-                          >
-                             <div className="badge bg-primary mb-1">ตัวเลือกที่ 1 (หลัก)</div>
-                             <h5 className="mb-0 fw-bold text-dark">{formatDateCard(selectedTask.priority1Date).date}</h5>
-                          </div>
-                          
-                          {/* Card P2 (รอง) */}
-                          {selectedTask.priority2Date ? (
-                            <div 
-                              className={`date-select-card flex-grow-1 ${updateForm.confirmedDate === getLocalYMD(selectedTask.priority2Date) ? 'active' : ''}`} 
-                              onClick={() => setUpdateForm({ ...updateForm, confirmedDate: getLocalYMD(selectedTask.priority2Date) })}
-                            >
-                              <div className="badge bg-secondary mb-1">ตัวเลือกที่ 2 (รอง)</div>
-                              <h5 className="mb-0 fw-bold text-dark">{formatDateCard(selectedTask.priority2Date).date}</h5>
-                            </div>
-                          ) : (
-                            <div className="date-select-card flex-grow-1 disabled bg-light text-muted border-dashed d-flex align-items-center justify-content-center">
-                                <small>ไม่มีวันนัดสำรอง</small>
-                            </div>
-                          )}
+                      <label className="small text-muted mb-2 fw-bold">เลือกวันที่ต้องการยืนยัน</label>
+                      <div className="d-flex gap-3 mb-4">
+                        {/* Card P1 (หลัก) */}
+                        <div
+                          className={`date-select-card flex-grow-1 ${updateForm.confirmedDate === getLocalYMD(selectedTask.priority1Date) ? 'active' : ''}`}
+                          onClick={() => setUpdateForm({ ...updateForm, confirmedDate: getLocalYMD(selectedTask.priority1Date) })}
+                        >
+                          <div className="badge bg-primary mb-1">ตัวเลือกที่ 1 (หลัก)</div>
+                          <h5 className="mb-0 fw-bold text-dark">{formatDateCard(selectedTask.priority1Date).date}</h5>
                         </div>
+
+                        {/* Card P2 (รอง) */}
+                        {selectedTask.priority2Date ? (
+                          <div
+                            className={`date-select-card flex-grow-1 ${updateForm.confirmedDate === getLocalYMD(selectedTask.priority2Date) ? 'active' : ''}`}
+                            onClick={() => setUpdateForm({ ...updateForm, confirmedDate: getLocalYMD(selectedTask.priority2Date) })}
+                          >
+                            <div className="badge bg-secondary mb-1">ตัวเลือกที่ 2 (รอง)</div>
+                            <h5 className="mb-0 fw-bold text-dark">{formatDateCard(selectedTask.priority2Date).date}</h5>
+                          </div>
+                        ) : (
+                          <div className="date-select-card flex-grow-1 disabled bg-light text-muted border-dashed d-flex align-items-center justify-content-center">
+                            <small>ไม่มีวันนัดสำรอง</small>
+                          </div>
+                        )}
+                      </div>
                     </>
                   )}
 
-                  {/* --- CASE 2: 🔥 Bulk Update (ปรับ UI ตรงนี้) --- */}
                   {!selectedTask && (
                     <>
-                        <label className="small text-muted mb-2 fw-bold">เลือกรูปแบบวันที่สำหรับทุกคน</label>
-                        <div className="d-flex gap-3 mb-4">
-                            {/* Option 1: P1 Card */}
-                            <div 
-                                className={`date-select-card flex-grow-1 text-center p-3 ${updateForm.bulkStrategy === 'P1' ? 'active' : ''}`}
-                                onClick={() => setUpdateForm({ ...updateForm, bulkStrategy: 'P1' })}
-                                style={{ cursor: 'pointer' }}
-                            >
-                                <div className="badge bg-primary mb-2">ตัวเลือกที่ 1 (หลัก)</div>
-                                <h5 className="mb-0 fw-bold text-dark">ใช้วันนัดหลัก</h5>
-                                <small className="text-muted">ของทุกคน</small>
-                            </div>
-
-                            {/* Option 2: P2 Card */}
-                            <div 
-                                className={`date-select-card flex-grow-1 text-center p-3 ${updateForm.bulkStrategy === 'P2' ? 'active' : ''}`}
-                                onClick={() => setUpdateForm({ ...updateForm, bulkStrategy: 'P2' })}
-                                style={{ cursor: 'pointer' }}
-                            >
-                                <div className="badge bg-secondary mb-2">ตัวเลือกที่ 2 (รอง)</div>
-                                <h5 className="mb-0 fw-bold text-dark">ใช้วันนัดรอง</h5>
-                                <small className="text-muted">ของทุกคน (ถ้ามี)</small>
-                            </div>
+                      <label className="small text-muted mb-2 fw-bold">เลือกรูปแบบวันที่สำหรับทุกคน</label>
+                      <div className="d-flex gap-3 mb-4">
+                        <div
+                          className={`date-select-card flex-grow-1 text-center p-3 ${updateForm.bulkStrategy === 'P1' ? 'active' : ''}`}
+                          onClick={() => setUpdateForm({ ...updateForm, bulkStrategy: 'P1' })}
+                          style={{ cursor: 'pointer' }}
+                        >
+                          <div className="badge bg-primary mb-2">ตัวเลือกที่ 1 (หลัก)</div>
+                          <h5 className="mb-0 fw-bold text-dark">ใช้วันนัดหลัก</h5>
+                          <small className="text-muted">ของทุกคน</small>
                         </div>
+
+                        <div
+                          className={`date-select-card flex-grow-1 text-center p-3 ${updateForm.bulkStrategy === 'P2' ? 'active' : ''}`}
+                          onClick={() => setUpdateForm({ ...updateForm, bulkStrategy: 'P2' })}
+                          style={{ cursor: 'pointer' }}
+                        >
+                          <div className="badge bg-secondary mb-2">ตัวเลือกที่ 2 (รอง)</div>
+                          <h5 className="mb-0 fw-bold text-dark">ใช้วันนัดรอง</h5>
+                          <small className="text-muted">ของทุกคน (ถ้ามี)</small>
+                        </div>
+                      </div>
                     </>
                   )}
 
@@ -1903,21 +1951,21 @@ export default function AdminTracking() {
                   </div>
                   <div className="mb-3">
                     <label className="small text-muted mb-1 fw-bold">เสนอวันนัดใหม่ (ถ้ามี)</label>
-                    <CustomDatePicker 
-                        value={updateForm.newProposedDate} 
-                        onChange={(date) => setUpdateForm({ ...updateForm, newProposedDate: date })} 
-                        placeholder="เสนอวันใหม่..."
-                        disablePast={true}
+                    <CustomDatePicker
+                      value={updateForm.newProposedDate}
+                      onChange={(date) => setUpdateForm({ ...updateForm, newProposedDate: date })}
+                      placeholder="เสนอวันใหม่..."
+                      disablePast={true}
                     />
                   </div>
                   <div className="col-12">
                     <label className="small text-muted mb-1">รายละเอียดเพิ่มเติม</label>
-                    <textarea 
-                      className="form-control" 
-                      rows="2" 
-                      placeholder="เช่น แนะนำให้จองใหม่เดือนหน้า..." 
-                      value={updateForm.note} 
-                      onChange={e => setUpdateForm({ ...updateForm, note: e.target.value })} 
+                    <textarea
+                      className="form-control"
+                      rows="2"
+                      placeholder="เช่น แนะนำให้จองใหม่เดือนหน้า..."
+                      value={updateForm.note}
+                      onChange={e => setUpdateForm({ ...updateForm, note: e.target.value })}
                     />
                   </div>
                 </div>

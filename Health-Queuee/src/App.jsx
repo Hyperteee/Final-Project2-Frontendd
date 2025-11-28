@@ -14,11 +14,11 @@ import ProfileBook from "../src/Profile-User/Profile-book";
 import ChatBot from "../src/components/ChatBot"
 
 // Context
-import { HospitalScheduleProvider } from "../data/context/allSchedule";
-import { UserAppointmentProvider } from "../data/context/appointment";
+import { HospitalScheduleProvider } from "./data/context/allSchedule";
+import { UserAppointmentProvider } from "./data/context/appointment";
 
-// Admin Imports
-import Adminlayout from "../Layout/Adminlayout";
+
+import Adminlayout from "../Layout/Adminlayout"
 import AdminDashboard from "../pages/Dashboard";
 import AdminExport from "../pages/Export";
 import AdminTracking from "../pages/Tracking";
@@ -29,9 +29,8 @@ function App() {
   return (
     <HospitalScheduleProvider>
       <UserAppointmentProvider>
-        <BrowserRouter basename="/Health-Queuee">
+        <BrowserRouter basename="/Final-Project2-Frontendd/">
           <Routes>
-            {/* User Routes */}
             <Route path="/" element={<HealthcarePage />} />
             <Route path="hospitals" element={<Listsearch />} />
             <Route path="queue1" element={<Queue1 />} />
@@ -54,10 +53,7 @@ function App() {
               <Route path="/admin/resources" element={<AdminDataManagement />} />
               <Route path="/admin/users" element={<AdminPatients />} />
             </Route>
-
-            {/* Fallback: ถ้าพิมพ์มั่วๆ ให้ขึ้น 404 (ช่วยให้รู้ว่า Route ไม่พัง แต่แค่หาหน้าไม่เจอ) */}
-            <Route path="*" element={<div style={{ padding: 20 }}>404 Not Found</div>} />
-          </Routes>
+            </Routes>
         </BrowserRouter>
       </UserAppointmentProvider>
     </HospitalScheduleProvider>

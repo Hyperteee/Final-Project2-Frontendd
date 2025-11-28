@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate } from "react-router";
-import hospitalMap from "../../../data/hospitaldata.jsx/allhospitaldata";
-import { HospitalScheduleContext } from "../../../data/context/allSchedule";
+import hospitalMap from "../../data/hospitaldata.jsx/allhospitaldata";
+import { HospitalScheduleContext } from "../../data/context/allSchedule";
 import Button from "react-bootstrap/esm/Button";
 import Modal from 'react-bootstrap/Modal';
 import Calendar from "react-calendar";

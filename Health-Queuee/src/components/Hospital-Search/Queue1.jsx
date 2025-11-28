@@ -5,7 +5,7 @@ import "./Queue1.css"
 import Form from 'react-bootstrap/Form'
 import Modal from 'react-bootstrap/Modal';
 import Button from "react-bootstrap/esm/Button";
-import hospitalMap from "../../../data/hospitaldata.jsx/allhospitaldata";
+import hospitalMap from "../../data/hospitaldata.jsx/allhospitaldata";
 
 function Queue1() {
     const { state } = useLocation();
