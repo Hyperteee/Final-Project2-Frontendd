@@ -335,7 +335,6 @@ export default function Listsearch() {
     .filter(
       (h) =>
         h.name.toLowerCase().includes(letterSearch.toLowerCase()) ||
-        h.state.toLowerCase().includes(letterSearch.toLowerCase()) ||
         hospitalThai.includes(letterSearch)
     )
     .slice(0, 5);
@@ -477,16 +476,6 @@ export default function Listsearch() {
 
               {showDropdown && letterSearch.length > 0 && (
                 <ListGroup className="search-dropdown shadow-lg position-absolute w-100 mt-2 z-1">
-                  {filteredStates.map((state) => (
-                    <ListGroup.Item
-                      key={state}
-                      action
-                      onClick={() => handleSelectState(state)}
-                    >
-                      <MapPin size={16} className="me-2 text-info" />
-                      {highlightText(state)} (จังหวัด)
-                    </ListGroup.Item>
-                  ))}
                   {filteredHospitalsDropdown.map((hospital) => (
                     <ListGroup.Item
                       key={hospital.name}
@@ -500,6 +489,17 @@ export default function Listsearch() {
                       {highlightText(hospital.name)} ({hospital.state})
                     </ListGroup.Item>
                   ))}
+                  {filteredStates.map((state) => (
+                    <ListGroup.Item
+                      key={state}
+                      action
+                      onClick={() => handleSelectState(state)}
+                    >
+                      <MapPin size={16} className="me-2 text-info" />
+                      {highlightText(state)} (จังหวัด)
+                    </ListGroup.Item>
+                  ))}
+
                   {filteredStates.length === 0 &&
                     filteredHospitalsDropdown.length === 0 && (
                       <ListGroup.Item className="text-muted">

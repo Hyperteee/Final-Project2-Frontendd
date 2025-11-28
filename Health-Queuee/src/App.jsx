@@ -52,7 +52,7 @@ function App() {
             <Route path="profilePrivacy" element={<ProfilePrivacy />} />
             <Route path="DoctorList" element={<DoctorList />} />
             <Route path="chatbot" element={<ChatBot/> } />
-            <Route path="package" element={<PackagePage/> } />
+            <Route path="packages" element={<PackagePage/> } />
           </Route>
 
           <Route>

@@ -40,8 +40,7 @@ export default function Register2() {
       }));
     }
   };
-
-  // 3. ฟังก์ชันเมื่อกดปุ่มสมัครสมาชิก (Logic เดิม)
+  
   const handleRegister = (e) => {
     e.preventDefault();
 
@@ -265,6 +264,7 @@ export default function Register2() {
                               value={formData.phone}
                               onChange={handleChange}
                               required
+                              maxLength={10}
                               style={INPUT_STYLE}
                             />
                           </Form.Group>

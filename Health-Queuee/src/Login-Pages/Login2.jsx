@@ -13,6 +13,10 @@ export default function Login2() {
 
   const handleLogin = (e) => {
     e.preventDefault();
+  localStorage.setItem("isLoggedIn", "true");
+
+const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+console.log("isLoggedIn ===>", isLoggedIn);
 
     // ดึงผู้ใช้ทั้งหมดจาก localStorage
     const users = JSON.parse(localStorage.getItem('users')) || [];
@@ -60,6 +64,9 @@ export default function Login2() {
     }
   };
 
+  const PRIMARY_BLUE = "#0040FF";
+  const DARK_BLUE = "#020A1B";
+
   return (
     <div
       style={{
@@ -83,7 +90,6 @@ export default function Login2() {
       >
         <Container fluid className="h-100 p-0">
           <Row className="g-0 h-100">
-            {/* LEFT PANEL (UI เดิม) */}
             <Col
               md={5}
               className="position-relative overflow-hidden"
@@ -92,11 +98,27 @@ export default function Login2() {
                   "linear-gradient(135deg, #071164ff 0%, #2527afff 50%, #7d7bffff 100%)",
               }}
             >
-              <div className="position-absolute top-0 start-0 p-4 w-100">
-                <span className="text-white fw-bold fs-5">Health For U</span>
-              </div>
+        <div
+          className="d-flex align-items-center gap-3 py-3 px-4"
+          role="button"
+          onClick={() => navigate("/")}
+          style={{ cursor: "pointer" }}
+        >
+          <div
+            className="d-flex align-items-center justify-content-center bg-primary rounded-3"
+            style={{
+              width: "50px",
+              height: "50px",
+              backgroundColor: PRIMARY_BLUE,
+            }}
+          >
+            <span className="text-white fw-bold fs-4">H</span>
+          </div>
+          <div>
+          </div>
+        </div>
 
-              <div className="d-flex flex-column justify-content-center align-items-center h-100 px-5">
+              <div className="d-flex flex-column justify-content-center align-items-center h-100 px-5" style={{ marginTop: "-50px"}}>
                 <div className="w-100" style={{ maxWidth: 400 }}>
                   <h1 className="text-white text-center mb-2 fw-bold">LOGIN</h1>
 
@@ -165,7 +187,6 @@ export default function Login2() {
               </div>
             </Col>
 
-            {/* RIGHT PANEL (UI เดิม) */}
             <Col
               md={7}
               className="bg-white d-flex align-items-center justify-content-center"

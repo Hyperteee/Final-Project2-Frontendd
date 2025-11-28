@@ -71,9 +71,6 @@ export default function PackagePage() {
       detail: "ราคา 11,340 บาท",
       tags: ["สุขภาพหัวใจ"],
     },
-
-
-
     {
       id: 11,
       title: "ชุดตรวจสุขภาพสมอง Stop Stroke",
@@ -328,11 +325,6 @@ const packagesToShow =
   return (
     <div className="page-container">
 
-      {/* Header */}
-      <header className="header">
-        <div className="logo">โลโก้ววววววววววววว</div>
-      </header>
-
       {/* Banner */}
       <section className="banner">
         <h2 className="banner-title">แพ็กเกจและโปรโมชั่น</h2>
@@ -377,10 +369,6 @@ const packagesToShow =
         ))}
       </section>
 
-      {/* Back Button */}
-      <div className="footer">
-        <button className="back-btn">⬅ กลับ</button>
-      </div>
     </div>
   );
 }

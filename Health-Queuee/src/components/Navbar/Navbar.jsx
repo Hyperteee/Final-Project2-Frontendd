@@ -22,8 +22,10 @@ export default function NavigationBar() {
 
   const handleLogout = () => {
     localStorage.removeItem("currentUser");
+    localStorage.removeItem("isLoggedIn");
     setCurrentUser(null);
     navigate("/login");
+    console.log ("isLoggedIn ===>", localStorage.getItem("isLoggedIn"));
   };
 
   const changeLanguage = (lng) => {
@@ -88,7 +90,7 @@ export default function NavigationBar() {
             {t("nav_doctors")}
           </a>
           <a
-            onClick={() => navigate("/doctorlist")}
+            onClick={() => navigate("/packages")}
             className="text-light text-decoration-none opacity-75 hover-opacity-100"
           >
             {t("nav_packages")}

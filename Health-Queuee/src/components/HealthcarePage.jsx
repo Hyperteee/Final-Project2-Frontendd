@@ -28,6 +28,9 @@ export default function HealthcarePage() {
   const navigate = useNavigate();
   const hospitalThai = "โรงพยาบาล";
 
+  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+  console.log("isLoggedIn ===>", isLoggedIn);
+
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
@@ -176,7 +179,6 @@ export default function HealthcarePage() {
   return (
     <>
       <div style={{ backgroundColor: "#f8f9fa" }}>
-
         <section
           className="position-relative py-5"
           style={{
@@ -199,8 +201,6 @@ export default function HealthcarePage() {
                   }}
                 >
                   {t("hero_title")}
-                  <br />
-                  {t("hero_title1")}
                 </h2>
                 <p
                   className="text-light opacity-75 mb-5"
@@ -225,12 +225,14 @@ export default function HealthcarePage() {
                   >
                     {t("hero_btn_booking")}
                   </button>
-                  <a
-                    onClick={() => navigate("/register")}
-                    className="btn btn-outline-light btn-lg px-4 py-3 fw-semibold rounded-pill"
-                  >
-                    {t("hero_btn_signup")}
-                  </a>
+                  {!isLoggedIn && (
+                    <a
+                      onClick={() => navigate("/register")}
+                      className="btn btn-outline-light btn-lg px-4 py-3 fw-semibold rounded-pill"
+                    >
+                      {t("hero_btn_signup")}
+                    </a>
+                  )}
                 </div>
               </div>
 
