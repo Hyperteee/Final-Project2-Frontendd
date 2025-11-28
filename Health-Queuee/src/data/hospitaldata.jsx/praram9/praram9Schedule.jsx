@@ -1,3 +1,3 @@
-import { praram9Schedule } from "./praram9";
+const praram9Schedule = [];
 
 export default praram9Schedule;

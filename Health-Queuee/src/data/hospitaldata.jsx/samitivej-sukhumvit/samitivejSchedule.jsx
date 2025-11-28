@@ -1,3 +1,3 @@
-import { samitivejSchedule } from "./samitivej-sukhumvit";
+const samitivejSchedule = [];
 
 export default samitivejSchedule;

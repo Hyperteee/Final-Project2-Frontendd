@@ -1,3 +1,3 @@
-import { somdetSchedule } from "./somdet-phra-theprat";
+const somdetSchedule = [];
 
 export default somdetSchedule;

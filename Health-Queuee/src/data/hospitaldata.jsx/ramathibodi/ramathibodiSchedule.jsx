@@ -1,3 +1,3 @@
-import { ramathibodiSchedule } from "./ramathibodi";
+const ramathibodiSchedule = [];
 
 export default ramathibodiSchedule;

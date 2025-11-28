@@ -1,3 +1,3 @@
-import { synphaetSchedule } from "./synphaet";
+const synphaetSchedule = [];
 
 export default synphaetSchedule;
