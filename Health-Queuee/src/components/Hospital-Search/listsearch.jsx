@@ -335,7 +335,7 @@ export default function Listsearch() {
     .filter(
       (h) =>
         h.name.toLowerCase().includes(letterSearch.toLowerCase()) ||
-        h.state.toLowerCase().includes(letterSearch.toLowerCase()) ||
+        
         hospitalThai.includes(letterSearch)
     )
     .slice(0, 5);

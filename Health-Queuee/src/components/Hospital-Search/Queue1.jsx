@@ -151,7 +151,7 @@ function Queue1() {
                 ></i>
                 <div className="d-flex p-5 flex-column align-items-start">
                   <span className="fw-bold">
-                    เลือกศูนย์การรักษา/แผนกเฉพาะทาง
+                    เลือกแผนก
                   </span>
                   {departmentName && department !== "ไม่รู้แผนก" ? (
                     <span className="small text-success">
