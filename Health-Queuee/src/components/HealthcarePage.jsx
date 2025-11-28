@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
+import Dropdown from "react-bootstrap/Dropdown";
+import { User, LogOut, Shield } from "lucide-react";
+
 import Carousel from "react-bootstrap/Carousel";
 import Button from "react-bootstrap/Button";
 import stateData from "../data/liststate";
@@ -20,6 +23,28 @@ export default function HealthcarePage() {
   const searchSection = useRef(null);
   const navigate = useNavigate();
   const hospitalThai = "โรงพยาบาล";
+
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    const loggedInUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (loggedInUser) {
+      setCurrentUser(loggedInUser);
+    }
+
+  }, []);
+
+  function handleLogout() {
+    localStorage.removeItem("currentUser");
+    setCurrentUser(null); // เคลียร์ State
+    navigate("/login");
+  }
+
+  const isAdmin = currentUser && currentUser.role === "admin";
+
+  const displayName = currentUser
+    ? currentUser.fullname || currentUser.name || currentUser.email // เลือกชื่อเต็ม, ชื่อ หรืออีเมล ตามลำดับ
+    : null;
 
   const doctors = [
     { id: 1, name: "นพ. สมชาย ใจดี", specialty: "อายุรแพทย์" },
@@ -77,8 +102,8 @@ export default function HealthcarePage() {
     };
   }, []);
 
-  const PRIMARY_BLUE = "#0040FF"; // สีน้ำเงินสดสำหรับเน้น
-  const DARK_BLUE = "#020A1B"; // สีน้ำเงินเข้มสำหรับพื้นหลัง
+  const PRIMARY_BLUE = "#0040FF";
+  const DARK_BLUE = "#020A1B";
 
   const DOCTORS_PER_SLIDE = 4;
   const allDoctors = useMemo(() => getTopDoctors(12), []);
@@ -88,7 +113,6 @@ export default function HealthcarePage() {
     (currentOrgSlide + 1) * DOCTORS_PER_SLIDE
   );
 
-  // Avatar paths and gender detection
   const DOCTOR_AVATAR_PATHS = {
     male: "images/Doctor-Boy.jpg",
     female: "images/Doctor-Girl.jpg",
@@ -167,44 +191,85 @@ export default function HealthcarePage() {
               </div>
             </div>
 
-            <nav className="d-none d-md-flex align-items-center gap-4 ">
+            <nav className="d-none d-md-flex align-items-center gap-4">
               <a
-                href="#"
-                className="text-white text-decoration-none fw-semibold opacity-100"
-              >
-                HOME
-              </a>
-              <a
-                href="#"
+                href="#services"
+                onClick={() => navigate("/Profile")}
                 className="text-light text-decoration-none opacity-75 hover-opacity-100"
               >
-                ABOUT US
+                บริการ
               </a>
               <a
-                href="#"
+                href="#doctors"
                 className="text-light text-decoration-none opacity-75 hover-opacity-100"
               >
-                DEPARTMENT
+                แพทย์
               </a>
               <a
-                href="#"
+              onClick={() => navigate("/doctors")}
+                href="#packages"
                 className="text-light text-decoration-none opacity-75 hover-opacity-100"
               >
-                PAGES
+                แพ็กเกจ
+              </a>
+              <a
+                href="#contact"
+                className="text-light text-decoration-none opacity-75 hover-opacity-100"
+              >
+                ติดต่อ
               </a>
             </nav>
 
-            <button
-             onClick={() => navigate("/queue1")}
-              className="btn px-4 py-2 fw-semibold"
-              style={{
-                backgroundColor: PRIMARY_BLUE,
-                borderColor: PRIMARY_BLUE,
-                color: "white",
-              }}
-            >
-              BOOK AN APPOINTMENT
-            </button>
+            {currentUser ? (
+              <Dropdown align="end">
+                <Dropdown.Toggle
+                  variant="primary"
+                  id="user-menu"
+                  className="d-flex align-items-center gap-2 px-3 py-2 fw-semibold"
+                >
+                  <User size={18} />
+                  {displayName || "บัญชีผู้ใช้"}
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  {(currentUser?.role === "admin" || currentUser?.role === "superadmin") && (
+      <Dropdown.Item
+        onClick={() => navigate('/admin/dashboard')}
+        className="d-flex align-items-center gap-2 fw-semibold text-warning"
+      >
+        <Shield size={16} />
+        Admin Dashboard
+      </Dropdown.Item>
+    )}
+
+    <Dropdown.Item
+      onClick={() => navigate("/Profile")}
+      className="d-flex align-items-center gap-2"
+    >
+      <User size={16} />
+      ดูโปรไฟล์
+    </Dropdown.Item>
+
+    <Dropdown.Divider />
+
+    <Dropdown.Item
+      className="d-flex align-items-center gap-2 text-danger"
+      onClick={handleLogout}
+    >
+      <LogOut size={16} />
+      ออกจากระบบ
+    </Dropdown.Item>
+
+  </Dropdown.Menu>
+</Dropdown>
+            ) : (
+              <button
+                className="btn btn-primary px-4 py-2 fw-semibold"
+                onClick={() => navigate("/login")}
+              >
+                เข้าสู่ระบบ
+              </button>
+            )}
           </div>
         </header>
 
@@ -323,9 +388,7 @@ export default function HealthcarePage() {
                         className="bi bi-person-workspace fs-3 mb-2"
                         style={{ color: PRIMARY_BLUE }}
                       ></i>
-                      <h6 className="fw-bold mb-1">
-                        We are Partnered
-                      </h6>
+                      <h6 className="fw-bold mb-1">We are Partnered</h6>
                       <p className="small text-muted mb-0">
                         multiple specialized hospitals.
                       </p>

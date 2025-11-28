@@ -34,7 +34,7 @@ function App() {
       <UserAppointmentProvider>
         <BrowserRouter basename="/Final-Project2-Frontendd/">
           <Routes>
-            <Route path="healthcarepage" element={<HealthcarePage />} />
+            <Route path="/" element={<HealthcarePage />} />
             <Route path="hospitals" element={<Listsearch />} />
             <Route path="queue1" element={<Queue1 />} />
             <Route path="login" element={<Login2 />} />
@@ -47,7 +47,7 @@ function App() {
             <Route path="profilebook" element={<ProfileBook />} />
             <Route path="profileHistory" element={<ProfileHistory />} />
             <Route path="profilePrivacy" element={<ProfilePrivacy />} />
-            <Route path="/" element={<ChatBot/> } />
+            {/* <Route path="/" element={<ChatBot/> } /> */}
 
             {/* Admin Routes */}
             <Route element={<Adminlayout />}>
