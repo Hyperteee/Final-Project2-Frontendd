@@ -68,33 +68,33 @@ export default function NavigationBar() {
           </div>
         </div>
 
-        {/* --- ส่วน Menu Links --- */}
-        <nav className="d-none d-md-flex align-items-center gap-4">
+        <nav
+          className="d-none d-md-flex align-items-center gap-4 "
+          style={{
+            marginLeft: "10px",
+            cursor: "pointer",
+          }}
+        >
           <a
-            href="#services"
-            onClick={(e) => {
-              e.preventDefault();
-              navigate("/queue1");
-            }}
+            onClick={() => navigate("/hospitals")}
             className="text-light text-decoration-none opacity-75 hover-opacity-100"
           >
             {t("nav_appointment")}
           </a>
           <a
-            href="#doctors"
+            onClick={() => navigate("/doctorlist")}
             className="text-light text-decoration-none opacity-75 hover-opacity-100"
           >
             {t("nav_doctors")}
           </a>
           <a
-            onClick={() => navigate("/doctors")}
-            href="#packages"
+            onClick={() => navigate("/doctorlist")}
             className="text-light text-decoration-none opacity-75 hover-opacity-100"
           >
             {t("nav_packages")}
           </a>
           <a
-            href="#contact"
+            onClick={() => navigate("/chatbot")}
             className="text-light text-decoration-none opacity-75 hover-opacity-100"
           >
             {t("nav_chatbot")}

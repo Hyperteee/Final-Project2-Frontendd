@@ -85,7 +85,7 @@ const ChatBot = () => {
 
   return (
     // Main Container
-    <div className="d-flex flex-column vh-100 bg-light text-dark font-sans">
+    <div className="d-flex flex-column vh-100 bg-light text-dark font-sans ">
 
       {/* HEADER */}
       <header className="bg-white shadow-sm px-4 py-3 d-flex align-items-center justify-content-between sticky-top border-bottom z-3">
