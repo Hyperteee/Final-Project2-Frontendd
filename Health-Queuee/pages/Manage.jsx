@@ -7,6 +7,8 @@ import {
 import "./Export.css"; 
 import hospitalMap from "../src/data/hospitaldata.jsx/allhospitaldata";
 
+import { useTranslation } from "react-i18next";
+
 
 function TabButton({ id, activeTab, onClick, icon: Icon, label }) {
   const isActive = activeTab === id;

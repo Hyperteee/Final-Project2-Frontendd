@@ -825,6 +825,8 @@ import hospitalData from "../src/data/listhospital";
 import { UserAppointment } from "../src/data/context/appointment";
 import * as XLSX from "xlsx";
 
+import { useTranslation } from "react-i18next";
+
 // --- Helper Component: Highlight Text ---
 const HighlightText = ({ text, highlight }) => {
   if (!highlight) return <span>{text}</span>;

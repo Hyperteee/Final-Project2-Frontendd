@@ -13,6 +13,8 @@ import { UserAppointment } from "../src/data/context/appointment";
 import "./Export.css";
 import "./Tracking.css";
 
+import { useTranslation } from "react-i18next";
+
 function getLocalYMD(dateString) {
   if (!dateString) return null;
   const d = new Date(dateString);

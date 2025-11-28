@@ -2,6 +2,8 @@ import React from "react";
 import { Dropdown } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+import { useTranslation } from "react-i18next";
+
 export default function PackagePart() {
   return (
     <div>

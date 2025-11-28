@@ -320,6 +320,8 @@ import hospitalData from '../src/data/listhospital';
 import { useNavigate } from 'react-router-dom';
 import { Modal, Button, Form } from 'react-bootstrap';
 
+import { useTranslation } from "react-i18next";
+
 export default function ManagePatients() {
     const navigate = useNavigate();
     const [users, setUsers] = useState([]);

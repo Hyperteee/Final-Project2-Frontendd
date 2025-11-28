@@ -1,23 +1,17 @@
-import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import Dropdown from "react-bootstrap/Dropdown";
 import { User, LogOut, Shield } from "lucide-react";
 import { useTranslation } from "react-i18next";
-
-function handleLogout() {
-  localStorage.removeItem("currentUser");
-  setCurrentUser(null);
-  navigate("/login");
-}
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function NavigationBar() {
+  const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useState(null);
+
   const PRIMARY_BLUE = "#0040FF";
   const DARK_BLUE = "#020A1B";
-
-  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
     const loggedInUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -26,25 +20,28 @@ export default function NavigationBar() {
     }
   }, []);
 
-  const isAdmin = currentUser && currentUser.role === "admin";
-
-  const displayName = currentUser
-    ? currentUser.fullname || currentUser.name || currentUser.email
-    : null;
+  const handleLogout = () => {
+    localStorage.removeItem("currentUser");
+    setCurrentUser(null);
+    navigate("/login");
+  };
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
   };
 
-  const { t, i18n } = useTranslation();
+  const displayName = currentUser
+    ? currentUser.fullname || currentUser.name || currentUser.email
+    : null;
 
-  const navigate = useNavigate();
   return (
     <header
       className="py-3 shadow-lg sticky-top"
       style={{ backgroundColor: DARK_BLUE, backdropFilter: "blur(12px)" }}
     >
       <div className="container d-flex align-items-center justify-content-between">
+        
+        {/* --- ส่วน Logo --- */}
         <div
           className="d-flex align-items-center gap-3"
           role="button"
@@ -71,112 +68,118 @@ export default function NavigationBar() {
           </div>
         </div>
 
-        <nav
-          className="d-none d-md-flex align-items-center gap-4 "
-          style={{ marginLeft: "10px" }}
-        >
+        {/* --- ส่วน Menu Links --- */}
+        <nav className="d-none d-md-flex align-items-center gap-4">
           <a
             href="#services"
-            onClick={() => navigate("/Profile")}
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/queue1");
+            }}
             className="text-light text-decoration-none opacity-75 hover-opacity-100"
           >
-            นัดหมอ
+            {t("nav_appointment")}
           </a>
           <a
             href="#doctors"
             className="text-light text-decoration-none opacity-75 hover-opacity-100"
           >
-            แพทย์
+            {t("nav_doctors")}
           </a>
           <a
             onClick={() => navigate("/doctors")}
             href="#packages"
             className="text-light text-decoration-none opacity-75 hover-opacity-100"
           >
-            แพ็กเกจ
+            {t("nav_packages")}
           </a>
           <a
             href="#contact"
             className="text-light text-decoration-none opacity-75 hover-opacity-100"
           >
-            แชทบอท
+            {t("nav_chatbot")}
           </a>
         </nav>
 
-        <div
-          className="d-flex align-items-center gap-2 "
-          style={{ marginLeft: "35rem" }}
-        >
-          <button
-            onClick={() => changeLanguage("th")}
-            className={`btn btn-sm ${
-              i18n.language === "th" ? "btn-light" : "btn-outline-light"
-            } rounded-pill px-3`}
-            style={{ fontSize: "0.8rem" }}
-          >
-            TH
-          </button>
-          <button
-            onClick={() => changeLanguage("en")}
-            className={`btn btn-sm ${
-              i18n.language === "en" ? "btn-light" : "btn-outline-light"
-            } rounded-pill px-3`}
-            style={{ fontSize: "0.8rem" }}
-          >
-            EN
-          </button>
-        </div>
-
-        {currentUser ? (
-          <Dropdown align="end">
-            <Dropdown.Toggle
-              variant="primary"
-              id="user-menu"
-              className="d-flex align-items-center gap-2 px-3 py-2 fw-semibold"
+        {/* --- ส่วนขวา: ปุ่มเปลี่ยนภาษา + User Profile --- */}
+        <div className="d-flex align-items-center gap-3">
+          
+          {/* ปุ่มเปลี่ยนภาษา */}
+          <div className="d-flex align-items-center gap-2">
+            <button
+              onClick={() => changeLanguage("th")}
+              className={`btn btn-sm ${
+                i18n.language === "th" ? "btn-light" : "btn-outline-light"
+              } rounded-pill px-3`}
+              style={{ fontSize: "0.8rem" }}
             >
-              <User size={18} />
-              {displayName || "บัญชีผู้ใช้"}
-            </Dropdown.Toggle>
+              TH
+            </button>
+            <button
+              onClick={() => changeLanguage("en")}
+              className={`btn btn-sm ${
+                i18n.language === "en" ? "btn-light" : "btn-outline-light"
+              } rounded-pill px-3`}
+              style={{ fontSize: "0.8rem" }}
+            >
+              EN
+            </button>
+          </div>
 
-            <Dropdown.Menu>
-              {(currentUser?.role === "admin" ||
-                currentUser?.role === "super_admin") && (
+          {/* User Profile Dropdown */}
+          {currentUser ? (
+            <Dropdown align="end">
+              <Dropdown.Toggle
+                variant="primary"
+                id="user-menu"
+                className="d-flex align-items-center gap-2 px-3 py-2 fw-semibold"
+                style={{ backgroundColor: PRIMARY_BLUE, borderColor: PRIMARY_BLUE }}
+              >
+                <User size={18} />
+                {displayName || t("user_account")}
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                {(currentUser?.role === "admin" ||
+                  currentUser?.role === "super_admin") && (
+                  <Dropdown.Item
+                    onClick={() => navigate("/admin/dashboard")}
+                    className="d-flex align-items-center gap-2 fw-semibold text-warning"
+                  >
+                    <Shield size={16} />
+                    {t("admin_dashboard")}
+                  </Dropdown.Item>
+                )}
+
                 <Dropdown.Item
-                  onClick={() => navigate("/admin/dashboard")}
-                  className="d-flex align-items-center gap-2 fw-semibold text-warning"
+                  onClick={() => navigate("/Profile")}
+                  className="d-flex align-items-center gap-2"
                 >
-                  <Shield size={16} />
-                  Admin Dashboard
+                  <User size={16} />
+                  {t("view_profile")}
                 </Dropdown.Item>
-              )}
 
-              <Dropdown.Item
-                onClick={() => navigate("/Profile")}
-                className="d-flex align-items-center gap-2"
-              >
-                <User size={16} />
-                ดูโปรไฟล์
-              </Dropdown.Item>
+                <Dropdown.Divider />
 
-              <Dropdown.Divider />
-
-              <Dropdown.Item
-                className="d-flex align-items-center gap-2 text-danger"
-                onClick={handleLogout}
-              >
-                <LogOut size={16} />
-                ออกจากระบบ
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        ) : (
-          <button
-            className="btn btn-primary px-4 py-2 fw-semibold"
-            onClick={() => navigate("/login")}
-          >
-            เข้าสู่ระบบ
-          </button>
-        )}
+                <Dropdown.Item
+                  className="d-flex align-items-center gap-2 text-danger"
+                  onClick={handleLogout}
+                >
+                  <LogOut size={16} />
+                  {t("logout")}
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          ) : (
+            <button
+              className="btn btn-primary px-4 py-2 fw-semibold"
+              onClick={() => navigate("/login")}
+              style={{ backgroundColor: PRIMARY_BLUE, borderColor: PRIMARY_BLUE }}
+            >
+              {t("btn_login")}
+            </button>
+          )}
+        </div>
       </div>
     </header>
   );

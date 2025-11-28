@@ -728,7 +728,7 @@ export default function HealthcarePage() {
             </div>
 
             <div className="col-6 col-md-4 col-lg-2">
-              <h4 className="fw-bold fs-5 mb-4">{t("footer_company ")}</h4>
+              <h4 className="fw-bold fs-5 mb-4">{t("footer_company")}</h4>
               <ul className="list-unstyled space-y-3">
                 <li>
                   <a href="#">About Us</a>
@@ -746,7 +746,7 @@ export default function HealthcarePage() {
             </div>
 
             <div className="col-12 col-md-4 col-lg-4 mt-4 mt-md-0">
-              <h4 className="fw-bold fs-5 mb-4">Support & Legal</h4>
+              <h4 className="fw-bold fs-5 mb-4">{t("footer_support")}</h4>
               <ul className="list-unstyled space-y-3">
                 <li>
                   <a href="#">Help Center (FAQ)</a>

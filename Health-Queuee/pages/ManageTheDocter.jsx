@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import { useTranslation } from "react-i18next";
+
 const BookingDetailsPopup = ({ onClose, booking }) => {
     const exampleBookingData = [
         { id: 1, name: "นายคมซาน สายลม", details: "Details" },

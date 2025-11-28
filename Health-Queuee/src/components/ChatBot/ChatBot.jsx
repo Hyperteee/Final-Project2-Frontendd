@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { User, Bot, Activity, HeartPulse, Stethoscope, Pill, Smile, Eye, Brain } from 'lucide-react';
 
+import { useTranslation } from "react-i18next";
+
 const ChatBot = () => {
   const [messages, setMessages] = useState([
     {

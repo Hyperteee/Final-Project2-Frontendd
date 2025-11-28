@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 import { UserAppointment } from "../src/data/context/appointment";
 
+import { useTranslation } from "react-i18next";
+
 export default function AdminDashboard() {
   const navigate = useNavigate()
   const { appointments, batches } = useContext(UserAppointment);
