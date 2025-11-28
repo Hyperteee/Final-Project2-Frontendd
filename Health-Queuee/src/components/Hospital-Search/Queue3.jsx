@@ -152,9 +152,13 @@ const Queue3 = () => {
     { id: 3, label: "เลือกวันนัด" },
     { id: 4, label: "กรอกอาการ" },
   ];
-
+  
   const currentStep = 3;
   const isStepActive = (stepNumber) => stepNumber <= currentStep;
+
+
+  console.log("hospitalMap[].schedule:", hospitalMap[selectedHospital].schedule);
+  console.log("hospitalSchedules['']:", hospitalSchedules[selectedHospital]);
 
   return (
     <>
