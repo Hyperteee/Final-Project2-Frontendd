@@ -73,30 +73,31 @@ export default function NavigationBar() {
 
         <nav
           className="d-none d-md-flex align-items-center gap-4 "
-          style={{ marginLeft: "10px" }}
+          style={{
+            marginLeft: "10px",
+            cursor: "pointer",
+          }}
         >
           <a
-            href="#services"
-            onClick={() => navigate("/Profile")}
+            onClick={() => navigate("/hospitals")}
             className="text-light text-decoration-none opacity-75 hover-opacity-100"
           >
             นัดหมอ
           </a>
           <a
-            href="#doctors"
+            onClick={() => navigate("/doctorlist")}
             className="text-light text-decoration-none opacity-75 hover-opacity-100"
           >
             แพทย์
           </a>
           <a
-            onClick={() => navigate("/doctors")}
-            href="#packages"
+            onClick={() => navigate("/doctorlist")}
             className="text-light text-decoration-none opacity-75 hover-opacity-100"
           >
             แพ็กเกจ
           </a>
           <a
-            href="#contact"
+            onClick={() => navigate("/chatbot")}
             className="text-light text-decoration-none opacity-75 hover-opacity-100"
           >
             แชทบอท

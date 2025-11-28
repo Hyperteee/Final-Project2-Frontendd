@@ -51,7 +51,7 @@ function App() {
             <Route path="profileHistory" element={<ProfileHistory />} />
             <Route path="profilePrivacy" element={<ProfilePrivacy />} />
             <Route path="DoctorList" element={<DoctorList />} />
-            {/* <Route path="/" element={<ChatBot/> } /> */}
+            <Route path="chatbot" element={<ChatBot/> } />
           </Route>
 
             {/* Admin Routes */}
