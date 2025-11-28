@@ -30,6 +30,7 @@ import ProfilePrivacy from "./Profile-User/Profile-Privacy";
 import DoctorList from "./Doctor-List/Doctor-List";
 import Layout from "./components/Layout/Layout";
 import PackagePage from "./components/aom/PackagePage";
+import PackageDetail from "./pages/PackageDetail";
 function App() {
   return (
     <HospitalScheduleProvider>
@@ -68,6 +69,8 @@ function App() {
               <Route path="/admin/tracking" element={<AdminTracking />} />
               <Route path="/admin/resources" element={<AdminDataManagement />} />
               <Route path="/admin/users" element={<AdminPatients />} />
+              <Route path="/" element={<PackagePage />} />
+              <Route path="/package/:id" element={<PackageDetail />} />
             </Route>
             </Routes>
         </BrowserRouter>
