@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 // กำหนดสไตล์สำหรับ Form.Control เพื่อให้สอดคล้องกับ UI เดิม
 const INPUT_STYLE = {
-    borderRadius: 8,
-    border: "none",
+  borderRadius: 8,
+  border: "none",
 };
 
 export default function Register2() {
@@ -40,9 +40,12 @@ export default function Register2() {
       }));
     }
   };
-  
+
   const handleRegister = (e) => {
     e.preventDefault();
+
+    const id = formData.identificationNumber;
+    const phone = formData.phone;
 
     const users = JSON.parse(localStorage.getItem("users")) || [];
 
@@ -55,6 +58,16 @@ export default function Register2() {
 
     if (foundUser) {
       alert("มี email นี้ในระบบแล้ว");
+      return;
+    }
+
+    if (id.length !== 13) {
+      alert("กรุณากรอกเลขบัตรประชาชน 13 หลักให้ครบ");
+      return;
+    }
+
+    if (phone.length !== 10) {
+      alert("กรุณากรอกเบอร์โทรศัพท์ให้ครบ 10 หลัก");
       return;
     }
 
@@ -164,7 +177,6 @@ export default function Register2() {
                     </p>
 
                     <Form onSubmit={handleRegister}>
-                        
                       <Row className="mb-3">
                         <Col md={4}>
                           <Form.Group controlId="title">
@@ -204,7 +216,7 @@ export default function Register2() {
                           </Form.Group>
                         </Col>
                       </Row>
-                        
+
                       {/* นามสกุล/เพศ (Row 2) */}
                       <Row className="mb-3">
                         <Col md={8}>
@@ -221,21 +233,25 @@ export default function Register2() {
                           </Form.Group>
                         </Col>
                         <Col md={4}>
-                            <Form.Group controlId="gender">
-                                <Form.Select
-                                    size="lg"
-                                    value={formData.gender}
-                                    onChange={handleChange}
-                                    required
-                                    style={INPUT_STYLE}
-                                    className={!formData.gender ? "text-muted" : "text-dark"}
-                                >
-                                    <option value="" disabled>เพศ</option>
-                                    <option value="ชาย">ชาย</option>
-                                    <option value="หญิง">หญิง</option>
-                                    <option value="อื่นๆ">อื่นๆ</option>
-                                </Form.Select>
-                            </Form.Group>
+                          <Form.Group controlId="gender">
+                            <Form.Select
+                              size="lg"
+                              value={formData.gender}
+                              onChange={handleChange}
+                              required
+                              style={INPUT_STYLE}
+                              className={
+                                !formData.gender ? "text-muted" : "text-dark"
+                              }
+                            >
+                              <option value="" disabled>
+                                เพศ
+                              </option>
+                              <option value="ชาย">ชาย</option>
+                              <option value="หญิง">หญิง</option>
+                              <option value="อื่นๆ">อื่นๆ</option>
+                            </Form.Select>
+                          </Form.Group>
                         </Col>
                       </Row>
 
@@ -270,7 +286,7 @@ export default function Register2() {
                           </Form.Group>
                         </Col>
                       </Row>
-                        
+
                       <Form.Group className="mb-3" controlId="email">
                         <Form.Control
                           type="email"
@@ -306,7 +322,9 @@ export default function Register2() {
                               required
                               style={INPUT_STYLE}
                               className={
-                                !formData.nationality ? "text-muted" : "text-dark"
+                                !formData.nationality
+                                  ? "text-muted"
+                                  : "text-dark"
                               }
                             >
                               <option value="" disabled>
