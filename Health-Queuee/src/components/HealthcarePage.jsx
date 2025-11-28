@@ -13,7 +13,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { getTopDoctors } from "../utils/doctorUtils";
 import resolveAssetPath from "../utils/assetPath";
 
+import { useTranslation } from 'react-i18next';
+
 export default function HealthcarePage() {
+
+  const { t, i18n } = useTranslation();
+
   const [currentOrgSlide, setCurrentOrgSlide] = useState(0);
   const [currentPackageSlide, setCurrentPackageSlide] = useState(0);
   const [letterSearch, setLetterSearch] = useState("");
@@ -166,6 +171,10 @@ export default function HealthcarePage() {
     setCurrentOrgSlide((prev) => (prev === totalSlides - 1 ? 0 : prev + 1));
   };
 
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
+
   return (
     <>
       <div style={{ backgroundColor: "#f8f9fa" }}>
@@ -294,9 +303,9 @@ export default function HealthcarePage() {
                     fontSize: "4.4rem",
                   }}
                 >
-                  Easy Appointments
+                  {t('hero_title')}
                   <br />
-                  Fast Queue
+                  {t('hero_title1')}
                 </h2>
                 <p
                   className="text-light opacity-75 mb-5"
@@ -304,9 +313,9 @@ export default function HealthcarePage() {
                     fontSize: "1.3rem",
                   }}
                 >
-                  Book your doctor's appointment easily.
+                  {t('hero_subtitle')}
                   <br />
-                  Professional healthcare for your family.
+                  {t('hero_subtitle1')}
                   <br />
                 </p>
                 <div className="d-flex align-items-center gap-3">
@@ -319,13 +328,13 @@ export default function HealthcarePage() {
                       color: "white",
                     }}
                   >
-                    Bookings
+                    {t('hero_btn_booking')}
                   </button>
                   <a
                     onClick={() => navigate("/register")}
                     className="btn btn-outline-light btn-lg px-4 py-3 fw-semibold rounded-pill"
                   >
-                    Sign Up
+                    {t('hero_btn_signup')}
                   </a>
                 </div>
               </div>
@@ -421,7 +430,7 @@ export default function HealthcarePage() {
         <div className="container py-4">
           <div className="d-flex justify-content-between align-items-end mb-5">
             <div>
-              <h2 className="display-5 fw-bold mb-2">Top Doctors</h2>
+              <h2 className="display-5 fw-bold mb-2">{t('Top Doctors')}</h2>
               <div
                 style={{
                   height: "4px",
@@ -435,7 +444,7 @@ export default function HealthcarePage() {
               onClick={() => navigate("/doctors")}
               className="btn btn-link text-primary text-decoration-none fw-medium"
             >
-              ดูทั้งหมด
+              {t('see_all')}
             </button>
           </div>
 
@@ -443,9 +452,8 @@ export default function HealthcarePage() {
             {currentDoctors.map((doctor) => {
               const avatarPath = getDoctorAvatarPath(doctor.name);
               const avatarSrc = avatarPath ? resolveAssetPath(avatarPath) : "";
-              const avatarClassName = `rounded-4 mb-3 d-flex align-items-center justify-content-center overflow-hidden${
-                avatarSrc ? "" : " bg-light"
-              }`;
+              const avatarClassName = `rounded-4 mb-3 d-flex align-items-center justify-content-center overflow-hidden${avatarSrc ? "" : " bg-light"
+                }`;
               return (
                 <div key={doctor.id} className="col-sm-6 col-lg-3">
                   <div
@@ -611,7 +619,7 @@ export default function HealthcarePage() {
           <div className="row g-4 mb-5">
             <div className="col-md-6">
               <label className="form-label text-white fw-medium">
-                เลือกประเภท
+                {t('select_type')}
               </label>
               <select className="form-select form-select-lg rounded-3">
                 <option>ทั้งหมด</option>
@@ -621,7 +629,7 @@ export default function HealthcarePage() {
               </select>
             </div>
             <div className="col-md-6">
-              <label className="form-label text-white fw-medium">ค้นหา</label>
+              <label className="form-label text-white fw-medium">{t('search')}</label>
               <div className="input-group input-group-lg">
                 <span className="input-group-text bg-white border-0">
                   <svg
@@ -642,7 +650,7 @@ export default function HealthcarePage() {
                 <input
                   type="text"
                   className="form-control border-0 rounded-end"
-                  placeholder="ค้นหาแพ็กเกจ..."
+                  placeholder={t('search_placeholder')}
                 />
               </div>
             </div>
@@ -698,10 +706,10 @@ export default function HealthcarePage() {
                     <h5 className="fw-bold mb-4">{pkg.title}</h5>
                     <div className="d-flex gap-2">
                       <button className="btn btn-light flex-fill">
-                        รายละเอียด
+                        {t('details')}
                       </button>
                       <button className="btn btn-primary flex-fill">
-                        จองเลย
+                        {t('book_now')}
                       </button>
                     </div>
                   </div>
@@ -784,7 +792,7 @@ export default function HealthcarePage() {
                 Health Queue Management System
               </p>
 
-              <h5 className="fw-bold fs-5 mb-3">Contact</h5>
+              <h5 className="fw-bold fs-5 mb-3">{t('footer_contact')}</h5>
               <ul className="list-unstyled small contact-list">
                 <li className="d-flex align-items-start mb-2">
                   <i className="bi bi-geo-alt-fill"></i>
@@ -804,7 +812,7 @@ export default function HealthcarePage() {
             </div>
 
             <div className="col-6 col-md-4 col-lg-2">
-              <h4 className="fw-bold fs-5 mb-4">Products</h4>
+              <h4 className="fw-bold fs-5 mb-4">{t('footer_products')}</h4>
               <ul className="list-unstyled space-y-3">
                 <li>
                   <a href="#">Queue Management</a>
@@ -822,7 +830,7 @@ export default function HealthcarePage() {
             </div>
 
             <div className="col-6 col-md-4 col-lg-2">
-              <h4 className="fw-bold fs-5 mb-4">Company</h4>
+              <h4 className="fw-bold fs-5 mb-4">{t('footer_company ')}</h4>
               <ul className="list-unstyled space-y-3">
                 <li>
                   <a href="#">About Us</a>

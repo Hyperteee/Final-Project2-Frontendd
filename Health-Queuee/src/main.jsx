@@ -6,6 +6,8 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 
 import "./index.css"
 
+import './components/i18n.js'
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <App />
