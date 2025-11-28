@@ -47,6 +47,18 @@ export default function Register2() {
     const id = formData.identificationNumber;
     const phone = formData.phone;
 
+    const today = new Date();
+    const maxYear = today.getFullYear() - 18;
+
+    const minRequiredBirthDate = new Date(today.setFullYear(maxYear));
+
+    const selectedBirthDate = new Date(formData.birthDate);
+
+    if (selectedBirthDate > minRequiredBirthDate) {
+      alert("คุณต้องมีอายุ 18 ปีบริบูรณ์ขึ้นไปจึงจะสามารถสมัครได้");
+      return;
+    }
+
     const users = JSON.parse(localStorage.getItem("users")) || [];
 
     if (formData.password !== formData.confirmPassword) {
