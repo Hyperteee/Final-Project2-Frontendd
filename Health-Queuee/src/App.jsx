@@ -11,7 +11,7 @@ import Queue4 from "./components/Hospital-Search/Queue4";
 import Testdata from "./components/Hospital-Search/testdata";
 import Profile from "../src/Profile-User/Profile";
 import ProfileBook from "../src/Profile-User/Profile-book";
-import ChatBot from "../src/components/ChatBot"
+// import ChatBot from "../src/components/ChatBot"
 
 // Context
 import { HospitalScheduleProvider } from "./data/context/allSchedule";
