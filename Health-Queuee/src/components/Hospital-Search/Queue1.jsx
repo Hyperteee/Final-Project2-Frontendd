@@ -36,7 +36,7 @@ function Queue1() {
         },
       });
     } else if (chooseDoctor === "choose") {
-      // ✅ เลือกแพทย์ ให้ไปหน้า Queue2
+
       navigate("/queue2", {
         state: {
           selectedDepartment: department,
@@ -182,10 +182,10 @@ function Queue1() {
                 ></i>
                 <div className="d-flex flex-column align-items-start ">
                   <span className="fw-bold">
-                    ไม่รู้แผนก/ต้องการให้แพทย์คัดกรอง
+                    ไม่รู้แผนก
                   </span>
                   <span className="small text-muted">
-                    ระบบจะส่งไปยังแพทย์เวรเพื่อคัดกรองอาการ (ข้ามการเลือกแพทย์)
+                    คัดกรองอาการที่รพ.
                   </span>
                 </div>
               </div>
@@ -210,7 +210,7 @@ function Queue1() {
                     style={{ color: "#001E6C" }}
                   ></i>
                   <div className="d-flex flex-column align-items-start">
-                    <span className="fw-bold">เลือกแพทย์เฉพาะทาง</span>
+                    <span className="fw-bold">เลือกแพทย์เอง</span>
                     <span className="small text-muted">
                       นัดแพทย์ตามชื่อหรือความเชี่ยวชาญ
                     </span>
@@ -230,10 +230,10 @@ function Queue1() {
                   ></i>
                   <div className="d-flex flex-column align-items-start">
                     <span className="fw-bold">
-                      ไม่เลือกแพทย์ (แพทย์เวร/แผนกทั่วไป)
+                      เลือกแพทย์ให้ฉัน
                     </span>
                     <span className="small text-muted">
-                      ระบบจะเลือกแพทย์ที่มีตารางว่างให้
+                      รพ.จะจัดแพทย์ให้ท่านเอง
                     </span>
                   </div>
                 </div>
