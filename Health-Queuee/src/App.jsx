@@ -40,8 +40,8 @@ function App() {
             <Route path="/" element={<HealthcarePage />} />
             <Route path="hospitals" element={<Listsearch />} />
             <Route path="queue1" element={<Queue1 />} />
-            <Route path="login" element={<Login2 />} />
-            <Route path="register" element={<Register2 />} />
+            {/* <Route path="login" element={<Login2 />} /> */}
+            {/* <Route path="register" element={<Register2 />} /> */}
             <Route path="queue2" element={<Queue2 />} />
             <Route path="queue3" element={<Queue3 />} />
             <Route path="queue4" element={<Queue4 />} />
@@ -54,7 +54,11 @@ function App() {
             <Route path="chatbot" element={<ChatBot/> } />
           </Route>
 
-            {/* Admin Routes */}
+          <Route>
+            <Route path="/login" element={<Login2 />} />
+            <Route path="/register" element={<Register2 />} />
+          </Route>
+
             <Route element={<Adminlayout />}>
               <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
 
