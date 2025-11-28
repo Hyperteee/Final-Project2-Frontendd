@@ -303,25 +303,27 @@ export default function PackagePage() {
     },
   ];
 
-// ฟิลเตอร์  ค้นหา
-  const filteredPackages = packages.filter((item) => {
-    const matchFilter =
-      selectedFilters.length === 0 ||
-      item.tags.some((tag) => selectedFilters.includes(tag));
+// ฟิลเตอร์ตามหมวดหมู่ + ค้นหา
+const filteredPackages = packages.filter((item) => {
+  const matchFilter =
+    selectedFilters.length === 0 ||
+    item.tags.some((tag) => selectedFilters.includes(tag));
 
-    const matchSearch =
-      item.title.toLowerCase().includes(searchText.toLowerCase()) ||
-      item.detail.toLowerCase().includes(searchText.toLowerCase());
+  const matchSearch =
+    item.title.toLowerCase().includes(searchText.toLowerCase()) ||
+    item.detail.toLowerCase().includes(searchText.toLowerCase());
 
-    return matchFilter && matchSearch;
-  });
+  return matchFilter && matchSearch;
+});
 
-  // จำกัดจำนวน 10 
+// จำกัดจำนวนแสดง 10 อันแรก เมื่อยังไม่ได้เลือกฟิลเตอร์และยังไม่ค้นหา
+const defaultLimit = 10;
 
-  const packagesToShow =
-    selectedFilters.length === 0 && searchText === ""
-      ? filteredPackages.slice(0, defaultLimit)
-      : filteredPackages;
+const packagesToShow =
+  selectedFilters.length === 0 && searchText === ""
+    ? filteredPackages.slice(0, defaultLimit)
+    : filteredPackages;
+
 
   return (
     <div className="page-container">
