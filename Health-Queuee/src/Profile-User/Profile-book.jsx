@@ -143,21 +143,6 @@ function handleLogout(){
 
   return (
     <div className="bg-light min-vh-100">
-      <header className="py-3 shadow-lg sticky-top" style={{ backgroundColor: "#020A1B" }}>
-        <div className="container d-flex align-items-center justify-content-between">
-          <div className="d-flex align-items-center gap-3">
-            <div className="d-flex align-items-center justify-content-center bg-primary rounded-3" style={{ width: "50px", height: "50px" }}>
-              <span className="text-white fw-bold fs-4">H</span>
-            </div>
-            <div>
-              <h1 className="text-white fw-bold fs-5 mb-0">HFU</h1>
-              <p className="text-light small mb-0 opacity-75">Health Queue</p>
-            </div>
-          </div>
-          <button className="btn btn-primary px-4 py-2 fw-semibold" onClick={() => navigate("/login")}>ออกจากระบบ</button>
-        </div>
-      </header>
-
       <div className="container py-4">
         <h1 className="text-center mb-4 fw-semibold text-black">ข้อมูลของคุณ</h1>
         <div className="d-flex justify-content-center mb-4">
@@ -193,7 +178,6 @@ function handleLogout(){
             </div>
           </div>
 
-          {/* Main Content */}
           <div className="col-lg-9">
             <div className="card shadow-sm border-0">
               <div className="card-body p-4 p-lg-5">

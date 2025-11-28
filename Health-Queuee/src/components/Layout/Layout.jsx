@@ -1,7 +1,6 @@
 import React from 'react'
 import { Outlet } from 'react-router'
 
-// import Navbar from '../Navbar/Navbar'
 import NavigationBar from '../Navbar/Navbar'
 import ChatBot from '../ChatBot/ChatBot'
 import PoppularDoc from '../PopularDoc/PoppularDoc'
@@ -13,6 +12,7 @@ export default function Layout() {
   return (
     <div>
         <NavigationBar />
+        <Outlet />
     </div>
   )
 }

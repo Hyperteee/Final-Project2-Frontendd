@@ -1,7 +1,36 @@
 import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useEffect, useRef, useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 
-export default function NavigationBar() {
+import Dropdown from "react-bootstrap/Dropdown";
+import { User, LogOut, Shield } from "lucide-react";
+
+ function handleLogout() {
+    localStorage.removeItem("currentUser");
+    setCurrentUser(null); // เคลียร์ State
+    navigate("/login");
+  }
+
+  export default function NavigationBar() {
+    const PRIMARY_BLUE = "#0040FF";
+    const DARK_BLUE = "#020A1B";
+    
+    const [currentUser, setCurrentUser] = useState(null);
+    
+    useEffect(() => {
+      const loggedInUser = JSON.parse(localStorage.getItem("currentUser"));
+      if (loggedInUser) {
+        setCurrentUser(loggedInUser);
+      }
+    }, []);
+    
+    const isAdmin = currentUser && currentUser.role === "admin";
+  
+    const displayName = currentUser
+      ? currentUser.fullname || currentUser.name || currentUser.email
+      : null;
+      
   return (
         <header
           className="py-3 shadow-lg sticky-top"

@@ -27,6 +27,8 @@ import AdminPatients from "../pages/ManagePatients";
 import Register2 from "./Login-Pages/register2";
 import ProfileHistory from "./Profile-User/Profile-History";
 import ProfilePrivacy from "./Profile-User/Profile-Privacy";
+import DoctorList from "./Doctor-List/Doctor-List";
+import Layout from "./components/Layout/Layout";
 
 function App() {
   return (
@@ -34,6 +36,7 @@ function App() {
       <UserAppointmentProvider>
         <BrowserRouter basename="/Final-Project2-Frontendd/">
           <Routes>
+          <Route element={<Layout />}>
             <Route path="/" element={<HealthcarePage />} />
             <Route path="hospitals" element={<Listsearch />} />
             <Route path="queue1" element={<Queue1 />} />
@@ -47,7 +50,9 @@ function App() {
             <Route path="profilebook" element={<ProfileBook />} />
             <Route path="profileHistory" element={<ProfileHistory />} />
             <Route path="profilePrivacy" element={<ProfilePrivacy />} />
+            <Route path="DoctorList" element={<DoctorList />} />
             {/* <Route path="/" element={<ChatBot/> } /> */}
+          </Route>
 
             {/* Admin Routes */}
             <Route element={<Adminlayout />}>
