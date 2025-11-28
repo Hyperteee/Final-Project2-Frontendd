@@ -215,7 +215,7 @@ export default function HealthcarePage() {
                 แพทย์
               </a>
               <a
-              onClick={() => navigate("/doctors")}
+                onClick={() => navigate("/doctors")}
                 href="#packages"
                 className="text-light text-decoration-none opacity-75 hover-opacity-100"
               >
@@ -241,36 +241,36 @@ export default function HealthcarePage() {
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                  {(currentUser?.role === "admin" || currentUser?.role === "superadmin") && (
-      <Dropdown.Item
-        onClick={() => navigate('/admin/dashboard')}
-        className="d-flex align-items-center gap-2 fw-semibold text-warning"
-      >
-        <Shield size={16} />
-        Admin Dashboard
-      </Dropdown.Item>
-    )}
+                  {(currentUser?.role === "admin" || currentUser?.role === "super_admin") && (
+                    <Dropdown.Item
+                      onClick={() => navigate('/admin/dashboard')}
+                      className="d-flex align-items-center gap-2 fw-semibold text-warning"
+                    >
+                      <Shield size={16} />
+                      Admin Dashboard
+                    </Dropdown.Item>
+                  )}
 
-    <Dropdown.Item
-      onClick={() => navigate("/Profile")}
-      className="d-flex align-items-center gap-2"
-    >
-      <User size={16} />
-      ดูโปรไฟล์
-    </Dropdown.Item>
+                  <Dropdown.Item
+                    onClick={() => navigate("/Profile")}
+                    className="d-flex align-items-center gap-2"
+                  >
+                    <User size={16} />
+                    ดูโปรไฟล์
+                  </Dropdown.Item>
 
-    <Dropdown.Divider />
+                  <Dropdown.Divider />
 
-    <Dropdown.Item
-      className="d-flex align-items-center gap-2 text-danger"
-      onClick={handleLogout}
-    >
-      <LogOut size={16} />
-      ออกจากระบบ
-    </Dropdown.Item>
+                  <Dropdown.Item
+                    className="d-flex align-items-center gap-2 text-danger"
+                    onClick={handleLogout}
+                  >
+                    <LogOut size={16} />
+                    ออกจากระบบ
+                  </Dropdown.Item>
 
-  </Dropdown.Menu>
-</Dropdown>
+                </Dropdown.Menu>
+              </Dropdown>
             ) : (
               <button
                 className="btn btn-primary px-4 py-2 fw-semibold"

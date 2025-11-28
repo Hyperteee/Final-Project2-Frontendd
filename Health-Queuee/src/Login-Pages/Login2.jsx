@@ -30,7 +30,7 @@ export default function Login2() {
       localStorage.setItem('currentUser', JSON.stringify(superAdminUser));
 
       alert("ยินดีต้อนรับ Super Admin!");
-      navigate("/admin"); // นำทางไปที่ /admin
+      navigate("/"); // นำทางไปที่ /admin
       return;
     }
     
@@ -48,7 +48,7 @@ export default function Login2() {
     if (foundUser.role === "admin") {
       alert("ยินดีต้อนรับ Admin!");
       localStorage.setItem('currentUser', JSON.stringify(foundUser));
-      navigate("/admin"); // นำทางไปที่ /admin
+      navigate("/"); // นำทางไปที่ /admin
     } else if (foundUser.role === "pending") {
       alert("กรุณารอแอดมินยืนยันบัญชีของท่านก่อน");
     } else if (foundUser.role === "user") {
