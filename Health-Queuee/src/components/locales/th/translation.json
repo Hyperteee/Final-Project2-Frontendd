@@ -31,5 +31,32 @@
     "footer_contact": "ติดต่อเรา",
     "footer_products": "ผลิตภัณฑ์",
     "footer_company": "บริษัท",
-    "footer_support" : "ช่วยเหลือ & อื่น"
+    "footer_support" : "ช่วยเหลือ & อื่น",
+
+    "appointment_title": "ทำนัด",
+    "hospital_prefix": "โรงพยาบาล",
+    "step_dept": "เลือกแผนก",
+    "step_doc": "เลือกแพทย์",
+    "step_date": "เลือกวันนัด",
+    "step_symptom": "กรอกอาการ",
+    "section_1_title": "1. เลือกศูนย์การรักษา/แผนก",
+    "selected": "เลือกแล้ว",
+    "click_to_select": "คลิกเพื่อเลือกจากรายชื่อแผนกทั้งหมด",
+    "unknown_dept": "ไม่รู้แผนก",
+    "screening_desc": "คัดกรองอาการที่รพ.",
+    "section_2_title": "2. ต้องการเลือกแพทย์เฉพาะเจาะจงหรือไม่",
+    "choose_doc_self": "เลือกแพทย์เอง",
+    "choose_doc_desc": "นัดแพทย์ตามชื่อหรือความเชี่ยวชาญ",
+    "let_hospital_choose": "เลือกแพทย์ให้ฉัน",
+    "hospital_assign_desc": "รพ.จะจัดแพทย์ให้ท่านเอง",
+    "modal_title": "เลือกแผนกที่ต้องการรักษา",
+    "modal_instruction": "กรุณาเลือกแผนกที่ตรงกับอาการของท่าน เพื่อดำเนินการขั้นตอนถัดไป",
+    "next_btn": "ต่อไป",
+
+    "department_prefix": "แผนก",
+    "select_doctor_title": "เลือกแพทย์ที่ต้องการนัดหมาย",
+    "unnamed_doctor": "ไม่ระบุชื่อแพทย์",
+    "book_btn": "นัดหมาย",
+    "details_btn": "รายละเอียด",
+    "back_btn": "ย้อนกลับ"
 }

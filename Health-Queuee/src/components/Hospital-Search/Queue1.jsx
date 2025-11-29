@@ -6,8 +6,10 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/esm/Button";
 import hospitalMap from "../../data/hospitaldata.jsx/allhospitaldata";
+import { useTranslation } from "react-i18next";
 
 function Queue1() {
+  const { t } = useTranslation();
   const { state } = useLocation();
   const { selectedHospital } = state || {};
   console.log("selectedHospital:", selectedHospital);
@@ -20,13 +22,10 @@ function Queue1() {
   const handleShow = () => setShow(true);
   const navigate = useNavigate();
 
-  // ใช้ Optional Chaining ป้องกัน Error กรณีไม่มีข้อมูล
   const hospitalData = hospitalMap[selectedHospital]?.info || null;
 
   function handleNext(department, chooseDoctor, selectedHospital) {
-    // หากเลือก "ไม่รู้แผนก" หรือเลือกแผนกแล้วและเลือก "ไม่เลือกแพทย์" ให้ข้ามไป Queue3 เลย
     if (department === "ไม่รู้แผนก" || chooseDoctor === "dontChoose") {
-      // ✅ "ไม่รู้แผนก" หรือ "ไม่เลือกแพทย์" จะข้ามไปหน้าเลือกวันนัดทันที
       navigate("/queue3", {
         state: {
           selectedHospital,
@@ -36,7 +35,6 @@ function Queue1() {
         },
       });
     } else if (chooseDoctor === "choose") {
-
       navigate("/queue2", {
         state: {
           selectedDepartment: department,
@@ -48,12 +46,11 @@ function Queue1() {
     }
   }
 
-  // --- Stepper Configuration ---
   const steps = [
-    { id: 1, label: "เลือกแผนก" },
-    { id: 2, label: "เลือกแพทย์" },
-    { id: 3, label: "เลือกวันนัด" },
-    { id: 4, label: "กรอกอาการ" },
+    { id: 1, label: t('step_dept') },
+    { id: 2, label: t('step_doc') },
+    { id: 3, label: t('step_date') },
+    { id: 4, label: t('step_symptom') },
   ];
   const currentStep = 1;
   const isStepActive = (stepNumber) => stepNumber <= currentStep;
@@ -66,7 +63,7 @@ function Queue1() {
           style={{ maxWidth: "600px", width: "100%", marginTop: "85px" }}
         >
           <div className="fw-bold fs-3 mb-2" style={{ color: "black" }}>
-            ทำนัด
+            {t('appointment_title')}
           </div>
 
           <div className="d-flex justify-content-center mb-4">
@@ -74,11 +71,10 @@ function Queue1() {
               className="bg-primary-subtle rounded-2 px-3 py-2 fw-semibold"
               style={{ color: "#11248f" }}
             >
-              โรงพยาบาล{selectedHospital}
+              {t('hospital_prefix')}{selectedHospital}
             </div>
           </div>
 
-          {/* Stepper Section */}
           <div className="d-flex justify-content-center align-items-start px-3 mb-4">
             {steps.map((step, index) => {
               const active = isStepActive(step.id);
@@ -89,9 +85,8 @@ function Queue1() {
                     style={{ zIndex: 2, minWidth: "80px" }}
                   >
                     <div
-                      className={`step ${
-                        active ? "step-active" : "step-inactive"
-                      }`}
+                      className={`step ${active ? "step-active" : "step-inactive"
+                        }`}
                     >
                       {step.id}
                     </div>
@@ -133,16 +128,14 @@ function Queue1() {
         >
           <div className="zone-option d-flex flex-column mb-5 w-100">
             <div className="fw-bold mb-4 fs-5" style={{ color: "#001E6C" }}>
-              1. เลือกศูนย์การรักษา/แผนก
+              {t('section_1_title')}
             </div>
             <div className="d-flex justify-content-center gap-4 w-100">
-              {/* เลือกศูนย์การรักษา/แผนกเฉพาะทาง */}
               <div
-                className={`option ${
-                  department !== null && department !== "ไม่รู้แผนก"
+                className={`option ${department !== null && department !== "ไม่รู้แผนก"
                     ? "option-active"
                     : ""
-                }`}
+                  }`}
                 onClick={handleShow}
               >
                 <i
@@ -151,28 +144,26 @@ function Queue1() {
                 ></i>
                 <div className="d-flex p-5 flex-column align-items-start">
                   <span className="fw-bold">
-                    เลือกแผนก
+                    {t('step_dept')}
                   </span>
                   {departmentName && department !== "ไม่รู้แผนก" ? (
                     <span className="small text-success">
-                      เลือกแล้ว: {departmentName}
+                      {t('selected')}: {departmentName}
                     </span>
                   ) : (
                     <span className="small text-muted">
-                      คลิกเพื่อเลือกจากรายชื่อแผนกทั้งหมด
+                      {t('click_to_select')}
                     </span>
                   )}
                 </div>
               </div>
 
-              {/* ไม่รู้แผนก */}
               <div
-                className={`option ${
-                  department === "ไม่รู้แผนก" ? "option-active" : ""
-                }`}
+                className={`option ${department === "ไม่รู้แผนก" ? "option-active" : ""
+                  }`}
                 onClick={() => {
                   setDepartment("ไม่รู้แผนก");
-                  setDepartmentName("ไม่รู้แผนก");
+                  setDepartmentName(t('unknown_dept'));
                   setChooseDoctor("dontChoose");
                 }}
               >
@@ -182,10 +173,10 @@ function Queue1() {
                 ></i>
                 <div className="d-flex flex-column align-items-start ">
                   <span className="fw-bold">
-                    ไม่รู้แผนก
+                    {t('unknown_dept')}
                   </span>
                   <span className="small text-muted">
-                    คัดกรองอาการที่รพ.
+                    {t('screening_desc')}
                   </span>
                 </div>
               </div>
@@ -195,14 +186,12 @@ function Queue1() {
           {department && department !== "ไม่รู้แผนก" && (
             <div className="zone-option d-flex flex-column mb-5 w-100">
               <div className="fw-bold mb-3 fs-5" style={{ color: "#001E6C" }}>
-                2. ต้องการเลือกแพทย์เฉพาะเจาะจงหรือไม่
+                {t('section_2_title')}
               </div>
               <div className="d-flex justify-content-center gap-4 w-100">
-                {/* เลือกแพทย์เฉพาะทาง */}
                 <div
-                  className={`option ${
-                    chooseDoctor === "choose" ? "option-active" : ""
-                  }`}
+                  className={`option ${chooseDoctor === "choose" ? "option-active" : ""
+                    }`}
                   onClick={() => setChooseDoctor("choose")}
                 >
                   <i
@@ -210,18 +199,16 @@ function Queue1() {
                     style={{ color: "#001E6C" }}
                   ></i>
                   <div className="d-flex flex-column align-items-start">
-                    <span className="fw-bold">เลือกแพทย์เอง</span>
+                    <span className="fw-bold">{t('choose_doc_self')}</span>
                     <span className="small text-muted">
-                      นัดแพทย์ตามชื่อหรือความเชี่ยวชาญ
+                      {t('choose_doc_desc')}
                     </span>
                   </div>
                 </div>
 
-                {/* ไม่เลือกแพทย์ */}
                 <div
-                  className={`option ${
-                    chooseDoctor === "dontChoose" ? "option-active" : ""
-                  }`}
+                  className={`option ${chooseDoctor === "dontChoose" ? "option-active" : ""
+                    }`}
                   onClick={() => setChooseDoctor("dontChoose")}
                 >
                   <i
@@ -230,10 +217,10 @@ function Queue1() {
                   ></i>
                   <div className="d-flex flex-column align-items-start">
                     <span className="fw-bold">
-                      เลือกแพทย์ให้ฉัน
+                      {t('let_hospital_choose')}
                     </span>
                     <span className="small text-muted">
-                      รพ.จะจัดแพทย์ให้ท่านเอง
+                      {t('hospital_assign_desc')}
                     </span>
                   </div>
                 </div>
@@ -241,7 +228,6 @@ function Queue1() {
             </div>
           )}
 
-          {/* Modal เลือกแผนก */}
           <Modal
             className="department-modal"
             size="lg"
@@ -251,16 +237,13 @@ function Queue1() {
           >
             <Modal.Header closeButton>
               <Modal.Title className="fw-bold modal-title">
-                เลือกแผนกที่ต้องการรักษา
+                {t('modal_title')}
               </Modal.Title>
             </Modal.Header>
 
             <Modal.Body className="modal-body department-grid-container">
-              {" "}
-              {/* เปลี่ยนชื่อคลาสเพื่อให้แยกสไตล์ได้ชัดเจน */}
-              {/* เพิ่มข้อความแนะนำ เพื่อให้ UX ดีขึ้น */}
               <p className="text-center text-muted mb-4 department-instruction">
-                กรุณาเลือกแผนกที่ตรงกับอาการของท่าน เพื่อดำเนินการขั้นตอนถัดไป
+                {t('modal_instruction')}
               </p>
               <div className="department-grid-list">
                 {hospitalData?.departments
@@ -272,15 +255,13 @@ function Queue1() {
                       onClick={() => {
                         setDepartment(dep.id);
                         setDepartmentName(dep.name);
-                        setChooseDoctor(null); // Reset ตัวเลือกแพทย์เมื่อเลือกแผนกใหม่
+                        setChooseDoctor(null);
                         handleClose();
                       }}
                     >
-                      {/* ปรับขนาด Icon ให้ดูเด่นขึ้น */}
                       {dep.logo ? (
                         <img src={dep.logo} alt={`Icon for ${dep.name}`} />
                       ) : (
-                        // Fallback icon กรณีไม่มีโลโก้ (ใช้ Bootstrap Icon)
                         <div className="default-icon-placeholder">
                           <i
                             className="bi bi-hospital fs-1"
@@ -306,13 +287,12 @@ function Queue1() {
             onClick={() =>
               handleNext(department, chooseDoctor, selectedHospital)
             }
-            // ปุ่ม Disabled เมื่อยังไม่เลือกแผนก หรือเลือกแผนกแล้วแต่ยังไม่เลือกแพทย์
             disabled={
               department === null ||
               (department !== "ไม่รู้แผนก" && chooseDoctor === null)
             }
           >
-            <span>ต่อไป </span>
+            <span>{t('next_btn')} </span>
             <i className="bi bi-arrow-right ms-2"></i>
           </Button>
         </div>
@@ -328,11 +308,11 @@ function Queue1() {
             display: "block",
             marginBottom: "-5px",
             marginTop: "-5px",
-            
+
           }}
         />
       </div>
-      
+
       <footer
         id="contact"
         className="custom-footer py-5"
@@ -345,10 +325,10 @@ function Queue1() {
               <span className="h3 fw-bold text-white mb-0">HFU</span>
             </div>
             <p className="text-light small opacity-75 mb-4">
-              Health Queue Management System
+              {t('system_name')}
             </p>
 
-            <h5 className="fw-bold fs-5 mb-3">Contact</h5>
+            <h5 className="fw-bold fs-5 mb-3">{t('contact')}</h5>
             <ul className="list-unstyled small contact-list">
               <li className="d-flex align-items-start mb-2">
                 <i className="bi bi-geo-alt-fill"></i>
@@ -368,7 +348,7 @@ function Queue1() {
           </div>
 
           <div className="col-6 col-md-4 col-lg-2">
-            <h4 className="fw-bold fs-5 mb-4">Products</h4>
+            <h4 className="fw-bold fs-5 mb-4">{t('products')}</h4>
             <ul className="list-unstyled space-y-3">
               <li>
                 <a href="#">Queue Management</a>
@@ -386,7 +366,7 @@ function Queue1() {
           </div>
 
           <div className="col-6 col-md-4 col-lg-2">
-            <h4 className="fw-bold fs-5 mb-4">Company</h4>
+            <h4 className="fw-bold fs-5 mb-4">{t('company')}</h4>
             <ul className="list-unstyled space-y-3">
               <li>
                 <a href="#">About Us</a>
@@ -406,7 +386,7 @@ function Queue1() {
           </div>
 
           <div className="col-12 col-md-4 col-lg-4 mt-4 mt-md-0">
-            <h4 className="fw-bold fs-5 mb-4">Support & Legal</h4>
+            <h4 className="fw-bold fs-5 mb-4">{t('support')}</h4>
             <ul className="list-unstyled space-y-3">
               <li>
                 <a href="#">Help Center (FAQ)</a>
@@ -426,7 +406,7 @@ function Queue1() {
 
         <div className="border-top border-secondary-subtle pt-4 mt-4 d-flex flex-column flex-md-row justify-content-between align-items-center">
           <p className="text-light opacity-50 small mb-3 mb-md-0">
-            &copy; 2025 HFU Healthcare Technologies. All rights reserved.
+            &copy; 2025 HFU Healthcare Technologies. {t('rights')}
           </p>
         </div>
       </footer>

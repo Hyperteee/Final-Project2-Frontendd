@@ -31,6 +31,32 @@
     "footer_contact": "Contact",
     "footer_products": "Products",
     "footer_company": "Company",
-    "footer_support":"Support & Legal"
+    "footer_support":"Support & Legal",
+
+    "appointment_title": "Make Appointment",
+    "hospital_prefix": "Hospital ",
+    "step_dept": "Department",
+    "step_doc": "Doctor",
+    "step_date": "Date",
+    "step_symptom": "Symptom",
+    "section_1_title": "1. Select Center/Department",
+    "selected": "Selected",
+    "click_to_select": "Click to select from all departments",
+    "unknown_dept": "Unknown Department",
+    "screening_desc": "Symptom screening at hospital",
+    "section_2_title": "2. Do you want to choose a specific doctor?",
+    "choose_doc_self": "Choose Doctor",
+    "choose_doc_desc": "Select by name or specialty",
+    "let_hospital_choose": "Auto-assign Doctor",
+    "hospital_assign_desc": "Hospital will assign for you",
+    "modal_title": "Select Department",
+    "modal_instruction": "Please select the department matching your symptoms.",
+    "next_btn": "Next",
     
+    "department_prefix": "Dept. ",
+    "select_doctor_title": "Select Doctor",
+    "unnamed_doctor": "Unnamed Doctor",
+    "book_btn": "Book",
+    "details_btn": "Details",
+    "back_btn": "Back"
 }

@@ -4,8 +4,10 @@ import React from "react";
 import hospitalMap from "../../data/hospitaldata.jsx/allhospitaldata";
 import "./Queue2.css";
 import Button from "react-bootstrap/esm/Button";
+import { useTranslation } from "react-i18next";
 
 function Queue2() {
+  const { t } = useTranslation();
   const { state } = useLocation();
   const { selectedHospital, selectedDepartment, optionChooseDoctor } =
     state || {};
@@ -17,10 +19,7 @@ function Queue2() {
   );
 
   function handleBook(selectedHospital, selectedDoctor, selectedDepartment) {
-    // ดึงชื่อแผนกที่ถูกส่งมาด้วย
     const departmentName = departmentData?.name;
-
-    // ค้นหาชื่อแพทย์
     const doctor = departmentData?.doctors.find(
       (doc) => doc.id === selectedDoctor
     );
@@ -37,12 +36,11 @@ function Queue2() {
     });
   }
 
-  // --- Stepper Config ---
   const steps = [
-    { id: 1, label: "เลือกแผนก" },
-    { id: 2, label: "เลือกแพทย์" },
-    { id: 3, label: "เลือกวันนัด" },
-    { id: 4, label: "กรอกอาการ" },
+    { id: 1, label: t('step_dept') },
+    { id: 2, label: t('step_doc') },
+    { id: 3, label: t('step_date') },
+    { id: 4, label: t('step_symptom') },
   ];
   const currentStep = 2;
   const isStepActive = (stepNumber) => stepNumber <= currentStep;
@@ -50,7 +48,6 @@ function Queue2() {
   return (
     <div>
       <div className="d-flex flex-column align-items-center bg-light min-vh-100 pb-5">
-        {/* Header Section */}
         <div
           className="mt-5 fs-4 text-center w-100"
           style={{ maxWidth: "800px" }}
@@ -59,7 +56,7 @@ function Queue2() {
             className="fw-bold fs-3 mb-2"
             style={{ color: "black", marginTop: "55px" }}
           >
-            ทำนัด
+            {t('appointment_title')}
           </div>
 
           <div className="d-flex justify-content-center gap-3 mb-4">
@@ -67,17 +64,16 @@ function Queue2() {
               className="bg-primary-subtle rounded-2 px-3 py-2 fw-semibold"
               style={{ color: "#001E6C" }}
             >
-              โรงพยาบาล{selectedHospital}
+              {t('hospital_prefix')}{selectedHospital}
             </div>
             <div
               className="bg-primary-subtle rounded-2 px-2 py-2 fw-semibold"
               style={{ color: "#001E6C" }}
             >
-              แผนก{departmentData?.name}
+              {t('department_prefix')}{departmentData?.name}
             </div>
           </div>
 
-          {/* Stepper Section */}
           <div
             className="d-flex justify-content-center align-items-start px-3 mb-4 mx-auto"
             style={{ maxWidth: "600px", width: "100%" }}
@@ -91,9 +87,8 @@ function Queue2() {
                     style={{ zIndex: 2, minWidth: "80px" }}
                   >
                     <div
-                      className={`step ${
-                        active ? "step-active" : "step-inactive"
-                      }`}
+                      className={`step ${active ? "step-active" : "step-inactive"
+                        }`}
                     >
                       {step.id}
                     </div>
@@ -129,11 +124,10 @@ function Queue2() {
           </div>
 
           <h4 className="fw-bold mb-4" style={{ color: "#001E6C" }}>
-            เลือกแพทย์ที่ต้องการนัดหมาย
+            {t('select_doctor_title')}
           </h4>
         </div>
 
-        {/* Doctor Selection Section */}
         <div
           className="doctor-results-panel"
           style={{ width: "100%", maxWidth: "900px", padding: "0 15px" }}
@@ -148,7 +142,7 @@ function Queue2() {
                         <i className="bi bi-person-fill fs-2"></i>
                       </div>
                       <p className="fw-semibold mt-3 mb-1 text-truncate w-100">
-                        {doctor.name || "Unnamed doctor"}
+                        {doctor.name || t('unnamed_doctor')}
                       </p>
                       <p className="small mb-1 doctor-card__subtitle">
                         {doctor.department}
@@ -170,10 +164,10 @@ function Queue2() {
                             );
                           }}
                         >
-                          นัดหมาย
+                          {t('book_btn')}
                         </button>
                         <button className="btn btn-outline-secondary rounded-pill py-2">
-                          รายละเอียด
+                          {t('details_btn')}
                         </button>
                       </div>
                     </div>
@@ -184,7 +178,6 @@ function Queue2() {
           </div>
         </div>
 
-        {/* แก้ไขปุ่มย้อนกลับให้เป็น Outline Primary และมี Icon */}
         <div className="mt-5">
           <Button
             variant="outline-primary"
@@ -193,11 +186,11 @@ function Queue2() {
             onClick={() => navigate(-1)}
           >
             <i className="bi bi-arrow-left me-2"></i>
-            ย้อนกลับ
+            {t('back_btn')}
           </Button>
         </div>
       </div>
-            <div style={{ width: "100%", overflow: "hidden", lineHeight: 0 }}>
+      <div style={{ width: "100%", overflow: "hidden", lineHeight: 0 }}>
         <img
           src={"./images/wave-navy.png"}
           alt="footer wave"
@@ -207,7 +200,7 @@ function Queue2() {
             display: "block",
             marginBottom: "-5px",
             marginTop: "-5px",
-            
+
           }}
         />
       </div>
@@ -223,10 +216,10 @@ function Queue2() {
               <span className="h3 fw-bold text-white mb-0">HFU</span>
             </div>
             <p className="text-light small opacity-75 mb-4">
-              Health Queue Management System
+              {t('system_name')}
             </p>
 
-            <h5 className="fw-bold fs-5 mb-3">Contact</h5>
+            <h5 className="fw-bold fs-5 mb-3">{t('contact')}</h5>
             <ul className="list-unstyled small contact-list">
               <li className="d-flex align-items-start mb-2">
                 <i className="bi bi-geo-alt-fill"></i>
@@ -246,7 +239,7 @@ function Queue2() {
           </div>
 
           <div className="col-6 col-md-4 col-lg-2">
-            <h4 className="fw-bold fs-5 mb-4">Products</h4>
+            <h4 className="fw-bold fs-5 mb-4">{t('products')}</h4>
             <ul className="list-unstyled space-y-3">
               <li>
                 <a href="#">Queue Management</a>
@@ -264,7 +257,7 @@ function Queue2() {
           </div>
 
           <div className="col-6 col-md-4 col-lg-2">
-            <h4 className="fw-bold fs-5 mb-4">Company</h4>
+            <h4 className="fw-bold fs-5 mb-4">{t('company')}</h4>
             <ul className="list-unstyled space-y-3">
               <li>
                 <a href="#">About Us</a>
@@ -284,7 +277,7 @@ function Queue2() {
           </div>
 
           <div className="col-12 col-md-4 col-lg-4 mt-4 mt-md-0">
-            <h4 className="fw-bold fs-5 mb-4">Support & Legal</h4>
+            <h4 className="fw-bold fs-5 mb-4">{t('support')}</h4>
             <ul className="list-unstyled space-y-3">
               <li>
                 <a href="#">Help Center (FAQ)</a>
@@ -304,7 +297,7 @@ function Queue2() {
 
         <div className="border-top border-secondary-subtle pt-4 mt-4 d-flex flex-column flex-md-row justify-content-between align-items-center">
           <p className="text-light opacity-50 small mb-3 mb-md-0">
-            &copy; 2025 HFU Healthcare Technologies. All rights reserved.
+            &copy; 2025 HFU Healthcare Technologies. {t('rights')}
           </p>
         </div>
       </footer>
