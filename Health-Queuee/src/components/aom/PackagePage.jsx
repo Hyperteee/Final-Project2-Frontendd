@@ -330,7 +330,7 @@ const packagesToShow =
         <h2 className="banner-title">แพ็กเกจและโปรโมชั่น</h2>
 
         <div className="banner-box">
-          <img src="/โปรจจจ.jpg" className="banner-image" alt="banner" />
+          <img src="โปรจจจ.jpg" className="banner-image" alt="banner" />
           <div className="banner-info">ชื่อแพ็กเกจ รายละเอียดต่างๆ</div>
         </div>
       </section>

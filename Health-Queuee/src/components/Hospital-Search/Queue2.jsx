@@ -147,11 +147,11 @@ function Queue2() {
                       <p className="small mb-1 doctor-card__subtitle">
                         {doctor.department}
                       </p>
-                      {doctor.specialization && (
+                      {/* {doctor.specialization && (
                         <p className="small text-secondary mb-3">
                           {doctor.specialization}
                         </p>
-                      )}
+                      )} */}
                       <div className="d-grid gap-2 w-100 mt-auto doctor-card__actions">
                         <button
                           className="btn btn-primary rounded-pill py-2"

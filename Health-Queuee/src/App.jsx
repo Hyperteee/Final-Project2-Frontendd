@@ -3,8 +3,7 @@ import HealthcarePage from "./components/HealthcarePage";
 import Listsearch from "./components/Hospital-Search/listsearch";
 import Queue1 from "./components/Hospital-Search/Queue1";
 import Login2 from "./Login-Pages/login2";
-import LoginPage from "../Login-Pages/Login-user";
-import RegisterPage from "../Login-Pages/Register-User";
+
 import Queue2 from "./components/Hospital-Search/Queue2";
 import Queue3 from "./components/Hospital-Search/Queue3";
 import Queue4 from "./components/Hospital-Search/Queue4";

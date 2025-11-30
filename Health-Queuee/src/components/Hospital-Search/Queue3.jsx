@@ -379,8 +379,8 @@ const Queue3 = () => {
           <Modal.Header closeButton>
             <Modal.Title>
               {activeField === "P1"
-                ? "📅 เลือกวันนัดหลัก (ล่วงหน้า 7 วัน)"
-                : "🗓️ เลือกวันนัดรอง"}
+                ? "เลือกวันนัดหลัก (ล่วงหน้า 7 วัน)"
+                : "เลือกวันนัดรอง"}
             </Modal.Title>
           </Modal.Header>
           <Modal.Body className="d-flex justify-content-center">

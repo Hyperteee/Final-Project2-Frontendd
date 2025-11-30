@@ -22,6 +22,7 @@ const AdminNavbar = () => {
 
     function handleLogout(){
         localStorage.removeItem('currentUser');
+        localStorage.removeItem("isLoggedIn");
         navigate('/login')
     }
     return (

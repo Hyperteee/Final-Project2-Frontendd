@@ -412,8 +412,12 @@ export default function AdminExport() {
       if (selectedHospital && String(appt.hospitalId) !== String(selectedHospital)) return;
 
       if (selectedProvince && !selectedHospital) {
-        const hosp = allHospitals.find(h => String(h.id) === String(appt.hospitalId));
-        if (!hosp || hosp.province !== selectedProvince) return;
+        // const hosp = allHospitals.find(h => String(h.id) === String(appt.hospitalId));
+        // if (!hosp || hosp.province !== selectedProvince) return;
+        return
+      }
+      if (!selectedProvince && !selectedHospital){
+        return
       }
 
       const dateKey = new Date(appt.priority1Date).toISOString().split('T')[0];
@@ -519,7 +523,6 @@ export default function AdminExport() {
     // const filename = `BatchExport-${now.toISOString().slice(0, 10)}.xlsx`;
     // XLSX.writeFile(wb, filename);
 
-    // Update DB/Context
     const idsToExport = selectedItems.map(appt => appt.id);
     const newBatchId = createBatchExport(idsToExport);
 
